@@ -192,6 +192,70 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 46,
+                'title' => 'balance_create',
+            ],
+            [
+                'id'    => 47,
+                'title' => 'balance_edit',
+            ],
+            [
+                'id'    => 48,
+                'title' => 'balance_show',
+            ],
+            [
+                'id'    => 49,
+                'title' => 'balance_delete',
+            ],
+            [
+                'id'    => 50,
+                'title' => 'balance_access',
+            ],
+            [
+                'id'    => 51,
+                'title' => 'setting_access',
+            ],
+            [
+                'id'    => 52,
+                'title' => 'payment_status_create',
+            ],
+            [
+                'id'    => 53,
+                'title' => 'payment_status_edit',
+            ],
+            [
+                'id'    => 54,
+                'title' => 'payment_status_show',
+            ],
+            [
+                'id'    => 55,
+                'title' => 'payment_status_delete',
+            ],
+            [
+                'id'    => 56,
+                'title' => 'payment_status_access',
+            ],
+            [
+                'id'    => 57,
+                'title' => 'payment_method_create',
+            ],
+            [
+                'id'    => 58,
+                'title' => 'payment_method_edit',
+            ],
+            [
+                'id'    => 59,
+                'title' => 'payment_method_show',
+            ],
+            [
+                'id'    => 60,
+                'title' => 'payment_method_delete',
+            ],
+            [
+                'id'    => 61,
+                'title' => 'payment_method_access',
+            ],
+            [
+                'id'    => 62,
                 'title' => 'profile_password_edit',
             ],
         ];

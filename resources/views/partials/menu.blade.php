@@ -44,6 +44,18 @@
                         </a>
                     </li>
                 @endcan
+                @can('balance_access')
+                    <li class="nav-item">
+                        <a href="{{ route("admin.balances.index") }}" class="nav-link {{ request()->is("admin/balances") || request()->is("admin/balances/*") ? "active" : "" }}">
+                            <i class="fa-fw nav-icon fas fa-cogs">
+
+                            </i>
+                            <p>
+                                {{ trans('cruds.balance.title') }}
+                            </p>
+                        </a>
+                    </li>
+                @endcan
                 @can('mail_room_access')
                     <li class="nav-item">
                         <a href="{{ route("admin.mail-rooms.index") }}" class="nav-link {{ request()->is("admin/mail-rooms") || request()->is("admin/mail-rooms/*") ? "active" : "" }}">
@@ -69,7 +81,7 @@
                     </li>
                 @endcan
                 @can('user_management_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/permissions*") ? "menu-open" : "" }} {{ request()->is("admin/roles*") ? "menu-open" : "" }} {{ request()->is("admin/users*") ? "menu-open" : "" }} {{ request()->is("admin/teams*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/permissions*") ? "menu-open" : "" }} {{ request()->is("admin/roles*") ? "menu-open" : "" }} {{ request()->is("admin/users*") ? "menu-open" : "" }} {{ request()->is("admin/teams*") ? "menu-open" : "" }} {{ request()->is("admin/user-alerts*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-users">
 
@@ -128,31 +140,19 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('user_alert_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.user-alerts.index") }}" class="nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-bell">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.userAlert.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
-                    </li>
-                @endcan
-                @can('user_alert_access')
-                    <li class="nav-item">
-                        <a href="{{ route("admin.user-alerts.index") }}" class="nav-link {{ request()->is("admin/user-alerts") || request()->is("admin/user-alerts/*") ? "active" : "" }}">
-                            <i class="fa-fw nav-icon fas fa-bell">
-
-                            </i>
-                            <p>
-                                {{ trans('cruds.userAlert.title') }}
-                            </p>
-                        </a>
-                    </li>
-                @endcan
-                @can('balance_access')
-                    <li class="nav-item">
-                        <a href="{{ route("admin.balances.index") }}" class="nav-link {{ request()->is("admin/balances") || request()->is("admin/balances/*") ? "active" : "" }}">
-                            <i class="fa-fw nav-icon fas fa-cogs">
-
-                            </i>
-                            <p>
-                                {{ trans('cruds.balance.title') }}
-                            </p>
-                        </a>
                     </li>
                 @endcan
                 @can('setting_access')

@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.balance.fields.company_name') }}
+                        </th>
+                        <td>
+                            {{ $balance->company_name->company ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.balance.fields.revenue') }}
                         </th>
                         <td>
@@ -45,6 +53,22 @@
                         </th>
                         <td>
                             {{ $balance->profit }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.balance.fields.payment_status') }}
+                        </th>
+                        <td>
+                            {{ $balance->payment_status->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.balance.fields.payment_method') }}
+                        </th>
+                        <td>
+                            {{ $balance->payment_method->name ?? '' }}
                         </td>
                     </tr>
                     <tr>

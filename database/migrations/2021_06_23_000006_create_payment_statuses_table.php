@@ -4,15 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserAlertsTable extends Migration
+class CreatePaymentStatusesTable extends Migration
 {
     public function up()
     {
-        Schema::create('user_alerts', function (Blueprint $table) {
+        Schema::create('payment_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('alert_text');
-            $table->string('alert_link')->nullable();
+            $table->string('name')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 }

@@ -46,21 +46,6 @@ class PaymentMethodController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? PaymentMethod::NAME_SELECT[$row->name] : '';
             });
-            $table->editColumn('account_name', function ($row) {
-                return $row->account_name ? $row->account_name : '';
-            });
-            $table->editColumn('account_number', function ($row) {
-                return $row->account_number ? $row->account_number : '';
-            });
-            $table->editColumn('routing_number', function ($row) {
-                return $row->routing_number ? $row->routing_number : '';
-            });
-            $table->editColumn('swift', function ($row) {
-                return $row->swift ? $row->swift : '';
-            });
-            $table->editColumn('paypal_email', function ($row) {
-                return $row->paypal_email ? $row->paypal_email : '';
-            });
 
             $table->rawColumns(['actions', 'placeholder']);
 

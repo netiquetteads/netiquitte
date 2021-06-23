@@ -28,21 +28,6 @@
                         {{ trans('cruds.paymentMethod.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.paymentMethod.fields.account_name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.paymentMethod.fields.account_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.paymentMethod.fields.routing_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.paymentMethod.fields.swift') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.paymentMethod.fields.paypal_email') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -100,11 +85,6 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
-{ data: 'account_name', name: 'account_name' },
-{ data: 'account_number', name: 'account_number' },
-{ data: 'routing_number', name: 'routing_number' },
-{ data: 'swift', name: 'swift' },
-{ data: 'paypal_email', name: 'paypal_email' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
