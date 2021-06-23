@@ -3,18 +3,16 @@
 namespace App\Models;
 
 use \DateTimeInterface;
-use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MailRoom extends Model
+class PaymentStatus extends Model
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
     use HasFactory;
 
-    public $table = 'mail_rooms';
+    public $table = 'payment_statuses';
 
     protected $dates = [
         'created_at',
@@ -25,21 +23,9 @@ class MailRoom extends Model
     protected $fillable = [
         'name',
         'created_at',
-        'template_id',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
-
-    public function template()
-    {
-        return $this->belongsTo(Template::class, 'template_id');
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

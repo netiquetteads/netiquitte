@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.mailRoom.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.paymentStatus.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.mail-rooms.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.payment-statuses.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -17,32 +17,24 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.mailRoom.fields.id') }}
+                            {{ trans('cruds.paymentStatus.fields.id') }}
                         </th>
                         <td>
-                            {{ $mailRoom->id }}
+                            {{ $paymentStatus->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.mailRoom.fields.name') }}
+                            {{ trans('cruds.paymentStatus.fields.name') }}
                         </th>
                         <td>
-                            {{ $mailRoom->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.mailRoom.fields.template') }}
-                        </th>
-                        <td>
-                            {{ $mailRoom->template->name ?? '' }}
+                            {{ $paymentStatus->name }}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.mail-rooms.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.payment-statuses.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

@@ -1,34 +1,46 @@
 @extends('layouts.admin')
 @section('content')
-@can('mail_room_create')
+@can('payment_method_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.mail-rooms.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.mailRoom.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.payment-methods.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.paymentMethod.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.mailRoom.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.paymentMethod.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-MailRoom">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PaymentMethod">
             <thead>
                 <tr>
                     <th width="10">
 
                     </th>
                     <th>
-                        {{ trans('cruds.mailRoom.fields.id') }}
+                        {{ trans('cruds.paymentMethod.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.mailRoom.fields.name') }}
+                        {{ trans('cruds.paymentMethod.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.mailRoom.fields.template') }}
+                        {{ trans('cruds.paymentMethod.fields.account_name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.paymentMethod.fields.account_number') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.paymentMethod.fields.routing_number') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.paymentMethod.fields.swift') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.paymentMethod.fields.paypal_email') }}
                     </th>
                     <th>
                         &nbsp;
@@ -47,11 +59,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('mail_room_delete')
+@can('payment_method_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.mail-rooms.massDestroy') }}",
+    url: "{{ route('admin.payment-methods.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -83,19 +95,23 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.mail-rooms.index') }}",
+    ajax: "{{ route('admin.payment-methods.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
-{ data: 'template_name', name: 'template.name' },
+{ data: 'account_name', name: 'account_name' },
+{ data: 'account_number', name: 'account_number' },
+{ data: 'routing_number', name: 'routing_number' },
+{ data: 'swift', name: 'swift' },
+{ data: 'paypal_email', name: 'paypal_email' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
-  let table = $('.datatable-MailRoom').DataTable(dtOverrideGlobals);
+  let table = $('.datatable-PaymentMethod').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

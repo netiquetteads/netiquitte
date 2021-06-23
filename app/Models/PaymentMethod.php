@@ -8,13 +8,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MailRoom extends Model
+class PaymentMethod extends Model
 {
     use SoftDeletes;
     use MultiTenantModelTrait;
     use HasFactory;
 
-    public $table = 'mail_rooms';
+    public const NAME_SELECT = [
+        '1' => 'ACH',
+        '2' => 'Paypal',
+        '3' => 'Wire Transfer',
+    ];
+
+    public $table = 'payment_methods';
 
     protected $dates = [
         'created_at',
@@ -24,17 +30,16 @@ class MailRoom extends Model
 
     protected $fillable = [
         'name',
+        'account_name',
+        'account_number',
+        'routing_number',
+        'swift',
+        'paypal_email',
         'created_at',
-        'template_id',
         'updated_at',
         'deleted_at',
         'team_id',
     ];
-
-    public function template()
-    {
-        return $this->belongsTo(Template::class, 'template_id');
-    }
 
     public function team()
     {

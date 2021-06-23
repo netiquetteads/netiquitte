@@ -44,6 +44,11 @@ class Template extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function templateMailRooms()
+    {
+        return $this->hasMany(MailRoom::class, 'template_id', 'id');
+    }
+
     public function getOfferImageAttribute()
     {
         $file = $this->getMedia('offer_image')->last();

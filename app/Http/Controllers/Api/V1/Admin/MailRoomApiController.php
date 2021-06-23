@@ -17,7 +17,7 @@ class MailRoomApiController extends Controller
     {
         abort_if(Gate::denies('mail_room_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MailRoomResource(MailRoom::with(['team'])->get());
+        return new MailRoomResource(MailRoom::with(['template', 'team'])->get());
     }
 
     public function store(StoreMailRoomRequest $request)
@@ -33,7 +33,7 @@ class MailRoomApiController extends Controller
     {
         abort_if(Gate::denies('mail_room_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MailRoomResource($mailRoom->load(['team']));
+        return new MailRoomResource($mailRoom->load(['template', 'team']));
     }
 
     public function update(UpdateMailRoomRequest $request, MailRoom $mailRoom)

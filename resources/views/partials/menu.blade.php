@@ -143,6 +143,67 @@
                         </a>
                     </li>
                 @endcan
+                @can('balance_access')
+                    <li class="nav-item">
+                        <a href="{{ route("admin.balances.index") }}" class="nav-link {{ request()->is("admin/balances") || request()->is("admin/balances/*") ? "active" : "" }}">
+                            <i class="fa-fw nav-icon fas fa-cogs">
+
+                            </i>
+                            <p>
+                                {{ trans('cruds.balance.title') }}
+                            </p>
+                        </a>
+                    </li>
+                @endcan
+                @can('setting_access')
+                    <li class="nav-item has-treeview {{ request()->is("admin/payment-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/payment-methods*") ? "menu-open" : "" }}">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="fa-fw nav-icon fas fa-cogs">
+
+                            </i>
+                            <p>
+                                {{ trans('cruds.setting.title') }}
+                                <i class="right fa fa-fw fa-angle-left nav-icon"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('payment_status_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.payment-statuses.index") }}" class="nav-link {{ request()->is("admin/payment-statuses") || request()->is("admin/payment-statuses/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-cogs">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.paymentStatus.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('payment_method_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.payment-methods.index") }}" class="nav-link {{ request()->is("admin/payment-methods") || request()->is("admin/payment-methods/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fab fa-cc-apple-pay">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.paymentMethod.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcan
+                <li class="nav-item">
+                    <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "active" : "" }}">
+                        <i class="fas fa-fw fa-calendar nav-icon">
+
+                        </i>
+                        <p>
+                            {{ trans('global.systemCalendar') }}
+                        </p>
+                    </a>
+                </li>
                 @php($unread = \App\Models\QaTopic::unreadCount())
                     <li class="nav-item">
                         <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is("admin/messenger") || request()->is("admin/messenger/*") ? "active" : "" }} nav-link">

@@ -124,6 +124,8 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $template->load('templateMailRooms');
+
         return view('admin.templates.show', compact('template'));
     }
 
