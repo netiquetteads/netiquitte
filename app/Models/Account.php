@@ -38,6 +38,31 @@ class Account extends Model
         'team_id',
     ];
 
+    public function scopePublished($query)
+    {
+        return $query->where('published', 1);
+    }
+
+    public function getisAdvertiserAttribute()
+    {
+        //match role id of Advertiser
+        return $this->roles()->where('id', 1)->exists();
+    }
+
+    public function getisAffiliateAttribute()
+    {
+        //match role id of Affiliate
+        return $this->roles()->where('id', 1)->exists();
+    }
+
+    public function isAdvertiser() {
+       return $this->roles()->where('title', 'Advertiser')->exists();
+    }
+
+    public function isAffiliate() {
+       return $this->roles()->where('title', 'Affiliate')->exists();
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class);
