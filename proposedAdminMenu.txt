@@ -1,6 +1,21 @@
 
 
 
+The host for all requests is https://api.eflow.team/v1. All requests must be made over HTTPS.
+
+The JSON format is returned by all API responses, including errors
+
+
+
+https://docs.sendgrid.com/for-developers/sending-email/laravel
+
+
+
+
+
+
+
+
 Phillip So here is how I would like the sidebar laid out Starting form the top:
 
 Dashboard:

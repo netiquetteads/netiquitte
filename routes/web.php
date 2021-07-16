@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\PostController;
+
+Route::get('mail/send-grid', [PostController::class, 'sendMail']);
+
+
+
 Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {
