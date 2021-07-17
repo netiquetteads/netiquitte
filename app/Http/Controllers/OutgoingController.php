@@ -12,15 +12,15 @@ class OutgoingController extends Controller
 {
     public function sendMail(Requset $request)
     {
-        $input = ['message' => 'This is a test!'];
+        $input = ['message' => 'This is a neti sendgrid test!'];
 
-        Mail::to('phillip.madsen.12@gmail.com')->send(new SendGrid($input));
+        Mail::to('phillip.madsen.21@gmail.com')->send(new SendGrid($input));
     }
 
     public function testMail(Requset $request)
     {
-        $data = ['message' => 'This is a test!'];
+        $data = ['message' => 'This is a neti test test!'];
 
-        Mail::to('john@example.com')->send(new TestEmail($data));
+        Mail::to('phillip.madsen.21@gmail.com')->send(new TestEmail($data));
     }
 }
