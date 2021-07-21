@@ -72,7 +72,7 @@
                           @endif
 
                         {{--  <a type="button" class="btn btn-outline-success" title="User Account Profile Area">Account Profile</a>--}}
-                        <a target="_blank" href="{{ url('/private/home') }}" type="button" class="btn btn-outline-warning" title="Private Layer Dashboard">Private Area</a>
+            
                         <a target="_blank" href="{{ url('/') }}" type="button" class="btn btn-info" title="View The Live Site">Live Site</a>
                 </div>
                 </li>
