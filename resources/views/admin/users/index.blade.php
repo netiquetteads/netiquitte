@@ -43,6 +43,15 @@
                         {{ trans('cruds.user.fields.labels') }}
                     </th>
                     <th>
+                        {{ trans('cruds.user.fields.addresses') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.user.fields.adertisers') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.user.fields.affiliates') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -105,6 +114,9 @@
 { data: 'roles', name: 'roles.title' },
 { data: 'cell_phone', name: 'cell_phone' },
 { data: 'labels', name: 'labels.name' },
+{ data: 'addresses', name: 'addresses.address_1' },
+{ data: 'adertisers', name: 'adertisers.name' },
+{ data: 'affiliates', name: 'affiliates.company' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

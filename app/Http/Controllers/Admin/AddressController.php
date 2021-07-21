@@ -43,6 +43,9 @@ class AddressController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+            $table->editColumn('nickname', function ($row) {
+                return $row->nickname ? $row->nickname : '';
+            });
             $table->editColumn('address_1', function ($row) {
                 return $row->address_1 ? $row->address_1 : '';
             });

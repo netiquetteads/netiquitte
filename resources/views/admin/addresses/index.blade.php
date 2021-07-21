@@ -25,6 +25,9 @@
                         {{ trans('cruds.address.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.address.fields.nickname') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.address.fields.address_1') }}
                     </th>
                     <th>
@@ -99,6 +102,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'nickname', name: 'nickname' },
 { data: 'address_1', name: 'address_1' },
 { data: 'address_2', name: 'address_2' },
 { data: 'city', name: 'city' },

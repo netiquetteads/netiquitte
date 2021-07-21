@@ -140,6 +140,54 @@
                 <span class="help-block">{{ trans('cruds.user.fields.labels_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="addresses">{{ trans('cruds.user.fields.addresses') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('addresses') ? 'is-invalid' : '' }}" name="addresses[]" id="addresses" multiple>
+                    @foreach($addresses as $id => $addresses)
+                        <option value="{{ $id }}" {{ (in_array($id, old('addresses', [])) || $user->addresses->contains($id)) ? 'selected' : '' }}>{{ $addresses }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('addresses'))
+                    <span class="text-danger">{{ $errors->first('addresses') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.addresses_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="adertisers">{{ trans('cruds.user.fields.adertisers') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('adertisers') ? 'is-invalid' : '' }}" name="adertisers[]" id="adertisers" multiple>
+                    @foreach($adertisers as $id => $adertisers)
+                        <option value="{{ $id }}" {{ (in_array($id, old('adertisers', [])) || $user->adertisers->contains($id)) ? 'selected' : '' }}>{{ $adertisers }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('adertisers'))
+                    <span class="text-danger">{{ $errors->first('adertisers') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.adertisers_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="affiliates">{{ trans('cruds.user.fields.affiliates') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('affiliates') ? 'is-invalid' : '' }}" name="affiliates[]" id="affiliates" multiple>
+                    @foreach($affiliates as $id => $affiliates)
+                        <option value="{{ $id }}" {{ (in_array($id, old('affiliates', [])) || $user->affiliates->contains($id)) ? 'selected' : '' }}>{{ $affiliates }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('affiliates'))
+                    <span class="text-danger">{{ $errors->first('affiliates') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.user.fields.affiliates_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="team_id">{{ trans('cruds.user.fields.team') }}</label>
                 <select class="form-control select2 {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id">
                     @foreach($teams as $id => $entry)

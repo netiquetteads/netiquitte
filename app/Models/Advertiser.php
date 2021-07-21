@@ -81,6 +81,11 @@ class Advertiser extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function adertisersUsers()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function getFeaturedImageAttribute()
     {
         $file = $this->getMedia('featured_image')->last();

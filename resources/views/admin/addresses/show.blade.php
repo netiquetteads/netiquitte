@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.address.fields.nickname') }}
+                        </th>
+                        <td>
+                            {{ $address->nickname }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.address.fields.address_1') }}
                         </th>
                         <td>
