@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use \DateTimeInterface;
+use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ class PaymentMethod extends Model
 {
     use SoftDeletes;
     use MultiTenantModelTrait;
+    use Auditable;
     use HasFactory;
 
     public const NAME_SELECT = [

@@ -256,6 +256,114 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 62,
+                'title' => 'audit_log_show',
+            ],
+            [
+                'id'    => 63,
+                'title' => 'audit_log_access',
+            ],
+            [
+                'id'    => 64,
+                'title' => 'label_create',
+            ],
+            [
+                'id'    => 65,
+                'title' => 'label_edit',
+            ],
+            [
+                'id'    => 66,
+                'title' => 'label_show',
+            ],
+            [
+                'id'    => 67,
+                'title' => 'label_delete',
+            ],
+            [
+                'id'    => 68,
+                'title' => 'label_access',
+            ],
+            [
+                'id'    => 69,
+                'title' => 'affiliate_create',
+            ],
+            [
+                'id'    => 70,
+                'title' => 'affiliate_edit',
+            ],
+            [
+                'id'    => 71,
+                'title' => 'affiliate_show',
+            ],
+            [
+                'id'    => 72,
+                'title' => 'affiliate_delete',
+            ],
+            [
+                'id'    => 73,
+                'title' => 'affiliate_access',
+            ],
+            [
+                'id'    => 74,
+                'title' => 'advertiser_create',
+            ],
+            [
+                'id'    => 75,
+                'title' => 'advertiser_edit',
+            ],
+            [
+                'id'    => 76,
+                'title' => 'advertiser_show',
+            ],
+            [
+                'id'    => 77,
+                'title' => 'advertiser_delete',
+            ],
+            [
+                'id'    => 78,
+                'title' => 'advertiser_access',
+            ],
+            [
+                'id'    => 79,
+                'title' => 'account_status_create',
+            ],
+            [
+                'id'    => 80,
+                'title' => 'account_status_edit',
+            ],
+            [
+                'id'    => 81,
+                'title' => 'account_status_show',
+            ],
+            [
+                'id'    => 82,
+                'title' => 'account_status_delete',
+            ],
+            [
+                'id'    => 83,
+                'title' => 'account_status_access',
+            ],
+            [
+                'id'    => 84,
+                'title' => 'address_create',
+            ],
+            [
+                'id'    => 85,
+                'title' => 'address_edit',
+            ],
+            [
+                'id'    => 86,
+                'title' => 'address_show',
+            ],
+            [
+                'id'    => 87,
+                'title' => 'address_delete',
+            ],
+            [
+                'id'    => 88,
+                'title' => 'address_access',
+            ],
+            [
+                'id'    => 89,
                 'title' => 'profile_password_edit',
             ],
         ];

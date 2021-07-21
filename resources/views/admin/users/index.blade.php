@@ -37,6 +37,12 @@
                         {{ trans('cruds.user.fields.roles') }}
                     </th>
                     <th>
+                        {{ trans('cruds.user.fields.cell_phone') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.user.fields.labels') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -97,6 +103,8 @@
 { data: 'email', name: 'email' },
 { data: 'email_verified_at', name: 'email_verified_at' },
 { data: 'roles', name: 'roles.title' },
+{ data: 'cell_phone', name: 'cell_phone' },
+{ data: 'labels', name: 'labels.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

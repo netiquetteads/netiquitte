@@ -40,6 +40,38 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'first_name' => [
+                'string',
+                'nullable',
+            ],
+            'last_name' => [
+                'string',
+                'nullable',
+            ],
+            'work_phone' => [
+                'string',
+                'nullable',
+            ],
+            'cell_phone' => [
+                'string',
+                'nullable',
+            ],
+            'instant_messaginid' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
+            'instant_messaging_identifier' => [
+                'string',
+                'nullable',
+            ],
+            'labels.*' => [
+                'integer',
+            ],
+            'labels' => [
+                'array',
+            ],
         ];
     }
 }

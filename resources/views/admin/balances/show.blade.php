@@ -25,10 +25,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.balance.fields.company_name') }}
+                            {{ trans('cruds.balance.fields.affiliate') }}
                         </th>
                         <td>
-                            {{ $balance->company_name->company ?? '' }}
+                            {{ $balance->affiliate->company ?? '' }}
                         </td>
                     </tr>
                     <tr>

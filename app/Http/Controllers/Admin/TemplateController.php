@@ -23,7 +23,7 @@ class TemplateController extends Controller
         abort_if(Gate::denies('template_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Template::query()->select(sprintf('%s.*', (new Template())->table));
+            $query = Template::with(['team'])->select(sprintf('%s.*', (new Template())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -99,6 +99,8 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $template->load('team');
+
         return view('admin.templates.edit', compact('template'));
     }
 
@@ -124,7 +126,7 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $template->load('templateMailRooms');
+        $template->load('team', 'templateMailRooms');
 
         return view('admin.templates.show', compact('template'));
     }

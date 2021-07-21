@@ -1,11 +1,5 @@
 <?php
 
-use App\Http\Controllers\PostController;
-
-Route::get('mail/send-grid', [PostController::class, 'sendMail']);
-
-
-
 Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {
@@ -29,6 +23,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::post('users/media', 'UsersController@storeMedia')->name('users.storeMedia');
+    Route::post('users/ckmedia', 'UsersController@storeCKEditorImages')->name('users.storeCKEditorImages');
     Route::resource('users', 'UsersController');
 
     // Team
@@ -42,6 +38,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Account
     Route::delete('accounts/destroy', 'AccountController@massDestroy')->name('accounts.massDestroy');
+    Route::post('accounts/media', 'AccountController@storeMedia')->name('accounts.storeMedia');
+    Route::post('accounts/ckmedia', 'AccountController@storeCKEditorImages')->name('accounts.storeCKEditorImages');
     Route::resource('accounts', 'AccountController');
 
     // Offers
@@ -69,6 +67,33 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Payment Method
     Route::delete('payment-methods/destroy', 'PaymentMethodController@massDestroy')->name('payment-methods.massDestroy');
     Route::resource('payment-methods', 'PaymentMethodController');
+
+    // Audit Logs
+    Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+
+    // Labels
+    Route::delete('labels/destroy', 'LabelsController@massDestroy')->name('labels.massDestroy');
+    Route::resource('labels', 'LabelsController');
+
+    // Affiliate
+    Route::delete('affiliates/destroy', 'AffiliateController@massDestroy')->name('affiliates.massDestroy');
+    Route::post('affiliates/media', 'AffiliateController@storeMedia')->name('affiliates.storeMedia');
+    Route::post('affiliates/ckmedia', 'AffiliateController@storeCKEditorImages')->name('affiliates.storeCKEditorImages');
+    Route::resource('affiliates', 'AffiliateController');
+
+    // Advertiser
+    Route::delete('advertisers/destroy', 'AdvertiserController@massDestroy')->name('advertisers.massDestroy');
+    Route::post('advertisers/media', 'AdvertiserController@storeMedia')->name('advertisers.storeMedia');
+    Route::post('advertisers/ckmedia', 'AdvertiserController@storeCKEditorImages')->name('advertisers.storeCKEditorImages');
+    Route::resource('advertisers', 'AdvertiserController');
+
+    // Account Status
+    Route::delete('account-statuses/destroy', 'AccountStatusController@massDestroy')->name('account-statuses.massDestroy');
+    Route::resource('account-statuses', 'AccountStatusController');
+
+    // Address
+    Route::delete('addresses/destroy', 'AddressController@massDestroy')->name('addresses.massDestroy');
+    Route::resource('addresses', 'AddressController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
