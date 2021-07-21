@@ -143,6 +143,36 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.addresses') }}
+                        </th>
+                        <td>
+                            @foreach($user->addresses as $key => $addresses)
+                                <span class="label label-info">{{ $addresses->address_1 }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.adertisers') }}
+                        </th>
+                        <td>
+                            @foreach($user->adertisers as $key => $adertisers)
+                                <span class="label label-info">{{ $adertisers->name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.affiliates') }}
+                        </th>
+                        <td>
+                            @foreach($user->affiliates as $key => $affiliates)
+                                <span class="label label-info">{{ $affiliates->company }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

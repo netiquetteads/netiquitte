@@ -10,6 +10,14 @@
         <form method="POST" action="{{ route("admin.addresses.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label for="nickname">{{ trans('cruds.address.fields.nickname') }}</label>
+                <input class="form-control {{ $errors->has('nickname') ? 'is-invalid' : '' }}" type="text" name="nickname" id="nickname" value="{{ old('nickname', '') }}">
+                @if($errors->has('nickname'))
+                    <span class="text-danger">{{ $errors->first('nickname') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.address.fields.nickname_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="address_1">{{ trans('cruds.address.fields.address_1') }}</label>
                 <input class="form-control {{ $errors->has('address_1') ? 'is-invalid' : '' }}" type="text" name="address_1" id="address_1" value="{{ old('address_1', '') }}">
                 @if($errors->has('address_1'))

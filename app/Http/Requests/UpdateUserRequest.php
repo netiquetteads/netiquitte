@@ -72,6 +72,24 @@ class UpdateUserRequest extends FormRequest
             'labels' => [
                 'array',
             ],
+            'addresses.*' => [
+                'integer',
+            ],
+            'addresses' => [
+                'array',
+            ],
+            'adertisers.*' => [
+                'integer',
+            ],
+            'adertisers' => [
+                'array',
+            ],
+            'affiliates.*' => [
+                'integer',
+            ],
+            'affiliates' => [
+                'array',
+            ],
         ];
     }
 }

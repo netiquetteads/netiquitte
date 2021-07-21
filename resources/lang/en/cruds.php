@@ -85,6 +85,12 @@ return [
             'instant_messaging_identifier_helper' => ' ',
             'labels'                              => 'Labels',
             'labels_helper'                       => ' ',
+            'addresses'                           => 'Addresses',
+            'addresses_helper'                    => ' ',
+            'adertisers'                          => 'Adertisers',
+            'adertisers_helper'                   => ' ',
+            'affiliates'                          => 'Affiliates',
+            'affiliates_helper'                   => ' ',
         ],
     ],
     'team' => [
@@ -541,6 +547,8 @@ return [
             'deleted_at_helper'      => ' ',
             'team'                   => 'Team',
             'team_helper'            => ' ',
+            'nickname'               => 'Nickname',
+            'nickname_helper'        => ' ',
         ],
     ],
 ];

@@ -17,6 +17,10 @@ class StoreAddressRequest extends FormRequest
     public function rules()
     {
         return [
+            'nickname' => [
+                'string',
+                'nullable',
+            ],
             'address_1' => [
                 'string',
                 'nullable',

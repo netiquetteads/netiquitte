@@ -7,6 +7,9 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Address;
+use App\Models\Advertiser;
+use App\Models\Affiliate;
 use App\Models\Label;
 use App\Models\Role;
 use App\Models\Team;
@@ -26,7 +29,7 @@ class UsersController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = User::with(['roles', 'labels', 'team'])->select(sprintf('%s.*', (new User())->table));
+            $query = User::with(['roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'team'])->select(sprintf('%s.*', (new User())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -76,8 +79,32 @@ class UsersController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('addresses', function ($row) {
+                $labels = [];
+                foreach ($row->addresses as $address) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $address->address_1);
+                }
 
-            $table->rawColumns(['actions', 'placeholder', 'roles', 'labels']);
+                return implode(' ', $labels);
+            });
+            $table->editColumn('adertisers', function ($row) {
+                $labels = [];
+                foreach ($row->adertisers as $adertiser) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $adertiser->name);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->editColumn('affiliates', function ($row) {
+                $labels = [];
+                foreach ($row->affiliates as $affiliate) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $affiliate->company);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'roles', 'labels', 'addresses', 'adertisers', 'affiliates']);
 
             return $table->make(true);
         }
@@ -93,9 +120,15 @@ class UsersController extends Controller
 
         $labels = Label::all()->pluck('name', 'id');
 
+        $addresses = Address::all()->pluck('address_1', 'id');
+
+        $adertisers = Advertiser::all()->pluck('name', 'id');
+
+        $affiliates = Affiliate::all()->pluck('company', 'id');
+
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.users.create', compact('roles', 'labels', 'teams'));
+        return view('admin.users.create', compact('roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'teams'));
     }
 
     public function store(StoreUserRequest $request)
@@ -103,6 +136,9 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
         $user->labels()->sync($request->input('labels', []));
+        $user->addresses()->sync($request->input('addresses', []));
+        $user->adertisers()->sync($request->input('adertisers', []));
+        $user->affiliates()->sync($request->input('affiliates', []));
         if ($request->input('photo', false)) {
             $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
         }
@@ -122,11 +158,17 @@ class UsersController extends Controller
 
         $labels = Label::all()->pluck('name', 'id');
 
+        $addresses = Address::all()->pluck('address_1', 'id');
+
+        $adertisers = Advertiser::all()->pluck('name', 'id');
+
+        $affiliates = Affiliate::all()->pluck('company', 'id');
+
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $user->load('roles', 'labels', 'team');
+        $user->load('roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'team');
 
-        return view('admin.users.edit', compact('roles', 'labels', 'teams', 'user'));
+        return view('admin.users.edit', compact('roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'teams', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -134,6 +176,9 @@ class UsersController extends Controller
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
         $user->labels()->sync($request->input('labels', []));
+        $user->addresses()->sync($request->input('addresses', []));
+        $user->adertisers()->sync($request->input('adertisers', []));
+        $user->affiliates()->sync($request->input('affiliates', []));
         if ($request->input('photo', false)) {
             if (!$user->photo || $request->input('photo') !== $user->photo->file_name) {
                 if ($user->photo) {
@@ -152,7 +197,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'labels', 'team', 'userUserAlerts', 'usersAffiliates');
+        $user->load('roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'team', 'userUserAlerts', 'usersAffiliates');
 
         return view('admin.users.show', compact('user'));
     }

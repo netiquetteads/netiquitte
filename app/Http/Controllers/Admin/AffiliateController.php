@@ -176,7 +176,7 @@ class AffiliateController extends Controller
     {
         abort_if(Gate::denies('affiliate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $affiliate->load('users', 'labels', 'team');
+        $affiliate->load('users', 'labels', 'team', 'affiliatesUsers');
 
         return view('admin.affiliates.show', compact('affiliate'));
     }

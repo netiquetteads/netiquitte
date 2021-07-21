@@ -140,7 +140,7 @@ class AdvertiserController extends Controller
     {
         abort_if(Gate::denies('advertiser_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $advertiser->load('team');
+        $advertiser->load('team', 'adertisersUsers');
 
         return view('admin.advertisers.show', compact('advertiser'));
     }

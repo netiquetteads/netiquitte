@@ -140,6 +140,21 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Label::class);
     }
 
+    public function addresses()
+    {
+        return $this->belongsToMany(Address::class);
+    }
+
+    public function adertisers()
+    {
+        return $this->belongsToMany(Advertiser::class);
+    }
+
+    public function affiliates()
+    {
+        return $this->belongsToMany(Affiliate::class);
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

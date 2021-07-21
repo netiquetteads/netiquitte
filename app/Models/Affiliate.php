@@ -68,6 +68,11 @@ class Affiliate extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function affiliatesUsers()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function getLogoAttribute()
     {
         $file = $this->getMedia('logo')->last();

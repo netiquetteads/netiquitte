@@ -20,7 +20,7 @@ class UsersApiController extends Controller
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new UserResource(User::with(['roles', 'labels', 'team'])->get());
+        return new UserResource(User::with(['roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'team'])->get());
     }
 
     public function store(StoreUserRequest $request)
@@ -28,6 +28,9 @@ class UsersApiController extends Controller
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
         $user->labels()->sync($request->input('labels', []));
+        $user->addresses()->sync($request->input('addresses', []));
+        $user->adertisers()->sync($request->input('adertisers', []));
+        $user->affiliates()->sync($request->input('affiliates', []));
         if ($request->input('photo', false)) {
             $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
         }
@@ -41,7 +44,7 @@ class UsersApiController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new UserResource($user->load(['roles', 'labels', 'team']));
+        return new UserResource($user->load(['roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'team']));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -49,6 +52,9 @@ class UsersApiController extends Controller
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
         $user->labels()->sync($request->input('labels', []));
+        $user->addresses()->sync($request->input('addresses', []));
+        $user->adertisers()->sync($request->input('adertisers', []));
+        $user->affiliates()->sync($request->input('affiliates', []));
         if ($request->input('photo', false)) {
             if (!$user->photo || $request->input('photo') !== $user->photo->file_name) {
                 if ($user->photo) {
