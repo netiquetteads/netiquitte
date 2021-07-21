@@ -119,7 +119,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 });
 
 
-Route::get('/r', function ()
+Route::get('/r', function () 
 {
     function philsroutes()
     {
