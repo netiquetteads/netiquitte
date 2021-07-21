@@ -7,13 +7,23 @@ The JSON format is returned by all API responses, including errors
 
 
 
-https://docs.sendgrid.com/for-developers/sending-email/laravel
+https://docs.sendgrid.com/for-developers/sending-email/laravel 
+
+https://www.nicesnippets.com/blog/laravel-8-send-mail-using-sendgrid-tutorial
 
 
 
-
-
-
+Accounting.php
+AccountingYTD.php
+AdvertisersPull.php
+GetCountry.php
+HOEF.php
+OfferPull.php
+po2.php
+PublisherPull.php
+t.php
+t2.php
+x.php
 
 
 Phillip So here is how I would like the sidebar laid out Starting form the top:

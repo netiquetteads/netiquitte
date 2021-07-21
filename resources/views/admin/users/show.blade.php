@@ -73,6 +73,76 @@
                             {{ $user->skype }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($user->photo)
+                                <a href="{{ $user->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $user->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.first_name') }}
+                        </th>
+                        <td>
+                            {{ $user->first_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.last_name') }}
+                        </th>
+                        <td>
+                            {{ $user->last_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.work_phone') }}
+                        </th>
+                        <td>
+                            {{ $user->work_phone }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.cell_phone') }}
+                        </th>
+                        <td>
+                            {{ $user->cell_phone }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.instant_messaginid') }}
+                        </th>
+                        <td>
+                            {{ $user->instant_messaginid }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.instant_messaging_identifier') }}
+                        </th>
+                        <td>
+                            {{ $user->instant_messaging_identifier }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.labels') }}
+                        </th>
+                        <td>
+                            @foreach($user->labels as $key => $labels)
+                                <span class="label label-info">{{ $labels->name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -95,8 +165,8 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#users_accounts" role="tab" data-toggle="tab">
-                {{ trans('cruds.account.title') }}
+            <a class="nav-link" href="#users_affiliates" role="tab" data-toggle="tab">
+                {{ trans('cruds.affiliate.title') }}
             </a>
         </li>
     </ul>
@@ -104,8 +174,8 @@
         <div class="tab-pane" role="tabpanel" id="user_user_alerts">
             @includeIf('admin.users.relationships.userUserAlerts', ['userAlerts' => $user->userUserAlerts])
         </div>
-        <div class="tab-pane" role="tabpanel" id="users_accounts">
-            @includeIf('admin.users.relationships.usersAccounts', ['accounts' => $user->usersAccounts])
+        <div class="tab-pane" role="tabpanel" id="users_affiliates">
+            @includeIf('admin.users.relationships.usersAffiliates', ['affiliates' => $user->usersAffiliates])
         </div>
     </div>
 </div>

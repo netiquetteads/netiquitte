@@ -25,7 +25,7 @@
                         {{ trans('cruds.balance.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.balance.fields.company_name') }}
+                        {{ trans('cruds.balance.fields.affiliate') }}
                     </th>
                     <th>
                         {{ trans('cruds.balance.fields.revenue') }}
@@ -99,7 +99,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'company_name_company', name: 'company_name.company' },
+{ data: 'affiliate_company', name: 'affiliate.company' },
 { data: 'revenue', name: 'revenue' },
 { data: 'payout', name: 'payout' },
 { data: 'profit', name: 'profit' },

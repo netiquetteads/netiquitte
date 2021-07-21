@@ -20,6 +20,30 @@
                         </p>
                     </a>
                 </li>
+                @can('advertiser_access')
+                    <li class="nav-item">
+                        <a href="{{ route("admin.advertisers.index") }}" class="nav-link {{ request()->is("admin/advertisers") || request()->is("admin/advertisers/*") ? "active" : "" }}">
+                            <i class="fa-fw nav-icon fas fa-user-circle">
+
+                            </i>
+                            <p>
+                                {{ trans('cruds.advertiser.title') }}
+                            </p>
+                        </a>
+                    </li>
+                @endcan
+                @can('affiliate_access')
+                    <li class="nav-item">
+                        <a href="{{ route("admin.affiliates.index") }}" class="nav-link {{ request()->is("admin/affiliates") || request()->is("admin/affiliates/*") ? "active" : "" }}">
+                            <i class="fa-fw nav-icon fas fa-user-circle">
+
+                            </i>
+                            <p>
+                                {{ trans('cruds.affiliate.title') }}
+                            </p>
+                        </a>
+                    </li>
+                @endcan
                 @can('account_access')
                     <li class="nav-item">
                         <a href="{{ route("admin.accounts.index") }}" class="nav-link {{ request()->is("admin/accounts") || request()->is("admin/accounts/*") ? "active" : "" }}">
@@ -59,7 +83,7 @@
                 @can('mail_room_access')
                     <li class="nav-item">
                         <a href="{{ route("admin.mail-rooms.index") }}" class="nav-link {{ request()->is("admin/mail-rooms") || request()->is("admin/mail-rooms/*") ? "active" : "" }}">
-                            <i class="fa-fw nav-icon fas fa-cogs">
+                            <i class="fa-fw nav-icon fas fa-at">
 
                             </i>
                             <p>
@@ -81,7 +105,7 @@
                     </li>
                 @endcan
                 @can('user_management_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/permissions*") ? "menu-open" : "" }} {{ request()->is("admin/roles*") ? "menu-open" : "" }} {{ request()->is("admin/users*") ? "menu-open" : "" }} {{ request()->is("admin/teams*") ? "menu-open" : "" }} {{ request()->is("admin/user-alerts*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/permissions*") ? "menu-open" : "" }} {{ request()->is("admin/roles*") ? "menu-open" : "" }} {{ request()->is("admin/users*") ? "menu-open" : "" }} {{ request()->is("admin/teams*") ? "menu-open" : "" }} {{ request()->is("admin/user-alerts*") ? "menu-open" : "" }} {{ request()->is("admin/audit-logs*") ? "menu-open" : "" }} {{ request()->is("admin/addresses*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-users">
 
@@ -152,11 +176,35 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('audit_log_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.audit-logs.index") }}" class="nav-link {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-file-alt">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.auditLog.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('address_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.addresses.index") }}" class="nav-link {{ request()->is("admin/addresses") || request()->is("admin/addresses/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-location-arrow">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.address.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endcan
                 @can('setting_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/payment-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/payment-methods*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/payment-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/payment-methods*") ? "menu-open" : "" }} {{ request()->is("admin/labels*") ? "menu-open" : "" }} {{ request()->is("admin/account-statuses*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-cogs">
 
@@ -187,6 +235,30 @@
                                         </i>
                                         <p>
                                             {{ trans('cruds.paymentMethod.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('label_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.labels.index") }}" class="nav-link {{ request()->is("admin/labels") || request()->is("admin/labels/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-cogs">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.label.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('account_status_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.account-statuses.index") }}" class="nav-link {{ request()->is("admin/account-statuses") || request()->is("admin/account-statuses/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-cogs">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.accountStatus.title') }}
                                         </p>
                                     </a>
                                 </li>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use \DateTimeInterface;
+use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ class Balance extends Model
 {
     use SoftDeletes;
     use MultiTenantModelTrait;
+    use Auditable;
     use HasFactory;
 
     public $table = 'balances';
@@ -23,7 +25,6 @@ class Balance extends Model
     ];
 
     protected $fillable = [
-        'company_name_id',
         'revenue',
         'payout',
         'profit',
@@ -31,15 +32,11 @@ class Balance extends Model
         'payment_method_id',
         'publisher_notes',
         'created_at',
+        'affiliate_id',
         'updated_at',
         'deleted_at',
         'team_id',
     ];
-
-    public function company_name()
-    {
-        return $this->belongsTo(Account::class, 'company_name_id');
-    }
 
     public function payment_status()
     {
@@ -49,6 +46,11 @@ class Balance extends Model
     public function payment_method()
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    public function affiliate()
+    {
+        return $this->belongsTo(Affiliate::class, 'affiliate_id');
     }
 
     public function team()

@@ -3,25 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Label;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = User::with(['roles', 'team'])->select(sprintf('%s.*', (new User())->table));
+            $query = User::with(['roles', 'labels', 'team'])->select(sprintf('%s.*', (new User())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -60,8 +65,19 @@ class UsersController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('cell_phone', function ($row) {
+                return $row->cell_phone ? $row->cell_phone : '';
+            });
+            $table->editColumn('labels', function ($row) {
+                $labels = [];
+                foreach ($row->labels as $label) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $label->name);
+                }
 
-            $table->rawColumns(['actions', 'placeholder', 'roles']);
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'roles', 'labels']);
 
             return $table->make(true);
         }
@@ -75,15 +91,25 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
 
+        $labels = Label::all()->pluck('name', 'id');
+
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.users.create', compact('roles', 'teams'));
+        return view('admin.users.create', compact('roles', 'labels', 'teams'));
     }
 
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
+        $user->labels()->sync($request->input('labels', []));
+        if ($request->input('photo', false)) {
+            $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $user->id]);
+        }
 
         return redirect()->route('admin.users.index');
     }
@@ -94,17 +120,30 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
 
+        $labels = Label::all()->pluck('name', 'id');
+
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $user->load('roles', 'team');
+        $user->load('roles', 'labels', 'team');
 
-        return view('admin.users.edit', compact('roles', 'teams', 'user'));
+        return view('admin.users.edit', compact('roles', 'labels', 'teams', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
+        $user->labels()->sync($request->input('labels', []));
+        if ($request->input('photo', false)) {
+            if (!$user->photo || $request->input('photo') !== $user->photo->file_name) {
+                if ($user->photo) {
+                    $user->photo->delete();
+                }
+                $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($user->photo) {
+            $user->photo->delete();
+        }
 
         return redirect()->route('admin.users.index');
     }
@@ -113,7 +152,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'team', 'userUserAlerts', 'usersAccounts');
+        $user->load('roles', 'labels', 'team', 'userUserAlerts', 'usersAffiliates');
 
         return view('admin.users.show', compact('user'));
     }
@@ -132,5 +171,17 @@ class UsersController extends Controller
         User::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('user_create') && Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new User();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

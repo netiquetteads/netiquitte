@@ -10,16 +10,16 @@
         <form method="POST" action="{{ route("admin.balances.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="company_name_id">{{ trans('cruds.balance.fields.company_name') }}</label>
-                <select class="form-control select2 {{ $errors->has('company_name') ? 'is-invalid' : '' }}" name="company_name_id" id="company_name_id">
-                    @foreach($company_names as $id => $entry)
-                        <option value="{{ $id }}" {{ old('company_name_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                <label for="affiliate_id">{{ trans('cruds.balance.fields.affiliate') }}</label>
+                <select class="form-control select2 {{ $errors->has('affiliate') ? 'is-invalid' : '' }}" name="affiliate_id" id="affiliate_id">
+                    @foreach($affiliates as $id => $entry)
+                        <option value="{{ $id }}" {{ old('affiliate_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('company_name'))
-                    <span class="text-danger">{{ $errors->first('company_name') }}</span>
+                @if($errors->has('affiliate'))
+                    <span class="text-danger">{{ $errors->first('affiliate') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.balance.fields.company_name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.balance.fields.affiliate_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="revenue">{{ trans('cruds.balance.fields.revenue') }}</label>

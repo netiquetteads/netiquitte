@@ -9,8 +9,8 @@ class AddRelationshipFieldsToBalancesTable extends Migration
     public function up()
     {
         Schema::table('balances', function (Blueprint $table) {
-            $table->unsignedBigInteger('company_name_id')->nullable();
-            $table->foreign('company_name_id', 'company_name_fk_4234470')->references('id')->on('accounts');
+            $table->unsignedBigInteger('affiliate_id')->nullable();
+            $table->foreign('affiliate_id', 'affiliate_fk_4426661')->references('id')->on('affiliates');
             $table->unsignedBigInteger('payment_status_id')->nullable();
             $table->foreign('payment_status_id', 'payment_status_fk_4234471')->references('id')->on('payment_statuses');
             $table->unsignedBigInteger('payment_method_id')->nullable();
