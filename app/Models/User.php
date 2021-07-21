@@ -75,6 +75,23 @@ class User extends Authenticatable implements HasMedia
         });
     }
 
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->createToken('api-access');
+        });
+    }
+
+        public function isAdmin() {
+       return $this->roles()->where('title', 'Admin')->exists();
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published', 1);
+    }
+    
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
