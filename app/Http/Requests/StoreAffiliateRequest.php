@@ -11,7 +11,8 @@ class StoreAffiliateRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('affiliate_create');
+        return true;
+        //Gate::allows('affiliate_create');
     }
 
     public function rules()
