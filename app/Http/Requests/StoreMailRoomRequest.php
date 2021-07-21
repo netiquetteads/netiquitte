@@ -11,7 +11,8 @@ class StoreMailRoomRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('mail_room_create');
+        return true;
+        //Gate::allows('mail_room_create');
     }
 
     public function rules()

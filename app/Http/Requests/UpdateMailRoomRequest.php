@@ -11,7 +11,8 @@ class UpdateMailRoomRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('mail_room_edit');
+        return true;
+        //Gate::allows('mail_room_edit');
     }
 
     public function rules()

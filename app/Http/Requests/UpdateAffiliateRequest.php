@@ -11,7 +11,8 @@ class UpdateAffiliateRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('affiliate_edit');
+        return true;
+        //Gate::allows('affiliate_edit');
     }
 
     public function rules()
