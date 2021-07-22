@@ -11,22 +11,16 @@ class StoreAffiliateRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return  true;
         //Gate::allows('affiliate_create');
     }
 
     public function rules()
     {
         return [
-            'company' => [
+            'name' => [
                 'string',
-                'required',
-            ],
-            'users.*' => [
-                'integer',
-            ],
-            'users' => [
-                'array',
+                'nullable',
             ],
             'everflow_account' => [
                 'string',
@@ -78,12 +72,6 @@ class StoreAffiliateRequest extends FormRequest
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
-            ],
-            'labels.*' => [
-                'integer',
-            ],
-            'labels' => [
-                'array',
             ],
         ];
     }

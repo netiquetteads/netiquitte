@@ -10,52 +10,16 @@ use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class TeamController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('team_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Team::with(['owner'])->select(sprintf('%s.*', (new Team())->table));
-            $table = Datatables::of($query);
+        $teams = Team::with(['owner'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'team_show';
-                $editGate = 'team_edit';
-                $deleteGate = 'team_delete';
-                $crudRoutePart = 'teams';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->addColumn('owner_name', function ($row) {
-                return $row->owner ? $row->owner->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'owner']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.teams.index');
+        return view('admin.teams.index', compact('teams'));
     }
 
     public function create()

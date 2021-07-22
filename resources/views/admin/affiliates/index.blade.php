@@ -25,28 +25,19 @@
                         {{ trans('cruds.affiliate.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.affiliate.fields.logo') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.affiliate.fields.company') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.affiliate.fields.account_status') }}
                     </th>
                     <th>
-                        {{ trans('cruds.affiliate.fields.users') }}
+                        {{ trans('cruds.affiliate.fields.logo') }}
                     </th>
                     <th>
-                        {{ trans('cruds.affiliate.fields.created_at') }}
+                        {{ trans('cruds.affiliate.fields.name') }}
                     </th>
                     <th>
                         {{ trans('cruds.affiliate.fields.everflow_account') }}
                     </th>
                     <th>
                         {{ trans('cruds.affiliate.fields.published') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.affiliate.fields.labels') }}
                     </th>
                     <th>
                         &nbsp;
@@ -105,14 +96,11 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'account_status_name', name: 'account_status.name' },
 { data: 'logo', name: 'logo', sortable: false, searchable: false },
-{ data: 'company', name: 'company' },
-{ data: 'account_status', name: 'account_status' },
-{ data: 'users', name: 'users.name' },
-{ data: 'created_at', name: 'created_at' },
+{ data: 'name', name: 'name' },
 { data: 'everflow_account', name: 'everflow_account' },
 { data: 'published', name: 'published' },
-{ data: 'labels', name: 'labels.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

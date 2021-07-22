@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Netiquette',
+    'site_title' => 'NetiquetteAds',
 ];

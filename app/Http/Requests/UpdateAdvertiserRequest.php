@@ -11,7 +11,7 @@ class UpdateAdvertiserRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return  true;
         //Gate::allows('advertiser_edit');
     }
 

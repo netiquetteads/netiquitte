@@ -21,11 +21,6 @@ class Affiliate extends Model implements HasMedia
     use Auditable;
     use HasFactory;
 
-    public const ACCOUNT_STATUS_SELECT = [
-        '1' => 'Active',
-        '2' => 'Inactive',
-    ];
-
     public $table = 'affiliates';
 
     protected $appends = [
@@ -34,16 +29,15 @@ class Affiliate extends Model implements HasMedia
     ];
 
     protected $dates = [
-        'created_at',
         'last_login',
+        'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $fillable = [
-        'company',
-        'account_status',
-        'created_at',
+        'account_status_id',
+        'name',
         'everflow_account',
         'account_manager_name',
         'account_executive_name',
@@ -57,6 +51,7 @@ class Affiliate extends Model implements HasMedia
         'account_executiveid',
         'account_managerid',
         'networkid',
+        'created_at',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -68,9 +63,9 @@ class Affiliate extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function affiliatesUsers()
+    public function account_status()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(AccountStatus::class, 'account_status_id');
     }
 
     public function getLogoAttribute()
@@ -83,11 +78,6 @@ class Affiliate extends Model implements HasMedia
         }
 
         return $file;
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
     }
 
     public function getFeaturedImageAttribute()
@@ -110,11 +100,6 @@ class Affiliate extends Model implements HasMedia
     public function setLastLoginAttribute($value)
     {
         $this->attributes['last_login'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
-    public function labels()
-    {
-        return $this->belongsToMany(Label::class);
     }
 
     public function team()

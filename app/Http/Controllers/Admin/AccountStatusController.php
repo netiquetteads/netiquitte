@@ -19,7 +19,7 @@ class AccountStatusController extends Controller
         abort_if(Gate::denies('account_status_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AccountStatus::with(['team'])->select(sprintf('%s.*', (new AccountStatus())->table));
+            $query = AccountStatus::query()->select(sprintf('%s.*', (new AccountStatus())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -73,8 +73,6 @@ class AccountStatusController extends Controller
     {
         abort_if(Gate::denies('account_status_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $accountStatus->load('team');
-
         return view('admin.accountStatuses.edit', compact('accountStatus'));
     }
 
@@ -88,8 +86,6 @@ class AccountStatusController extends Controller
     public function show(AccountStatus $accountStatus)
     {
         abort_if(Gate::denies('account_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $accountStatus->load('team');
 
         return view('admin.accountStatuses.show', compact('accountStatus'));
     }

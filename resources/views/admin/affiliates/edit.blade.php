@@ -11,6 +11,18 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <label for="account_status_id">{{ trans('cruds.affiliate.fields.account_status') }}</label>
+                <select class="form-control select2 {{ $errors->has('account_status') ? 'is-invalid' : '' }}" name="account_status_id" id="account_status_id">
+                    @foreach($account_statuses as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('account_status_id') ? old('account_status_id') : $affiliate->account_status->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('account_status'))
+                    <span class="text-danger">{{ $errors->first('account_status') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.affiliate.fields.account_status_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="logo">{{ trans('cruds.affiliate.fields.logo') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('logo') ? 'is-invalid' : '' }}" id="logo-dropzone">
                 </div>
@@ -20,41 +32,12 @@
                 <span class="help-block">{{ trans('cruds.affiliate.fields.logo_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="company">{{ trans('cruds.affiliate.fields.company') }}</label>
-                <input class="form-control {{ $errors->has('company') ? 'is-invalid' : '' }}" type="text" name="company" id="company" value="{{ old('company', $affiliate->company) }}" required>
-                @if($errors->has('company'))
-                    <span class="text-danger">{{ $errors->first('company') }}</span>
+                <label for="name">{{ trans('cruds.affiliate.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $affiliate->name) }}">
+                @if($errors->has('name'))
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.affiliate.fields.company_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label>{{ trans('cruds.affiliate.fields.account_status') }}</label>
-                <select class="form-control {{ $errors->has('account_status') ? 'is-invalid' : '' }}" name="account_status" id="account_status">
-                    <option value disabled {{ old('account_status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\Affiliate::ACCOUNT_STATUS_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('account_status', $affiliate->account_status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('account_status'))
-                    <span class="text-danger">{{ $errors->first('account_status') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.affiliate.fields.account_status_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="users">{{ trans('cruds.affiliate.fields.users') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('users') ? 'is-invalid' : '' }}" name="users[]" id="users" multiple>
-                    @foreach($users as $id => $users)
-                        <option value="{{ $id }}" {{ (in_array($id, old('users', [])) || $affiliate->users->contains($id)) ? 'selected' : '' }}>{{ $users }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('users'))
-                    <span class="text-danger">{{ $errors->first('users') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.affiliate.fields.users_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.affiliate.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="everflow_account">{{ trans('cruds.affiliate.fields.everflow_account') }}</label>
@@ -171,22 +154,6 @@
                     <span class="text-danger">{{ $errors->first('networkid') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.affiliate.fields.networkid_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="labels">{{ trans('cruds.affiliate.fields.labels') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('labels') ? 'is-invalid' : '' }}" name="labels[]" id="labels" multiple>
-                    @foreach($labels as $id => $labels)
-                        <option value="{{ $id }}" {{ (in_array($id, old('labels', [])) || $affiliate->labels->contains($id)) ? 'selected' : '' }}>{{ $labels }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('labels'))
-                    <span class="text-danger">{{ $errors->first('labels') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.affiliate.fields.labels_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

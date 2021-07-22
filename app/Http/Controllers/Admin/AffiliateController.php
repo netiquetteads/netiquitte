@@ -7,9 +7,8 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAffiliateRequest;
 use App\Http\Requests\StoreAffiliateRequest;
 use App\Http\Requests\UpdateAffiliateRequest;
+use App\Models\AccountStatus;
 use App\Models\Affiliate;
-use App\Models\Label;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -25,7 +24,7 @@ class AffiliateController extends Controller
         abort_if(Gate::denies('affiliate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Affiliate::with(['users', 'labels', 'team'])->select(sprintf('%s.*', (new Affiliate())->table));
+            $query = Affiliate::with(['account_status', 'team'])->select(sprintf('%s.*', (new Affiliate())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,6 +48,10 @@ class AffiliateController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+            $table->addColumn('account_status_name', function ($row) {
+                return $row->account_status ? $row->account_status->name : '';
+            });
+
             $table->editColumn('logo', function ($row) {
                 if ($photo = $row->logo) {
                     return sprintf(
@@ -60,37 +63,17 @@ class AffiliateController extends Controller
 
                 return '';
             });
-            $table->editColumn('company', function ($row) {
-                return $row->company ? $row->company : '';
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
             });
-            $table->editColumn('account_status', function ($row) {
-                return $row->account_status ? Affiliate::ACCOUNT_STATUS_SELECT[$row->account_status] : '';
-            });
-            $table->editColumn('users', function ($row) {
-                $labels = [];
-                foreach ($row->users as $user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
             $table->editColumn('everflow_account', function ($row) {
                 return $row->everflow_account ? $row->everflow_account : '';
             });
             $table->editColumn('published', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->published ? 'checked' : null) . '>';
             });
-            $table->editColumn('labels', function ($row) {
-                $labels = [];
-                foreach ($row->labels as $label) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $label->name);
-                }
 
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'logo', 'users', 'published', 'labels']);
+            $table->rawColumns(['actions', 'placeholder', 'account_status', 'logo', 'published']);
 
             return $table->make(true);
         }
@@ -102,18 +85,15 @@ class AffiliateController extends Controller
     {
         abort_if(Gate::denies('affiliate_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::all()->pluck('name', 'id');
+        $account_statuses = AccountStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $labels = Label::all()->pluck('name', 'id');
-
-        return view('admin.affiliates.create', compact('users', 'labels'));
+        return view('admin.affiliates.create', compact('account_statuses'));
     }
 
     public function store(StoreAffiliateRequest $request)
     {
         $affiliate = Affiliate::create($request->all());
-        $affiliate->users()->sync($request->input('users', []));
-        $affiliate->labels()->sync($request->input('labels', []));
+
         if ($request->input('logo', false)) {
             $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
         }
@@ -133,20 +113,17 @@ class AffiliateController extends Controller
     {
         abort_if(Gate::denies('affiliate_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::all()->pluck('name', 'id');
+        $account_statuses = AccountStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $labels = Label::all()->pluck('name', 'id');
+        $affiliate->load('account_status', 'team');
 
-        $affiliate->load('users', 'labels', 'team');
-
-        return view('admin.affiliates.edit', compact('users', 'labels', 'affiliate'));
+        return view('admin.affiliates.edit', compact('account_statuses', 'affiliate'));
     }
 
     public function update(UpdateAffiliateRequest $request, Affiliate $affiliate)
     {
         $affiliate->update($request->all());
-        $affiliate->users()->sync($request->input('users', []));
-        $affiliate->labels()->sync($request->input('labels', []));
+
         if ($request->input('logo', false)) {
             if (!$affiliate->logo || $request->input('logo') !== $affiliate->logo->file_name) {
                 if ($affiliate->logo) {
@@ -176,7 +153,7 @@ class AffiliateController extends Controller
     {
         abort_if(Gate::denies('affiliate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $affiliate->load('users', 'labels', 'team', 'affiliatesUsers');
+        $affiliate->load('account_status', 'team');
 
         return view('admin.affiliates.show', compact('affiliate'));
     }

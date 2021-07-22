@@ -43,6 +43,9 @@
                         {{ trans('cruds.offer.fields.margin') }}
                     </th>
                     <th>
+                        {{ trans('cruds.offer.fields.affiliate') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -105,6 +108,7 @@
 { data: 'revenue', name: 'revenue' },
 { data: 'offer_status', name: 'offer_status' },
 { data: 'margin', name: 'margin' },
+{ data: 'affiliate_name', name: 'affiliate.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

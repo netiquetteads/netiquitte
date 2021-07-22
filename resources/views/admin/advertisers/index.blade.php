@@ -31,9 +31,6 @@
                         {{ trans('cruds.advertiser.fields.account_status') }}
                     </th>
                     <th>
-                        {{ trans('cruds.advertiser.fields.created_at') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.advertiser.fields.everflow_account') }}
                     </th>
                     <th>
@@ -116,7 +113,6 @@
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'account_status', name: 'account_status' },
-{ data: 'created_at', name: 'created_at' },
 { data: 'everflow_account', name: 'everflow_account' },
 { data: 'published', name: 'published' },
 { data: 'platform_url', name: 'platform_url' },

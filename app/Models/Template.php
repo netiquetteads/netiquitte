@@ -4,7 +4,6 @@ namespace App\Models;
 
 use \DateTimeInterface;
 use App\Traits\Auditable;
-use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,7 +14,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Template extends Model implements HasMedia
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
     use InteractsWithMedia;
     use Auditable;
     use HasFactory;
@@ -40,18 +38,12 @@ class Template extends Model implements HasMedia
         'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
-    }
-
-    public function templateMailRooms()
-    {
-        return $this->hasMany(MailRoom::class, 'template_id', 'id');
     }
 
     public function getOfferImageAttribute()
@@ -64,11 +56,6 @@ class Template extends Model implements HasMedia
         }
 
         return $file;
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

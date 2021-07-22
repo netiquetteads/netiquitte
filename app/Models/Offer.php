@@ -36,10 +36,16 @@ class Offer extends Model
         'revenue',
         'offer_status',
         'margin',
+        'affiliate_id',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
+
+    public function affiliate()
+    {
+        return $this->belongsTo(Affiliate::class, 'affiliate_id');
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

@@ -20,14 +20,13 @@ class AffiliateApiController extends Controller
     {
         // abort_if(Gate::denies('affiliate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AffiliateResource(Affiliate::with(['users', 'labels', 'team'])->get());
+        return new AffiliateResource(Affiliate::with(['account_status', 'team'])->get());
     }
 
     public function store(StoreAffiliateRequest $request)
     {
         $affiliate = Affiliate::create($request->all());
-        $affiliate->users()->sync($request->input('users', []));
-        $affiliate->labels()->sync($request->input('labels', []));
+
         if ($request->input('logo', false)) {
             $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
         }
@@ -45,14 +44,13 @@ class AffiliateApiController extends Controller
     {
         // abort_if(Gate::denies('affiliate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AffiliateResource($affiliate->load(['users', 'labels', 'team']));
+        return new AffiliateResource($affiliate->load(['account_status', 'team']));
     }
 
     public function update(UpdateAffiliateRequest $request, Affiliate $affiliate)
     {
         $affiliate->update($request->all());
-        $affiliate->users()->sync($request->input('users', []));
-        $affiliate->labels()->sync($request->input('labels', []));
+
         if ($request->input('logo', false)) {
             if (!$affiliate->logo || $request->input('logo') !== $affiliate->logo->file_name) {
                 if ($affiliate->logo) {
