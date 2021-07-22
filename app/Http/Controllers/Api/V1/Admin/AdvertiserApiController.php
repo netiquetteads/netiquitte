@@ -18,9 +18,9 @@ class AdvertiserApiController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('advertiser_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('advertiser_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AdvertiserResource(Advertiser::with(['team'])->get());
+        return new AdvertiserResource(Advertiser::all());
     }
 
     public function store(StoreAdvertiserRequest $request)
@@ -38,9 +38,9 @@ class AdvertiserApiController extends Controller
 
     public function show(Advertiser $advertiser)
     {
-        // abort_if(Gate::denies('advertiser_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('advertiser_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AdvertiserResource($advertiser->load(['team']));
+        return new AdvertiserResource($advertiser);
     }
 
     public function update(UpdateAdvertiserRequest $request, Advertiser $advertiser)
@@ -65,7 +65,7 @@ class AdvertiserApiController extends Controller
 
     public function destroy(Advertiser $advertiser)
     {
-        // abort_if(Gate::denies('advertiser_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('advertiser_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $advertiser->delete();
 
