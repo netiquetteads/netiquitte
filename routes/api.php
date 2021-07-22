@@ -8,25 +8,27 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('roles', 'RolesApiController');
 
     // Users
-    Route::post('users/media', 'UsersApiController@storeMedia')->name('users.storeMedia');
     Route::apiResource('users', 'UsersApiController');
 
     // Team
     Route::apiResource('teams', 'TeamApiController');
 
-    // Account
-    Route::post('accounts/media', 'AccountApiController@storeMedia')->name('accounts.storeMedia');
-    Route::apiResource('accounts', 'AccountApiController');
+    // Affiliate
+    Route::post('affiliates/media', 'AffiliateApiController@storeMedia')->name('affiliates.storeMedia');
+    Route::apiResource('affiliates', 'AffiliateApiController');
 
-    // Offers
-    Route::apiResource('offers', 'OffersApiController');
+    // Account Status
+    Route::apiResource('account-statuses', 'AccountStatusApiController');
 
-    // Mail Room
-    Route::apiResource('mail-rooms', 'MailRoomApiController');
+    // Advertiser
+    Route::post('advertisers/media', 'AdvertiserApiController@storeMedia')->name('advertisers.storeMedia');
+    Route::apiResource('advertisers', 'AdvertiserApiController');
 
-    // Template
-    Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
-    Route::apiResource('templates', 'TemplateApiController');
+    // Label
+    Route::apiResource('labels', 'LabelApiController');
+
+    // Offer
+    Route::apiResource('offers', 'OfferApiController');
 
     // Balances
     Route::apiResource('balances', 'BalancesApiController');
@@ -37,20 +39,10 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Payment Method
     Route::apiResource('payment-methods', 'PaymentMethodApiController');
 
-    // Labels
-    Route::apiResource('labels', 'LabelsApiController');
+    // Mail Room
+    Route::apiResource('mail-rooms', 'MailRoomApiController');
 
-    // Affiliate
-    Route::post('affiliates/media', 'AffiliateApiController@storeMedia')->name('affiliates.storeMedia');
-    Route::apiResource('affiliates', 'AffiliateApiController');
-
-    // Advertiser
-    Route::post('advertisers/media', 'AdvertiserApiController@storeMedia')->name('advertisers.storeMedia');
-    Route::apiResource('advertisers', 'AdvertiserApiController');
-
-    // Account Status
-    Route::apiResource('account-statuses', 'AccountStatusApiController');
-
-    // Address
-    Route::apiResource('addresses', 'AddressApiController');
+    // Template
+    Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
+    Route::apiResource('templates', 'TemplateApiController');
 });

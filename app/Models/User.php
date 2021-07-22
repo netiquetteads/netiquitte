@@ -4,7 +4,6 @@ namespace App\Models;
 
 use \DateTimeInterface;
 use App\Notifications\VerifyUserNotification;
-use App\Traits\Auditable;
 use Carbon\Carbon;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -14,23 +13,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
-    use InteractsWithMedia;
-    use Auditable;
     use HasFactory;
 
     public $table = 'users';
-
-    protected $appends = [
-        'photo',
-    ];
 
     protected $hidden = [
         'remember_token',
@@ -51,14 +41,6 @@ class User extends Authenticatable implements HasMedia
         'password',
         'remember_token',
         'created_at',
-        'linkedin',
-        'skype',
-        'first_name',
-        'last_name',
-        'work_phone',
-        'cell_phone',
-        'instant_messaginid',
-        'instant_messaging_identifier',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -83,7 +65,7 @@ class User extends Authenticatable implements HasMedia
         });
     }
 
-        public function isAdmin() {
+    public function isAdmin() {
        return $this->roles()->where('title', 'Admin')->exists();
     }
 
@@ -95,22 +77,11 @@ class User extends Authenticatable implements HasMedia
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
-    }
-
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
-    }
-
+    } 
+    
     public function userUserAlerts()
     {
         return $this->belongsToMany(UserAlert::class);
-    }
-
-    public function usersAffiliates()
-    {
-        return $this->belongsToMany(Affiliate::class);
     }
 
     public function getEmailVerifiedAtAttribute($value)
@@ -138,38 +109,6 @@ class User extends Authenticatable implements HasMedia
     public function roles()
     {
         return $this->belongsToMany(Role::class);
-    }
-
-    public function getPhotoAttribute()
-    {
-        $file = $this->getMedia('photo')->last();
-        if ($file) {
-            $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
-        }
-
-        return $file;
-    }
-
-    public function labels()
-    {
-        return $this->belongsToMany(Label::class);
-    }
-
-    public function addresses()
-    {
-        return $this->belongsToMany(Address::class);
-    }
-
-    public function adertisers()
-    {
-        return $this->belongsToMany(Advertiser::class);
-    }
-
-    public function affiliates()
-    {
-        return $this->belongsToMany(Affiliate::class);
     }
 
     public function team()

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBalanceRequest;
 use App\Http\Requests\StoreBalanceRequest;
 use App\Http\Requests\UpdateBalanceRequest;
-use App\Models\Affiliate;
 use App\Models\Balance;
 use App\Models\PaymentMethod;
 use App\Models\PaymentStatus;
@@ -22,7 +21,7 @@ class BalancesController extends Controller
         abort_if(Gate::denies('balance_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Balance::with(['payment_status', 'payment_method', 'affiliate', 'team'])->select(sprintf('%s.*', (new Balance())->table));
+            $query = Balance::with(['payment_method', 'payment_status'])->select(sprintf('%s.*', (new Balance())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -55,19 +54,15 @@ class BalancesController extends Controller
             $table->editColumn('profit', function ($row) {
                 return $row->profit ? $row->profit : '';
             });
-            $table->addColumn('payment_status_name', function ($row) {
-                return $row->payment_status ? $row->payment_status->name : '';
-            });
-
             $table->addColumn('payment_method_name', function ($row) {
                 return $row->payment_method ? $row->payment_method->name : '';
             });
 
-            $table->addColumn('affiliate_company', function ($row) {
-                return $row->affiliate ? $row->affiliate->company : '';
+            $table->addColumn('payment_status_name', function ($row) {
+                return $row->payment_status ? $row->payment_status->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'payment_status', 'payment_method', 'affiliate']);
+            $table->rawColumns(['actions', 'placeholder', 'payment_method', 'payment_status']);
 
             return $table->make(true);
         }
@@ -79,13 +74,11 @@ class BalancesController extends Controller
     {
         abort_if(Gate::denies('balance_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $payment_statuses = PaymentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $payment_methods = PaymentMethod::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $affiliates = Affiliate::all()->pluck('company', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $payment_statuses = PaymentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.balances.create', compact('payment_statuses', 'payment_methods', 'affiliates'));
+        return view('admin.balances.create', compact('payment_methods', 'payment_statuses'));
     }
 
     public function store(StoreBalanceRequest $request)
@@ -99,15 +92,13 @@ class BalancesController extends Controller
     {
         abort_if(Gate::denies('balance_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $payment_statuses = PaymentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $payment_methods = PaymentMethod::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $affiliates = Affiliate::all()->pluck('company', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $payment_statuses = PaymentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $balance->load('payment_status', 'payment_method', 'affiliate', 'team');
+        $balance->load('payment_method', 'payment_status');
 
-        return view('admin.balances.edit', compact('payment_statuses', 'payment_methods', 'affiliates', 'balance'));
+        return view('admin.balances.edit', compact('payment_methods', 'payment_statuses', 'balance'));
     }
 
     public function update(UpdateBalanceRequest $request, Balance $balance)
@@ -121,7 +112,7 @@ class BalancesController extends Controller
     {
         abort_if(Gate::denies('balance_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $balance->load('payment_status', 'payment_method', 'affiliate', 'team');
+        $balance->load('payment_method', 'payment_status');
 
         return view('admin.balances.show', compact('balance'));
     }

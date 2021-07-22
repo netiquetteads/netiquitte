@@ -11,18 +11,6 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label for="affiliate_id">{{ trans('cruds.balance.fields.affiliate') }}</label>
-                <select class="form-control select2 {{ $errors->has('affiliate') ? 'is-invalid' : '' }}" name="affiliate_id" id="affiliate_id">
-                    @foreach($affiliates as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('affiliate_id') ? old('affiliate_id') : $balance->affiliate->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('affiliate'))
-                    <span class="text-danger">{{ $errors->first('affiliate') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.balance.fields.affiliate_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="revenue">{{ trans('cruds.balance.fields.revenue') }}</label>
                 <input class="form-control {{ $errors->has('revenue') ? 'is-invalid' : '' }}" type="number" name="revenue" id="revenue" value="{{ old('revenue', $balance->revenue) }}" step="0.01">
                 @if($errors->has('revenue'))
@@ -47,16 +35,12 @@
                 <span class="help-block">{{ trans('cruds.balance.fields.profit_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="payment_status_id">{{ trans('cruds.balance.fields.payment_status') }}</label>
-                <select class="form-control select2 {{ $errors->has('payment_status') ? 'is-invalid' : '' }}" name="payment_status_id" id="payment_status_id">
-                    @foreach($payment_statuses as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('payment_status_id') ? old('payment_status_id') : $balance->payment_status->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('payment_status'))
-                    <span class="text-danger">{{ $errors->first('payment_status') }}</span>
+                <label for="publisher_notes">{{ trans('cruds.balance.fields.publisher_notes') }}</label>
+                <textarea class="form-control {{ $errors->has('publisher_notes') ? 'is-invalid' : '' }}" name="publisher_notes" id="publisher_notes">{{ old('publisher_notes', $balance->publisher_notes) }}</textarea>
+                @if($errors->has('publisher_notes'))
+                    <span class="text-danger">{{ $errors->first('publisher_notes') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.balance.fields.payment_status_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.balance.fields.publisher_notes_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="payment_method_id">{{ trans('cruds.balance.fields.payment_method') }}</label>
@@ -71,12 +55,16 @@
                 <span class="help-block">{{ trans('cruds.balance.fields.payment_method_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="publisher_notes">{{ trans('cruds.balance.fields.publisher_notes') }}</label>
-                <textarea class="form-control {{ $errors->has('publisher_notes') ? 'is-invalid' : '' }}" name="publisher_notes" id="publisher_notes">{{ old('publisher_notes', $balance->publisher_notes) }}</textarea>
-                @if($errors->has('publisher_notes'))
-                    <span class="text-danger">{{ $errors->first('publisher_notes') }}</span>
+                <label for="payment_status_id">{{ trans('cruds.balance.fields.payment_status') }}</label>
+                <select class="form-control select2 {{ $errors->has('payment_status') ? 'is-invalid' : '' }}" name="payment_status_id" id="payment_status_id">
+                    @foreach($payment_statuses as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('payment_status_id') ? old('payment_status_id') : $balance->payment_status->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('payment_status'))
+                    <span class="text-danger">{{ $errors->first('payment_status') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.balance.fields.publisher_notes_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.balance.fields.payment_status_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

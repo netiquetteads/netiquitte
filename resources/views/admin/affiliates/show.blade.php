@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.affiliate.fields.account_status') }}
+                        </th>
+                        <td>
+                            {{ $affiliate->account_status->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.affiliate.fields.logo') }}
                         </th>
                         <td>
@@ -37,36 +45,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.affiliate.fields.company') }}
+                            {{ trans('cruds.affiliate.fields.name') }}
                         </th>
                         <td>
-                            {{ $affiliate->company }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.affiliate.fields.account_status') }}
-                        </th>
-                        <td>
-                            {{ App\Models\Affiliate::ACCOUNT_STATUS_SELECT[$affiliate->account_status] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.affiliate.fields.users') }}
-                        </th>
-                        <td>
-                            @foreach($affiliate->users as $key => $users)
-                                <span class="label label-info">{{ $users->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.affiliate.fields.created_at') }}
-                        </th>
-                        <td>
-                            {{ $affiliate->created_at }}
+                            {{ $affiliate->name }}
                         </td>
                     </tr>
                     <tr>
@@ -185,16 +167,6 @@
                             {{ $affiliate->networkid }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.affiliate.fields.labels') }}
-                        </th>
-                        <td>
-                            @foreach($affiliate->labels as $key => $labels)
-                                <span class="label label-info">{{ $labels->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -206,22 +178,6 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#affiliates_users" role="tab" data-toggle="tab">
-                {{ trans('cruds.user.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="affiliates_users">
-            @includeIf('admin.affiliates.relationships.affiliatesUsers', ['users' => $affiliate->affiliatesUsers])
-        </div>
-    </div>
-</div>
+
 
 @endsection

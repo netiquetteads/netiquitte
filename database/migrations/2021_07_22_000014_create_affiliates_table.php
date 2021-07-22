@@ -4,14 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountsTable extends Migration
+class CreateAffiliatesTable extends Migration
 {
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('affiliates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('company');
-            $table->string('account_status')->nullable();
+            $table->string('name')->nullable();
             $table->string('everflow_account')->nullable();
             $table->string('account_manager_name')->nullable();
             $table->string('account_executive_name')->nullable();

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use \DateTimeInterface;
 use App\Traits\Auditable;
-use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +15,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Advertiser extends Model implements HasMedia
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
     use InteractsWithMedia;
     use Auditable;
     use HasFactory;
@@ -33,8 +31,8 @@ class Advertiser extends Model implements HasMedia
     ];
 
     protected $dates = [
-        'created_at',
         'last_login',
+        'created_at',
         'updated_at',
         'deleted_at',
     ];
@@ -42,7 +40,6 @@ class Advertiser extends Model implements HasMedia
     protected $fillable = [
         'name',
         'account_status',
-        'created_at',
         'everflow_account',
         'account_manager_name',
         'account_executive_name',
@@ -70,20 +67,15 @@ class Advertiser extends Model implements HasMedia
         'attribution_method',
         'email_attribution_method',
         'network_advertiserid',
+        'created_at',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
-    }
-
-    public function adertisersUsers()
-    {
-        return $this->belongsToMany(User::class);
     }
 
     public function getFeaturedImageAttribute()
@@ -106,11 +98,6 @@ class Advertiser extends Model implements HasMedia
     public function setLastLoginAttribute($value)
     {
         $this->attributes['last_login'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

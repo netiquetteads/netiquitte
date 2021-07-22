@@ -30,11 +30,18 @@ class LoginController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function redirectTo()
+    {
+        if (auth()->user()->is_admin) {
+            return '/admin';
+        }
+
+        return '/home';
     }
 }

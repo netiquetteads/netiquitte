@@ -3,113 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Address;
-use App\Models\Advertiser;
-use App\Models\Affiliate;
-use App\Models\Label;
 use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
-    use MediaUploadingTrait;
-
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = User::with(['roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'team'])->select(sprintf('%s.*', (new User())->table));
-            $table = Datatables::of($query);
+        $users = User::with(['roles', 'team'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
-                $crudRoutePart = 'users';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
-            });
-
-            $table->editColumn('roles', function ($row) {
-                $labels = [];
-                foreach ($row->roles as $role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $role->title);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('cell_phone', function ($row) {
-                return $row->cell_phone ? $row->cell_phone : '';
-            });
-            $table->editColumn('labels', function ($row) {
-                $labels = [];
-                foreach ($row->labels as $label) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $label->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('addresses', function ($row) {
-                $labels = [];
-                foreach ($row->addresses as $address) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $address->address_1);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('adertisers', function ($row) {
-                $labels = [];
-                foreach ($row->adertisers as $adertiser) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $adertiser->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('affiliates', function ($row) {
-                $labels = [];
-                foreach ($row->affiliates as $affiliate) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $affiliate->company);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'roles', 'labels', 'addresses', 'adertisers', 'affiliates']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.users.index');
+        return view('admin.users.index', compact('users'));
     }
 
     public function create()
@@ -118,34 +30,15 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
 
-        $labels = Label::all()->pluck('name', 'id');
-
-        $addresses = Address::all()->pluck('address_1', 'id');
-
-        $adertisers = Advertiser::all()->pluck('name', 'id');
-
-        $affiliates = Affiliate::all()->pluck('company', 'id');
-
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.users.create', compact('roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'teams'));
+        return view('admin.users.create', compact('roles', 'teams'));
     }
 
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
-        $user->labels()->sync($request->input('labels', []));
-        $user->addresses()->sync($request->input('addresses', []));
-        $user->adertisers()->sync($request->input('adertisers', []));
-        $user->affiliates()->sync($request->input('affiliates', []));
-        if ($request->input('photo', false)) {
-            $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
-        }
-
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $user->id]);
-        }
 
         return redirect()->route('admin.users.index');
     }
@@ -156,39 +49,17 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
 
-        $labels = Label::all()->pluck('name', 'id');
-
-        $addresses = Address::all()->pluck('address_1', 'id');
-
-        $adertisers = Advertiser::all()->pluck('name', 'id');
-
-        $affiliates = Affiliate::all()->pluck('company', 'id');
-
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $user->load('roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'team');
+        $user->load('roles', 'team');
 
-        return view('admin.users.edit', compact('roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'teams', 'user'));
+        return view('admin.users.edit', compact('roles', 'teams', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
-        $user->labels()->sync($request->input('labels', []));
-        $user->addresses()->sync($request->input('addresses', []));
-        $user->adertisers()->sync($request->input('adertisers', []));
-        $user->affiliates()->sync($request->input('affiliates', []));
-        if ($request->input('photo', false)) {
-            if (!$user->photo || $request->input('photo') !== $user->photo->file_name) {
-                if ($user->photo) {
-                    $user->photo->delete();
-                }
-                $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
-            }
-        } elseif ($user->photo) {
-            $user->photo->delete();
-        }
 
         return redirect()->route('admin.users.index');
     }
@@ -197,7 +68,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'labels', 'addresses', 'adertisers', 'affiliates', 'team', 'userUserAlerts', 'usersAffiliates');
+        $user->load('roles', 'team', 'userUserAlerts');
 
         return view('admin.users.show', compact('user'));
     }
@@ -216,17 +87,5 @@ class UsersController extends Controller
         User::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-    }
-
-    public function storeCKEditorImages(Request $request)
-    {
-        abort_if(Gate::denies('user_create') && Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $model         = new User();
-        $model->id     = $request->input('crud_id', 0);
-        $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
-
-        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

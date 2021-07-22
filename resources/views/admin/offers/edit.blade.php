@@ -77,6 +77,18 @@
                 <span class="help-block">{{ trans('cruds.offer.fields.margin_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="affiliate_id">{{ trans('cruds.offer.fields.affiliate') }}</label>
+                <select class="form-control select2 {{ $errors->has('affiliate') ? 'is-invalid' : '' }}" name="affiliate_id" id="affiliate_id">
+                    @foreach($affiliates as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('affiliate_id') ? old('affiliate_id') : $offer->affiliate->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('affiliate'))
+                    <span class="text-danger">{{ $errors->first('affiliate') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.offer.fields.affiliate_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

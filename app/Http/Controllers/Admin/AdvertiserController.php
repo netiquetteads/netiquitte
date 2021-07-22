@@ -23,7 +23,7 @@ class AdvertiserController extends Controller
         abort_if(Gate::denies('advertiser_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Advertiser::with(['team'])->select(sprintf('%s.*', (new Advertiser())->table));
+            $query = Advertiser::query()->select(sprintf('%s.*', (new Advertiser())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -53,7 +53,6 @@ class AdvertiserController extends Controller
             $table->editColumn('account_status', function ($row) {
                 return $row->account_status ? Advertiser::ACCOUNT_STATUS_SELECT[$row->account_status] : '';
             });
-
             $table->editColumn('everflow_account', function ($row) {
                 return $row->everflow_account ? $row->everflow_account : '';
             });
@@ -113,8 +112,6 @@ class AdvertiserController extends Controller
     {
         abort_if(Gate::denies('advertiser_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $advertiser->load('team');
-
         return view('admin.advertisers.edit', compact('advertiser'));
     }
 
@@ -139,8 +136,6 @@ class AdvertiserController extends Controller
     public function show(Advertiser $advertiser)
     {
         abort_if(Gate::denies('advertiser_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $advertiser->load('team', 'adertisersUsers');
 
         return view('admin.advertisers.show', compact('advertiser'));
     }

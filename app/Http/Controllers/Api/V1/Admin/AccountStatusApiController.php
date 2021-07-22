@@ -17,7 +17,7 @@ class AccountStatusApiController extends Controller
     {
         abort_if(Gate::denies('account_status_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AccountStatusResource(AccountStatus::with(['team'])->get());
+        return new AccountStatusResource(AccountStatus::all());
     }
 
     public function store(StoreAccountStatusRequest $request)
@@ -33,7 +33,7 @@ class AccountStatusApiController extends Controller
     {
         abort_if(Gate::denies('account_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AccountStatusResource($accountStatus->load(['team']));
+        return new AccountStatusResource($accountStatus);
     }
 
     public function update(UpdateAccountStatusRequest $request, AccountStatus $accountStatus)

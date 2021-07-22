@@ -4,7 +4,6 @@ namespace App\Models;
 
 use \DateTimeInterface;
 use App\Traits\Auditable;
-use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Balance extends Model
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
     use Auditable;
     use HasFactory;
 
@@ -28,34 +26,22 @@ class Balance extends Model
         'revenue',
         'payout',
         'profit',
-        'payment_status_id',
-        'payment_method_id',
         'publisher_notes',
+        'payment_method_id',
+        'payment_status_id',
         'created_at',
-        'affiliate_id',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
-
-    public function payment_status()
-    {
-        return $this->belongsTo(PaymentStatus::class, 'payment_status_id');
-    }
 
     public function payment_method()
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
     }
 
-    public function affiliate()
+    public function payment_status()
     {
-        return $this->belongsTo(Affiliate::class, 'affiliate_id');
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
+        return $this->belongsTo(PaymentStatus::class, 'payment_status_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)
