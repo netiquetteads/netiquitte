@@ -18,7 +18,7 @@ class AffiliateApiController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('affiliate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('affiliate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new AffiliateResource(Affiliate::with(['account_status', 'team'])->get());
     }
@@ -42,7 +42,7 @@ class AffiliateApiController extends Controller
 
     public function show(Affiliate $affiliate)
     {
-        // abort_if(Gate::denies('affiliate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('affiliate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new AffiliateResource($affiliate->load(['account_status', 'team']));
     }
@@ -80,7 +80,7 @@ class AffiliateApiController extends Controller
 
     public function destroy(Affiliate $affiliate)
     {
-        // abort_if(Gate::denies('affiliate_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('affiliate_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $affiliate->delete();
 
