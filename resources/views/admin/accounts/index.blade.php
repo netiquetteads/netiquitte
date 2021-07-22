@@ -25,22 +25,19 @@
                         {{ trans('cruds.account.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.account.fields.published') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.account.fields.company') }}
                     </th>
                     <th>
                         {{ trans('cruds.account.fields.account_status') }}
                     </th>
                     <th>
-                        {{ trans('cruds.account.fields.users') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.account.fields.created_at') }}
                     </th>
                     <th>
                         {{ trans('cruds.account.fields.everflow_account') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.account.fields.published') }}
                     </th>
                     <th>
                         &nbsp;
@@ -99,12 +96,11 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'published', name: 'published' },
 { data: 'company', name: 'company' },
 { data: 'account_status', name: 'account_status' },
-{ data: 'users', name: 'users.name' },
 { data: 'created_at', name: 'created_at' },
 { data: 'everflow_account', name: 'everflow_account' },
+{ data: 'published', name: 'published' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

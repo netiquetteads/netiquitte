@@ -28,9 +28,6 @@
                         {{ trans('cruds.mailRoom.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.mailRoom.fields.template') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -88,7 +85,6 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
-{ data: 'template_name', name: 'template.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

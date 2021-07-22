@@ -31,14 +31,6 @@
                             {{ $mailRoom->name }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.mailRoom.fields.template') }}
-                        </th>
-                        <td>
-                            {{ $mailRoom->template->name ?? '' }}
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
