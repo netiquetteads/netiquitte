@@ -79,6 +79,14 @@
                             {{ $offer->margin }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.offer.fields.affiliate') }}
+                        </th>
+                        <td>
+                            {{ $offer->affiliate->name ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

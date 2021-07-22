@@ -11,57 +11,16 @@ use App\Models\Role;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class RolesController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Role::with(['permissions'])->select(sprintf('%s.*', (new Role())->table));
-            $table = Datatables::of($query);
+        $roles = Role::with(['permissions'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'role_show';
-                $editGate = 'role_edit';
-                $deleteGate = 'role_delete';
-                $crudRoutePart = 'roles';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : '';
-            });
-            $table->editColumn('permissions', function ($row) {
-                $labels = [];
-                foreach ($row->permissions as $permission) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $permission->title);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'permissions']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.roles.index');
+        return view('admin.roles.index', compact('roles'));
     }
 
     public function create()

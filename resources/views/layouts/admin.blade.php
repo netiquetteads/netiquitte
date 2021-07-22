@@ -23,6 +23,37 @@
     @yield('styles')
 </head>
 
+<style>
+        body.sidebar-open > .nav-sidebar .nav-item.menu-open {background-color: #212529!important; }
+        li.menu-open>ul>li {margin-left: 20px!important }
+        body.sidebar-open > li[class*="nav-item.has-treeview.menu-open"]>ul>li  { margin-left: 20px!important }
+        nav>ul>li.menu-open> a {background-color: #dc3545!important; }
+        nav>ul>li.nav-item.has-treeview.menu-is-opening.menu-open {background: #0000000!important; }
+         .container {width: 100%; max-width: 1200px; }
+        .header {padding: 8px 0 10px 0; background: #444; position: relative; display: none; z-index: 2000; }
+        .header .navigation .menu {box-shadow: 0px 0px 10px #333; }
+        .header .navigation .menu span {display: block; margin-top: 14px; padding: 10px 12px; font-size: 13px; color: #fff; }
+        .header .navigation .menu .menu-list ul {list-style: none; padding-left: 0px; }
+        .header .navigation .menu .menu-list ul li {padding-bottom: 6px; padding-top: 6px; background: #fff; padding-left: 10px; border: 1px solid #eee; border-top: 0; }
+        .header .navigation .menu .menu-list ul li a {font-size: 13px; }
+        a {color: #888; }
+        .header .navigation .menu {box-shadow: 0px 0px 10px #333; }
+        .header .navigation .menu span {display: block; margin-top: 14px; padding: 10px 12px; font-size: 13px; color: #fff; }
+        .header .navigation .sform span {display: block; padding-bottom: 8px; margin-bottom: 12px; border-bottom: 1px dashed #ccc; font-size: 15px; color: #555; }
+        .header .navigation .sform .form .form-group input {margin-bottom: 10px; }
+        .menu-btn {position: absolute; right: 10%; z-index: 2000; }
+        .menu-btn a {display: inline-block; width: 90px; height: 35px; line-height: 35px; text-align: center; font-size: 14px; color: #fff; background: #F76753; text-decoration: none !important; }
+        .head {background: rgba(0, 0, 0, 1.0); border-top: 3px solid #F76753; border-bottom: 1px solid rgba(0, 0, 0, 0.5); padding: 8px 0; width: 100%; position: absolute; z-index: 1000; }
+        .head .logo {margin-top: 7px; }
+        .head .logo img {display: inline; margin: 0; }
+        .head .logo a {color: #fff; }
+        .br-lblue {background: #368699 !important; }
+        .br-green {background: #3EB95E !important; }
+        .br-red {background: #dc3545 !important; }
+        .hidden {display:none; }
+     </style>
+
+
 <body class="sidebar-mini layout-fixed" style="height: auto;">
     <div class="wrapper">
         <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
@@ -30,6 +61,20 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+                </li>
+                                <li class="adminbuttonbar">
+                    <div class="btn-group">
+                        
+                        @if(Auth::user()->isAdmin())
+                         <a type="button"  target="_blank" href="{{ url('r') }}" class="btn btn-outline-success" title="Route Endpoints">Routes</a>
+                         <a type="button" target="_blank" href="{{ url('/telescope') }}" class="btn btn-outline-success" title="Requests & Responses">Telescope</a>
+                         <a type="button"  target="_blank" href="{{ url('/logs') }}" class="btn btn-outline-success" title="Application Logs">Logs</a>
+                          @endif
+
+                        {{--  <a type="button" class="btn btn-outline-success" title="User Account Profile Area">Account Profile</a>--}}
+            
+                        <a target="_blank" href="{{ url('/') }}" type="button" class="btn btn-info" title="View The Live Site">Live Site</a>
+                </div>
                 </li>
             </ul>
 

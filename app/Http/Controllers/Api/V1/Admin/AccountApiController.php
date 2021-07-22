@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Http\Resources\Admin\AccountResource;
@@ -13,17 +14,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccountApiController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('account_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AccountResource(Account::with(['users', 'team'])->get());
+        return new AccountResource(Account::with(['team'])->get());
     }
 
     public function store(StoreAccountRequest $request)
     {
         $account = Account::create($request->all());
-        $account->users()->sync($request->input('users', []));
+
+        if ($request->input('featured_image', false)) {
+            $account->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+        }
 
         return (new AccountResource($account))
             ->response()
@@ -34,13 +40,23 @@ class AccountApiController extends Controller
     {
         abort_if(Gate::denies('account_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AccountResource($account->load(['users', 'team']));
+        return new AccountResource($account->load(['team']));
     }
 
     public function update(UpdateAccountRequest $request, Account $account)
     {
         $account->update($request->all());
-        $account->users()->sync($request->input('users', []));
+
+        if ($request->input('featured_image', false)) {
+            if (!$account->featured_image || $request->input('featured_image') !== $account->featured_image->file_name) {
+                if ($account->featured_image) {
+                    $account->featured_image->delete();
+                }
+                $account->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+            }
+        } elseif ($account->featured_image) {
+            $account->featured_image->delete();
+        }
 
         return (new AccountResource($account))
             ->response()

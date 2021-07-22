@@ -32,14 +32,6 @@ class UpdateUserRequest extends FormRequest
                 'required',
                 'array',
             ],
-            'linkedin' => [
-                'string',
-                'nullable',
-            ],
-            'skype' => [
-                'string',
-                'nullable',
-            ],
         ];
     }
 }

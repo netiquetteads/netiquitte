@@ -41,8 +41,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'created_at',
-        'linkedin',
-        'skype',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -59,19 +57,31 @@ class User extends Authenticatable
         });
     }
 
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->createToken('api-access');
+        });
+    }
+
+    public function isAdmin() {
+       return $this->roles()->where('title', 'Admin')->exists();
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published', 1);
+    }
+    
     public function getIsAdminAttribute()
     {
         return $this->roles()->where('id', 1)->exists();
-    }
-
+    } 
+    
     public function userUserAlerts()
     {
         return $this->belongsToMany(UserAlert::class);
-    }
-
-    public function usersAccounts()
-    {
-        return $this->belongsToMany(Account::class);
     }
 
     public function getEmailVerifiedAtAttribute($value)
