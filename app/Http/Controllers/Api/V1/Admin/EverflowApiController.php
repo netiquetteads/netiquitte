@@ -15,7 +15,7 @@ class EverflowApiController extends Controller
     public function getAllAdvertiser()
     {
         $response = Http::withHeaders([
-            'X-Eflow-API-Key' => env('CLIENT_API_KEY'),
+            'X-Eflow-API-Key' => env('EF_API_KEY'),
         ])
         ->withBody(json_encode([
             'search_terms' => [array('search_type'=>'name','value'=>"")],
@@ -51,7 +51,7 @@ class EverflowApiController extends Controller
     public function getAllAffiliates()
     {
         $response = Http::withHeaders([
-            'X-Eflow-API-Key' => env('CLIENT_API_KEY'),
+            'X-Eflow-API-Key' => env('EF_API_KEY'),
         ])
         ->withBody(json_encode([
             'search_terms' => [array('search_type'=>'name','value'=>"")],
@@ -89,7 +89,7 @@ class EverflowApiController extends Controller
     public function getAllOffers()
     {
         $response = Http::withHeaders([
-            'X-Eflow-API-Key' => env('CLIENT_API_KEY'),
+            'X-Eflow-API-Key' => env('EF_API_KEY'),
         ])
         ->withBody(json_encode([
             'search_terms' => [array('search_type'=>'name','value'=>"")],
