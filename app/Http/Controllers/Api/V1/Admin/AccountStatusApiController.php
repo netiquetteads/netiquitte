@@ -15,7 +15,7 @@ class AccountStatusApiController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('account_status_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('account_status_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new AccountStatusResource(AccountStatus::all());
     }
@@ -31,7 +31,7 @@ class AccountStatusApiController extends Controller
 
     public function show(AccountStatus $accountStatus)
     {
-        abort_if(Gate::denies('account_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('account_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new AccountStatusResource($accountStatus);
     }
@@ -47,7 +47,7 @@ class AccountStatusApiController extends Controller
 
     public function destroy(AccountStatus $accountStatus)
     {
-        abort_if(Gate::denies('account_status_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('account_status_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $accountStatus->delete();
 

@@ -15,7 +15,7 @@ class LabelApiController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('label_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('label_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new LabelResource(Label::all());
     }
@@ -31,7 +31,7 @@ class LabelApiController extends Controller
 
     public function show(Label $label)
     {
-        abort_if(Gate::denies('label_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('label_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new LabelResource($label);
     }
@@ -47,7 +47,7 @@ class LabelApiController extends Controller
 
     public function destroy(Label $label)
     {
-        abort_if(Gate::denies('label_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('label_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $label->delete();
 
