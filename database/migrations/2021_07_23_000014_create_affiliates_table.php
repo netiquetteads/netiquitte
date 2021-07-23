@@ -19,7 +19,7 @@ class CreateAffiliatesTable extends Migration
             $table->string('network_country_code')->nullable();
             $table->string('global_tracking_domain_url')->nullable();
             $table->boolean('published')->default(0)->nullable();
-            $table->decimal('today_revenue', 15, 2)->nullable();
+            $table->string('today_revenue')->nullable();
             $table->integer('network_affiliateid')->nullable();
             $table->integer('account_executiveid')->nullable();
             $table->integer('account_managerid')->nullable();
