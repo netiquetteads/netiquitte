@@ -66,6 +66,13 @@ class OfferController extends Controller
                 return $row->affiliate ? $row->affiliate->name : '';
             });
 
+            $table->editColumn('today_clicks', function ($row) {
+                return $row->today_clicks ? $row->today_clicks : '';
+            });
+            $table->editColumn('payout_amount', function ($row) {
+                return $row->payout_amount ? $row->payout_amount : '';
+            });
+
             $table->rawColumns(['actions', 'placeholder', 'affiliate']);
 
             return $table->make(true);
