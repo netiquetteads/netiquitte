@@ -18,7 +18,7 @@ class TemplateApiController extends Controller
 
     public function index()
     {
-        abort_if(Gate::denies('template_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('template_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new TemplateResource(Template::all());
     }
@@ -38,7 +38,7 @@ class TemplateApiController extends Controller
 
     public function show(Template $template)
     {
-        abort_if(Gate::denies('template_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('template_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new TemplateResource($template);
     }
@@ -65,7 +65,7 @@ class TemplateApiController extends Controller
 
     public function destroy(Template $template)
     {
-        abort_if(Gate::denies('template_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('template_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $template->delete();
 

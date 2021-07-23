@@ -41,6 +41,14 @@ class RetrieveAccountsCommand extends Command
      */
     public function handle()
     {
+        $this->comment('=====================================');
+        $this->comment('');
+        $this->info("Updating the Dev channels started@:". Carbon::now()->diffForHumans());
+        $this->comment('');
+        $this->comment('=====================================');
+        $this->comment('');
+
+        
         return 0;
     }
 }
