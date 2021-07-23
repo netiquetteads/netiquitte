@@ -11,7 +11,8 @@ class StoreOfferRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('offer_create');
+        return true;
+            //Gate::allows('offer_create');
     }
 
     public function rules()

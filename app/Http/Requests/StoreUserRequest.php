@@ -11,7 +11,8 @@ class StoreUserRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('user_create');
+        return true;
+            //Gate::allows('user_create');
     }
 
     public function rules()
