@@ -46,6 +46,12 @@
                         {{ trans('cruds.offer.fields.affiliate') }}
                     </th>
                     <th>
+                        {{ trans('cruds.offer.fields.today_clicks') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.payout_amount') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -109,6 +115,8 @@
 { data: 'offer_status', name: 'offer_status' },
 { data: 'margin', name: 'margin' },
 { data: 'affiliate_name', name: 'affiliate.name' },
+{ data: 'today_clicks', name: 'today_clicks' },
+{ data: 'payout_amount', name: 'payout_amount' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

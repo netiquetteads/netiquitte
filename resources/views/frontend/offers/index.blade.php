@@ -47,6 +47,12 @@
                                         {{ trans('cruds.offer.fields.affiliate') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.offer.fields.today_clicks') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.offer.fields.payout_amount') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -77,6 +83,12 @@
                                         </td>
                                         <td>
                                             {{ $offer->affiliate->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $offer->today_clicks ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $offer->payout_amount ?? '' }}
                                         </td>
                                         <td>
                                             @can('offer_show')

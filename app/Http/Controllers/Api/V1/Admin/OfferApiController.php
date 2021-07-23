@@ -15,7 +15,7 @@ class OfferApiController extends Controller
 {
     public function index()
     {
-        //abort_if(Gate::denies('offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new OfferResource(Offer::with(['affiliate'])->get());
     }
@@ -31,7 +31,7 @@ class OfferApiController extends Controller
 
     public function show(Offer $offer)
     {
-        //abort_if(Gate::denies('offer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('offer_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new OfferResource($offer->load(['affiliate']));
     }
@@ -47,7 +47,7 @@ class OfferApiController extends Controller
 
     public function destroy(Offer $offer)
     {
-        //abort_if(Gate::denies('offer_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('offer_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $offer->delete();
 
