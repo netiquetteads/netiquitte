@@ -42,6 +42,7 @@ class Advertiser extends Model implements HasMedia
         'account_status',
         'everflow_account',
         'account_manager_name',
+        'sales_manager_name',
         'account_executive_name',
         'balance',
         'last_login',
