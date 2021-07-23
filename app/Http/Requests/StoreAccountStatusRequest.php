@@ -11,7 +11,8 @@ class StoreAccountStatusRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('account_status_create');
+        return true;
+            //Gate::allows('account_status_create');
     }
 
     public function rules()

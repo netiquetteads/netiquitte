@@ -11,7 +11,8 @@ class UpdateOfferRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('offer_edit');
+        return true;
+            //Gate::allows('offer_edit');
     }
 
     public function rules()
