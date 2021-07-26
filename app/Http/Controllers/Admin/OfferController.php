@@ -48,7 +48,7 @@ class OfferController extends Controller
                 return $row->name ? $row->name : '';
             });
             $table->editColumn('source', function ($row) {
-                return $row->source ? Offer::SOURCE_SELECT[$row->source] : '';
+                return $row->source ? $row->source : '';
             });
             $table->editColumn('payout', function ($row) {
                 return $row->payout ? $row->payout : '';
@@ -57,7 +57,7 @@ class OfferController extends Controller
                 return $row->revenue ? $row->revenue : '';
             });
             $table->editColumn('offer_status', function ($row) {
-                return $row->offer_status ? Offer::OFFER_STATUS_SELECT[$row->offer_status] : '';
+                return $row->offer_status ? $row->offer_status : '';
             });
             $table->editColumn('margin', function ($row) {
                 return $row->margin ? $row->margin : '';
