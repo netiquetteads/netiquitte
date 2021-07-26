@@ -51,7 +51,7 @@ class AdvertiserController extends Controller
                 return $row->name ? $row->name : '';
             });
             $table->editColumn('account_status', function ($row) {
-                return $row->account_status ? Advertiser::ACCOUNT_STATUS_SELECT[$row->account_status] : '';
+                return $row->account_status ? $row->account_status : '';
             });
             $table->editColumn('everflow_account', function ($row) {
                 return $row->everflow_account ? $row->everflow_account : '';
