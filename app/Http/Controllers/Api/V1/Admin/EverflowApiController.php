@@ -15,7 +15,7 @@ class EverflowApiController extends Controller
     public function getAllAdvertiser()
     {
         $response = Http::withHeaders([
-            'X-Eflow-API-Key' => env('CLIENT_API_KEY'),
+            'X-Eflow-API-Key' => env('EF_API_KEY'),
         ])
         ->withBody(json_encode([
             'search_terms' => [array('search_type'=>'name','value'=>"")],
@@ -51,7 +51,7 @@ class EverflowApiController extends Controller
     public function getAllAffiliates()
     {
         $response = Http::withHeaders([
-            'X-Eflow-API-Key' => env('CLIENT_API_KEY'),
+            'X-Eflow-API-Key' => env('EF_API_KEY'),
         ])
         ->withBody(json_encode([
             'search_terms' => [array('search_type'=>'name','value'=>"")],
@@ -89,7 +89,7 @@ class EverflowApiController extends Controller
     public function getAllOffers()
     {
         $response = Http::withHeaders([
-            'X-Eflow-API-Key' => env('CLIENT_API_KEY'),
+            'X-Eflow-API-Key' => env('EF_API_KEY'),
         ])
         ->withBody(json_encode([
             'search_terms' => [array('search_type'=>'name','value'=>"")],
@@ -99,25 +99,36 @@ class EverflowApiController extends Controller
 
         $results=$response->json();
 
-        // foreach ($results['offers'] as $row) {
-        //     $offer = Offer::updateOrCreate(
-		// 		['network_affiliateid' => $row['network_offer_id']],
-		// 		[
-		// 			'network_affiliateid'           => $row['network_offer_id'],
-		// 			'networkid'                     => $row['network_id'],
-		// 			'name'                          => $row['name'],
-		// 			'account_status'                => $row['account_status'],
-		// 			'account_managerid'             => $row['account_manager_id'],
-		// 			'account_manager_name'          => $row['account_manager_name'],
-		// 			'account_executiveid'           => $row['account_executive_id'],
-		// 			'account_executive_name'        => $row['account_executive_name'],
-		// 			'today_revenue'                 => $row['today_revenue'],
-		// 			'balance'                       => $row['balance'],
-		// 			'global_tracking_domain_url'    => $row['global_tracking_domain_url'],
-		// 			'network_country_code'          => $row['network_country_code'],
-		// 		]
-		// 	);
-        // }
+        foreach ($results['offers'] as $row) {
+            $offer = Offer::updateOrCreate(
+				['network_offer' => $row['network_offer_id']],
+				[
+					'network_offer'                 => $row['network_offer_id'],
+					'network'                       => $row['network_id'],
+					'name'                          => $row['name'],
+					'offer_status'                  => $row['offer_status'],
+					'thumbnail_url'                 => $row['thumbnail_url'],
+					'visibility'                    => $row['visibility'],
+					'network_advertiser_name'       => $row['network_advertiser_name'],
+					'category'                      => $row['category'],
+					'network_offer_group'           => $row['network_offer_group_id'],
+					'time_created'                  => date("H:m:s",$row['time_created']),
+					'time_saved'                    => date("H:m:s",$row['time_saved']),
+					'payout'                        => $row['payout'],
+					'revenue'                       => $row['revenue'],
+					'today_revenue'                 => $row['today_revenue'],
+					'destination_url'               => $row['destination_url'],
+					'today_clicks'                  => $row['today_clicks'],
+					'optimized_thumbnail_url'       => $row['optimized_thumbnail_url'],
+					'revenue_amount'                => $row['revenue_amount'],
+					'payout_amount'                 => $row['payout_amount'],
+					'today_revenue_amount'          => $row['today_revenue_amount'],
+					'today_payout_amount'           => $row['today_payout_amount'],
+					'payout_type'                   => $row['payout_type'],
+					'revenue_type'                  => $row['revenue_type'],
+				]
+			);
+        }
 
         return response()->json([
             "message" => "Recorded successfully",
