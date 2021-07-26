@@ -15,7 +15,7 @@ class CreateAffiliatesTable extends Migration
             $table->string('account_manager_name')->nullable();
             $table->string('account_executive_name')->nullable();
             $table->float('balance', 15, 2)->nullable();
-            $table->datetime('last_login')->nullable();
+            $table->unsignedBigInteger('last_login')->nullable();
             $table->string('network_country_code')->nullable();
             $table->string('global_tracking_domain_url')->nullable();
             $table->boolean('published')->default(0)->nullable();
@@ -24,6 +24,8 @@ class CreateAffiliatesTable extends Migration
             $table->integer('account_executiveid')->nullable();
             $table->integer('account_managerid')->nullable();
             $table->integer('networkid')->nullable();
+            $table->unsignedBigInteger('time_created')->nullable();
+            $table->unsignedBigInteger('time_saved')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

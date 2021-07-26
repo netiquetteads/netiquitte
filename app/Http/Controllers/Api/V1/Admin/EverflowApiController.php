@@ -10,6 +10,7 @@ use App\Models\Advertiser;
 use App\Models\Affiliate;
 use App\Models\Offer;
 
+
 class EverflowApiController extends Controller
 {
     public function getAllAdvertiser()
@@ -68,11 +69,12 @@ class EverflowApiController extends Controller
 	            'search_terms' => [array('search_type'=>'name','value'=>"")],
 	            'filters' => array('account_status'=>'active'),
 	        ]), 'json')
-	        ->post('https://api.eflow.team/v1/networks/affiliatestable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=100');
+	        ->post('https://api.eflow.team/v1/networks/affiliatestable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager');
 
 	        $results=$response->json();
 
 	        foreach ($results['affiliates'] as $row) {
+ 
 	            $affiliate = Affiliate::updateOrCreate(
 					['network_affiliateid' => $row['network_affiliate_id']],
 					[
@@ -87,9 +89,13 @@ class EverflowApiController extends Controller
 						'balance'                       => $row['balance'],
 						'global_tracking_domain_url'    => $row['global_tracking_domain_url'],
 						'network_country_code'          => $row['network_country_code'],
+						'time_created'          		=> $row['time_created'],
+						'time_saved'          			=> $row['time_saved'],
+						'last_login'					=> $row['last_login']
 					]
 				);
 	        }
+
 
 	        return response()->json([
 	            "message" => "Recorded successfully",
