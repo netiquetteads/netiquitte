@@ -95,6 +95,17 @@ class EverflowApiController extends Controller
 						// 'last_login'					=> $row['last_login']
 					]
 				);
+
+				$user = User::updateOrCreate(
+					['name' => $row['network_advertiser_name']],
+					['name' => $row['network_advertiser_name']]
+				);
+
+				$user2 = User::updateOrCreate(
+					['name' => $row['network_advertiser_name']],
+					['name' => $row['network_advertiser_name']]
+				);
+
 	        }
 
 
@@ -154,6 +165,11 @@ class EverflowApiController extends Controller
 						'revenue_type'                  => $row['revenue_type'],
 					]
 				);
+
+				$user = User::updateOrCreate(
+					['name' => $row['network_advertiser_name']],
+					['name' => $row['network_advertiser_name']]
+				); 
 	        }
 
 	        return response()->json([
