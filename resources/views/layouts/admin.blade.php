@@ -153,9 +153,18 @@
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.0.0-alpha
+                <strong> &copy;</strong> {{ trans('global.allRightsReserved') }} <b>Version</b> 3.0.0-alpha HIPPY
             </div>
-            <strong> &copy;</strong> {{ trans('global.allRightsReserved') }}
+                {{-- <button type="button" class="btn btn-outline-primary">Primary</button>
+                <button type="button" class="btn btn-outline-secondary">Secondary</button>
+                <button type="button" class="btn btn-outline-success">Success</button>
+                <button type="button" class="btn btn-outline-danger">Danger</button>
+                <button type="button" class="btn btn-outline-warning">Warning</button>
+                <button type="button" class="btn btn-outline-info">Info</button>
+                <button type="button" class="btn btn-outline-light">Light</button> --}}
+                <button id="syncAdvertisers" type="button" class="btn btn-outline-dark">SYNC Advertisers</button>
+                <button id="syncAffiliates" type="button" class="btn btn-outline-dark">SYNC Affiliates</button>
+                <button id="syncOffers" type="button" class="btn btn-outline-dark">Sync Offers</button>
         </footer>
         <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
@@ -181,6 +190,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script>
+        $("#syncAdvertisers").click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '{{ route('api.advertiser.getAllAdvertiser') }}',
+                success: function() {
+                    console.log("SYNC Advertisers Successful!");
+                    alert("SYNC Advertisers Successful!");
+                }
+            })
+        });
+        $("#syncAffiliates").click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '{{ route('api.advertiser.getAllAffiliates') }}',
+                success: function() {
+                    console.log("SYNC Affiliates Successful!");
+                    alert("SYNC Affiliates Successful!");
+                }
+            })
+        });
+        $("#syncOffers").click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '{{ route('api.advertiser.getAllOffers') }}',
+                success: function() {
+                    console.log("SYNC Offers Successful!");
+                    alert("SYNC Offers Successful!");
+                }
+            })
+        }); 
+    </script>
+
+
+
+
     <script>
         $(function() {
   let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
