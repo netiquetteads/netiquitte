@@ -9,7 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Advertiser;
 use App\Models\Affiliate;
 use App\Models\Offer;
-
+use App\Models\User;
+use App\Models\AccountStatus;
 
 class EverflowApiController extends Controller
 {
@@ -43,6 +44,11 @@ class EverflowApiController extends Controller
 						'sales_manager_name'    => $row['sales_manager_name'],
 						'today_revenue'         => $row['today_revenue'],
 					]
+				);
+
+				$account_status = AccountStatus::updateOrCreate(
+					['name' => $row['account_status']],
+					['name' => $row['account_status']]
 				);
 	        }
 
@@ -96,15 +102,15 @@ class EverflowApiController extends Controller
 					]
 				);
 
-				$user = User::updateOrCreate(
-					['name' => $row['network_advertiser_name']],
-					['name' => $row['network_advertiser_name']]
-				);
+				// $user = User::updateOrCreate(
+				// 	['name' => $row['account_manager_name']],
+				// 	['name' => $row['account_manager_name']]
+				// );
 
-				$user2 = User::updateOrCreate(
-					['name' => $row['network_advertiser_name']],
-					['name' => $row['network_advertiser_name']]
-				);
+				// $user2 = User::updateOrCreate(
+				// 	['name' => $row['account_executive_name']],
+				// 	['name' => $row['account_executive_name']]
+				// );
 
 	        }
 
@@ -166,10 +172,10 @@ class EverflowApiController extends Controller
 					]
 				);
 
-				$user = User::updateOrCreate(
-					['name' => $row['network_advertiser_name']],
-					['name' => $row['network_advertiser_name']]
-				); 
+				// $user = User::updateOrCreate(
+				// 	['name' => $row['network_advertiser_name']],
+				// 	['name' => $row['network_advertiser_name']]
+				// ); 
 	        }
 
 	        return response()->json([
