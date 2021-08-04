@@ -134,6 +134,10 @@ return [
     'affiliate' => [
         'title'          => 'Affiliates',
         'title_singular' => 'Affiliate',
+        'all' => 'All',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+        'suspended' => 'Suspended',
         'fields'         => [
             'id'                                => 'ID',
             'id_helper'                         => ' ',
@@ -200,6 +204,10 @@ return [
     'advertiser' => [
         'title'          => 'Advertisers',
         'title_singular' => 'Advertiser',
+        'pending' => 'Pending',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+        'suspended' => 'Suspended',
         'fields'         => [
             'id'                                        => 'ID',
             'id_helper'                                 => ' ',
@@ -292,6 +300,11 @@ return [
     'offer' => [
         'title'          => 'Offers',
         'title_singular' => 'Offer',
+        'all' => 'All',
+        'active' => 'Active',
+        'paused' => 'Paused',
+        'pending' => 'Pending',
+        'deleted' => 'Deleted',
         'fields'         => [
             'id'                             => 'ID',
             'id_helper'                      => ' ',
@@ -428,6 +441,22 @@ return [
     'mailRoom' => [
         'title'          => 'Mail Room',
         'title_singular' => 'Mail Room',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'name'              => 'Name',
+            'name_helper'       => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
+    'tool' => [
+        'title'          => 'Tools',
+        'title_singular' => 'Tools',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',

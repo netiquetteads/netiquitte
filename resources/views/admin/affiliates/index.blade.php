@@ -74,17 +74,26 @@
   dtButtons.push(deleteButton)
 @endcan
 
+@php
+  $slug=Request::segment(3);
+  if($slug){
+    $url=url('admin/affiliate',$slug);
+  }else{
+    $url=route('admin.affiliates.index');
+  }
+@endphp
+
   let dtOverrideGlobals = {
     buttons: dtButtons,
     processing: true,
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.affiliates.index') }}",
+    ajax: "{{ $url }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 // { data: 'id', name: 'id' },
-{ data: 'account_status_name', name: 'account_status.name' },
+{ data: 'account_status', name: 'account_status' },
 // { data: 'logo', name: 'logo', sortable: false, searchable: false },
 { data: 'name', name: 'name' },
 // { data: 'everflow_account', name: 'everflow_account' },

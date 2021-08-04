@@ -34,6 +34,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('affiliates/media', 'AffiliateController@storeMedia')->name('affiliates.storeMedia');
     Route::post('affiliates/ckmedia', 'AffiliateController@storeCKEditorImages')->name('affiliates.storeCKEditorImages');
     Route::resource('affiliates', 'AffiliateController');
+    
+    Route::get('affiliate/{status?}', 'AffiliateController@index');
 
     // Account Status
     Route::delete('account-statuses/destroy', 'AccountStatusController@massDestroy')->name('account-statuses.massDestroy');
@@ -45,6 +47,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('advertisers/ckmedia', 'AdvertiserController@storeCKEditorImages')->name('advertisers.storeCKEditorImages');
     Route::resource('advertisers', 'AdvertiserController');
 
+    Route::get('advertiser/{status?}', 'AdvertiserController@index');
+
     // Label
     Route::delete('labels/destroy', 'LabelController@massDestroy')->name('labels.massDestroy');
     Route::resource('labels', 'LabelController');
@@ -52,6 +56,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Offer
     Route::delete('offers/destroy', 'OfferController@massDestroy')->name('offers.massDestroy');
     Route::resource('offers', 'OfferController');
+
+    Route::get('offer/{status?}', 'OfferController@index');
 
     // Balances
     Route::delete('balances/destroy', 'BalancesController@massDestroy')->name('balances.massDestroy');

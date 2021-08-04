@@ -19,12 +19,18 @@ class AffiliateController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index(Request $request, $status='')
     {
         abort_if(Gate::denies('affiliate_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Affiliate::with(['account_status', 'team'])->select(sprintf('%s.*', (new Affiliate())->table));
+            if ($status) {
+                $query = Affiliate::with(['team'])->select(sprintf('%s.*', (new Affiliate())->table))->where('account_status',$status);
+            } else {
+                $query = Affiliate::with(['team'])->select(sprintf('%s.*', (new Affiliate())->table));
+            }
+            
+            
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,9 +54,9 @@ class AffiliateController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->addColumn('account_status_name', function ($row) {
-                return $row->account_status ? $row->account_status->name : '';
-            });
+            // $table->addColumn('account_status_name', function ($row) {
+            //     return $row->account_status ? $row->account_status : '';
+            // });
 
             $table->editColumn('logo', function ($row) {
                 if ($photo = $row->logo) {
@@ -73,7 +79,7 @@ class AffiliateController extends Controller
                 return '<input type="checkbox" disabled ' . ($row->published ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'account_status', 'logo', 'published']);
+            $table->rawColumns(['actions', 'placeholder', 'logo', 'published']);
 
             return $table->make(true);
         }
@@ -115,7 +121,7 @@ class AffiliateController extends Controller
 
         $account_statuses = AccountStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $affiliate->load('account_status', 'team');
+        $affiliate->load('team');
 
         return view('admin.affiliates.edit', compact('account_statuses', 'affiliate'));
     }
@@ -153,7 +159,7 @@ class AffiliateController extends Controller
     {
         abort_if(Gate::denies('affiliate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $affiliate->load('account_status', 'team');
+        $affiliate->load('team');
 
         return view('admin.affiliates.show', compact('affiliate'));
     }
