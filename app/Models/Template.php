@@ -19,7 +19,7 @@ class Template extends Model implements HasMedia
     use HasFactory;
 
     public const SELECT_TEMPLATE_SELECT = [
-        'fills from this table' => 'loads data from selected table',
+        'fills from this table' => 'SETUP TO LOAD FROM THIS CRUD',
     ];
 
     public $table = 'templates';
@@ -65,6 +65,11 @@ class Template extends Model implements HasMedia
     }
 
     public function offer_selection()
+    {
+        return $this->belongsTo(Offer::class, 'offer_selection_id');
+    }
+
+    public function offer_selects()
     {
         return $this->belongsTo(Offer::class, 'offer_selection_id');
     }
