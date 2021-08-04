@@ -11,6 +11,7 @@ class CreateAffiliatesTable extends Migration
         Schema::create('affiliates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
+            $table->string('account_status')->nullable();
             $table->string('everflow_account')->nullable();
             $table->string('account_manager_name')->nullable();
             $table->string('account_executive_name')->nullable();
