@@ -11,8 +11,7 @@ class StoreLabelRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
-            //Gate::allows('label_create');
+        return Gate::allows('label_create');
     }
 
     public function rules()

@@ -117,14 +117,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.advertiser.fields.today_revenue') }}
-                        </th>
-                        <td>
-                            {{ $advertiser->today_revenue }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.advertiser.fields.network_affiliateid') }}
                         </th>
                         <td>
@@ -265,6 +257,22 @@
                         </th>
                         <td>
                             {{ $advertiser->network_advertiserid }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.advertiser.fields.sales_manager_name') }}
+                        </th>
+                        <td>
+                            {{ $advertiser->sales_manager_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.advertiser.fields.today_revenue') }}
+                        </th>
+                        <td>
+                            {{ $advertiser->today_revenue }}
                         </td>
                     </tr>
                 </tbody>

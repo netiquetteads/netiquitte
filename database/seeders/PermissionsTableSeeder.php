@@ -284,46 +284,70 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 69,
-                'title' => 'mail_room_create',
-            ],
-            [
-                'id'    => 70,
-                'title' => 'mail_room_edit',
-            ],
-            [
-                'id'    => 71,
-                'title' => 'mail_room_show',
-            ],
-            [
-                'id'    => 72,
-                'title' => 'mail_room_delete',
-            ],
-            [
-                'id'    => 73,
-                'title' => 'mail_room_access',
-            ],
-            [
-                'id'    => 74,
                 'title' => 'template_create',
             ],
             [
-                'id'    => 75,
+                'id'    => 70,
                 'title' => 'template_edit',
             ],
             [
-                'id'    => 76,
+                'id'    => 71,
                 'title' => 'template_show',
             ],
             [
-                'id'    => 77,
+                'id'    => 72,
                 'title' => 'template_delete',
             ],
             [
-                'id'    => 78,
+                'id'    => 73,
                 'title' => 'template_access',
             ],
             [
+                'id'    => 74,
+                'title' => 'mail_room_access',
+            ],
+            [
+                'id'    => 75,
+                'title' => 'mail_history_create',
+            ],
+            [
+                'id'    => 76,
+                'title' => 'mail_history_edit',
+            ],
+            [
+                'id'    => 77,
+                'title' => 'mail_history_show',
+            ],
+            [
+                'id'    => 78,
+                'title' => 'mail_history_delete',
+            ],
+            [
                 'id'    => 79,
+                'title' => 'mail_history_access',
+            ],
+            [
+                'id'    => 80,
+                'title' => 'opened_mail_create',
+            ],
+            [
+                'id'    => 81,
+                'title' => 'opened_mail_edit',
+            ],
+            [
+                'id'    => 82,
+                'title' => 'opened_mail_show',
+            ],
+            [
+                'id'    => 83,
+                'title' => 'opened_mail_delete',
+            ],
+            [
+                'id'    => 84,
+                'title' => 'opened_mail_access',
+            ],
+            [
+                'id'    => 85,
                 'title' => 'profile_password_edit',
             ],
         ];

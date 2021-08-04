@@ -108,14 +108,6 @@
                 <span class="help-block">{{ trans('cruds.advertiser.fields.published_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="today_revenue">{{ trans('cruds.advertiser.fields.today_revenue') }}</label>
-                <input class="form-control {{ $errors->has('today_revenue') ? 'is-invalid' : '' }}" type="number" name="today_revenue" id="today_revenue" value="{{ old('today_revenue', $advertiser->today_revenue) }}" step="0.01">
-                @if($errors->has('today_revenue'))
-                    <span class="text-danger">{{ $errors->first('today_revenue') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.advertiser.fields.today_revenue_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="network_affiliateid">{{ trans('cruds.advertiser.fields.network_affiliateid') }}</label>
                 <input class="form-control {{ $errors->has('network_affiliateid') ? 'is-invalid' : '' }}" type="number" name="network_affiliateid" id="network_affiliateid" value="{{ old('network_affiliateid', $advertiser->network_affiliateid) }}" step="1">
                 @if($errors->has('network_affiliateid'))
@@ -264,6 +256,22 @@
                     <span class="text-danger">{{ $errors->first('network_advertiserid') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.advertiser.fields.network_advertiserid_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="sales_manager_name">{{ trans('cruds.advertiser.fields.sales_manager_name') }}</label>
+                <input class="form-control {{ $errors->has('sales_manager_name') ? 'is-invalid' : '' }}" type="text" name="sales_manager_name" id="sales_manager_name" value="{{ old('sales_manager_name', $advertiser->sales_manager_name) }}">
+                @if($errors->has('sales_manager_name'))
+                    <span class="text-danger">{{ $errors->first('sales_manager_name') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.advertiser.fields.sales_manager_name_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="today_revenue">{{ trans('cruds.advertiser.fields.today_revenue') }}</label>
+                <input class="form-control {{ $errors->has('today_revenue') ? 'is-invalid' : '' }}" type="text" name="today_revenue" id="today_revenue" value="{{ old('today_revenue', $advertiser->today_revenue) }}">
+                @if($errors->has('today_revenue'))
+                    <span class="text-danger">{{ $errors->first('today_revenue') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.advertiser.fields.today_revenue_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

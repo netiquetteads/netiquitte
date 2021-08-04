@@ -46,10 +46,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     // Payment Method
     Route::apiResource('payment-methods', 'PaymentMethodApiController');
 
-    // Mail Room
-    Route::apiResource('mail-rooms', 'MailRoomApiController');
-
     // Template
     Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
     Route::apiResource('templates', 'TemplateApiController');
+
+    // Mail History
+    Route::apiResource('mail-histories', 'MailHistoryApiController');
+
+    // Opened Mail
+    Route::apiResource('opened-mails', 'OpenedMailApiController');
 });

@@ -67,6 +67,22 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.template.fields.offer_selection') }}
+                        </th>
+                        <td>
+                            {{ $template->offer_selection->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.template.fields.select_template') }}
+                        </th>
+                        <td>
+                            {{ App\Models\Template::SELECT_TEMPLATE_SELECT[$template->select_template] ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

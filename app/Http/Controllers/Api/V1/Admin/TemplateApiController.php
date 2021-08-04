@@ -20,7 +20,7 @@ class TemplateApiController extends Controller
     {
         //abort_if(Gate::denies('template_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TemplateResource(Template::all());
+        return new TemplateResource(Template::with(['offer_selection'])->get());
     }
 
     public function store(StoreTemplateRequest $request)
@@ -40,7 +40,7 @@ class TemplateApiController extends Controller
     {
         //abort_if(Gate::denies('template_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TemplateResource($template);
+        return new TemplateResource($template->load(['offer_selection']));
     }
 
     public function update(UpdateTemplateRequest $request, Template $template)

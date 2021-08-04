@@ -18,6 +18,10 @@ class Template extends Model implements HasMedia
     use Auditable;
     use HasFactory;
 
+    public const SELECT_TEMPLATE_SELECT = [
+        'fills from this table' => 'loads data from selected table',
+    ];
+
     public $table = 'templates';
 
     protected $appends = [
@@ -35,6 +39,8 @@ class Template extends Model implements HasMedia
         'email_subject',
         'from_email',
         'content',
+        'offer_selection_id',
+        'select_template',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -58,6 +64,11 @@ class Template extends Model implements HasMedia
         return $file;
     }
 
+    public function offer_selection()
+    {
+        return $this->belongsTo(Offer::class, 'offer_selection_id');
+    }
+    
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
