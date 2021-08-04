@@ -18,12 +18,17 @@ class AdvertiserController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index(Request $request, $status='')
     {
         abort_if(Gate::denies('advertiser_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Advertiser::query()->select(sprintf('%s.*', (new Advertiser())->table));
+            
+            if ($status) {
+                $query = Advertiser::query()->select(sprintf('%s.*', (new Advertiser())->table))->where('account_status',$status);
+            } else {
+                $query = Advertiser::query()->select(sprintf('%s.*', (new Advertiser())->table));
+            }
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

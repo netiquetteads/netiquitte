@@ -17,7 +17,10 @@ class Offer extends Model
     ];
 
     public const OFFER_STATUS_SELECT = [
-        '1' => 'Active',
+        'active' => 'Active',
+        'paused' => 'Paused',
+        'pending' => 'Pending',
+        'deleted' => 'Deleted',
     ];
 
     public $table = 'offers';

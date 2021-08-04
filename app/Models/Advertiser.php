@@ -20,8 +20,10 @@ class Advertiser extends Model implements HasMedia
     use HasFactory;
 
     public const ACCOUNT_STATUS_SELECT = [
-        '1' => 'Active',
-        '2' => 'Inactive',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+        'pending' => 'Pending',
+        'suspended' => 'Suspended',
     ];
 
     public $table = 'advertisers';

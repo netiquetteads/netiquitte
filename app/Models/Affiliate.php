@@ -36,13 +36,12 @@ class Affiliate extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'account_status_id',
+        'account_status',
         'name',
         'everflow_account',
         'account_manager_name',
         'account_executive_name',
         'balance',
-        
         'network_country_code',
         'global_tracking_domain_url',
         'published',
@@ -66,10 +65,10 @@ class Affiliate extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function account_status()
-    {
-        return $this->belongsTo(AccountStatus::class, 'account_status_id');
-    }
+    // public function account_status()
+    // {
+    //     return $this->belongsTo(AccountStatus::class, 'account_status_id');
+    // }
 
     public function getLogoAttribute()
     {

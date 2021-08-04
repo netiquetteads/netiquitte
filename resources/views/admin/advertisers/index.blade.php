@@ -77,13 +77,22 @@
   dtButtons.push(deleteButton)
 @endcan
 
+@php
+  $slug=Request::segment(3);
+  if($slug){
+    $url=url('admin/advertiser',$slug);
+  }else{
+    $url=route('admin.advertisers.index');
+  }
+@endphp
+
   let dtOverrideGlobals = {
     buttons: dtButtons,
     processing: true,
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.advertisers.index') }}",
+    ajax: "{{ $url }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 // { data: 'id', name: 'id' },

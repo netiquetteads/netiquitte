@@ -11,10 +11,10 @@
             @csrf
             <div class="form-group">
                 <label for="account_status_id">{{ trans('cruds.affiliate.fields.account_status') }}</label>
-                <select class="form-control select2 {{ $errors->has('account_status') ? 'is-invalid' : '' }}" name="account_status_id" id="account_status_id">
-                    @foreach($account_statuses as $id => $entry)
-                        <option value="{{ $id }}" {{ old('account_status_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
+                <select class="form-control select2 {{ $errors->has('account_status') ? 'is-invalid' : '' }}" name="account_status" id="account_status">
+                        <option value="active" {{ old('account_status') == "active" ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ old('account_status') == "inactive" ? 'selected' : '' }}>Inactive</option>
+                        <option value="suspended" {{ old('account_status') == "suspended" ? 'selected' : '' }}>Suspended</option>
                 </select>
                 @if($errors->has('account_status'))
                     <span class="text-danger">{{ $errors->first('account_status') }}</span>
