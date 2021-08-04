@@ -64,6 +64,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('payment-methods/destroy', 'PaymentMethodController@massDestroy')->name('payment-methods.massDestroy');
     Route::resource('payment-methods', 'PaymentMethodController');
 
+    // Template
+    Route::delete('templates/destroy', 'TemplateController@massDestroy')->name('templates.massDestroy');
+    Route::post('templates/media', 'TemplateController@storeMedia')->name('templates.storeMedia');
+    Route::post('templates/ckmedia', 'TemplateController@storeCKEditorImages')->name('templates.storeCKEditorImages');
+    Route::resource('templates', 'TemplateController');
+
+    // Mail History
+    Route::delete('mail-histories/destroy', 'MailHistoryController@massDestroy')->name('mail-histories.massDestroy');
+    Route::resource('mail-histories', 'MailHistoryController');
+
+    // Opened Mail
+    Route::delete('opened-mails/destroy', 'OpenedMailController@massDestroy')->name('opened-mails.massDestroy');
+    Route::resource('opened-mails', 'OpenedMailController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');
