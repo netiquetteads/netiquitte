@@ -56,6 +56,9 @@
                     </th>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
+=======
 >>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
 >>>>>>> parent of 232c5d7 (pushing new crud files and migrations)

@@ -74,6 +74,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Mail Room
     Route::delete('mail-rooms/destroy', 'MailRoomController@massDestroy')->name('mail-rooms.massDestroy');
     Route::resource('mail-rooms', 'MailRoomController');
@@ -84,6 +85,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('templates/ckmedia', 'TemplateController@storeCKEditorImages')->name('templates.storeCKEditorImages');
     Route::resource('templates', 'TemplateController');
 
+=======
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
 >>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
