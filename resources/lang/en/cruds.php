@@ -134,10 +134,6 @@ return [
     'affiliate' => [
         'title'          => 'Affiliates',
         'title_singular' => 'Affiliate',
-        'all' => 'All',
-        'active' => 'Active',
-        'inactive' => 'Inactive',
-        'suspended' => 'Suspended',
         'fields'         => [
             'id'                                => 'ID',
             'id_helper'                         => ' ',
@@ -204,10 +200,6 @@ return [
     'advertiser' => [
         'title'          => 'Advertisers',
         'title_singular' => 'Advertiser',
-        'pending' => 'Pending',
-        'active' => 'Active',
-        'inactive' => 'Inactive',
-        'suspended' => 'Suspended',
         'fields'         => [
             'id'                                        => 'ID',
             'id_helper'                                 => ' ',
@@ -300,11 +292,6 @@ return [
     'offer' => [
         'title'          => 'Offers',
         'title_singular' => 'Offer',
-        'all' => 'All',
-        'active' => 'Active',
-        'paused' => 'Paused',
-        'pending' => 'Pending',
-        'deleted' => 'Deleted',
         'fields'         => [
             'id'                             => 'ID',
             'id_helper'                      => ' ',
