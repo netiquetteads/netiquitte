@@ -257,6 +257,7 @@ class PermissionsTableSeeder extends Seeder
             [
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 'id'    => 69,
                 'title' => 'mail_room_create',
             ],
@@ -298,6 +299,9 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 79,
+=======
+                'id'    => 62,
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
                 'id'    => 62,
 >>>>>>> parent of 232c5d7 (pushing new crud files and migrations)

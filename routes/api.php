@@ -23,6 +23,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     // Account
     Route::apiResource('accounts', 'AccountApiController');
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     // Offers
     Route::apiResource('offers', 'OffersApiController');
@@ -30,6 +31,15 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     // Mail Room
     Route::apiResource('mail-rooms', 'MailRoomApiController');
 
+=======
+
+    // Offers
+    Route::apiResource('offers', 'OffersApiController');
+
+    // Mail Room
+    Route::apiResource('mail-rooms', 'MailRoomApiController');
+
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
 
     // Offers
@@ -53,6 +63,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     Route::apiResource('payment-methods', 'PaymentMethodApiController');
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     // Mail Room
     Route::apiResource('mail-rooms', 'MailRoomApiController');
@@ -60,6 +71,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     // Template
     Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
     Route::apiResource('templates', 'TemplateApiController');
+=======
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
 >>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
