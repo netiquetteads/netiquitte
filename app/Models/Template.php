@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use \DateTimeInterface;
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,6 +15,7 @@ class Template extends Model implements HasMedia
 {
     use SoftDeletes;
     use InteractsWithMedia;
+    use Auditable;
     use HasFactory;
 
     public $table = 'templates';
@@ -29,8 +31,10 @@ class Template extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'offer_selection_id',
         'name',
         'email_subject',
+        'from_name',
         'from_email',
         'content',
         'created_at',
@@ -44,6 +48,11 @@ class Template extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function offer_selection()
+    {
+        return $this->belongsTo(Offer::class, 'offer_selection_id');
+    }
+    
     public function getOfferImageAttribute()
     {
         $file = $this->getMedia('offer_image')->last();

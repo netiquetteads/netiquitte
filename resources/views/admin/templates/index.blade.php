@@ -28,12 +28,6 @@
                         {{ trans('cruds.template.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.template.fields.from_email') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.template.fields.offer_image') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -91,8 +85,6 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
-{ data: 'from_email', name: 'from_email' },
-{ data: 'offer_image', name: 'offer_image', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

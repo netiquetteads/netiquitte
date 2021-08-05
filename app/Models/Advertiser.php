@@ -20,10 +20,8 @@ class Advertiser extends Model implements HasMedia
     use HasFactory;
 
     public const ACCOUNT_STATUS_SELECT = [
-        'active' => 'Active',
-        'inactive' => 'Inactive',
-        'pending' => 'Pending',
-        'suspended' => 'Suspended',
+        '1' => 'Active',
+        '2' => 'Inactive',
     ];
 
     public $table = 'advertisers';
@@ -44,14 +42,12 @@ class Advertiser extends Model implements HasMedia
         'account_status',
         'everflow_account',
         'account_manager_name',
-        'sales_manager_name',
         'account_executive_name',
         'balance',
         'last_login',
         'network_country_code',
         'global_tracking_domain_url',
         'published',
-        'today_revenue',
         'network_affiliateid',
         'account_executiveid',
         'account_managerid',
@@ -70,6 +66,8 @@ class Advertiser extends Model implements HasMedia
         'attribution_method',
         'email_attribution_method',
         'network_advertiserid',
+        'sales_manager_name',
+        'today_revenue',
         'created_at',
         'updated_at',
         'deleted_at',

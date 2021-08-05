@@ -20,48 +20,22 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     // Team
     Route::apiResource('teams', 'TeamApiController');
 
-    // Account
-    Route::apiResource('accounts', 'AccountApiController');
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+    // Affiliate
+    Route::post('affiliates/media', 'AffiliateApiController@storeMedia')->name('affiliates.storeMedia');
+    Route::apiResource('affiliates', 'AffiliateApiController');
 
-    // Offers
-    Route::apiResource('offers', 'OffersApiController');
+    // Account Status
+    Route::apiResource('account-statuses', 'AccountStatusApiController');
 
-    // Mail Room
-    Route::apiResource('mail-rooms', 'MailRoomApiController');
+    // Advertiser
+    Route::post('advertisers/media', 'AdvertiserApiController@storeMedia')->name('advertisers.storeMedia');
+    Route::apiResource('advertisers', 'AdvertiserApiController');
 
-=======
+    // Label
+    Route::apiResource('labels', 'LabelApiController');
 
-    // Offers
-    Route::apiResource('offers', 'OffersApiController');
-
-    // Mail Room
-    Route::apiResource('mail-rooms', 'MailRoomApiController');
-
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-=======
-
-    // Offers
-    Route::apiResource('offers', 'OffersApiController');
-
-    // Mail Room
-    Route::apiResource('mail-rooms', 'MailRoomApiController');
-
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-=======
-
-    // Offers
-    Route::apiResource('offers', 'OffersApiController');
-
-    // Mail Room
-    Route::apiResource('mail-rooms', 'MailRoomApiController');
-
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-    // Template
-    Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
-    Route::apiResource('templates', 'TemplateApiController');
+    // Offer
+    Route::apiResource('offers', 'OfferApiController');
 
     // Balances
     Route::apiResource('balances', 'BalancesApiController');
@@ -71,23 +45,25 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
 
     // Payment Method
     Route::apiResource('payment-methods', 'PaymentMethodApiController');
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-    // Mail Room
-    Route::apiResource('mail-rooms', 'MailRoomApiController');
 
     // Template
     Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
     Route::apiResource('templates', 'TemplateApiController');
-=======
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-=======
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-=======
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-=======
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
+
+    // Campaign Results
+    Route::apiResource('campaign-results', 'CampaignResultsApiController');
+
+    // Results Tracking
+    Route::apiResource('results-trackings', 'ResultsTrackingApiController');
+
+    // Campaign
+    Route::post('campaigns/media', 'CampaignApiController@storeMedia')->name('campaigns.storeMedia');
+    Route::apiResource('campaigns', 'CampaignApiController');
+
+    // Subscriber
+    Route::apiResource('subscribers', 'SubscriberApiController');
+
+    // Subscription
+    Route::apiResource('subscriptions', 'SubscriptionApiController');
+
 });

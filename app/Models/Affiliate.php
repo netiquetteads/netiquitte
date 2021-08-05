@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
- 
 
 class Affiliate extends Model implements HasMedia
 {
@@ -30,18 +29,22 @@ class Affiliate extends Model implements HasMedia
     ];
 
     protected $dates = [
+        'last_login',
+        'time_created',
+        'time_saved',
         'created_at',
         'updated_at',
-        'deleted_at'      
+        'deleted_at',
     ];
 
     protected $fillable = [
-        'account_status',
+        'account_status_id',
         'name',
         'everflow_account',
         'account_manager_name',
         'account_executive_name',
         'balance',
+        'last_login',
         'network_country_code',
         'global_tracking_domain_url',
         'published',
@@ -49,13 +52,12 @@ class Affiliate extends Model implements HasMedia
         'network_affiliateid',
         'account_executiveid',
         'account_managerid',
+        'time_created',
+        'time_saved',
         'networkid',
         'created_at',
         'updated_at',
         'deleted_at',
-        'last_login',
-        'time_created',
-        'time_saved',
         'team_id',
     ];
 

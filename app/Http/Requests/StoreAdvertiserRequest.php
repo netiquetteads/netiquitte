@@ -11,8 +11,8 @@ class StoreAdvertiserRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
-            //Gate::allows('advertiser_create');
+         return true;
+        //return Gate::allows('advertiser_create');
     }
 
     public function rules()
@@ -118,6 +118,14 @@ class StoreAdvertiserRequest extends FormRequest
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
+            ],
+            'sales_manager_name' => [
+                'string',
+                'nullable',
+            ],
+            'today_revenue' => [
+                'string',
+                'nullable',
             ],
         ];
     }

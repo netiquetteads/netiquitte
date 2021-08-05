@@ -11,7 +11,8 @@ class UpdateUserRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('user_edit');
+        return true;
+            //Gate::allows('user_edit');
     }
 
     public function rules()
