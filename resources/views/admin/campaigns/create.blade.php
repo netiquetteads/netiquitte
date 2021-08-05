@@ -1,5 +1,10 @@
 @extends('layouts.admin')
+
+@section('styles')  @endsection
+
+
 @section('content')
+
 
 <div class="card">
     <div class="card-header">
@@ -35,7 +40,186 @@
             </div>
             <div class="form-group">
                 <label for="content">{{ trans('cruds.campaign.fields.content') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="content">{!! old('content') !!}</textarea>
+
+
+
+                <textarea class="form-control ckeditor {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="content">
+
+                    {{-- <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+                        <tbody>
+                            <tr>
+                                <td><img alt="" src="https://www.netiquetteads.com/assets/mail/netiquette-white-coverphoto-01.jpg" style="width: 450px; height: 100px;" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Hey&nbsp;{FirstName}</p>
+                                    <p>write content here</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    &nbsp;<br/>
+                    &nbsp;<br/>
+                    <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <center><img alt="" src="https://www.netiquetteads.com/assets/mail/staytuned.JPG" /></center>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <center><a href="https://www.facebook.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_fb.png" style="width: 50px; height: 50px;" /></a></center>
+                                </td>
+                                <td>
+                                    <center><a href="https://www.instagram.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_ig.png" style="width: 50px; height: 50px;" /></a></center>
+                                </td>
+                                <td>
+                                    <center><a href="https://www.linkedin.com/company/netiquette-ads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_linkedin.png" style="width: 50px; height: 50px;" /></a></center>
+                                </td>
+                                <td>
+                                    <center><a href="https://twitter.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_twitter.png" style="width: 50px; height: 50px;" /></a></center>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="netiquetteads.com/unsubscribe.php?id={ID}">unsubscribe here</a><br/>
+                        Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
+                    </p>
+
+--}}
+
+{{--                     <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+        <tr>
+            <td><img alt="" src="https://www.netiquetteads.com/assets/mail/netiquette-white-coverphoto-01.jpg" style="width: 450px; height: 100px;" /></td>
+        </tr>
+    </tbody>
+</table>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+        <tr>
+            <td>
+            <p>Hey&nbsp;{FirstName}</p>
+
+            <p>write content here</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+    </tbody>
+</table>
+
+<p>&nbsp;<br />
+&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+        <tr>
+            <td>
+            <center><img alt="" src="https://www.netiquetteads.com/assets/mail/staytuned.JPG" /></center>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+        <tr>
+            <td>
+            <center><a href="https://www.facebook.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_fb.png" style="width: 50px; height: 50px;" /></a></center>
+            </td>
+            <td>
+            <center><a href="https://www.instagram.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_ig.png" style="width: 50px; height: 50px;" /></a></center>
+            </td>
+            <td>
+            <center><a href="https://www.linkedin.com/company/netiquette-ads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_linkedin.png" style="width: 50px; height: 50px;" /></a></center>
+            </td>
+            <td>
+            <center><a href="https://twitter.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_twitter.png" style="width: 50px; height: 50px;" /></a></center>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p style="text-align: center;">If you no longer wish to receive our emails, please <a href="netiquetteads.com/unsubscribe.php?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
+690 A West Montrose Street, Clermont FL, USA, 34711<br />
+Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p> --}}
+
+
+
+
+
+      <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+        <tr>
+            <td><img alt="" src="https://www.netiquetteads.com/assets/mail/netiquette-white-coverphoto-01.jpg" style="width: 450px; height: 100px;" /></td>
+        </tr>
+    </tbody>
+</table>
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+        <tr>
+            <td>
+            <p>Hey&nbsp;{FirstName}</p>
+
+            <p>write content here</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+            
+            $OfferBodyHTML
+            
+&nbsp;<br/>
+&nbsp;<br/>
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+        <tr>
+            <td>
+            <center><img alt="" src="https://www.netiquetteads.com/assets/mail/staytuned.JPG" /></center>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+    <tbody>
+        <tr>
+            <td>
+            <center><a href="https://www.facebook.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_fb.png" style="width: 50px; height: 50px;" /></a></center>
+            </td>
+            <td>
+            <center><a href="https://www.instagram.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_ig.png" style="width: 50px; height: 50px;" /></a></center>
+            </td>
+            <td>
+            <center><a href="https://www.linkedin.com/company/netiquette-ads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_linkedin.png" style="width: 50px; height: 50px;" /></a></center>
+            </td>
+            <td>
+            <center><a href="https://twitter.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_twitter.png" style="width: 50px; height: 50px;" /></a></center>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p style="text-align: center;">If you no longer wish to receive our emails, please <a href="netiquetteads.com/unsubscribe.php?id={ID}&type={AcctType}">unsubscribe here</a><br/>
+690 A West Montrose Street, Clermont FL, USA, 34711<br />
+Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p> 
+
+</textarea> 
+
+
                 @if($errors->has('content'))
                     <span class="text-danger">{{ $errors->first('content') }}</span>
                 @endif
@@ -230,4 +414,8 @@
     }
 }
 </script>
+
+
+
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
 @endsection
