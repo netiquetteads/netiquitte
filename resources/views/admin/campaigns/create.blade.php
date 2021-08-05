@@ -15,6 +15,18 @@
         <form method="POST" action="{{ route("admin.campaigns.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label for="selected_template_id">{{ trans('cruds.campaign.fields.selected_template') }}</label>
+                <select class="form-control select2 selectTemplate {{ $errors->has('selected_template') ? 'is-invalid' : '' }}" name="selected_template_id" id="selected_template_id">
+                    @foreach($selected_templates as $id => $entry)
+                        <option value="{{ $id }}" {{ old('selected_template_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('selected_template'))
+                    <span class="text-danger">{{ $errors->first('selected_template') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.campaign.fields.selected_template_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="name">{{ trans('cruds.campaign.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}">
                 @if($errors->has('name'))
@@ -246,18 +258,7 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="selected_template_id">{{ trans('cruds.campaign.fields.selected_template') }}</label>
-                <select class="form-control select2 {{ $errors->has('selected_template') ? 'is-invalid' : '' }}" name="selected_template_id" id="selected_template_id">
-                    @foreach($selected_templates as $id => $entry)
-                        <option value="{{ $id }}" {{ old('selected_template_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('selected_template'))
-                    <span class="text-danger">{{ $errors->first('selected_template') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.campaign.fields.selected_template_helper') }}</span>
-            </div>
+           
             <div class="form-group">
                 <label for="subs">{{ trans('cruds.campaign.fields.subs') }}</label>
                 <input class="form-control {{ $errors->has('subs') ? 'is-invalid' : '' }}" type="number" name="subs" id="subs" value="{{ old('subs', '0') }}" step="1">
@@ -296,8 +297,34 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 @endsection
 
 @section('scripts')
+
+
 <script>
-    $(document).ready(function () {
+    $('.selectTemplate').change(function(){
+
+        var tempId=$(this).val();
+        var _token = $('input[name="_token"]').val();
+          $.ajax({
+            url:"{{ route('admin.campaigns.getTemplateData') }}",
+            dataType:'json',
+            method:"POST",
+            data:{id:tempId, _token:_token},
+            success:function(data){
+                console.log('data',data);
+              $('#email_subject').val(data.email_subject);
+              $('#from_email').val(data.from_email);
+
+              setDataFromTheEditor(data.content);
+    
+              $("#campaign_offer_id").select2("val", ""+data.offer_selection_id+"");
+            }
+          });
+
+    });
+</script>
+
+<script>
+    // $(document).ready(function () {
   function SimpleUploadAdapter(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
       return {
@@ -349,15 +376,27 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
     }
   }
 
+  let theEditor;
+
   var allEditors = document.querySelectorAll('.ckeditor');
   for (var i = 0; i < allEditors.length; ++i) {
     ClassicEditor.create(
       allEditors[i], {
         extraPlugins: [SimpleUploadAdapter]
       }
-    );
+    ) .then( editor => {
+        theEditor = editor; // Save for later use.
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
   }
-});
+
+
+function setDataFromTheEditor(data) {
+    theEditor.setData(data);
+}
+// });
 </script>
 
 <script>

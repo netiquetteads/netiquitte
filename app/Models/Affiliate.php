@@ -39,6 +39,7 @@ class Affiliate extends Model implements HasMedia
 
     protected $fillable = [
         'account_status_id',
+        'account_status',
         'name',
         'everflow_account',
         'account_manager_name',

@@ -21,7 +21,6 @@
                     <th width="10">
 
                     </th>
-<<<<<<< HEAD
                     {{-- <th> {{ trans('cruds.offer.fields.id') }} </th>  --}}
                     <th> {{ trans('cruds.offer.fields.name') }} </th> 
                     {{-- <th> {{ trans('cruds.offer.fields.source') }} </th>  --}}
@@ -29,11 +28,10 @@
                     <th> {{ trans('cruds.offer.fields.revenue') }} </th> 
                     <th> {{ trans('cruds.offer.fields.offer_status') }} </th> 
                     <th> {{ trans('cruds.offer.fields.margin') }} </th> 
-                    <th> {{ trans('cruds.offer.fields.affiliate') }} </th> 
+                    {{--  <th> {{ trans('cruds.offer.fields.affiliate') }} </th> 
                     <th> {{ trans('cruds.offer.fields.today_clicks') }} </th> 
-                    <th> {{ trans('cruds.offer.fields.payout_amount') }} </th> 
-=======
-                    <th>
+                    <th> {{ trans('cruds.offer.fields.payout_amount') }} </th>   --}}
+                    {{--  <th>
                         {{ trans('cruds.offer.fields.id') }}
                     </th>
                     <th>
@@ -53,17 +51,7 @@
                     </th>
                     <th>
                         {{ trans('cruds.offer.fields.margin') }}
-                    </th>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-=======
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-=======
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
-=======
->>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
+                    </th>  --}}
                     <th>
                         &nbsp;
                     </th>

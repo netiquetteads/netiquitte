@@ -363,7 +363,7 @@
                         </ul>
                     </li>
                 @endcan
-                <li class="nav-item">
+                {{--  <li class="nav-item">
                     <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "active" : "" }}">
                         <i class="fas fa-fw fa-calendar nav-icon">
 
@@ -372,7 +372,7 @@
                             {{ trans('global.systemCalendar') }}
                         </p>
                     </a>
-                </li>
+                </li>  --}}
                 {{-- @can('tool_access') --}}
                 <li class="nav-item has-treeview {{ request()->is("admin/tools*") ? "menu-open" : "" }} {{ request()->is("admin/system-calendar") ? "menu-open" : "" }} {{ request()->is("admin/messenger") ? "menu-open" : "" }}">
                     <a href="{{ route("admin.mail-rooms.index") }}" class="nav-link nav-dropdown-toggle {{ request()->is("admin/mail-rooms") || request()->is("admin/mail-rooms/*") ? "active" : "" }}">

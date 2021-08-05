@@ -26,7 +26,7 @@ class EverflowApiController extends Controller
 	            'search_terms' => [array('search_type'=>'name','value'=>"")],
 	            // 'filters' => array('account_status'=>'active'),
 	        ]), 'json')
-	        ->post('https://api.eflow.team/v1/networks/advertiserstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=100');
+	        ->post('https://api.eflow.team/v1/networks/advertiserstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
 
 	        $results=$response->json();
 
@@ -75,7 +75,7 @@ class EverflowApiController extends Controller
 	            'search_terms' => [array('search_type'=>'name','value'=>"")],
 	            // 'filters' => array('account_status'=>'active'),
 	        ]), 'json')
-	        ->post('https://api.eflow.team/v1/networks/affiliatestable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager');
+	        ->post('https://api.eflow.team/v1/networks/affiliatestable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
 
 	        $results=$response->json();
 
@@ -138,7 +138,7 @@ class EverflowApiController extends Controller
 	            'search_terms' => [array('search_type'=>'name','value'=>"")],
 	            // 'filters' => array('account_status'=>'active'),
 	        ]), 'json')
-	        ->post('https://api.eflow.team/v1/networks/offerstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=100');
+	        ->post('https://api.eflow.team/v1/networks/offerstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
 
 	        $results=$response->json();
 

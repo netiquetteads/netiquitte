@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Mail\CampaignMail;
 
 class CampaignController extends Controller
 {
@@ -97,6 +98,10 @@ class CampaignController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $campaign->id]);
         }
 
+        $input = ['message' => $request->content,'subject' => $request->email_subject];
+
+        \Mail::to('tpsvishwas78@gmail.com')->send(new CampaignMail($input));
+
         return redirect()->route('admin.campaigns.index');
     }
 
@@ -166,5 +171,12 @@ class CampaignController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function getTemplateData(Request $request)
+    {
+        $template=Template::where('id',$request->id)->first();
+
+        echo json_encode($template);
     }
 }

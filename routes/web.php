@@ -22,6 +22,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('affiliates/media', 'AffiliateController@storeMedia')->name('affiliates.storeMedia');
     Route::post('affiliates/ckmedia', 'AffiliateController@storeCKEditorImages')->name('affiliates.storeCKEditorImages');
     Route::resource('affiliates', 'AffiliateController');
+    Route::get('affiliate/{status?}', 'AffiliateController@index');
+    Route::get('sendmail', 'AffiliateController@sendMail');
 
     // Account Status
     Route::delete('account-statuses/destroy', 'AccountStatusController@massDestroy')->name('account-statuses.massDestroy');
@@ -32,6 +34,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('advertisers/media', 'AdvertiserController@storeMedia')->name('advertisers.storeMedia');
     Route::post('advertisers/ckmedia', 'AdvertiserController@storeCKEditorImages')->name('advertisers.storeCKEditorImages');
     Route::resource('advertisers', 'AdvertiserController');
+    Route::get('advertiser/{status?}', 'AdvertiserController@index');
 
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
@@ -58,8 +61,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('labels', 'LabelController');
 
     // Offers
-    Route::delete('offers/destroy', 'OffersController@massDestroy')->name('offers.massDestroy');
-    Route::resource('offers', 'OffersController');
+    Route::delete('offers/destroy', 'OfferController@massDestroy')->name('offers.massDestroy');
+    Route::resource('offers', 'OfferController');
+    Route::get('offer/{status?}', 'OfferController@index');
 
     // Mail Room
     Route::delete('mail-rooms/destroy', 'MailRoomController@massDestroy')->name('mail-rooms.massDestroy');
@@ -102,6 +106,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('campaigns/media', 'CampaignController@storeMedia')->name('campaigns.storeMedia');
     Route::post('campaigns/ckmedia', 'CampaignController@storeCKEditorImages')->name('campaigns.storeCKEditorImages');
     Route::resource('campaigns', 'CampaignController');
+    Route::post('getTemplateData', 'CampaignController@getTemplateData')->name('campaigns.getTemplateData');
 
     // Subscriber
     Route::delete('subscribers/destroy', 'SubscriberController@massDestroy')->name('subscribers.massDestroy');
