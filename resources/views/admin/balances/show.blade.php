@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.balance.fields.company_name') }}
+                        </th>
+                        <td>
+                            {{ $balance->company_name->company ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.balance.fields.revenue') }}
                         </th>
                         <td>
@@ -49,10 +57,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.balance.fields.publisher_notes') }}
+                            {{ trans('cruds.balance.fields.payment_status') }}
                         </th>
                         <td>
-                            {{ $balance->publisher_notes }}
+                            {{ $balance->payment_status->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -65,10 +73,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.balance.fields.payment_status') }}
+                            {{ trans('cruds.balance.fields.publisher_notes') }}
                         </th>
                         <td>
-                            {{ $balance->payment_status->name ?? '' }}
+                            {{ $balance->publisher_notes }}
                         </td>
                     </tr>
                 </tbody>

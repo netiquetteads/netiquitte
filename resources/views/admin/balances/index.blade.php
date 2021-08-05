@@ -25,6 +25,9 @@
                         {{ trans('cruds.balance.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.balance.fields.company_name') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.balance.fields.revenue') }}
                     </th>
                     <th>
@@ -34,10 +37,10 @@
                         {{ trans('cruds.balance.fields.profit') }}
                     </th>
                     <th>
-                        {{ trans('cruds.balance.fields.payment_method') }}
+                        {{ trans('cruds.balance.fields.payment_status') }}
                     </th>
                     <th>
-                        {{ trans('cruds.balance.fields.payment_status') }}
+                        {{ trans('cruds.balance.fields.payment_method') }}
                     </th>
                     <th>
                         &nbsp;
@@ -96,11 +99,12 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'company_name_company', name: 'company_name.company' },
 { data: 'revenue', name: 'revenue' },
 { data: 'payout', name: 'payout' },
 { data: 'profit', name: 'profit' },
-{ data: 'payment_method_name', name: 'payment_method.name' },
 { data: 'payment_status_name', name: 'payment_status.name' },
+{ data: 'payment_method_name', name: 'payment_method.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

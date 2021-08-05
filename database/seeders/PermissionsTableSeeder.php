@@ -96,193 +96,166 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 22,
-                'title' => 'audit_log_show',
-            ],
-            [
-                'id'    => 23,
-                'title' => 'audit_log_access',
-            ],
-            [
-                'id'    => 24,
                 'title' => 'user_alert_create',
             ],
             [
-                'id'    => 25,
+                'id'    => 23,
                 'title' => 'user_alert_show',
             ],
             [
-                'id'    => 26,
+                'id'    => 24,
                 'title' => 'user_alert_delete',
             ],
             [
-                'id'    => 27,
+                'id'    => 25,
                 'title' => 'user_alert_access',
             ],
             [
+                'id'    => 26,
+                'title' => 'account_create',
+            ],
+            [
+                'id'    => 27,
+                'title' => 'account_edit',
+            ],
+            [
                 'id'    => 28,
-                'title' => 'setting_access',
+                'title' => 'account_show',
             ],
             [
                 'id'    => 29,
-                'title' => 'affiliate_create',
+                'title' => 'account_delete',
             ],
             [
                 'id'    => 30,
-                'title' => 'affiliate_edit',
+                'title' => 'account_access',
             ],
             [
                 'id'    => 31,
-                'title' => 'affiliate_show',
-            ],
-            [
-                'id'    => 32,
-                'title' => 'affiliate_delete',
-            ],
-            [
-                'id'    => 33,
-                'title' => 'affiliate_access',
-            ],
-            [
-                'id'    => 34,
-                'title' => 'account_status_create',
-            ],
-            [
-                'id'    => 35,
-                'title' => 'account_status_edit',
-            ],
-            [
-                'id'    => 36,
-                'title' => 'account_status_show',
-            ],
-            [
-                'id'    => 37,
-                'title' => 'account_status_delete',
-            ],
-            [
-                'id'    => 38,
-                'title' => 'account_status_access',
-            ],
-            [
-                'id'    => 39,
-                'title' => 'advertiser_create',
-            ],
-            [
-                'id'    => 40,
-                'title' => 'advertiser_edit',
-            ],
-            [
-                'id'    => 41,
-                'title' => 'advertiser_show',
-            ],
-            [
-                'id'    => 42,
-                'title' => 'advertiser_delete',
-            ],
-            [
-                'id'    => 43,
-                'title' => 'advertiser_access',
-            ],
-            [
-                'id'    => 44,
-                'title' => 'label_create',
-            ],
-            [
-                'id'    => 45,
-                'title' => 'label_edit',
-            ],
-            [
-                'id'    => 46,
-                'title' => 'label_show',
-            ],
-            [
-                'id'    => 47,
-                'title' => 'label_delete',
-            ],
-            [
-                'id'    => 48,
-                'title' => 'label_access',
-            ],
-            [
-                'id'    => 49,
                 'title' => 'offer_create',
             ],
             [
-                'id'    => 50,
+                'id'    => 32,
                 'title' => 'offer_edit',
             ],
             [
-                'id'    => 51,
+                'id'    => 33,
                 'title' => 'offer_show',
             ],
             [
-                'id'    => 52,
+                'id'    => 34,
                 'title' => 'offer_delete',
             ],
             [
-                'id'    => 53,
+                'id'    => 35,
                 'title' => 'offer_access',
             ],
             [
-                'id'    => 54,
+                'id'    => 36,
+                'title' => 'mail_room_create',
+            ],
+            [
+                'id'    => 37,
+                'title' => 'mail_room_edit',
+            ],
+            [
+                'id'    => 38,
+                'title' => 'mail_room_show',
+            ],
+            [
+                'id'    => 39,
+                'title' => 'mail_room_delete',
+            ],
+            [
+                'id'    => 40,
+                'title' => 'mail_room_access',
+            ],
+            [
+                'id'    => 41,
+                'title' => 'template_create',
+            ],
+            [
+                'id'    => 42,
+                'title' => 'template_edit',
+            ],
+            [
+                'id'    => 43,
+                'title' => 'template_show',
+            ],
+            [
+                'id'    => 44,
+                'title' => 'template_delete',
+            ],
+            [
+                'id'    => 45,
+                'title' => 'template_access',
+            ],
+            [
+                'id'    => 46,
                 'title' => 'balance_create',
             ],
             [
-                'id'    => 55,
+                'id'    => 47,
                 'title' => 'balance_edit',
             ],
             [
-                'id'    => 56,
+                'id'    => 48,
                 'title' => 'balance_show',
             ],
             [
-                'id'    => 57,
+                'id'    => 49,
                 'title' => 'balance_delete',
             ],
             [
-                'id'    => 58,
+                'id'    => 50,
                 'title' => 'balance_access',
             ],
             [
-                'id'    => 59,
+                'id'    => 51,
+                'title' => 'setting_access',
+            ],
+            [
+                'id'    => 52,
                 'title' => 'payment_status_create',
             ],
             [
-                'id'    => 60,
+                'id'    => 53,
                 'title' => 'payment_status_edit',
             ],
             [
-                'id'    => 61,
+                'id'    => 54,
                 'title' => 'payment_status_show',
             ],
             [
-                'id'    => 62,
+                'id'    => 55,
                 'title' => 'payment_status_delete',
             ],
             [
-                'id'    => 63,
+                'id'    => 56,
                 'title' => 'payment_status_access',
             ],
             [
-                'id'    => 64,
+                'id'    => 57,
                 'title' => 'payment_method_create',
             ],
             [
-                'id'    => 65,
+                'id'    => 58,
                 'title' => 'payment_method_edit',
             ],
             [
-                'id'    => 66,
+                'id'    => 59,
                 'title' => 'payment_method_show',
             ],
             [
-                'id'    => 67,
+                'id'    => 60,
                 'title' => 'payment_method_delete',
             ],
             [
-                'id'    => 68,
+                'id'    => 61,
                 'title' => 'payment_method_access',
             ],
             [
+<<<<<<< HEAD
                 'id'    => 69,
                 'title' => 'mail_room_create',
             ],
@@ -324,6 +297,9 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 79,
+=======
+                'id'    => 62,
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
                 'title' => 'profile_password_edit',
             ],
         ];

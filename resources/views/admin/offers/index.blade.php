@@ -21,6 +21,7 @@
                     <th width="10">
 
                     </th>
+<<<<<<< HEAD
                     {{-- <th> {{ trans('cruds.offer.fields.id') }} </th>  --}}
                     <th> {{ trans('cruds.offer.fields.name') }} </th> 
                     {{-- <th> {{ trans('cruds.offer.fields.source') }} </th>  --}}
@@ -31,6 +32,29 @@
                     <th> {{ trans('cruds.offer.fields.affiliate') }} </th> 
                     <th> {{ trans('cruds.offer.fields.today_clicks') }} </th> 
                     <th> {{ trans('cruds.offer.fields.payout_amount') }} </th> 
+=======
+                    <th>
+                        {{ trans('cruds.offer.fields.id') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.source') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.payout') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.revenue') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.offer_status') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.offer.fields.margin') }}
+                    </th>
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
                     <th>
                         &nbsp;
                     </th>
@@ -101,9 +125,6 @@
 { data: 'revenue', name: 'revenue' },
 { data: 'offer_status', name: 'offer_status' },
 { data: 'margin', name: 'margin' },
-{ data: 'affiliate_name', name: 'affiliate.name' },
-{ data: 'today_clicks', name: 'today_clicks' },
-{ data: 'payout_amount', name: 'payout_amount' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

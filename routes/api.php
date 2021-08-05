@@ -20,22 +20,18 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     // Team
     Route::apiResource('teams', 'TeamApiController');
 
-    // Affiliate
-    Route::post('affiliates/media', 'AffiliateApiController@storeMedia')->name('affiliates.storeMedia');
-    Route::apiResource('affiliates', 'AffiliateApiController');
+    // Account
+    Route::apiResource('accounts', 'AccountApiController');
 
-    // Account Status
-    Route::apiResource('account-statuses', 'AccountStatusApiController');
+    // Offers
+    Route::apiResource('offers', 'OffersApiController');
 
-    // Advertiser
-    Route::post('advertisers/media', 'AdvertiserApiController@storeMedia')->name('advertisers.storeMedia');
-    Route::apiResource('advertisers', 'AdvertiserApiController');
+    // Mail Room
+    Route::apiResource('mail-rooms', 'MailRoomApiController');
 
-    // Label
-    Route::apiResource('labels', 'LabelApiController');
-
-    // Offer
-    Route::apiResource('offers', 'OfferApiController');
+    // Template
+    Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
+    Route::apiResource('templates', 'TemplateApiController');
 
     // Balances
     Route::apiResource('balances', 'BalancesApiController');
@@ -45,6 +41,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
 
     // Payment Method
     Route::apiResource('payment-methods', 'PaymentMethodApiController');
+<<<<<<< HEAD
 
     // Mail Room
     Route::apiResource('mail-rooms', 'MailRoomApiController');
@@ -52,4 +49,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     // Template
     Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
     Route::apiResource('templates', 'TemplateApiController');
+=======
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 });
