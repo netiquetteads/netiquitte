@@ -276,57 +276,33 @@
                         </a>
                     </li>
                 @endcan --}}
-  @can('mail_room_access')
-    <li class="nav-item has-treeview {{ request()->is("admin/templates*") ? "menu-open" : "" }} {{ request()->is("admin/mail-histories*") ? "menu-open" : "" }} {{ request()->is("admin/opened-mails*") ? "menu-open" : "" }}">
-        <a class="nav-link nav-dropdown-toggle" href="#">
-            <i class="fa-fw nav-icon fas fa-at">
+                @can('mail_room_access')
+                    <li class="nav-item has-treeview {{ request()->is("admin/mail-rooms*") ? "menu-open" : "" }} {{ request()->is("admin/templates*") ? "menu-open" : "" }}">
+                        <a href="#" class="nav-link nav-dropdown-toggle {{ request()->is("admin/mail-rooms") || request()->is("admin/mail-rooms/*") ? "active" : "" }}">
+                            <i class="fa-fw nav-icon fas fa-at">
 
-            </i>
-            <p>
-                {{ trans('cruds.mailRoom.title') }}
-                <i class="right fa fa-fw fa-angle-left nav-icon"></i>
-            </p>
-        </a>
-        <ul class="nav nav-treeview">
-            @can('template_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.templates.index") }}" class="nav-link {{ request()->is("admin/templates") || request()->is("admin/templates/*") ? "active" : "" }}">
-                        <i class="fa-fw nav-icon far fa-envelope">
-
-                        </i>
-                        <p>
-                            {{ trans('cruds.template.title') }}
-                        </p>
-                    </a>
-                </li>
-            @endcan
-            @can('mail_history_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.mail-histories.index") }}" class="nav-link {{ request()->is("admin/mail-histories") || request()->is("admin/mail-histories/*") ? "active" : "" }}">
-                        <i class="fa-fw nav-icon fas fa-cogs">
-
-                        </i>
-                        <p>
-                            {{ trans('cruds.mailHistory.title') }}
-                        </p>
-                    </a>
-                </li>
-            @endcan
-            @can('opened_mail_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.opened-mails.index") }}" class="nav-link {{ request()->is("admin/opened-mails") || request()->is("admin/opened-mails/*") ? "active" : "" }}">
-                        <i class="fa-fw nav-icon fas fa-cogs">
-
-                        </i>
-                        <p>
-                            {{ trans('cruds.openedMail.title') }}
-                        </p>
-                    </a>
-                </li>
-            @endcan
-        </ul>
-    </li>
-@endcan
+                            </i>
+                            <p>
+                                {{ trans('cruds.mailRoom.title') }}
+                                <i class="right fa fa-fw fa-angle-left nav-icon"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('template_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.templates.index") }}" class="nav-link {{ request()->is("admin/templates") || request()->is("admin/templates/*") ? "active" : "" }}">
+                                    {{-- <i class="fa-fw nav-icon far fa-envelope">
+        
+                                    </i> --}}
+                                    <p>
+                                        {{ trans('cruds.template.title') }}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                        </ul>
+                    </li>
+                @endcan
                 
                 @can('tool_access')
                 <li class="nav-item has-treeview {{ request()->is("admin/tools*") ? "menu-open" : "" }} {{ request()->is("admin/system-calendar") ? "menu-open" : "" }} {{ request()->is("admin/messenger") ? "menu-open" : "" }}">
