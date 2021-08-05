@@ -54,6 +54,9 @@
                     <th>
                         {{ trans('cruds.offer.fields.margin') }}
                     </th>
+<<<<<<< HEAD
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
+=======
 >>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
                     <th>
                         &nbsp;

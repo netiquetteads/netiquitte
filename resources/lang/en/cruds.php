@@ -108,6 +108,7 @@ return [
         ],
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
     'setting' => [
         'title'          => 'Settings',
         'title_singular' => 'Setting',
@@ -119,6 +120,11 @@ return [
         'active' => 'Active',
         'inactive' => 'Inactive',
         'suspended' => 'Suspended',
+=======
+    'account' => [
+        'title'          => 'Accounts',
+        'title_singular' => 'Account',
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
     'account' => [
         'title'          => 'Accounts',
@@ -148,6 +154,7 @@ return [
         ],
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
     'accountStatus' => [
         'title'          => 'Account Status',
         'title_singular' => 'Account Status',
@@ -171,6 +178,11 @@ return [
         'active' => 'Active',
         'inactive' => 'Inactive',
         'suspended' => 'Suspended',
+=======
+    'offer' => [
+        'title'          => 'Offers',
+        'title_singular' => 'Offer',
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
     'offer' => [
         'title'          => 'Offers',
@@ -222,6 +234,7 @@ return [
         ],
     ],
 <<<<<<< HEAD
+<<<<<<< HEAD
     'offer' => [
         'title'          => 'Offers',
         'title_singular' => 'Offer',
@@ -230,6 +243,11 @@ return [
         'paused' => 'Paused',
         'pending' => 'Pending',
         'deleted' => 'Deleted',
+=======
+    'template' => [
+        'title'          => 'Template',
+        'title_singular' => 'Template',
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
     'template' => [
         'title'          => 'Template',
@@ -331,6 +349,7 @@ return [
             'deleted_at'            => 'Deleted at',
             'deleted_at_helper'     => ' ',
 <<<<<<< HEAD
+<<<<<<< HEAD
         ],
     ],
     'mailRoom' => [
@@ -387,6 +406,10 @@ return [
             'updated_at_helper'    => ' ',
             'deleted_at'           => 'Deleted at',
             'deleted_at_helper'    => ' ',
+=======
+            'team'                  => 'Team',
+            'team_helper'           => ' ',
+>>>>>>> parent of 232c5d7 (pushing new crud files and migrations)
 =======
             'team'                  => 'Team',
             'team_helper'           => ' ',
