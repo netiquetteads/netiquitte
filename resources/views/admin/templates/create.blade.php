@@ -50,20 +50,18 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.offer_image_helper') }}</span>
             </div>
-
             <div class="form-group">
                 <label for="offer_selection_id">{{ trans('cruds.template.fields.offer_selection') }}</label>
                 <select class="form-control select2 {{ $errors->has('offer_selection') ? 'is-invalid' : '' }}" name="offer_selection_id" id="offer_selection_id">
-                   {{--  @foreach($offer_selections as $id => $entry)
+                    @foreach($offer_selections as $id => $entry)
                         <option value="{{ $id }}" {{ old('offer_selection_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach --}}
+                    @endforeach
                 </select>
                 @if($errors->has('offer_selection'))
                     <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
             </div>
-            
             <div class="form-group">
                 <label>{{ trans('cruds.template.fields.select_template') }}</label>
                 <select class="form-control {{ $errors->has('select_template') ? 'is-invalid' : '' }}" name="select_template" id="select_template">
