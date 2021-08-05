@@ -21,43 +21,19 @@
                     <th width="10">
 
                     </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.account_status') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.everflow_account') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.published') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.platform_url') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.platform_username') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.affiliate_id_macro') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.attribution_method') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.email_attribution_method') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.advertiser.fields.network_advertiserid') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
+
+                    {{-- <th> {{ trans('cruds.advertiser.fields.id') }} </th>  --}}
+                    <th> {{ trans('cruds.advertiser.fields.name') }} </th> 
+                    <th> {{ trans('cruds.advertiser.fields.account_status') }} </th> 
+                    {{-- <th> {{ trans('cruds.advertiser.fields.everflow_account') }} </th>  --}}
+                    {{-- <th> {{ trans('cruds.advertiser.fields.published') }} </th>  --}}
+                    {{-- <th> {{ trans('cruds.advertiser.fields.platform_url') }} </th>  --}}
+                    {{-- <th> {{ trans('cruds.advertiser.fields.platform_username') }} </th>  --}}
+                    {{-- <th> {{ trans('cruds.advertiser.fields.affiliate_id_macro') }} </th>  --}}
+                    {{-- <th> {{ trans('cruds.advertiser.fields.attribution_method') }} </th>  --}}
+                    {{-- <th> {{ trans('cruds.advertiser.fields.email_attribution_method') }} </th>  --}}
+                    {{-- <th> {{ trans('cruds.advertiser.fields.network_advertiserid') }} </th>  --}}
+                    <th> &nbsp; </th> </tr>
             </thead>
         </table>
     </div>
@@ -119,17 +95,17 @@
     ajax: "{{ $url }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
+// { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'account_status', name: 'account_status' },
-{ data: 'everflow_account', name: 'everflow_account' },
-{ data: 'published', name: 'published' },
-{ data: 'platform_url', name: 'platform_url' },
-{ data: 'platform_username', name: 'platform_username' },
-{ data: 'affiliate_id_macro', name: 'affiliate_id_macro' },
-{ data: 'attribution_method', name: 'attribution_method' },
-{ data: 'email_attribution_method', name: 'email_attribution_method' },
-{ data: 'network_advertiserid', name: 'network_advertiserid' },
+// { data: 'everflow_account', name: 'everflow_account' },
+// { data: 'published', name: 'published' },
+// { data: 'platform_url', name: 'platform_url' },
+// { data: 'platform_username', name: 'platform_username' },
+// { data: 'affiliate_id_macro', name: 'affiliate_id_macro' },
+// { data: 'attribution_method', name: 'attribution_method' },
+// { data: 'email_attribution_method', name: 'email_attribution_method' },
+// { data: 'network_advertiserid', name: 'network_advertiserid' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

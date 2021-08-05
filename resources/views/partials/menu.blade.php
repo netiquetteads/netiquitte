@@ -278,7 +278,7 @@
                 @endcan --}}
                 @can('mail_room_access')
                     <li class="nav-item has-treeview {{ request()->is("admin/mail-rooms*") ? "menu-open" : "" }} {{ request()->is("admin/templates*") ? "menu-open" : "" }}">
-                        <a href="#" class="nav-link nav-dropdown-toggle {{ request()->is("admin/mail-rooms") || request()->is("admin/mail-rooms/*") ? "active" : "" }}">
+                        <a href="{{ route("admin.mail-rooms.index") }}" class="nav-link nav-dropdown-toggle {{ request()->is("admin/mail-rooms") || request()->is("admin/mail-rooms/*") ? "active" : "" }}">
                             <i class="fa-fw nav-icon fas fa-at">
 
                             </i>
@@ -306,7 +306,7 @@
                 
                 @can('tool_access')
                 <li class="nav-item has-treeview {{ request()->is("admin/tools*") ? "menu-open" : "" }} {{ request()->is("admin/system-calendar") ? "menu-open" : "" }} {{ request()->is("admin/messenger") ? "menu-open" : "" }}">
-                    <a href="#" class="nav-link nav-dropdown-toggle {{ request()->is("admin/mail-rooms") || request()->is("admin/mail-rooms/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.mail-rooms.index") }}" class="nav-link nav-dropdown-toggle {{ request()->is("admin/mail-rooms") || request()->is("admin/mail-rooms/*") ? "active" : "" }}">
                         <i class="fa-fw nav-icon fas fa-cogs">
 
                         </i>

@@ -21,24 +21,12 @@
                     <th width="10">
 
                     </th>
-                    <th>
-                        {{ trans('cruds.affiliate.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.affiliate.fields.account_status') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.affiliate.fields.logo') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.affiliate.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.affiliate.fields.everflow_account') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.affiliate.fields.published') }}
-                    </th>
+                    {{-- <th> {{ trans('cruds.affiliate.fields.id') }} </th>  --}}
+                    <th> {{ trans('cruds.affiliate.fields.account_status') }} </th> 
+                    {{-- <th> {{ trans('cruds.affiliate.fields.logo') }} </th>  --}}
+                    <th> {{ trans('cruds.affiliate.fields.name') }} </th> 
+                    {{-- <th> {{ trans('cruds.affiliate.fields.everflow_account') }} </th>  --}}
+                    {{-- <th> {{ trans('cruds.affiliate.fields.published') }} </th>  --}}
                     <th>
                         &nbsp;
                     </th>
@@ -104,12 +92,12 @@
     ajax: "{{ $url }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
+// { data: 'id', name: 'id' },
 { data: 'account_status', name: 'account_status' },
-{ data: 'logo', name: 'logo', sortable: false, searchable: false },
+// { data: 'logo', name: 'logo', sortable: false, searchable: false },
 { data: 'name', name: 'name' },
-{ data: 'everflow_account', name: 'everflow_account' },
-{ data: 'published', name: 'published' },
+// { data: 'everflow_account', name: 'everflow_account' },
+// { data: 'published', name: 'published' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

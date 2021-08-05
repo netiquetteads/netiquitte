@@ -34,12 +34,6 @@
                         {{ trans('cruds.template.fields.offer_image') }}
                     </th>
                     <th>
-                        {{ trans('cruds.template.fields.offer_selection') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.template.fields.select_template') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -99,8 +93,6 @@
 { data: 'name', name: 'name' },
 { data: 'from_email', name: 'from_email' },
 { data: 'offer_image', name: 'offer_image', sortable: false, searchable: false },
-{ data: 'offer_selection_name', name: 'offer_selection.name' },
-{ data: 'select_template', name: 'select_template' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

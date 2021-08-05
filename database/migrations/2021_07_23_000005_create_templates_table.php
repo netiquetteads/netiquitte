@@ -14,7 +14,6 @@ class CreateTemplatesTable extends Migration
             $table->string('email_subject')->nullable();
             $table->string('from_email')->nullable();
             $table->longText('content')->nullable();
-            $table->string('select_template')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
