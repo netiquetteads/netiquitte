@@ -13,7 +13,7 @@ class UpdateCampaignRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,30 @@ class UpdateCampaignRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => [
+                'string',
+                'required',
+            ],
+            'email_subject' => [
+                'string',
+                'required',
+            ],
+            'from_email' => [
+                'string',
+                'required',
+            ],
+            'content' => [
+                'string',
+                'nullable',
+            ],
+            'campaign_offer_id' => [
+                'string',
+                'nullable',
+            ],
+            'selected_template_id' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

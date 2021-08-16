@@ -12,16 +12,66 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;    
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::with(['roles', 'team'])->get();
+        if ($request->ajax()) {
+            
+            $query = User::with(['roles', 'team'])->get();
 
-        return view('admin.users.index', compact('users'));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'user_show';
+                $editGate = 'user_edit';
+                $deleteGate = 'user_delete';
+                $crudRoutePart = 'users';
+
+                return view('partials.datatablesActions', compact(
+                'viewGate',
+                'editGate',
+                'deleteGate',
+                'crudRoutePart',
+                'row'
+            ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+            $table->editColumn('email', function ($row) {
+                return $row->email ? $row->email : '';
+            });
+            $table->editColumn('email_verified_at', function ($row) {
+                return $row->email_verified_at ? $row->email_verified_at : '';
+            });
+            $table->editColumn('roles', function ($row) {
+                $labels = [];
+
+                foreach ($row->roles as $role) {
+                    $labels[] = sprintf('<span class="btn btn-outline-primary">%s</span>', $role->title);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'roles']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.users.index');
     }
 
     public function create()
