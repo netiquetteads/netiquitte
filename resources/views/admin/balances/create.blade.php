@@ -12,9 +12,9 @@
             <div class="form-group">
                 <label for="company_name_id">{{ trans('cruds.balance.fields.company_name') }}</label>
                 <select class="form-control select2 {{ $errors->has('company_name') ? 'is-invalid' : '' }}" name="company_name_id" id="company_name_id">
-                    @foreach($company_names as $id => $entry)
+                    {{-- @foreach($company_names as $id => $entry)
                         <option value="{{ $id }}" {{ old('company_name_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
+                    @endforeach --}}
                 </select>
                 @if($errors->has('company_name'))
                     <span class="text-danger">{{ $errors->first('company_name') }}</span>

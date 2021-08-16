@@ -310,17 +310,39 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
             method:"POST",
             data:{id:tempId, _token:_token},
             success:function(data){
-                console.log('data',data);
+                console.log('data',data.offer_image);
               $('#email_subject').val(data.email_subject);
               $('#from_email').val(data.from_email);
 
               setDataFromTheEditor(data.content);
     
               $("#campaign_offer_id").select2("val", ""+data.offer_selection_id+"");
+
+            //   $('#offer_image-dropzone').each(function () {                
+            //     let dropzoneControl = $(this)[0].dropzone;
+            //     if (dropzoneControl) {
+            //         dropzoneControl.destroy();
+            //     }
+            //     });
+                
+
+            //   new Dropzone("#offer_image-dropzone", {
+            //     init: function () {
+            //         var file = data.offer_image;
+            //         this.options.addedfile.call(this, file);
+            //         this.options.thumbnail.call(this, file, file.preview);
+            //         file.previewElement.classList.add('dz-complete');
+            //         $('form').append('<input type="hidden" name="offer_image" value="' + file.file_name + '">');
+            //         this.options.maxFiles = this.options.maxFiles - 1;   
+                           
+            //     }
+            // });
+
             }
           });
 
     });
+
 </script>
 
 <script>
