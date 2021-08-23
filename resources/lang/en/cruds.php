@@ -398,6 +398,7 @@ return [
             'payment_method_helper'  => ' ',
             'payment_status'         => 'Payment Status',
             'payment_status_helper'  => ' ',
+            'company_name'           => 'Company Name',
         ],
     ],
     'paymentStatus' => [

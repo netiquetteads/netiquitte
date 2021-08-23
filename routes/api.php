@@ -7,6 +7,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     Route::post('all-advertiser', 'EverflowApiController@getAllAdvertiser')->name('advertiser.getAllAdvertiser');
     Route::post('all-affiliates', 'EverflowApiController@getAllAffiliates')->name('advertiser.getAllAffiliates');
     Route::post('all-offers', 'EverflowApiController@getAllOffers')->name('advertiser.getAllOffers');
+    Route::get('accounting', 'EverflowApiController@accounting')->name('balance.Accounting');
+    Route::get('AccountingYTD', 'EverflowApiController@AccountingYTD')->name('balance.AccountingYTD');
 
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');

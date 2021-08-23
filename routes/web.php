@@ -78,6 +78,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Balances
     Route::delete('balances/destroy', 'BalancesController@massDestroy')->name('balances.massDestroy');
     Route::resource('balances', 'BalancesController');
+    Route::post('getTabledata', 'BalancesController@getTabledata')->name('balances.getTabledata');
+    Route::post('getModeldata', 'BalancesController@getModeldata')->name('balances.getModeldata');
+    Route::post('SaveAccounting', 'BalancesController@SaveAccounting')->name('balances.SaveAccounting');
+    Route::post('SavePaymentStatus', 'BalancesController@SavePaymentStatus')->name('balances.SavePaymentStatus');
+    Route::post('SavePaymentInfo', 'BalancesController@SavePaymentInfo')->name('balances.SavePaymentInfo');
+    Route::post('SaveNotes', 'BalancesController@SaveNotes')->name('balances.SaveNotes');
 
     // Payment Status
     Route::delete('payment-statuses/destroy', 'PaymentStatusController@massDestroy')->name('payment-statuses.massDestroy');

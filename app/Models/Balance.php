@@ -23,6 +23,20 @@ class Balance extends Model
     ];
 
     protected $fillable = [
+        'affiliate',
+        'affiliate_id',
+        'accounting_year',
+        'accounting_month',
+        'monthly_status',
+        'ach_name',
+        'ach_account',
+        'ach_routing',
+        'wire_name',
+        'wire_account',
+        'wire_routing',
+        'wire_swift',
+        'paypal',
+        'wire_name',
         'revenue',
         'payout',
         'profit',

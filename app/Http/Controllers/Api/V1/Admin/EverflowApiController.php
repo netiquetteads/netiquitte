@@ -11,6 +11,9 @@ use App\Models\Affiliate;
 use App\Models\Offer;
 use App\Models\User;
 use App\Models\AccountStatus;
+use App\Models\BalanceContainer;
+use App\Models\Balance;
+use DateTime;
 
 class EverflowApiController extends Controller
 {
@@ -189,4 +192,246 @@ class EverflowApiController extends Controller
 			], 400);
 		}    
     }
+
+	public function accounting(Request $request)
+	{
+		try{
+
+		$Year = $request->Year;
+		$month = $request->Month;
+		$tmpdate = $Year."-".$month;
+		$monthName =  date("F",strtotime($tmpdate));
+
+		$date = new DateTime($Year.'-'.$month.'-01');
+		$date->modify('first day of this month');
+		$first_day_this_month = $date->format('Y-m-d');
+
+		$date->modify('last day of this month');
+		$last_day_this_month = $date->format('Y-m-d');
+
+		Balance::where('accounting_month',$monthName)->delete();
+
+		$response = Http::withHeaders([
+			'content-type' => 'application/json',
+			'x-eflow-api-key' => env('EF_API_KEY'),
+		])
+		->withBody(json_encode([
+			'from' => $first_day_this_month,
+			'to' => $last_day_this_month,
+			'timezone_id' => 80,
+			'currency_id' => "USD",
+			'query' => array('filters'=>[],'settings'=>array('ignore_fail_traffic'=>false),'metric_filters'=>[],'exclusions'=>[]),
+			'columns' => array(array('column'=>'affiliate'),array('column'=>'offer')),
+		]), 'json')
+		->post('https://api.eflow.team/v1/networks/reporting/entity');
+
+		$results=$response->json();
+
+		$deResp = json_decode($response);
+
+		$MonthlyTotal = $deResp->summary->revenue;
+		$MonthlyPayout = $deResp->summary->payout;
+		$MonthlyProfit = $deResp->summary->profit;
+		$tmpTable = $deResp->table;
+
+		foreach ($tmpTable as $value){
+			//print_r($value);
+			$Affiliate = null;
+			$AffiliateID = null;
+			$Offer = null;
+			$OfferID = null;
+			$Revenue = null;
+			$Payout = null;
+			$Profit = null;
+			$Affiliate = $value->columns[0]->label;
+			$AffiliateID = $value->columns[0]->id;
+			$Offer = $value->columns[1]->label;
+			$OfferID = $value->columns[1]->id;
+			$Revenue = $value->reporting->revenue;
+			$Payout = $value->reporting->payout;
+			$Profit = $value->reporting->profit;
+			
+			$BalanceContainer=new BalanceContainer;
+			$BalanceContainer->time_year=date('Y');
+			$BalanceContainer->time_month=$monthName;
+			$BalanceContainer->affiliate=$Affiliate;
+			$BalanceContainer->affiliate_id=$AffiliateID;
+			$BalanceContainer->offer=$Offer;
+			$BalanceContainer->offer_id=$OfferID;
+			$BalanceContainer->revenue=$Revenue;
+			$BalanceContainer->payout=$Payout;
+			$BalanceContainer->profit=$Profit;
+			$BalanceContainer->save();
+
+		}
+
+		$containers=BalanceContainer::select('affiliate','affiliate_id','time_month','monthly_status')->distinct()->get();
+
+		foreach ($containers as $key => $container) {
+			$Affiliate = $container->affiliate;
+			$AffiliateID = $container->affiliate_id;
+			$Month = $container->time_month;
+			$MonthlyStatus = $container->monthly_status;
+
+			$revenue=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('revenue');
+			$payout=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('payout');
+			$profit=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('profit');
+			
+			$balance = Balance::updateOrCreate(
+				[
+					'affiliate_id' => $AffiliateID,
+					'accounting_year' => $Year,
+					'accounting_month' => $monthName
+				],
+				[
+					'affiliate_id'           => $AffiliateID,
+					'accounting_year'        => $Year,
+					'accounting_month'       => $monthName,
+					'affiliate'              => $Affiliate,
+					'payout'                 => $payout,
+					'revenue'                => $revenue,
+					'profit'                 => $profit,
+				]
+			);
+						
+		}
+
+		BalanceContainer::query()->truncate();
+		return response()->json([
+			"message" => "success",
+			"data" => 'results'
+		], 200);
+
+	} catch (Exception $e) {
+
+		return response()->json([
+			"message" => "No Changes Sincle Last Sync",
+			"Caught Exception" => $e->getMessage()
+		], 400);
+	}   
+	}
+
+	public function AccountingYTD(Request $request)
+	{
+		try{
+
+		$Year = $request->Year;
+		$array = array("01|January", "02|February", "03|March", "04|April","05|May","06|June","07|July ","08|August","09|September","10|October","11|November","12|December");
+		$array = array_combine(range(1, count($array)), array_values($array));
+
+		// return response()->json([
+		// 	"message" => "check",
+		// 	"data" => $date
+		// ], 200);
+
+		foreach ($array as $Month){
+			$tmpMonth = explode("|",$Month);
+			//echo $tmpMonth[0] . " >> " . $tmpMonth[1]."<br>";
+			$MonthNum = $tmpMonth[0];
+			$MonthName = $tmpMonth[1];
+			$month = $MonthNum;
+	
+			$date = new DateTime($Year.'-'.$month.'-01');
+			$date->modify('first day of this month');
+			$first_day_this_month = $date->format('Y-m-d');
+	
+			$date->modify('last day of this month');
+			$last_day_this_month = $date->format('d');
+	
+			$response = Http::withHeaders([
+	            'content-type' => 'application/json',
+	            'x-eflow-api-key' => env('EF_API_KEY'),
+	        ])
+	        ->withBody(json_encode([
+				'from' => $Year."-".$MonthNum."-01",
+				'to' => $Year."-".$MonthNum."-".$last_day_this_month,
+				'timezone_id' => 80,
+				'currency_id' => "USD",
+				'query' => array('filters'=>[],'settings'=>array('ignore_fail_traffic'=>false),'metric_filters'=>[],'exclusions'=>[]),
+				'columns' => array(array('column'=>'affiliate'),array('column'=>'offer')),
+			]), 'json')
+	        ->post('https://api.eflow.team/v1/networks/reporting/entity');
+
+	        $results=$response->json();
+
+			$deResp = json_decode($response);
+			$MonthlyTotal = $deResp->summary->revenue;
+			$MonthlyPayout = $deResp->summary->payout;
+			$MonthlyProfit = $deResp->summary->profit;
+			$tmpTable = $deResp->table;
+
+			foreach ($tmpTable as $value){
+
+				$Affiliate = $value->columns[0]->label;
+				$AffiliateID = $value->columns[0]->id;
+				$Offer = $value->columns[1]->label;
+				$OfferID = $value->columns[1]->id;
+				$Revenue = $value->reporting->revenue;
+				$Payout = $value->reporting->payout;
+				$Profit = $value->reporting->profit;
+
+				$BalanceContainer=new BalanceContainer;
+				$BalanceContainer->time_year=$Year;
+				$BalanceContainer->time_month=$MonthName;
+				$BalanceContainer->affiliate=$Affiliate;
+				$BalanceContainer->affiliate_id=$AffiliateID;
+				$BalanceContainer->offer=$Offer;
+				$BalanceContainer->offer_id=$OfferID;
+				$BalanceContainer->revenue=$Revenue;
+				$BalanceContainer->payout=$Payout;
+				$BalanceContainer->profit=$Profit;
+				$BalanceContainer->save();
+				
+			}
+
+			$containers=BalanceContainer::select('affiliate','affiliate_id','time_month','monthly_status')->distinct()->get();
+
+			foreach ($containers as $key => $container) {
+				$Affiliate = $container->affiliate;
+				$AffiliateID = $container->affiliate_id;
+				$Month = $container->time_month;
+				$MonthlyStatus = $container->monthly_status;
+
+				$revenue=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('revenue');
+				$payout=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('payout');
+				$profit=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('profit');
+				
+				$balance = Balance::updateOrCreate(
+					[
+						'affiliate_id' => $AffiliateID,
+						'accounting_year' => $Year,
+						'accounting_month' => $MonthName
+					],
+					[
+						'affiliate_id'           => $AffiliateID,
+						'accounting_year'        => $Year,
+						'accounting_month'       => $MonthName,
+						'affiliate'              => $Affiliate,
+						'payout'                 => $payout,
+						'revenue'                => $revenue,
+						'profit'                 => $profit,
+					]
+				);
+				
+
+				
+			}
+
+			BalanceContainer::query()->truncate();
+
+		}
+
+			return response()->json([
+				"message" => "success",
+				"data" => 'results'
+			], 200);
+
+		} catch (Exception $e) {
+
+			return response()->json([
+				"message" => "No Changes Sincle Last Sync",
+				"Caught Exception" => $e->getMessage()
+			], 400);
+		}   
+	}
 }

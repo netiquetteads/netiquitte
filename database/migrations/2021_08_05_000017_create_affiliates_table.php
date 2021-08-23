@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint
+
 class CreateAffiliatesTable extends Migration
 {
     public function up()
@@ -25,8 +25,8 @@ class CreateAffiliatesTable extends Migration
             $table->integer('account_executiveid')->nullable();
             $table->integer('account_managerid')->nullable();
             $table->integer('networkid')->nullable();
-	        $table->timestamps('time_created')->nullable();
-	        $table->timestamps('time_saved')->nullable();
+	        $table->string('time_created')->nullable();
+	        $table->string('time_saved')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
