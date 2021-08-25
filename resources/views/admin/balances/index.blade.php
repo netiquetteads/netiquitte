@@ -6,6 +6,7 @@ if($Year == ""){
 ?>
 @extends('layouts.admin')
 @section('content')
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
 <style>
     /* The Modal (background) */
@@ -73,9 +74,11 @@ if($Year == ""){
 <div class="card">
     <div class="card-header">
         Accounting Overview
+        
     </div>
 
     <div class="card-body">
+        <input type="text" name="daterange" id="daterangepicker"> <br><br>
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Balance" id="balanceTable">
             
         </table>
@@ -90,6 +93,42 @@ if($Year == ""){
 
 @section('scripts')
 @parent
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
+<script>
+    $('#daterangepicker').daterangepicker({
+    "showDropdowns": true,
+    // "startDate": "08/18/2021",
+    // "endDate": "08/24/2021"
+    // minDate: moment().subtract(12, 'years')
+    
+}, function(start, end, label) {
+  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+  console.log(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+
+    $.ajax({
+        type: "POST",
+        async:true,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: "{{ route('admin.balances.getTabledata') }}",
+        data: {"Year":{{ $Year }},"start":start.format('YYYY-MM-DD'),"end":end.format('YYYY-MM-DD')},
+        success: function(response){
+            $('#balanceTable').html(response);
+            table = $('.datatable-Balance').DataTable();
+
+            table.clear().draw();
+            // table.rows.add(NewlyCreatedData); // Add new data
+            table.columns.adjust().draw(); // Redraw the DataTable
+        }
+    });
+
+});
+
+// $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+//     console.log(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+//     //   $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+//   });
+</script>
 <script>
     var modal
         function OpenTab(TabToOpen){
