@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateCampaignRequest;
 use App\Models\Campaign;
 use App\Models\Offer;
 use App\Models\Template;
+use App\Models\Account;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -83,11 +84,15 @@ class CampaignController extends Controller
 
         $selected_templates = Template::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates'));
+        $AffiliateCount=Account::where('AccountType',1)->where('AccountStatus','active')->count();
+        $AdvertiserCount=Account::where('AccountType',2)->where('AccountStatus','active')->count();
+
+        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateCount','AdvertiserCount'));
     }
 
     public function store(StoreCampaignRequest $request)
     {
+
         $campaign = Campaign::create($request->all());
 
         if ($request->input('offer_image', false)) {
@@ -98,9 +103,31 @@ class CampaignController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $campaign->id]);
         }
 
-        $input = ['message' => $request->content,'subject' => $request->email_subject];
+        $input = [
+            'message' => $request->content,
+            'subject' => $request->email_subject,
+        ];
 
-        \Mail::to('tpsvishwas78@gmail.com')->send(new CampaignMail($input));
+        if($request->SendingTo==1){
+            $emails=Account::where('AccountType',1)->where('AccountStatus','active')->pluck('EmailAddress')->toArray();
+
+        }else if($request->SendingTo==2){
+            $emails=Account::where('AccountType',2)->where('AccountStatus','active')->pluck('EmailAddress')->toArray();
+        }
+        else if($request->SendingTo==3){
+
+            $emails=env("TEST_EMAIL_TO");
+
+        }else if($request->SendingTo==4){
+
+            $emails=env("DEV_EMAIL_TO");
+            
+        }else{
+            $emails = explode("\n", str_replace("\r", "", $request->SingleEmailBox));
+        }
+
+        \Mail::to($emails)->send(new CampaignMail($input));
+        
 
         return redirect()->route('admin.campaigns.index');
     }

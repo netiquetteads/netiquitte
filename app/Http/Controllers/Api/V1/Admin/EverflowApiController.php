@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\AccountStatus;
 use App\Models\BalanceContainer;
 use App\Models\Balance;
+use App\Models\Account;
 use DateTime;
 use DateInterval;
 use DatePeriod;
@@ -55,6 +56,47 @@ class EverflowApiController extends Controller
 					['name' => $row['account_status']],
 					['name' => $row['account_status']]
 				);
+
+				$response2 = Http::withHeaders([
+					'X-Eflow-API-Key' => env('EF_API_KEY'),
+				])
+				->get('https://api.eflow.team/v1/networks/advertisers/'.$row['network_advertiser_id']);
+	
+				$AffiliateInfo=$response2->object();
+
+				$response3 = Http::withHeaders([
+					'X-Eflow-API-Key' => env('EF_API_KEY'),
+				])
+				->get("https://api.eflow.team/v1/networks/advertisers/".$row['network_advertiser_id']."/users");
+	
+				$AffiliateInfoUser=$response3->object();
+				
+				if ($AffiliateInfoUser->users) {
+					$EmailAddress = $AffiliateInfoUser->users[0]->email;
+					$FirstName = $AffiliateInfoUser->users[0]->first_name;
+					$LastName = $AffiliateInfoUser->users[0]->last_name;
+					$AccountStatus = $AffiliateInfoUser->users[0]->account_status;
+					$Company = $AffiliateInfo->name;
+
+					$account = Account::updateOrCreate(
+						[
+							'PlatformUserID' => $row['network_advertiser_id'],
+							'AccountType' => 2
+						],
+						[
+							'FirstName' 		 => $FirstName,
+							'LastName'           => $LastName,
+							'EmailAddress'       => $EmailAddress,
+							'Company'       	 => $Company,
+							'PlatformUserID'     => $row['network_advertiser_id'],
+							'AccountStatus'  	 => $AccountStatus,
+							'AccountType'        => 2,
+							'SubscribedStatus'   => 'Subscribed',
+						]
+					);
+				}
+				
+
 	        }
 
 	        return response()->json([
@@ -116,6 +158,45 @@ class EverflowApiController extends Controller
 				// 	['name' => $row['account_executive_name']],
 				// 	['name' => $row['account_executive_name']]
 				// );
+
+				$response2 = Http::withHeaders([
+					'X-Eflow-API-Key' => env('EF_API_KEY'),
+				])
+				->get('https://api.eflow.team/v1/networks/affiliates/'.$row['network_affiliate_id']);
+	
+				$AffiliateInfo=$response2->object();
+
+				$response3 = Http::withHeaders([
+					'X-Eflow-API-Key' => env('EF_API_KEY'),
+				])
+				->get("https://api.eflow.team/v1/networks/affiliates/".$row['network_affiliate_id']."/users");
+	
+				$AffiliateInfoUser=$response3->object();
+				
+				if ($AffiliateInfoUser->users) {
+					$EmailAddress = $AffiliateInfoUser->users[0]->email;
+					$FirstName = $AffiliateInfoUser->users[0]->first_name;
+					$LastName = $AffiliateInfoUser->users[0]->last_name;
+					$AccountStatus = $AffiliateInfoUser->users[0]->account_status;
+					$Company = $AffiliateInfo->name;
+
+					$account = Account::updateOrCreate(
+						[
+							'PlatformUserID' => $row['network_affiliate_id'],
+							'AccountType' => 1
+						],
+						[
+							'FirstName' 		 => $FirstName,
+							'LastName'           => $LastName,
+							'EmailAddress'       => $EmailAddress,
+							'Company'       	 => $Company,
+							'PlatformUserID'     => $row['network_affiliate_id'],
+							'AccountStatus'  	 => $AccountStatus,
+							'AccountType'        => 1,
+							'SubscribedStatus'   => 'Subscribed',
+						]
+					);
+				}
 
 	        }
 

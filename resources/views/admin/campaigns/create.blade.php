@@ -50,6 +50,49 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.from_email_helper') }}</span>
             </div>
+            <label for="SendingTo">Send To:</label><br/>
+			<div class="form-check">
+				&nbsp;
+				<label class="radio-inline" for="SendingTo1">
+				<input type="radio" name="SendingTo" id="SendingTo1" value="1">
+					Affiliates({{ $AffiliateCount }})
+				</label>
+				&nbsp;
+				<label class="radio-inline" for="SendingTo2">
+				<input type="radio" name="SendingTo" id="SendingTo2" value="2">
+					Advertisers({{ $AdvertiserCount }})
+				</label> 
+				
+				&nbsp;
+				<label class="radio-inline" for="SendingTo3">
+				<input type="radio" name="SendingTo" id="SendingTo3" value="3">
+					Testing
+				</label> 
+				<label class="radio-inline" for="SendingTo4">
+				<input type="radio" name="SendingTo" id="SendingTo4" value="4">
+					Dev
+				</label> 
+				<label class="radio-inline" for="SendingTo5">
+				<input type="radio" name="SendingTo" id="SendingTo5" value="5" onclick="SendSingleEmail();">
+					Single Email
+				</label> 
+				<div id="SingleEmailDiv" style="display:none;">
+					<label>Please Enter an Email List</label><br/>
+					Please enter <b><u>ONE EMAIL PER LINE</u></b>
+					<textarea name="SingleEmailBox" class="form-control"></textarea><br/>
+				</div>
+				<br/>
+				<script>
+				function SendSingleEmail(){
+				var x = document.getElementById("SingleEmailDiv");
+					if (x.style.display === "none") {
+						x.style.display = "block";
+					} else {
+						x.style.display = "none";
+					}
+				}
+				</script>
+			</div>
             <div class="form-group">
                 <label for="content">{{ trans('cruds.campaign.fields.content') }}</label>
 
