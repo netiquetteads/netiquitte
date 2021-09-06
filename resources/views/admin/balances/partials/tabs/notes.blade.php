@@ -1,3 +1,4 @@
                   <div class="tab-pane fade" id="vert-tabs-notes" role="tabpanel" aria-labelledby="vert-tabs-notes-tab">
-                     Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                     <textarea class="form-control" id="PublisherNotes">{{ $balance->publisher_notes }}</textarea><br/>
+		<button style='float:right' class='btn btn-success' onclick="SaveNotes('{{ $AffiliateID }}');">Save Notes</button>
                   </div>

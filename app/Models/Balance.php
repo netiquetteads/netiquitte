@@ -27,6 +27,7 @@ class Balance extends Model
         'affiliate_id',
         'accounting_year',
         'accounting_month',
+        'accounting_date',
         'monthly_status',
         'ach_name',
         'ach_account',

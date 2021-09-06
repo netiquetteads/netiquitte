@@ -14,6 +14,8 @@ use App\Models\AccountStatus;
 use App\Models\BalanceContainer;
 use App\Models\Balance;
 use DateTime;
+use DateInterval;
+use DatePeriod;
 
 class EverflowApiController extends Controller
 {
@@ -193,6 +195,153 @@ class EverflowApiController extends Controller
 		}    
     }
 
+	public function manualUpdate(Request $request)
+	{
+		try{
+
+			// $fromDateOriginal = explode("-",$request->fromDate);
+			// $toDateOriginal = explode("-",$request->toDate);
+
+			// $fromDateMonth=$fromDateOriginal[0];
+			// $fromDateYear=$fromDateOriginal[1];
+
+			// $toDateMonth=$toDateOriginal[0];
+			// $toDateYear=$toDateOriginal[1];
+
+			// $fromDate = new DateTime($fromDateYear.'-'.$fromDateMonth.'-01');
+			// $fromDate->modify('first day of this month');
+			// $first_day_this_month = $fromDate->format('Y-m-d');
+
+			// $toDate = new DateTime($toDateYear.'-'.$toDateMonth.'-01');
+			// $toDate->modify('last day of this month');
+			// $last_day_this_month = $toDate->format('Y-m-d');
+
+			// dd($first_day_this_month);
+
+			$fromDate = date("Y-m-d",strtotime($request->fromDate));
+			$toDate = date("Y-m-d",strtotime($request->toDate));
+			$begin = new DateTime($fromDate);
+			$end = new DateTime($toDate);
+
+			$interval = DateInterval::createFromDateString('1 month');
+			$period = new DatePeriod($begin, $interval, $end);
+					
+			foreach ($period as $key => $dt){
+				
+				$Year = $dt->format("Y");
+				$MonthName= $dt->format("F");
+
+				// if($key==0){
+				// 	$Year=$accountinYear;
+				// 	$MonthName=$accountinMonth;
+				// }else{
+				// 	$toDate = new DateTime($accountinDate);
+				// 	$toDate->modify('last day of this month');
+				// 	$last_day_this_month = $toDate->format('Y-m-d');
+				// 	$DateArray[]=$last_day_this_month;
+				// }
+
+				$response = Http::withHeaders([
+					'content-type' => 'application/json',
+					'x-eflow-api-key' => env('EF_API_KEY'),
+				])
+				->withBody(json_encode([
+					'from' => $fromDate,
+					'to' => $toDate,
+					'timezone_id' => 80,
+					'currency_id' => "USD",
+					'query' => array('filters'=>[],'settings'=>array('ignore_fail_traffic'=>false),'metric_filters'=>[],'exclusions'=>[]),
+					'columns' => array(array('column'=>'affiliate'),array('column'=>'offer')),
+				]), 'json')
+				->post('https://api.eflow.team/v1/networks/reporting/entity');
+	
+				$results=$response->json();
+	
+				$deResp = json_decode($response);
+				$MonthlyTotal = $deResp->summary->revenue;
+				$MonthlyPayout = $deResp->summary->payout;
+				$MonthlyProfit = $deResp->summary->profit;
+				$tmpTable = $deResp->table;
+
+				foreach ($tmpTable as $value){
+
+					$Affiliate = $value->columns[0]->label;
+					$AffiliateID = $value->columns[0]->id;
+					$Offer = $value->columns[1]->label;
+					$OfferID = $value->columns[1]->id;
+					$Revenue = $value->reporting->revenue;
+					$Payout = $value->reporting->payout;
+					$Profit = $value->reporting->profit;
+	
+					$BalanceContainer=new BalanceContainer;
+					$BalanceContainer->time_year=$Year;
+					$BalanceContainer->time_month=$MonthName;
+					$BalanceContainer->affiliate=$Affiliate;
+					$BalanceContainer->affiliate_id=$AffiliateID;
+					$BalanceContainer->offer=$Offer;
+					$BalanceContainer->offer_id=$OfferID;
+					$BalanceContainer->revenue=$Revenue;
+					$BalanceContainer->payout=$Payout;
+					$BalanceContainer->profit=$Profit;
+					$BalanceContainer->save();
+					
+				}
+
+				$containers=BalanceContainer::select('affiliate','affiliate_id','time_month','monthly_status')->distinct()->get();
+
+				foreach ($containers as $key => $container) {
+					$Affiliate = $container->affiliate;
+					$AffiliateID = $container->affiliate_id;
+					$Month = $container->time_month;
+					$MonthlyStatus = $container->monthly_status;
+	
+					$revenue=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('revenue');
+					$payout=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('payout');
+					$profit=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('profit');
+					
+					$balance = Balance::updateOrCreate(
+						[
+							'affiliate_id' => $AffiliateID,
+							'accounting_year' => $Year,
+							'accounting_month' => $MonthName
+						],
+						[
+							'affiliate_id'           => $AffiliateID,
+							'accounting_year'        => $Year,
+							'accounting_month'       => $MonthName,
+							'affiliate'              => $Affiliate,
+							'payout'                 => $payout,
+							'revenue'                => $revenue,
+							'profit'                 => $profit,
+						]
+					);
+					
+	
+					
+				}
+	
+				BalanceContainer::query()->truncate();
+
+				
+					
+			}
+
+			return response()->json([
+	            "message" => "Recorded successfully",
+	            "content" => 'results'
+	        ], 201);
+
+		} catch (Exception $e) {
+
+			return response()->json([
+				"message" => "No Changes Sincle Last Sync",
+				"Caught Exception" => $e->getMessage()
+			], 400);
+
+		}  
+		
+	}
+
 	public function accounting(Request $request)
 	{
 		try{
@@ -228,6 +377,7 @@ class EverflowApiController extends Controller
 		$results=$response->json();
 
 		$deResp = json_decode($response);
+		//
 
 		$MonthlyTotal = $deResp->summary->revenue;
 		$MonthlyPayout = $deResp->summary->payout;

@@ -2,37 +2,53 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <div>
-    <font class="h3 mb-0 text-gray-800">Accounting ({{ $Year }}) &nbsp; <i class="fa fa-edit" aria-hidden="true" onclick="YearDropDown();"></i></font><br/>
+        <font class="h3 mb-0 text-gray-800">Accounting</font>
+    {{-- <font class="h3 mb-0 text-gray-800">Accounting ({{ $Year }}) &nbsp; <i class="fa fa-edit" aria-hidden="true" onclick="YearDropDown();"></i></font><br/>
         <div id="YearDropdown" style="align:left; display:none;">
         <select id="ViewYear" class="form-control">
             {{-- <option value='{{ $Year }}'>{{ $Year }}</option> --}}
-            @foreach ($accountingYears as $YearToView)
-                
+            {{-- @foreach ($accountingYears as $YearToView)
                 <option value='{{ $YearToView }}'>{{ $YearToView }}</option>
             @endforeach
         </select>
         &nbsp;
-        <button class='btn btn-success' onclick="ChangeYearView();">Change Year</button>
+        <button class='btn btn-success' onclick="ChangeYearView();">Change Year</button> --}}
         <script>
-            function ChangeYearView(){
-                var YTC = document.getElementById("ViewYear").value;
+            // function ChangeYearView(){
+            //     var YTC = document.getElementById("ViewYear").value;
                 
-                window.location.replace("{{ url('admin/balances') }}?year="+YTC);
-            }
-            function YearDropDown(){
-                var x = document.getElementById("YearDropdown");
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                } else {
-                    x.style.display = "none";
-                }
-              }
+            //     window.location.replace("{{ url('admin/balances') }}?year="+YTC);
+            // }
+            // function YearDropDown(){
+            //     var x = document.getElementById("YearDropdown");
+            //     if (x.style.display === "none") {
+            //         x.style.display = "block";
+            //     } else {
+            //         x.style.display = "none";
+            //     }
+            //   }
         </script>
+        {{-- </div> --}}
+    </div>
+    <div class="manualFilterBox">
+        <div class="input-group input-daterange">
+            <input type="text" id="from" autocomplete="off">
+            <label for="to">to</label>
+            <input type="text" id="to" autocomplete="off">
+            <button class="btn btn-info" id="CustomManualUpdate">Update</button>
         </div>
     </div>
-    <div id="ManualLoader" style="float:right;">
+    {{--  <input type="text" id="manualUpdatePicker" autocomplete="off">  --}}
+{{--  <label for="from">From</label>
+<input type="text" id="from" name="from" autocomplete="off">
+<label for="to">to</label>
+<input type="text" id="to" name="to" autocomplete="off">  --}}
+
+
+
+    {{-- <div id="ManualLoader" style="float:right;">
         <button onclick="ShowUpdaterBox(); "class="btn btn-success">Manual Update</button>
-    </div>
+    </div> --}}
     <div id="ManualOptions" style="display:none">
         <select class="form-control" onchange="ShowUpdater();" id="InfoToUpdate">
             <option>Please Select</option>
@@ -107,7 +123,7 @@
                     success: function(response){
                         document.getElementById("ManualLoaderProcessing").style.display = "none";
                         document.getElementById("ManualLoaderDone").style.display = "block";
-                        location.reload();
+                        //location.reload();
                     }
                 });
             }
@@ -122,7 +138,7 @@
                     success: function(response){
                         document.getElementById("ManualLoaderProcessing").style.display = "none";
                         document.getElementById("ManualLoaderDone").style.display = "block";
-                        location.reload();
+                        //location.reload();
                     }
                 });
             }
@@ -139,7 +155,7 @@
                         console.log('response',response);
                         document.getElementById("ManualLoaderProcessing").style.display = "none";
                         document.getElementById("ManualLoaderDone").style.display = "block";
-                        location.reload();
+                        //location.reload();
                     }
                 });
             }
@@ -157,7 +173,7 @@
                     success: function(response){
                         document.getElementById("ManualLoaderProcessing").style.display = "none";
                         document.getElementById("ManualLoaderDone").style.display = "block";
-                        location.reload();
+                        //location.reload();
                     }
                 });
             }
@@ -239,7 +255,7 @@
             success: function(response){
                 x2.style.display = "none";
                 x3.style.display = "block";
-                location.reload();
+                //location.reload();
             }
         });
     }
@@ -264,7 +280,7 @@
             success: function(response){
                 x2.style.display = "none";
                 x3.style.display = "block";
-                location.reload();
+                //location.reload();
             }
         });
     }

@@ -6,7 +6,6 @@ if($Year == ""){
 ?>
 @extends('layouts.admin')
 @section('content')
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
 <style>
     /* The Modal (background) */
@@ -58,6 +57,19 @@ if($Year == ""){
         width: 200px;
         height: 30px;
     }
+    .manualFilterBox{
+        float: right;
+    }
+    .manualFilterBox .btn-info{
+        margin-left: 20px !important;
+    }
+    .input-group label{
+        padding: 0px 10px;
+        line-height: 30px;
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+        border-color: #dee2e6 transparent #dee2e6 #dee2e6;
+    }
     </style>
 {{-- @can('balance_create')
     <div style="margin-bottom: 10px;" class="row">
@@ -78,7 +90,7 @@ if($Year == ""){
     </div>
 
     <div class="card-body">
-        <input type="text" name="daterange" id="daterangepicker"> <br><br>
+        {{-- <input type="text" name="daterange" id="daterangepicker"> <br><br> --}}
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Balance" id="balanceTable">
             
         </table>
@@ -93,36 +105,72 @@ if($Year == ""){
 
 @section('scripts')
 @parent
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 
 <script>
-    $('#daterangepicker').daterangepicker({
-    "showDropdowns": true,
-    // "startDate": "08/18/2021",
-    // "endDate": "08/24/2021"
-    // minDate: moment().subtract(12, 'years')
-    
-}, function(start, end, label) {
-  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-  console.log(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
-
-    $.ajax({
-        type: "POST",
-        async:true,
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        url: "{{ route('admin.balances.getTabledata') }}",
-        data: {"Year":{{ $Year }},"start":start.format('YYYY-MM-DD'),"end":end.format('YYYY-MM-DD')},
-        success: function(response){
-            $('#balanceTable').html(response);
-            table = $('.datatable-Balance').DataTable();
-
-            table.clear().draw();
-            // table.rows.add(NewlyCreatedData); // Add new data
-            table.columns.adjust().draw(); // Redraw the DataTable
-        }
+ 
+ $('.input-daterange input').each(function() {
+    $(this).datepicker({
+        changeMonth:true,
+        changeYear:true,
+        format:'dd-mm-yyyy',
+        // viewMode: 1,
+        // minViewMode: 1,
+    }).on('changeDate', function(e){
+        $(this).datepicker('hide');
     });
+});    
+    
 
+$('#CustomManualUpdate').click(function(){
+
+    
+    var fromDate=$( "#from" ).val();
+        var toDate=$( "#to" ).val();
+
+    // console.log(fromDate,toDate);
+
+                $.ajax({
+                    type: "GET",
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: "{{ route('api.balance.manualUpdate') }}?fromDate="+fromDate+"&toDate="+toDate,
+                    data: "check",
+                    success: function(response){
+                        alert(response.message);
+                        console.log('response',response);
+                    }
+                });
 });
+
+ </script>
+
+<script>
+//     $('#daterangepicker').daterangepicker({
+//     "showDropdowns": true,
+//     // "startDate": "08/18/2021",
+//     // "endDate": "08/24/2021"
+//     // minDate: moment().subtract(12, 'years')
+    
+// }, function(start, end, label) {
+//   console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+//   console.log(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+
+//     $.ajax({
+//         type: "POST",
+//         async:true,
+//         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+//         url: "{{ route('admin.balances.getTabledata') }}",
+//         data: {"Year":{{ $Year }},"start":start.format('YYYY-MM-DD'),"end":end.format('YYYY-MM-DD')},
+//         success: function(response){
+//             $('#balanceTable').html(response);
+//             table = $('.datatable-Balance').DataTable();
+
+//             table.clear().draw();
+//             // table.rows.add(NewlyCreatedData); // Add new data
+//             table.columns.adjust().draw(); // Redraw the DataTable
+//         }
+//     });
+
+// });
 
 // $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
 //     console.log(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
@@ -173,8 +221,8 @@ if($Year == ""){
         }
 
         window.onclick = function(event) {
-        if (event.target == modal) {
-        modal.style.display = "none";
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
         }
         
@@ -305,6 +353,7 @@ if($Year == ""){
         });
     }
     </script>
+
 <script>
 
 $(document).ready(function() {
@@ -320,7 +369,7 @@ $(document).ready(function() {
 				"order": [[ 1, "desc" ]],
 			} );
     }
-});
+    });
 
 			
 		} );
