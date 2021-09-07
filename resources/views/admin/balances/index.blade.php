@@ -122,7 +122,11 @@ if($Year == ""){
     
 
 $('#CustomManualUpdate').click(function(){
-
+    $this=$(this);
+$loader='<div class="spinner-border text-dark" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>';
+    $this.html($loader);
     
     var fromDate=$( "#from" ).val();
         var toDate=$( "#to" ).val();
@@ -136,6 +140,7 @@ $('#CustomManualUpdate').click(function(){
                     data: "check",
                     success: function(response){
                         alert(response.message);
+                        $this.html('Update');
                         console.log('response',response);
                     }
                 });

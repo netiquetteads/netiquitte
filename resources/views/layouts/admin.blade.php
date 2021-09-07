@@ -200,6 +200,13 @@
     <script>
         $("#syncAdvertisers").click(function(e){
             e.preventDefault();
+
+            $this=$(this);
+$loader='<div class="spinner-border text-dark" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>';
+    $this.html($loader);
+
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -207,11 +214,19 @@
                 success: function() {
                     console.log("SYNC Advertisers Successful!");
                     alert("SYNC Advertisers Successful!");
+                    $this.html('SYNC Advertisers');
                 }
             })
         });
         $("#syncAffiliates").click(function(e){
             e.preventDefault();
+
+            $this=$(this);
+$loader='<div class="spinner-border text-dark" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>';
+    $this.html($loader);
+
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -219,11 +234,19 @@
                 success: function() {
                     console.log("SYNC Affiliates Successful!");
                     alert("SYNC Affiliates Successful!");
+                    $this.html('SYNC Affiliates');
                 }
             })
         });
         $("#syncOffers").click(function(e){
             e.preventDefault();
+
+            $this=$(this);
+$loader='<div class="spinner-border text-dark" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>';
+    $this.html($loader);
+
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -231,6 +254,7 @@
                 success: function() {
                     console.log("SYNC Offers Successful!");
                     alert("SYNC Offers Successful!");
+                    $this.html('SYNC Offers');
                 }
             })
         }); 
