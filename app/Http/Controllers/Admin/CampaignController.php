@@ -103,33 +103,79 @@ class CampaignController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $campaign->id]);
         }
 
+        
+
         $input = [
             'message' => $request->content,
             'subject' => $request->email_subject,
         ];
 
         if($request->SendingTo==1){
-            $emails=Account::where('AccountType',1)->where('AccountStatus','active')->pluck('EmailAddress')->toArray();
+
+            $accounts=Account::where('AccountType',1)->where('AccountStatus','active')->get();
+            foreach ($accounts as $key => $account) {
+                $input['message'] = str_replace('{FirstName}', $account->FirstName, $input['message']);
+                $input['message'] = str_replace('{LastName}', $account->LastName, $input['message']);
+                $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
+
+                $this->sendMail($account->EmailAddress,$input);
+            }
+            
+            
 
         }else if($request->SendingTo==2){
-            $emails=Account::where('AccountType',2)->where('AccountStatus','active')->pluck('EmailAddress')->toArray();
+            $accounts=Account::where('AccountType',2)->where('AccountStatus','active')->get();
+            foreach ($accounts as $key => $account) {
+                $input['message'] = str_replace('{FirstName}', $account->FirstName, $input['message']);
+                $input['message'] = str_replace('{LastName}', $account->LastName, $input['message']);
+                $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
+
+                $this->sendMail($account->EmailAddress,$input);
+            }
         }
         else if($request->SendingTo==3){
 
-            $emails=env("TEST_EMAIL_TO");
+            $input['message'] = str_replace('{FirstName}', "Test Admin", $input['message']);
+            $input['message'] = str_replace('{LastName}', 'Test Admin', $input['message']);
+            $input['message'] = str_replace('{Company}', 'Test Company', $input['message']);
+
+            $emails = explode(",", $emails=env("TEST_EMAIL_TO"));
+            $this->sendMail($emails,$input);
 
         }else if($request->SendingTo==4){
 
-            $emails=env("DEV_EMAIL_TO");
+            $input['message'] = str_replace('{FirstName}', "Dev Admin", $input['message']);
+            $input['message'] = str_replace('{LastName}', 'Dev Admin', $input['message']);
+            $input['message'] = str_replace('{Company}', 'Dev Company', $input['message']);
+
+            $emails = explode(",", $emails=env("DEV_EMAIL_TO"));
+            $this->sendMail($emails,$input);
             
         }else{
+
             $emails = explode("\n", str_replace("\r", "", $request->SingleEmailBox));
+
+            foreach ($emails as $key => $value) {
+
+                $input['message'] = str_replace('{FirstName}', $value, $input['message']);
+                $input['message'] = str_replace('{LastName}', $value, $input['message']);
+                $input['message'] = str_replace('{Company}', $value, $input['message']);
+
+                $this->sendMail($value,$input);
+            }
+            
         }
 
-        \Mail::to($emails)->send(new CampaignMail($input));
+        // \Mail::to($emails)->send(new CampaignMail($input));
         
 
         return redirect()->route('admin.campaigns.index');
+    }
+
+    public function sendMail($emails,$input)
+    {
+        $send=\Mail::to($emails)->send(new CampaignMail($input));
+        return true;
     }
 
     public function edit(Campaign $campaign)

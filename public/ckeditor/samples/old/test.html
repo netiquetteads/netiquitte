@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+-->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Editor</title>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="../../ckeditor.js"></script>
+	<script src="../../adapters/jquery.js"></script>
+	<link href="sample.css" rel="stylesheet">
+	<meta name="description" content="Eiditor">
+	<style>
+
+		#editable
+		{
+			padding: 10px;
+			float: left;
+		}
+
+	</style>
+	<script>
+
+		CKEDITOR.disableAutoInline = true;
+
+		$( document ).ready( function() {
+			$( '#editor1' ).ckeditor(); // Use CKEDITOR.replace() if element is <textarea>.
+		} );
+
+	</script>
+</head>
+<body>
+
+	<form action="sample_posteddata.php" method="post">
+
+		<textarea cols="80" id="editor1" name="editor1" rows="10">
+			
+		</textarea>
+		
+		<input style="float: left" type="submit" value="Submit">
+	</form>
+</body>
+</html>
