@@ -64,7 +64,7 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $offer_selections = Offer::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $offer_selections = Offer::where('offer_status','active')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.templates.create', compact('offer_selections'));
     }
@@ -88,7 +88,7 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $offer_selections = Offer::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $offer_selections = Offer::where('offer_status','active')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $template->load('offer_selection');
 

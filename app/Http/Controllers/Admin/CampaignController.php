@@ -76,18 +76,20 @@ class CampaignController extends Controller
         return view('admin.campaigns.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
         abort_if(Gate::denies('campaign_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $campaign_offers = Offer::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $selectedOffers = Offer::where('offer_status','active')->whereIn('id',explode(',',$request->OfferSelection))->get();
+
+        $campaign_offers = Offer::where('offer_status','active')->pluck('name', 'id');
 
         $selected_templates = Template::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $AffiliateCount=Account::where('AccountType',1)->where('AccountStatus','active')->count();
         $AdvertiserCount=Account::where('AccountType',2)->where('AccountStatus','active')->count();
 
-        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateCount','AdvertiserCount'));
+        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateCount','AdvertiserCount','selectedOffers'));
     }
 
     public function store(StoreCampaignRequest $request)
@@ -102,8 +104,6 @@ class CampaignController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $campaign->id]);
         }
-
-        
 
         $input = [
             'message' => $request->content,
@@ -182,7 +182,7 @@ class CampaignController extends Controller
     {
         abort_if(Gate::denies('campaign_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $campaign_offers = Offer::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $campaign_offers = Offer::where('offer_status','active')->pluck('name', 'id');
 
         $selected_templates = Template::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

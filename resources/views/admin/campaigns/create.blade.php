@@ -43,7 +43,7 @@
             </div>
             <div class="form-group">
                 <label for="name">{{ trans('cruds.campaign.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}">
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', @$_GET['CampaignName']) }}">
                 @if($errors->has('name'))
                     <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
@@ -51,7 +51,7 @@
             </div>
             <div class="form-group">
                 <label for="email_subject">{{ trans('cruds.campaign.fields.email_subject') }}</label>
-                <input class="form-control {{ $errors->has('email_subject') ? 'is-invalid' : '' }}" type="text" name="email_subject" id="email_subject" value="{{ old('email_subject', '') }}">
+                <input class="form-control {{ $errors->has('email_subject') ? 'is-invalid' : '' }}" type="text" name="email_subject" id="email_subject" value="{{ old('email_subject', @$_GET['EmailSubject']) }}">
                 @if($errors->has('email_subject'))
                     <span class="text-danger">{{ $errors->first('email_subject') }}</span>
                 @endif
@@ -59,12 +59,51 @@
             </div>
             <div class="form-group">
                 <label for="from_email">{{ trans('cruds.campaign.fields.from_email') }}</label>
-                <input class="form-control {{ $errors->has('from_email') ? 'is-invalid' : '' }}" type="email" name="from_email" id="from_email" value="{{ old('from_email') }}">
+                <input class="form-control {{ $errors->has('from_email') ? 'is-invalid' : '' }}" type="email" name="from_email" id="from_email" value="info@netiquetteads.com" readonly>
                 @if($errors->has('from_email'))
                     <span class="text-danger">{{ $errors->first('from_email') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.from_email_helper') }}</span>
             </div>
+            <div class="form-group">
+                <label for="campaign_offer_id">{{ trans('cruds.campaign.fields.campaign_offer') }}</label>
+                <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id" id="campaign_offer_id" multiple data-placeholder="Choose offers..">
+                    @php
+                    $getOffers=array();
+                        if(@$_GET['OfferSelection']){
+                            $getOffers=explode(',',$_GET['OfferSelection']);
+                        }
+                    @endphp
+                    @foreach($campaign_offers as $id => $entry)
+                        <option value="{{ $id }}" @if (in_array($id,$getOffers))
+                            selected
+                        @endif>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('campaign_offer'))
+                    <span class="text-danger">{{ $errors->first('campaign_offer') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
+
+                <br/><br/>
+                <button type="button" onclick="LoadOffers()" class="btn btn-primary">Load Offers</button><br/>
+                <br/>
+            </div>
+            <script>
+                function LoadOffers(){
+                    var CampaignName = document.getElementById("name").value;
+                    var FromEmail = document.getElementById("from_email").value;
+                    var EmailSubject = document.getElementById("email_subject").value;
+                    var TemplateID = document.getElementById("selected_template_id").value;
+                    var OffersSelection = $("#campaign_offer_id").val();
+                    var data = CKEDITOR.instances.editor1.getData();
+                    var data2 = encodeURIComponent(data);
+                                
+                    window.location.replace("{{ route('admin.campaigns.create') }}?FromEmail="+FromEmail+"&EmailSubject="+EmailSubject+"&OfferSelection="+OffersSelection+"&CampaignName="+CampaignName);
+                        
+                }
+                </script>
+
             <div class="form-group">
             <label onclick="vph();"><font color="blue"><u>View Placeholders</u></font></label>
             <script>
@@ -179,6 +218,33 @@
 	</tbody>
 </table>
 
+@if ($selectedOffers)
+<table align='center' border='0' cellpadding='1' cellspacing='1' style='width:500px;'>
+	<tbody>	
+			@foreach($selectedOffers as $ID => $selectedOffer)
+				
+		<tr>
+			<td>
+<p><span style='font-size:26px;'><strong>{{ $selectedOffer->name }}</strong></span></p>
+<span style='border-radius:3px;display:inline-block;font-size:12px;font-weight:bold;line-height:14px;color:#white;white-space:nowrap;
+vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'><font color='white'>Payout: {{ $selectedOffer->payout }}</font></span>
+
+<p style='color:#white;font-size:12px;'><strong>Offer Id</strong>: {{ $selectedOffer->network_offer }}<br />
+<strong>Description</strong>:<br />
+<strong>Category</strong>: {{ $selectedOffer->category }}<br />
+<strong>Countries Accepted:</strong>  {{ $selectedOffer->category }}</p>
+<a href='http://netiquetteads.com/preview.php?id={{ $selectedOffer->network_offer }}' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Preview</a> 
+
+<a href='http://netiquetteads.com/client.php' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Get Links</a></div>
+</div>
+			</td>
+		</tr>
+        @endforeach
+    </tbody>
+</table>
+
+@endif
+
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>
 	</tbody>
@@ -237,18 +303,7 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.offer_image_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="campaign_offer_id">{{ trans('cruds.campaign.fields.campaign_offer') }}</label>
-                <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id" id="campaign_offer_id">
-                    @foreach($campaign_offers as $id => $entry)
-                        <option value="{{ $id }}" {{ old('campaign_offer_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('campaign_offer'))
-                    <span class="text-danger">{{ $errors->first('campaign_offer') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
-            </div>
+            
            
             <div class="form-group">
                 <label for="subs">{{ trans('cruds.campaign.fields.subs') }}</label>
@@ -293,6 +348,9 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <script>
     $('.selectTemplate').change(function(){
 
+if($(this).val()==''){
+    location.reload();
+}
         var tempId=$(this).val();
         var _token = $('input[name="_token"]').val();
           $.ajax({
@@ -301,13 +359,13 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
             method:"POST",
             data:{id:tempId, _token:_token},
             success:function(data){
-                console.log('data',data.offer_image);
+                console.log('data',data.offer_selection_id);
               $('#email_subject').val(data.email_subject);
               $('#from_email').val(data.from_email);
-
-              setDataFromTheEditor(data.content);
+              $("#campaign_offer_id").select2("val", [data.offer_selection_id]);
+              CKEDITOR.instances['editor1'].setData(data.content)
     
-              $("#campaign_offer_id").select2("val", ""+data.offer_selection_id+"");
+              
 
             //   $('#offer_image-dropzone').each(function () {                
             //     let dropzoneControl = $(this)[0].dropzone;
