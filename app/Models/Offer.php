@@ -17,7 +17,10 @@ class Offer extends Model
     ];
 
     public const OFFER_STATUS_SELECT = [
-        '1' => 'Active',
+        'active' => 'Active',
+        'paused' => 'Paused',
+        'pending' => 'Pending',
+        'deleted' => 'Deleted',
     ];
 
     public $table = 'offers';
@@ -36,10 +39,35 @@ class Offer extends Model
         'revenue',
         'offer_status',
         'margin',
+        'affiliate_id',
+        'network_offer',
+        'network',
+        'optimized_thumbnail_url',
+        'thumbnail_url',
+        'visibility',
+        'network_advertiser_name',
+        'category',
+        'network_offer_group',
+        'time_created',
+        'time_saved',
+        'today_revenue',
+        'destination_url',
+        'today_clicks',
+        'revenue_type',
+        'payout_type',
+        'today_payout_amount',
+        'today_revenue_amount',
+        'payout_amount',
+        'revenue_amount',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
+
+    public function affiliate()
+    {
+        return $this->belongsTo(Affiliate::class, 'affiliate_id');
+    }
 
     protected function serializeDate(DateTimeInterface $date)
     {

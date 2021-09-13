@@ -12,7 +12,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
+use Yajra\DataTables\Facades\DataTables;    
 
 class UsersController extends Controller
 {
@@ -21,7 +21,9 @@ class UsersController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = User::with(['roles', 'team'])->select(sprintf('%s.*', (new User())->table));
+            
+            $query = User::with(['roles', 'team'])->get();
+
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -51,11 +53,14 @@ class UsersController extends Controller
             $table->editColumn('email', function ($row) {
                 return $row->email ? $row->email : '';
             });
-
+            $table->editColumn('email_verified_at', function ($row) {
+                return $row->email_verified_at ? $row->email_verified_at : '';
+            });
             $table->editColumn('roles', function ($row) {
                 $labels = [];
+
                 foreach ($row->roles as $role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $role->title);
+                    $labels[] = sprintf('<span class="btn btn-outline-primary">%s</span>', $role->title);
                 }
 
                 return implode(' ', $labels);
@@ -113,7 +118,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'team', 'userUserAlerts', 'usersAccounts');
+        $user->load('roles', 'team', 'userUserAlerts');
 
         return view('admin.users.show', compact('user'));
     }

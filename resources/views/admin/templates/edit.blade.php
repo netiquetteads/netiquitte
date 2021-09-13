@@ -11,6 +11,18 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <label for="offer_selection_id">{{ trans('cruds.template.fields.offer_selection') }}</label>
+                <select class="form-control select2 {{ $errors->has('offer_selection') ? 'is-invalid' : '' }}" name="offer_selection_id" id="offer_selection_id">
+                    @foreach($offer_selections as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('offer_selection_id') ? old('offer_selection_id') : $template->offer_selection->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('offer_selection'))
+                    <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="name">{{ trans('cruds.template.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $template->name) }}">
                 @if($errors->has('name'))
@@ -25,6 +37,14 @@
                     <span class="text-danger">{{ $errors->first('email_subject') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.email_subject_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="from_name">{{ trans('cruds.template.fields.from_name') }}</label>
+                <input class="form-control {{ $errors->has('from_name') ? 'is-invalid' : '' }}" type="text" name="from_name" id="from_name" value="{{ old('from_name', $template->from_name) }}">
+                @if($errors->has('from_name'))
+                    <span class="text-danger">{{ $errors->first('from_name') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.template.fields.from_name_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="from_email">{{ trans('cruds.template.fields.from_email') }}</label>

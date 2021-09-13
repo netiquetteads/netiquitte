@@ -11,7 +11,8 @@ class UpdateBalanceRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('balance_edit');
+        return true;
+            //Gate::allows('balance_edit');
     }
 
     public function rules()

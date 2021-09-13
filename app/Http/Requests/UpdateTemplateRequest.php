@@ -11,7 +11,8 @@ class UpdateTemplateRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('template_edit');
+        return true;
+            //Gate::allows('template_edit');
     }
 
     public function rules()

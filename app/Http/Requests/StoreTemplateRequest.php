@@ -11,7 +11,8 @@ class StoreTemplateRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('template_create');
+        return true;
+            //Gate::allows('template_create');
     }
 
     public function rules()

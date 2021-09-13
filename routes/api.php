@@ -1,6 +1,16 @@
 <?php
 
-Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
+// Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
+Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], function () {
+
+    //Everflow Apis
+    Route::post('all-advertiser', 'EverflowApiController@getAllAdvertiser')->name('advertiser.getAllAdvertiser');
+    Route::post('all-affiliates', 'EverflowApiController@getAllAffiliates')->name('advertiser.getAllAffiliates');
+    Route::post('all-offers', 'EverflowApiController@getAllOffers')->name('advertiser.getAllOffers');
+    Route::get('accounting', 'EverflowApiController@accounting')->name('balance.Accounting');
+    Route::get('AccountingYTD', 'EverflowApiController@AccountingYTD')->name('balance.AccountingYTD');
+    Route::get('manualUpdate', 'EverflowApiController@manualUpdate')->name('balance.manualUpdate');
+
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');
 
@@ -13,18 +23,22 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Team
     Route::apiResource('teams', 'TeamApiController');
 
-    // Account
-    Route::apiResource('accounts', 'AccountApiController');
+    // Affiliate
+    Route::post('affiliates/media', 'AffiliateApiController@storeMedia')->name('affiliates.storeMedia');
+    Route::apiResource('affiliates', 'AffiliateApiController');
 
-    // Offers
-    Route::apiResource('offers', 'OffersApiController');
+    // Account Status
+    Route::apiResource('account-statuses', 'AccountStatusApiController');
 
-    // Mail Room
-    Route::apiResource('mail-rooms', 'MailRoomApiController');
+    // Advertiser
+    Route::post('advertisers/media', 'AdvertiserApiController@storeMedia')->name('advertisers.storeMedia');
+    Route::apiResource('advertisers', 'AdvertiserApiController');
 
-    // Template
-    Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
-    Route::apiResource('templates', 'TemplateApiController');
+    // Label
+    Route::apiResource('labels', 'LabelApiController');
+
+    // Offer
+    Route::apiResource('offers', 'OfferApiController');
 
     // Balances
     Route::apiResource('balances', 'BalancesApiController');
@@ -34,4 +48,25 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Payment Method
     Route::apiResource('payment-methods', 'PaymentMethodApiController');
+
+    // Template
+    Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
+    Route::apiResource('templates', 'TemplateApiController');
+
+    // Campaign Results
+    Route::apiResource('campaign-results', 'CampaignResultsApiController');
+
+    // Results Tracking
+    Route::apiResource('results-trackings', 'ResultsTrackingApiController');
+
+    // Campaign
+    Route::post('campaigns/media', 'CampaignApiController@storeMedia')->name('campaigns.storeMedia');
+    Route::apiResource('campaigns', 'CampaignApiController');
+
+    // Subscriber
+    Route::apiResource('subscribers', 'SubscriberApiController');
+
+    // Subscription
+    Route::apiResource('subscriptions', 'SubscriptionApiController');
+
 });

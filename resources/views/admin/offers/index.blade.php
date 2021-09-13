@@ -21,7 +21,17 @@
                     <th width="10">
 
                     </th>
-                    <th>
+                    {{-- <th> {{ trans('cruds.offer.fields.id') }} </th>  --}}
+                    <th> {{ trans('cruds.offer.fields.name') }} </th> 
+                    {{-- <th> {{ trans('cruds.offer.fields.source') }} </th>  --}}
+                    <th> {{ trans('cruds.offer.fields.payout') }} </th> 
+                    <th> {{ trans('cruds.offer.fields.revenue') }} </th> 
+                    <th> {{ trans('cruds.offer.fields.offer_status') }} </th> 
+                    <th> {{ trans('cruds.offer.fields.margin') }} </th> 
+                    {{--  <th> {{ trans('cruds.offer.fields.affiliate') }} </th> 
+                    <th> {{ trans('cruds.offer.fields.today_clicks') }} </th> 
+                    <th> {{ trans('cruds.offer.fields.payout_amount') }} </th>   --}}
+                    {{--  <th>
                         {{ trans('cruds.offer.fields.id') }}
                     </th>
                     <th>
@@ -41,7 +51,7 @@
                     </th>
                     <th>
                         {{ trans('cruds.offer.fields.margin') }}
-                    </th>
+                    </th>  --}}
                     <th>
                         &nbsp;
                     </th>
@@ -88,19 +98,26 @@
   }
   dtButtons.push(deleteButton)
 @endcan
-
+@php
+  $slug=Request::segment(3);
+  if($slug){
+    $url=url('admin/offer',$slug);
+  }else{
+    $url=route('admin.offers.index');
+  }
+@endphp
   let dtOverrideGlobals = {
     buttons: dtButtons,
     processing: true,
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.offers.index') }}",
+    ajax: "{{ $url }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
+// { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
-{ data: 'source', name: 'source' },
+// { data: 'source', name: 'source' },
 { data: 'payout', name: 'payout' },
 { data: 'revenue', name: 'revenue' },
 { data: 'offer_status', name: 'offer_status' },

@@ -15,9 +15,9 @@ class MailRoomApiController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('mail_room_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('mail_room_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MailRoomResource(MailRoom::with(['template', 'team'])->get());
+        return new MailRoomResource(MailRoom::all());
     }
 
     public function store(StoreMailRoomRequest $request)
@@ -31,9 +31,9 @@ class MailRoomApiController extends Controller
 
     public function show(MailRoom $mailRoom)
     {
-        abort_if(Gate::denies('mail_room_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('mail_room_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MailRoomResource($mailRoom->load(['template', 'team']));
+        return new MailRoomResource($mailRoom);
     }
 
     public function update(UpdateMailRoomRequest $request, MailRoom $mailRoom)
@@ -47,7 +47,7 @@ class MailRoomApiController extends Controller
 
     public function destroy(MailRoom $mailRoom)
     {
-        abort_if(Gate::denies('mail_room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('mail_room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $mailRoom->delete();
 

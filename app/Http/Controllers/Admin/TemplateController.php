@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyTemplateRequest;
 use App\Http\Requests\StoreTemplateRequest;
 use App\Http\Requests\UpdateTemplateRequest;
+use App\Models\Offer;
 use App\Models\Template;
 use Gate;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class TemplateController extends Controller
         abort_if(Gate::denies('template_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Template::query()->select(sprintf('%s.*', (new Template())->table));
+            $query = Template::with(['offer_selection'])->select(sprintf('%s.*', (new Template())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,22 +51,8 @@ class TemplateController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-            $table->editColumn('from_email', function ($row) {
-                return $row->from_email ? $row->from_email : '';
-            });
-            $table->editColumn('offer_image', function ($row) {
-                if ($photo = $row->offer_image) {
-                    return sprintf(
-        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-        $photo->url,
-        $photo->thumbnail
-    );
-                }
 
-                return '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'offer_image']);
+            $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
@@ -77,7 +64,9 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.templates.create');
+        $offer_selections = Offer::where('offer_status','active')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.templates.create', compact('offer_selections'));
     }
 
     public function store(StoreTemplateRequest $request)
@@ -99,7 +88,11 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.templates.edit', compact('template'));
+        $offer_selections = Offer::where('offer_status','active')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $template->load('offer_selection');
+
+        return view('admin.templates.edit', compact('offer_selections', 'template'));
     }
 
     public function update(UpdateTemplateRequest $request, Template $template)
@@ -124,7 +117,7 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $template->load('templateMailRooms');
+        $template->load('offer_selection');
 
         return view('admin.templates.show', compact('template'));
     }

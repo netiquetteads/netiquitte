@@ -10,49 +10,16 @@ use App\Models\PaymentMethod;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class PaymentMethodController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('payment_method_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = PaymentMethod::with(['team'])->select(sprintf('%s.*', (new PaymentMethod())->table));
-            $table = Datatables::of($query);
+        $paymentMethods = PaymentMethod::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'payment_method_show';
-                $editGate = 'payment_method_edit';
-                $deleteGate = 'payment_method_delete';
-                $crudRoutePart = 'payment-methods';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? PaymentMethod::NAME_SELECT[$row->name] : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.paymentMethods.index');
+        return view('admin.paymentMethods.index', compact('paymentMethods'));
     }
 
     public function create()
@@ -73,8 +40,6 @@ class PaymentMethodController extends Controller
     {
         abort_if(Gate::denies('payment_method_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $paymentMethod->load('team');
-
         return view('admin.paymentMethods.edit', compact('paymentMethod'));
     }
 
@@ -88,8 +53,6 @@ class PaymentMethodController extends Controller
     public function show(PaymentMethod $paymentMethod)
     {
         abort_if(Gate::denies('payment_method_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $paymentMethod->load('team');
 
         return view('admin.paymentMethods.show', compact('paymentMethod'));
     }

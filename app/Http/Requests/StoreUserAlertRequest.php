@@ -11,7 +11,8 @@ class StoreUserAlertRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('user_alert_create');
+        return true;
+            //Gate::allows('user_alert_create');
     }
 
     public function rules()

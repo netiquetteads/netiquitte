@@ -1,0 +1,22 @@
+Hey Philip,
+
+Hope you are doing well, so the easiest way for me to show you how the accounting system would work is by giving a link to a Google Doc that we currently use.
+
+https://docs.google.com/spreadsheets/d/1b9LMg-0G1CmfJrpyAnA4lDV3sMy5xt9-6O5P_-z-dn0/edit?usp=sharing
+
+Column 1 = Affiliate ID
+Column 2 = Affiliate Company Name
+Columns 3 - 14 are the months January - Dec. Every Affiliate who generates revenue "Payout"  for us should be listed in this section and the amount of revenue generated per month with column 15 giving us a total for each Publisher.
+(This will repeat for each Year.)
+
+How this should work initially, is that all of the data in terms "payout" for each month should be called from January to the current month.
+
+If for example, we need to update the current month or we need the ability to click Manual Update, where the API will then update the current month.
+
+For each month when Clicked on A Card Style option should open so we can make edit's and have various options.
+
+You can find all of this in the HQ Login under Affiliates - Balances, YOu should get a solid idea of how this works form the Google Doc as well as by having a look at HQ.
+
+Let me know if you have any questions.
+
+Thanks,

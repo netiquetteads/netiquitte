@@ -20,37 +20,38 @@ class RolesController extends Controller
         abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Role::with(['permissions'])->select(sprintf('%s.*', (new Role())->table));
+            $query = Role::with(['permissions'])->select(sprintf('%s.*', (new Role)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate = 'role_show';
-                $editGate = 'role_edit';
-                $deleteGate = 'role_delete';
+                $viewGate      = 'role_show';
+                $editGate      = 'role_edit';
+                $deleteGate    = 'role_delete';
                 $crudRoutePart = 'roles';
 
                 return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
+                return $row->id ? $row->id : "";
             });
             $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : '';
+                return $row->title ? $row->title : "";
             });
             $table->editColumn('permissions', function ($row) {
                 $labels = [];
+
                 foreach ($row->permissions as $permission) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $permission->title);
+                    $labels[] = sprintf('<span class="btn btn-outline-primary">%s</span>', $permission->title);
                 }
 
                 return implode(' ', $labels);

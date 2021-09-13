@@ -15,9 +15,9 @@ class BalancesApiController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('balance_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('balance_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BalanceResource(Balance::with(['company_name', 'payment_status', 'payment_method', 'team'])->get());
+        return new BalanceResource(Balance::with(['payment_method', 'payment_status'])->get());
     }
 
     public function store(StoreBalanceRequest $request)
@@ -31,9 +31,9 @@ class BalancesApiController extends Controller
 
     public function show(Balance $balance)
     {
-        abort_if(Gate::denies('balance_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('balance_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BalanceResource($balance->load(['company_name', 'payment_status', 'payment_method', 'team']));
+        return new BalanceResource($balance->load(['payment_method', 'payment_status']));
     }
 
     public function update(UpdateBalanceRequest $request, Balance $balance)
@@ -47,7 +47,7 @@ class BalancesApiController extends Controller
 
     public function destroy(Balance $balance)
     {
-        abort_if(Gate::denies('balance_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('balance_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $balance->delete();
 

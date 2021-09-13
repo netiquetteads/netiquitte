@@ -17,6 +17,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
 
+    // Affiliate
+    Route::delete('affiliates/destroy', 'AffiliateController@massDestroy')->name('affiliates.massDestroy');
+    Route::post('affiliates/media', 'AffiliateController@storeMedia')->name('affiliates.storeMedia');
+    Route::post('affiliates/ckmedia', 'AffiliateController@storeCKEditorImages')->name('affiliates.storeCKEditorImages');
+    Route::resource('affiliates', 'AffiliateController');
+    Route::get('affiliate/{status?}', 'AffiliateController@index');
+    Route::get('sendmail', 'AffiliateController@sendMail');
+
+    // Account Status
+    Route::delete('account-statuses/destroy', 'AccountStatusController@massDestroy')->name('account-statuses.massDestroy');
+    Route::resource('account-statuses', 'AccountStatusController');
+
+    // Advertiser
+    Route::delete('advertisers/destroy', 'AdvertiserController@massDestroy')->name('advertisers.massDestroy');
+    Route::post('advertisers/media', 'AdvertiserController@storeMedia')->name('advertisers.storeMedia');
+    Route::post('advertisers/ckmedia', 'AdvertiserController@storeCKEditorImages')->name('advertisers.storeCKEditorImages');
+    Route::resource('advertisers', 'AdvertiserController');
+    Route::get('advertiser/{status?}', 'AdvertiserController@index');
+
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
@@ -24,6 +43,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
     Route::resource('users', 'UsersController');
+
+    // Audit Logs
+    Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 
     // Team
     Route::delete('teams/destroy', 'TeamController@massDestroy')->name('teams.massDestroy');
@@ -33,14 +55,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
     Route::get('user-alerts/read', 'UserAlertsController@read');
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
-
-    // Account
-    Route::delete('accounts/destroy', 'AccountController@massDestroy')->name('accounts.massDestroy');
-    Route::resource('accounts', 'AccountController');
+ 
+    // Label
+    Route::delete('labels/destroy', 'LabelController@massDestroy')->name('labels.massDestroy');
+    Route::resource('labels', 'LabelController');
 
     // Offers
-    Route::delete('offers/destroy', 'OffersController@massDestroy')->name('offers.massDestroy');
-    Route::resource('offers', 'OffersController');
+    Route::delete('offers/destroy', 'OfferController@massDestroy')->name('offers.massDestroy');
+    Route::resource('offers', 'OfferController');
+    Route::get('offer/{status?}', 'OfferController@index');
 
     // Mail Room
     Route::delete('mail-rooms/destroy', 'MailRoomController@massDestroy')->name('mail-rooms.massDestroy');
@@ -55,6 +78,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Balances
     Route::delete('balances/destroy', 'BalancesController@massDestroy')->name('balances.massDestroy');
     Route::resource('balances', 'BalancesController');
+    Route::post('getTabledata', 'BalancesController@getTabledata')->name('balances.getTabledata');
+    Route::post('getModeldata', 'BalancesController@getModeldata')->name('balances.getModeldata');
+    Route::post('SaveAccounting', 'BalancesController@SaveAccounting')->name('balances.SaveAccounting');
+    Route::post('SavePaymentStatus', 'BalancesController@SavePaymentStatus')->name('balances.SavePaymentStatus');
+    Route::post('SavePaymentInfo', 'BalancesController@SavePaymentInfo')->name('balances.SavePaymentInfo');
+    Route::post('SaveNotes', 'BalancesController@SaveNotes')->name('balances.SaveNotes');
 
     // Payment Status
     Route::delete('payment-statuses/destroy', 'PaymentStatusController@massDestroy')->name('payment-statuses.massDestroy');
@@ -63,6 +92,35 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Payment Method
     Route::delete('payment-methods/destroy', 'PaymentMethodController@massDestroy')->name('payment-methods.massDestroy');
     Route::resource('payment-methods', 'PaymentMethodController');
+
+    // Template
+    Route::delete('templates/destroy', 'TemplateController@massDestroy')->name('templates.massDestroy');
+    Route::post('templates/media', 'TemplateController@storeMedia')->name('templates.storeMedia');
+    Route::post('templates/ckmedia', 'TemplateController@storeCKEditorImages')->name('templates.storeCKEditorImages');
+    Route::resource('templates', 'TemplateController');
+
+    // Campaign Results
+    Route::delete('campaign-results/destroy', 'CampaignResultsController@massDestroy')->name('campaign-results.massDestroy');
+    Route::resource('campaign-results', 'CampaignResultsController');
+
+    // Results Tracking
+    Route::delete('results-trackings/destroy', 'ResultsTrackingController@massDestroy')->name('results-trackings.massDestroy');
+    Route::resource('results-trackings', 'ResultsTrackingController');
+
+    // Campaign
+    Route::delete('campaigns/destroy', 'CampaignController@massDestroy')->name('campaigns.massDestroy');
+    Route::post('campaigns/media', 'CampaignController@storeMedia')->name('campaigns.storeMedia');
+    Route::post('campaigns/ckmedia', 'CampaignController@storeCKEditorImages')->name('campaigns.storeCKEditorImages');
+    Route::resource('campaigns', 'CampaignController');
+    Route::post('getTemplateData', 'CampaignController@getTemplateData')->name('campaigns.getTemplateData');
+
+    // Subscriber
+    Route::delete('subscribers/destroy', 'SubscriberController@massDestroy')->name('subscribers.massDestroy');
+    Route::resource('subscribers', 'SubscriberController');
+
+    // Subscription
+    Route::delete('subscriptions/destroy', 'SubscriptionController@massDestroy')->name('subscriptions.massDestroy');
+    Route::resource('subscriptions', 'SubscriptionController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

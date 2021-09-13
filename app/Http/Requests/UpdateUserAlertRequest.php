@@ -11,7 +11,8 @@ class UpdateUserAlertRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('user_alert_edit');
+        return true;
+            //Gate::allows('user_alert_edit');
     }
 
     public function rules()

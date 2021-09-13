@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.template.fields.offer_selection') }}
+                        </th>
+                        <td>
+                            {{ $template->offer_selection->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.template.fields.name') }}
                         </th>
                         <td>
@@ -37,6 +45,14 @@
                         </th>
                         <td>
                             {{ $template->email_subject }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.template.fields.from_name') }}
+                        </th>
+                        <td>
+                            {{ $template->from_name }}
                         </td>
                     </tr>
                     <tr>
@@ -78,22 +94,6 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#template_mail_rooms" role="tab" data-toggle="tab">
-                {{ trans('cruds.mailRoom.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="template_mail_rooms">
-            @includeIf('admin.templates.relationships.templateMailRooms', ['mailRooms' => $template->templateMailRooms])
-        </div>
-    </div>
-</div>
+
 
 @endsection

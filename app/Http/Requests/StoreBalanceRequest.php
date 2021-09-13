@@ -11,7 +11,8 @@ class StoreBalanceRequest extends FormRequest
 {
     public function authorize()
     {
-        return Gate::allows('balance_create');
+        return true;
+            //Gate::allows('balance_create');
     }
 
     public function rules()
