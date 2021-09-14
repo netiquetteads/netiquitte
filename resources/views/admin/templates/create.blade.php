@@ -1,6 +1,19 @@
 @extends('layouts.admin')
 @section('content')
-
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('ckeditor/adapters/jquery.js') }}"></script>
+<script>
+    $( document ).ready( function() {
+				CKEDITOR.config.allowedContent = true;
+				CKEDITOR.replace('editor1',{
+					filebrowserUploadUrl: 'ckeditor/ck_upload.php',
+					filebrowserUploadMethod: 'form',
+				});
+        // Add .js-ckeditor-enabled class to tag it as activated
+        $('#editor1').addClass('editor1-enabled');
+		});
+</script>
 <div class="card">
     <div class="card-header">
         {{ trans('global.create') }} {{ trans('cruds.template.title_singular') }}
@@ -9,21 +22,10 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.templates.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <label for="offer_selection_id">{{ trans('cruds.template.fields.offer_selection') }}</label>
-                <select class="form-control select2 {{ $errors->has('offer_selection') ? 'is-invalid' : '' }}" name="offer_selection_id" id="offer_selection_id">
-                    @foreach($offer_selections as $id => $entry)
-                        <option value="{{ $id }}" {{ old('offer_selection_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('offer_selection'))
-                    <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
-            </div>
+            
             <div class="form-group">
                 <label for="name">{{ trans('cruds.template.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}">
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', @$_GET['TemplateName']) }}">
                 @if($errors->has('name'))
                     <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
@@ -31,31 +33,203 @@
             </div>
             <div class="form-group">
                 <label for="email_subject">{{ trans('cruds.template.fields.email_subject') }}</label>
-                <input class="form-control {{ $errors->has('email_subject') ? 'is-invalid' : '' }}" type="text" name="email_subject" id="email_subject" value="{{ old('email_subject', '') }}">
+                <input class="form-control {{ $errors->has('email_subject') ? 'is-invalid' : '' }}" type="text" name="email_subject" id="email_subject" value="{{ old('email_subject', @$_GET['EmailSubject']) }}">
                 @if($errors->has('email_subject'))
                     <span class="text-danger">{{ $errors->first('email_subject') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.email_subject_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="from_name">{{ trans('cruds.template.fields.from_name') }}</label>
                 <input class="form-control {{ $errors->has('from_name') ? 'is-invalid' : '' }}" type="text" name="from_name" id="from_name" value="{{ old('from_name', '') }}">
                 @if($errors->has('from_name'))
                     <span class="text-danger">{{ $errors->first('from_name') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.from_name_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="from_email">{{ trans('cruds.template.fields.from_email') }}</label>
-                <input class="form-control {{ $errors->has('from_email') ? 'is-invalid' : '' }}" type="email" name="from_email" id="from_email" value="{{ old('from_email') }}">
+                <input class="form-control {{ $errors->has('from_email') ? 'is-invalid' : '' }}" type="email" name="from_email" id="from_email" value="{{ old('from_email', @$_GET['FromEmail']) }}">
                 @if($errors->has('from_email'))
                     <span class="text-danger">{{ $errors->first('from_email') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.from_email_helper') }}</span>
             </div>
             <div class="form-group">
+              <label for="offer_selection_id">{{ trans('cruds.template.fields.offer_selection') }}</label>
+              <select class="form-control select2 {{ $errors->has('offer_selection') ? 'is-invalid' : '' }}" name="offer_selection_id[]" id="offer_selection_id" multiple data-placeholder="Choose offers..">
+                @php
+                    $getOffers=array();
+                        if(@$_GET['OfferSelection']){
+                            $getOffers=explode(',',$_GET['OfferSelection']);
+                        }
+                    @endphp
+                @foreach($offer_selections as $id => $entry)
+                      <option value="{{ $id }}" @if (in_array($id,$getOffers))
+                      selected
+                  @endif>{{ $entry }}</option>
+                  @endforeach
+              </select>
+              @if($errors->has('offer_selection'))
+                  <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
+
+              <br/><br/>
+                <button type="button" onclick="LoadOffers()" class="btn btn-primary">Load Offers</button><br/>
+                <br/>
+
+          </div>
+          <script>
+            function LoadOffers(){
+                var TemplateName = document.getElementById("name").value;
+                var FromEmail = document.getElementById("from_email").value;
+                var EmailSubject = document.getElementById("email_subject").value;
+                var OffersSelection = $("#offer_selection_id").val();
+                var data = CKEDITOR.instances.editor1.getData();
+                var data2 = encodeURIComponent(data);
+                            
+                window.location.replace("{{ route('admin.templates.create') }}?FromEmail="+FromEmail+"&EmailSubject="+EmailSubject+"&OfferSelection="+OffersSelection+"&TemplateName="+TemplateName);
+                    
+            }
+            </script>
+          <div class="form-group">
+            <label onclick="vph();"><font color="blue"><u>View Placeholders</u></font></label>
+            <script>
+                function vph() {
+				var x = document.getElementById("placeholders");
+					if (x.style.display === "none") {
+						x.style.display = "block";
+					} else {
+						x.style.display = "none";
+					}
+			}
+            </script>
+            <div id="placeholders" style="display:none;">
+				<table>
+					<tr>
+						<td>ID</td>
+						<td>{ID}</td>
+					</tr>
+					<tr>
+						<td>Name</td>
+						<td>Placeholder</td>
+					</tr>
+					<tr>
+						<td>First Name</td>
+						<td>{FirstName}</td>
+					</tr>
+					<tr>
+						<td>Last Name</td>
+						<td>{LastName}</td>
+					</tr>
+					<tr>
+						<td>Offer Section</td>
+						<td>{Offers_Here}</td>
+					</tr>
+					<tr>
+						<td>Company</td>
+						<td>{Company}</td>
+					</tr>
+				</table>
+			</div>
+        </div>
+            <div class="form-group">
                 <label for="content">{{ trans('cruds.template.fields.content') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="content">{!! old('content') !!}</textarea>
+                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1">
+                
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+	<tbody>
+		<tr>
+			<td><img alt="" src="https://www.netiquetteads.com/assets/mail/netiquette-white-coverphoto-01.jpg" style="width: 450px; height: 100px;" /></td>
+		</tr>
+	</tbody>
+</table>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+	<tbody>
+		<tr>
+			<td>
+			<p>Hey&nbsp;{FirstName}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>write content here</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+@if ($selectedOffers)
+<table align='center' border='0' cellpadding='1' cellspacing='1' style='width:500px;'>
+<tbody>	
+@foreach($selectedOffers as $ID => $selectedOffer)
+<tr>
+<td><p><span style='font-size:26px;'><strong>{{ $selectedOffer->name }}</strong></span></p>
+<span style='border-radius:3px;display:inline-block;font-size:12px;font-weight:bold;line-height:14px;color:#white;white-space:nowrap;
+vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'>
+<font color='white'>Payout: {{ $selectedOffer->payout }}</font>
+</span>
+<br>
+<span style='color:#white;font-size:12px;'>
+<strong>Offer Id</strong>: {{ $selectedOffer->network_offer }}<br />
+<strong>Description</strong>:<br />
+<strong>Category</strong>: {{ $selectedOffer->category }}<br />
+<strong>Countries Accepted:</strong>  {{ $selectedOffer->category }}
+</span>
+<br>
+<a href='http://netiquetteads.com/preview.php?id={{ $selectedOffer->network_offer }}' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Preview</a> 
+<a href='http://netiquetteads.com/client.php' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Get Links</a>
+<br><br>
+</td>
+</tr>
+@endforeach
+</tbody>
+</table>
+@endif
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+	<tbody>
+	</tbody>
+</table>
+
+<p>&nbsp;<br />
+&nbsp;</p>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+	<tbody>
+		<tr>
+			<td>
+			<center><img alt="" src="https://www.netiquetteads.com/assets/mail/staytuned.JPG" /></center>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
+	<tbody>
+		<tr>
+			<td>
+			<center><a href="https://www.facebook.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_fb.png" style="width: 50px; height: 50px;" /></a></center>
+			</td>
+			<td>
+			<center><a href="https://www.instagram.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_ig.png" style="width: 50px; height: 50px;" /></a></center>
+			</td>
+			<td>
+			<center><a href="https://www.linkedin.com/company/netiquette-ads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_linkedin.png" style="width: 50px; height: 50px;" /></a></center>
+			</td>
+			<td>
+			<center><a href="https://twitter.com/netiquetteads"><img alt="" src="https://www.netiquetteads.com/assets/mail/v2_twitter.png" style="width: 50px; height: 50px;" /></a></center>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align: center;">If you no longer wish to receive our emails, please <a href="netiquetteads.com/unsubscribe.php?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
+690 A West Montrose Street, Clermont FL, USA, 34711<br />
+Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>
+                </textarea>
                 @if($errors->has('content'))
                     <span class="text-danger">{{ $errors->first('content') }}</span>
                 @endif

@@ -96,6 +96,18 @@ class CampaignController extends Controller
     {
 
         $campaign = Campaign::create($request->all());
+        $campaign->campaignOffers()->sync($request->input('campaign_offer_id', []));
+
+        $TemplateData=[
+            'name'=>$request->name,
+            'email_subject'=>$request->email_subject,
+            'from_email'=>$request->from_email,
+            'content'=>$request->content,
+        ];
+
+        $template = Template::create($TemplateData);
+
+        $template->templateOffers()->sync($request->input('campaign_offer_id', []));
 
         if ($request->input('offer_image', false)) {
             $campaign->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
@@ -194,6 +206,7 @@ class CampaignController extends Controller
     public function update(UpdateCampaignRequest $request, Campaign $campaign)
     {
         $campaign->update($request->all());
+        $campaign->campaignOffers()->sync($request->input('campaign_offer_id', []));
 
         if ($request->input('offer_image', false)) {
             if (!$campaign->offer_image || $request->input('offer_image') !== $campaign->offer_image->file_name) {
@@ -248,8 +261,9 @@ class CampaignController extends Controller
 
     public function getTemplateData(Request $request)
     {
-        $template=Template::where('id',$request->id)->first();
+        $data['template']=$template=Template::with('templateOffers')->where('id',$request->id)->first();
 
-        echo json_encode($template);
+        $data['offers']=$template->templateOffers->pluck('id')->toArray();
+        echo json_encode($data);
     }
 }

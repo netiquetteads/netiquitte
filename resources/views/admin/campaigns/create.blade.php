@@ -67,7 +67,7 @@
             </div>
             <div class="form-group">
                 <label for="campaign_offer_id">{{ trans('cruds.campaign.fields.campaign_offer') }}</label>
-                <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id" id="campaign_offer_id" multiple data-placeholder="Choose offers..">
+                <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id[]" id="campaign_offer_id" multiple data-placeholder="Choose offers..">
                     @php
                     $getOffers=array();
                         if(@$_GET['OfferSelection']){
@@ -220,29 +220,30 @@
 
 @if ($selectedOffers)
 <table align='center' border='0' cellpadding='1' cellspacing='1' style='width:500px;'>
-	<tbody>	
-			@foreach($selectedOffers as $ID => $selectedOffer)
-				
-		<tr>
-			<td>
-<p><span style='font-size:26px;'><strong>{{ $selectedOffer->name }}</strong></span></p>
+<tbody>	
+@foreach($selectedOffers as $ID => $selectedOffer)
+<tr>
+<td><p><span style='font-size:26px;'><strong>{{ $selectedOffer->name }}</strong></span></p>
 <span style='border-radius:3px;display:inline-block;font-size:12px;font-weight:bold;line-height:14px;color:#white;white-space:nowrap;
-vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'><font color='white'>Payout: {{ $selectedOffer->payout }}</font></span>
-
-<p style='color:#white;font-size:12px;'><strong>Offer Id</strong>: {{ $selectedOffer->network_offer }}<br />
+vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'>
+<font color='white'>Payout: {{ $selectedOffer->payout }}</font>
+</span>
+<br>
+<span style='color:#white;font-size:12px;'>
+<strong>Offer Id</strong>: {{ $selectedOffer->network_offer }}<br />
 <strong>Description</strong>:<br />
 <strong>Category</strong>: {{ $selectedOffer->category }}<br />
-<strong>Countries Accepted:</strong>  {{ $selectedOffer->category }}</p>
+<strong>Countries Accepted:</strong>  {{ $selectedOffer->category }}
+</span>
+<br>
 <a href='http://netiquetteads.com/preview.php?id={{ $selectedOffer->network_offer }}' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Preview</a> 
-
-<a href='http://netiquetteads.com/client.php' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Get Links</a></div>
-</div>
-			</td>
-		</tr>
-        @endforeach
-    </tbody>
+<a href='http://netiquetteads.com/client.php' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Get Links</a>
+<br><br>
+</td>
+</tr>
+@endforeach
+</tbody>
 </table>
-
 @endif
 
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
@@ -359,11 +360,11 @@ if($(this).val()==''){
             method:"POST",
             data:{id:tempId, _token:_token},
             success:function(data){
-                console.log('data',data.offer_selection_id);
-              $('#email_subject').val(data.email_subject);
-              $('#from_email').val(data.from_email);
-              $("#campaign_offer_id").select2("val", [data.offer_selection_id]);
-              CKEDITOR.instances['editor1'].setData(data.content)
+                console.log('data',data);
+              $('#email_subject').val(data.template.email_subject);
+              $('#from_email').val(data.template.from_email);
+              $("#campaign_offer_id").select2("val", [data.offers]);
+              CKEDITOR.instances['editor1'].setData(data.template.content)
     
               
 

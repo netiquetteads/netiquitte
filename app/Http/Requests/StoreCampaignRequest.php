@@ -43,10 +43,10 @@ class StoreCampaignRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'campaign_offer_id' => [
-                'string',
-                'nullable',
-            ],
+            // 'campaign_offer_id' => [
+            //     'string',
+            //     'nullable',
+            // ],
             'selected_template_id' => [
                 'string',
                 'nullable',

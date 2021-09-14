@@ -1,6 +1,20 @@
 @extends('layouts.admin')
 @section('content')
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('ckeditor/adapters/jquery.js') }}"></script>
+<script>
+    $( document ).ready( function() {
+				CKEDITOR.config.allowedContent = true;
+				CKEDITOR.replace('editor1',{
+					filebrowserUploadUrl: 'ckeditor/ck_upload.php',
+					filebrowserUploadMethod: 'form',
+				});
 
+            // Add .js-ckeditor-enabled class to tag it as activated
+            $('#editor1').addClass('editor1-enabled');
+		});
+</script>
 <div class="card">
     <div class="card-header">
         {{ trans('global.edit') }} {{ trans('cruds.campaign.title_singular') }}
@@ -10,6 +24,20 @@
         <form method="POST" action="{{ route("admin.campaigns.update", [$campaign->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
+            
+          <div class="form-group">
+              <label for="selected_template_id">{{ trans('cruds.campaign.fields.selected_template') }}</label>
+              <select class="form-control select2 {{ $errors->has('selected_template') ? 'is-invalid' : '' }}" name="selected_template_id" id="selected_template_id">
+                  @foreach($selected_templates as $id => $entry)
+                      <option value="{{ $id }}" {{ (old('selected_template_id') ? old('selected_template_id') : $campaign->selected_template->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                  @endforeach
+              </select>
+              @if($errors->has('selected_template'))
+                  <span class="text-danger">{{ $errors->first('selected_template') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.campaign.fields.selected_template_helper') }}</span>
+          </div>
+         
             <div class="form-group">
                 <label for="name">{{ trans('cruds.campaign.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $campaign->name) }}">
@@ -35,8 +63,22 @@
                 <span class="help-block">{{ trans('cruds.campaign.fields.from_email_helper') }}</span>
             </div>
             <div class="form-group">
+              <label for="campaign_offer_id">{{ trans('cruds.campaign.fields.campaign_offer') }}</label>
+              <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id[]" id="campaign_offer_id" multiple data-placeholder="Choose offers..">
+                  @foreach($campaign_offers as $id => $entry)
+                      <option value="{{ $id }}" @if (in_array($id,$campaign->campaignOffers->pluck('id')->toArray()))
+                        selected
+                    @endif>{{ $entry }}</option>
+                  @endforeach
+              </select>
+              @if($errors->has('campaign_offer'))
+                  <span class="text-danger">{{ $errors->first('campaign_offer') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
+          </div>
+            <div class="form-group">
                 <label for="content">{{ trans('cruds.campaign.fields.content') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="content">{!! old('content', $campaign->content) !!}</textarea>
+                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1">{!! old('content', $campaign->content) !!}</textarea>
                 @if($errors->has('content'))
                     <span class="text-danger">{{ $errors->first('content') }}</span>
                 @endif
@@ -51,30 +93,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.offer_image_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="campaign_offer_id">{{ trans('cruds.campaign.fields.campaign_offer') }}</label>
-                <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id" id="campaign_offer_id">
-                    @foreach($campaign_offers as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('campaign_offer_id') ? old('campaign_offer_id') : $campaign->campaign_offer->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('campaign_offer'))
-                    <span class="text-danger">{{ $errors->first('campaign_offer') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="selected_template_id">{{ trans('cruds.campaign.fields.selected_template') }}</label>
-                <select class="form-control select2 {{ $errors->has('selected_template') ? 'is-invalid' : '' }}" name="selected_template_id" id="selected_template_id">
-                    @foreach($selected_templates as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('selected_template_id') ? old('selected_template_id') : $campaign->selected_template->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('selected_template'))
-                    <span class="text-danger">{{ $errors->first('selected_template') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.campaign.fields.selected_template_helper') }}</span>
-            </div>
+            
             <div class="form-group">
                 <label for="subs">{{ trans('cruds.campaign.fields.subs') }}</label>
                 <input class="form-control {{ $errors->has('subs') ? 'is-invalid' : '' }}" type="number" name="subs" id="subs" value="{{ old('subs', $campaign->subs) }}" step="1">

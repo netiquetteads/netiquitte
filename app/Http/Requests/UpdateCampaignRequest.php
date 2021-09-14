@@ -40,10 +40,10 @@ class UpdateCampaignRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'campaign_offer_id' => [
-                'string',
-                'nullable',
-            ],
+            // 'campaign_offer_id' => [
+            //     'array',
+            //     'nullable',
+            // ],
             'selected_template_id' => [
                 'string',
                 'nullable',
