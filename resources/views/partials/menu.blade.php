@@ -312,7 +312,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('campaign_result_access')
+                            {{-- @can('campaign_result_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.campaign-results.index") }}" class="nav-link {{ request()->is("admin/campaign-results") || request()->is("admin/campaign-results/*") ? "active" : "" }}">
                                         <i class="fa-fw nav-icon fas fa-history">
@@ -359,7 +359,7 @@
                                         </p>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
                         </ul>
                     </li>
                 @endcan
