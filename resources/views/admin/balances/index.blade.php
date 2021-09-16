@@ -67,10 +67,13 @@ if($Year == ""){
         padding: 0px 10px;
         line-height: 30px;
     }
-    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-        border-color: #dee2e6 transparent #dee2e6 #dee2e6;
-    }
-    </style>
+    .modal-lg {
+    max-width: 950px;
+}
+.card-title {
+    margin-bottom: 20px !important;
+}
+    </style> 
 {{-- @can('balance_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">

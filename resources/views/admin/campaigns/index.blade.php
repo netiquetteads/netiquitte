@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('content')
+<style>
+    .dt-buttons{
+      display: none;
+    }
+  </style>
 @can('campaign_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">

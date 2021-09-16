@@ -124,8 +124,11 @@ class CampaignController extends Controller
 
         if($request->SendingTo==1){
 
-            $accounts=Account::where('AccountType',1)->where('AccountStatus','active')->get();
+            $accounts=Account::where('AccountType',1)->where('AccountStatus','active')->where('SubscribedStatus','Subscribed')->get();
             foreach ($accounts as $key => $account) {
+
+                $input['message']=str_replace('{ID}', $account->PlatformUserID, $input['message']);
+                $input['message']=str_replace('{AcctType}', $account->AccountType, $input['message']);
                 $input['message'] = str_replace('{FirstName}', $account->FirstName, $input['message']);
                 $input['message'] = str_replace('{LastName}', $account->LastName, $input['message']);
                 $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
@@ -136,8 +139,11 @@ class CampaignController extends Controller
             
 
         }else if($request->SendingTo==2){
-            $accounts=Account::where('AccountType',2)->where('AccountStatus','active')->get();
+            $accounts=Account::where('AccountType',2)->where('AccountStatus','active')->where('SubscribedStatus','Subscribed')->get();
             foreach ($accounts as $key => $account) {
+                
+                $input['message']=str_replace('{ID}', $account->PlatformUserID, $input['message']);
+                $input['message']=str_replace('{AcctType}', $account->AccountType, $input['message']);
                 $input['message'] = str_replace('{FirstName}', $account->FirstName, $input['message']);
                 $input['message'] = str_replace('{LastName}', $account->LastName, $input['message']);
                 $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
@@ -151,7 +157,7 @@ class CampaignController extends Controller
             $input['message'] = str_replace('{LastName}', 'Test Admin', $input['message']);
             $input['message'] = str_replace('{Company}', 'Test Company', $input['message']);
 
-            $emails = explode(",", $emails=env("TEST_EMAIL_TO"));
+            $emails = explode(",", env("TEST_EMAIL_TO"));
             $this->sendMail($emails,$input);
 
         }else if($request->SendingTo==4){
@@ -160,7 +166,7 @@ class CampaignController extends Controller
             $input['message'] = str_replace('{LastName}', 'Dev Admin', $input['message']);
             $input['message'] = str_replace('{Company}', 'Dev Company', $input['message']);
 
-            $emails = explode(",", $emails=env("DEV_EMAIL_TO"));
+            $emails = explode(",", env("DEV_EMAIL_TO"));
             $this->sendMail($emails,$input);
             
         }else{
@@ -176,10 +182,7 @@ class CampaignController extends Controller
                 $this->sendMail($value,$input);
             }
             
-        }
-
-        // \Mail::to($emails)->send(new CampaignMail($input));
-        
+        }        
 
         return redirect()->route('admin.campaigns.index');
     }
