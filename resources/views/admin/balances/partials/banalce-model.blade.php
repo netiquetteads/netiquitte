@@ -1,4 +1,8 @@
 <style>
+   .nav-tabs .nav-link.active {
+        color: black !important;
+    }
+
   #balanceModal {
 /*  --ratio: 664 / 1000;
   --container-width: 30rem;
@@ -89,7 +93,7 @@
   </div>
   <!-- /.card -->
 </div>
-            
+
   {{--           <div class="row">
               <div class="col-5 col-sm-3">
                 <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
