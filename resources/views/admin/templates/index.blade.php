@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('content')
+<style>
+  .dt-buttons{
+    display: none;
+  }
+</style>
 @can('template_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
@@ -43,39 +48,7 @@
 @parent
 <script>
     $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('template_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.templates.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
   let dtOverrideGlobals = {
-    buttons: dtButtons,
     processing: true,
     serverSide: true,
     retrieve: true,

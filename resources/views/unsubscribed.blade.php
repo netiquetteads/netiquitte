@@ -1,0 +1,1 @@
+<h1>You have been unsubscribed from all future emails</h1>
