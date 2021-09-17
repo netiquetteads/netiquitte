@@ -85,6 +85,13 @@ class TemplateController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $template->id]);
         }
 
+        $MyTemplate=Template::where('id',$template->id)->first();
+
+        $offerImg='<img width="100%" src="'.$MyTemplate->offer_image->getUrl().'" />';
+        $content = str_replace('{Offers_Image}', $offerImg, $MyTemplate->content);
+        $MyTemplate->content=$content;
+        $MyTemplate->save();
+
         return redirect()->route('admin.templates.index');
     }
 

@@ -134,9 +134,13 @@
 						<td>Last Name</td>
 						<td>{LastName}</td>
 					</tr>
-					<tr>
+					{{-- <tr>
 						<td>Offer Section</td>
 						<td>{Offers_Here}</td>
+					</tr> --}}
+                    <tr>
+						<td>Offer Image</td>
+						<td>{Offers_Image}</td>
 					</tr>
 					<tr>
 						<td>Company</td>
@@ -240,7 +244,7 @@ vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'>
 <br>
 <span style='color:#white;font-size:12px;'>
 <strong>Offer Id</strong>: {{ $selectedOffer->network_offer }}<br />
-<strong>Description</strong>:<br />
+<strong>Description</strong>: {!! $selectedOffer->description !!}<br />
 <strong>Category</strong>: {{ $selectedOffer->category }}<br />
 <strong>Countries Accepted:</strong>  {{ $selectedOffer->countries }}
 </span>

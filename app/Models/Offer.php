@@ -60,6 +60,7 @@ class Offer extends Model
         'payout_amount',
         'revenue_amount',
         'countries',
+        'description',
         'created_at',
         'updated_at',
         'deleted_at',

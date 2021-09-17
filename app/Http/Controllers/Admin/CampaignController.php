@@ -98,17 +98,6 @@ class CampaignController extends Controller
         $campaign = Campaign::create($request->all());
         $campaign->campaignOffers()->sync($request->input('campaign_offer_id', []));
 
-        $TemplateData=[
-            'name'=>$request->name,
-            'email_subject'=>$request->email_subject,
-            'from_email'=>$request->from_email,
-            'content'=>$request->content,
-        ];
-
-        $template = Template::create($TemplateData);
-
-        $template->templateOffers()->sync($request->input('campaign_offer_id', []));
-
         if ($request->input('offer_image', false)) {
             $campaign->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
         }
@@ -117,8 +106,28 @@ class CampaignController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $campaign->id]);
         }
 
+        $content=$request->content;
+
+        $CampaignImg=Campaign::where('id',$campaign->id)->first();
+
+        $offerImg='<img width="100%" src="'.$CampaignImg->offer_image->getUrl().'" />';
+        $content = str_replace('{Offers_Image}', $offerImg, $content);
+        $CampaignImg->content=$content;
+        $CampaignImg->save();
+
+        $TemplateData=[
+            'name'=>$request->name,
+            'email_subject'=>$request->email_subject,
+            'from_email'=>$request->from_email,
+            'content'=>$content,
+        ];
+
+        $template = Template::create($TemplateData);
+
+        $template->templateOffers()->sync($request->input('campaign_offer_id', []));
+
         $input = [
-            'message' => $request->content,
+            'message' => $content,
             'subject' => $request->email_subject,
         ];
 
