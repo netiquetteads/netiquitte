@@ -110,11 +110,13 @@ class CampaignController extends Controller
 
         $CampaignImg=Campaign::where('id',$campaign->id)->first();
 
-        $offerImg='<img width="100%" src="'.$CampaignImg->offer_image->getUrl().'" />';
-        $content = str_replace('{Offers_Image}', $offerImg, $content);
-        $CampaignImg->content=$content;
-        $CampaignImg->save();
-
+        if ($CampaignImg->offer_image) {
+            $offerImg='<img width="100%" src="'.$CampaignImg->offer_image->getUrl().'" />';
+            $content = str_replace('{Offers_Image}', $offerImg, $content);
+            $CampaignImg->content=$content;
+            $CampaignImg->save();
+        }
+        
         $TemplateData=[
             'name'=>$request->name,
             'email_subject'=>$request->email_subject,

@@ -35,6 +35,9 @@ class StoreCampaignRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'SendingTo' => [
+                'required',
+            ],
             'from_email' => [
                 'string',
                 'required',
