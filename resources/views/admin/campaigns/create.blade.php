@@ -45,7 +45,7 @@
                 <label for="name">{{ trans('cruds.campaign.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', @$_GET['CampaignName']) }}">
                 @if($errors->has('name'))
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                    <span class="text-danger">Enter a name you will be able to identify this email by. That way later you can find it.</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.name_helper') }}</span>
             </div>
