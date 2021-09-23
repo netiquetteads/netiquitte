@@ -30,7 +30,7 @@
         <form method="POST" action="{{ route("admin.campaigns.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="selected_template_id">{{ trans('cruds.campaign.fields.selected_template') }}</label>
+                <label for="selected_template_id">Select Template for Email or Edit Current Content</label>
                 <select class="form-control select2 selectTemplate {{ $errors->has('selected_template') ? 'is-invalid' : '' }}" name="selected_template_id" id="selected_template_id">
                     @foreach($selected_templates as $id => $entry)
                         <option value="{{ $id }}" {{ @$_GET['TemplateID'] == $id ? 'selected' : '' }}>{{ $entry }}</option>
@@ -42,12 +42,12 @@
                 <span class="help-block">{{ trans('cruds.campaign.fields.selected_template_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="name">{{ trans('cruds.campaign.fields.name') }}</label>
+                <label for="name">Nickname for Email</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', @$_GET['CampaignName']) }}">
                 @if($errors->has('name'))
                     <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.campaign.fields.name_helper') }}</span>
+                <span class="help-block">Enter a name you will be able to identify this email by. That way later you can find it.</span>
             </div>
             <div class="form-group">
                 <label for="email_subject">{{ trans('cruds.campaign.fields.email_subject') }}</label>
@@ -66,7 +66,7 @@
                 <span class="help-block">{{ trans('cruds.campaign.fields.from_email_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="campaign_offer_id">{{ trans('cruds.campaign.fields.campaign_offer') }}</label>
+                <label for="campaign_offer_id">Select Offer for Email</label>
                 <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id[]" id="campaign_offer_id" multiple data-placeholder="Choose offers..">
                     @php
                     $getOffers=array();
@@ -86,7 +86,7 @@
                 <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
 
                 <br/><br/>
-                <button type="button" id="LoadOffers" class="btn btn-primary">Load Offers</button><br/>
+                <button type="button" id="LoadOffers" class="btn btn-primary">Load Offer</button><br/>
                 <br/>
             </div>
             
@@ -123,11 +123,11 @@
 					</tr>
 					<tr>
 						<td>Offer Section</td>
-						<td>{Offers_Here}</td>
+						<td>{Offer_Here}</td>
 					</tr>
                     <tr>
 						<td>Offer Image</td>
-						<td>{Offers_Image}</td>
+						<td>{Offer_Image}</td>
 					</tr>
 					<tr>
 						<td>Company</td>
@@ -184,7 +184,7 @@
 
 
 
-                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1">
+                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1" rows="300">
 
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>
@@ -204,6 +204,16 @@
 		<tr>
 			<td>
 			<p>write content here</p>
+			</td>
+		</tr>
+        <tr>
+			<td>
+        {Offer_Here}
+			</td>
+		</tr>
+		<tr>
+			<td>
+        {Offer_Image}
 			</td>
 		</tr>
 	</tbody>
@@ -271,30 +281,30 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
             </div>
             
            
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="subs">{{ trans('cruds.campaign.fields.subs') }}</label>
                 <input class="form-control {{ $errors->has('subs') ? 'is-invalid' : '' }}" type="number" name="subs" id="subs" value="{{ old('subs', '0') }}" step="1">
                 @if($errors->has('subs'))
                     <span class="text-danger">{{ $errors->first('subs') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.subs_helper') }}</span>
-            </div>
-            <div class="form-group">
+            </div> --}}
+            {{-- <div class="form-group">
                 <label for="unsubs">{{ trans('cruds.campaign.fields.unsubs') }}</label>
                 <input class="form-control {{ $errors->has('unsubs') ? 'is-invalid' : '' }}" type="number" name="unsubs" id="unsubs" value="{{ old('unsubs', '0') }}" step="1">
                 @if($errors->has('unsubs'))
                     <span class="text-danger">{{ $errors->first('unsubs') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.unsubs_helper') }}</span>
-            </div>
-            <div class="form-group">
+            </div> --}}
+            {{-- <div class="form-group">
                 <label for="opens">{{ trans('cruds.campaign.fields.opens') }}</label>
                 <input class="form-control {{ $errors->has('opens') ? 'is-invalid' : '' }}" type="number" name="opens" id="opens" value="{{ old('opens', '0') }}" step="1">
                 @if($errors->has('opens'))
                     <span class="text-danger">{{ $errors->first('opens') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.opens_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
@@ -335,7 +345,7 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                         },
                         success:function(response) {
                             console.log(response);
-                            $this.html('Load Offers');
+                            $this.html('Load Offer');
                             CKEDITOR.instances.editor1.setData(response);
                         }
                     })

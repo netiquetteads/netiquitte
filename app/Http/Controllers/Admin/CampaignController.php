@@ -115,7 +115,7 @@ class CampaignController extends Controller
 
         if ($CampaignImg->offer_image) {
             $offerImg='<img width="100%" src="'.$CampaignImg->offer_image->getUrl().'" />';
-            $content = str_replace('{Offers_Image}', $offerImg, $content);
+            $content = str_replace('{Offer_Image}', $offerImg, $content);
             $CampaignImg->content=$content;
             $CampaignImg->save();
         }
@@ -303,7 +303,7 @@ class CampaignController extends Controller
 
         $selectedOfferHtml=view('admin.campaigns.partials.offers-loop', compact('selectedOffers'))->render();
 
-        $message = str_replace('{Offers_Here}', $selectedOfferHtml, $content);
+        $message = str_replace('{Offer_Here}', $selectedOfferHtml, $content);
 
         echo $message;
 

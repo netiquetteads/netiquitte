@@ -94,7 +94,7 @@
                 <span class="help-block">{{ trans('cruds.campaign.fields.offer_image_helper') }}</span>
             </div>
             
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="subs">{{ trans('cruds.campaign.fields.subs') }}</label>
                 <input class="form-control {{ $errors->has('subs') ? 'is-invalid' : '' }}" type="number" name="subs" id="subs" value="{{ old('subs', $campaign->subs) }}" step="1">
                 @if($errors->has('subs'))
@@ -117,7 +117,7 @@
                     <span class="text-danger">{{ $errors->first('opens') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.opens_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

@@ -76,7 +76,7 @@
               <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
 
               <br/><br/>
-                <button type="button" onclick="LoadOffers()" class="btn btn-primary">Load Offers</button><br/>
+                <button type="button" onclick="LoadOffers()" class="btn btn-primary">Load Offer</button><br/>
                 <br/>
 
           </div>
@@ -125,11 +125,11 @@
 					</tr>
 					<tr>
 						<td>Offer Section</td>
-						<td>{Offers_Here}</td>
+						<td>{Offer_Here}</td>
 					</tr>
 					<tr>
 						<td>Offer Image</td>
-						<td>{Offers_Image}</td>
+						<td>{Offer_Image}</td>
 					</tr>
 					<tr>
 						<td>Company</td>
@@ -140,7 +140,7 @@
         </div>
             <div class="form-group">
                 <label for="content">{{ trans('cruds.template.fields.content') }}</label>
-                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1">
+                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1" rows="300">
                 
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>
@@ -160,6 +160,16 @@
 		<tr>
 			<td>
 			<p>write content here</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+        {Offer_Here}
+			</td>
+		</tr>
+		<tr>
+			<td>
+        {Offer_Image}
 			</td>
 		</tr>
 	</tbody>
