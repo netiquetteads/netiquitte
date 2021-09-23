@@ -123,10 +123,10 @@
 						<td>Last Name</td>
 						<td>{LastName}</td>
 					</tr>
-					{{-- <tr>
+					<tr>
 						<td>Offer Section</td>
 						<td>{Offers_Here}</td>
-					</tr> --}}
+					</tr>
 					<tr>
 						<td>Offer Image</td>
 						<td>{Offers_Image}</td>

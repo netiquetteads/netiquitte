@@ -80,7 +80,10 @@ class CampaignController extends Controller
     {
         abort_if(Gate::denies('campaign_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $template=Template::where('id',$request->TemplateID)->first();
+
         $selectedOffers = Offer::where('offer_status','active')->whereIn('id',explode(',',$request->OfferSelection))->get();
+        
 
         $campaign_offers = Offer::where('offer_status','active')->pluck('name', 'id');
 
@@ -89,7 +92,7 @@ class CampaignController extends Controller
         $AffiliateCount=Account::where('AccountType',1)->where('AccountStatus','active')->count();
         $AdvertiserCount=Account::where('AccountType',2)->where('AccountStatus','active')->count();
 
-        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateCount','AdvertiserCount','selectedOffers'));
+        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateCount','AdvertiserCount','selectedOffers','template'));
     }
 
     public function store(StoreCampaignRequest $request)
@@ -279,5 +282,30 @@ class CampaignController extends Controller
 
         $data['offers']=$template->templateOffers->pluck('id')->toArray();
         echo json_encode($data);
+    }
+
+    public function loadTemplate(Request $request)
+    {
+        $TemplateID=$request->TemplateID;
+        $template=Template::with('templateOffers')->where('id',$TemplateID)->first();
+        
+        $templateOffers=$template->templateOffers->pluck('id')->toArray();
+        $OffersSelection=$request->OffersSelection;
+
+        // $arrMerge=array_merge($OffersSelection,$templateOffers);
+        // $uniqueOffers=array_unique($arrMerge);
+
+        $uniqueOffers=array_diff($OffersSelection,$templateOffers);
+
+        $content=urldecode($request->content);
+
+        $selectedOffers = Offer::whereIn('id',$uniqueOffers)->get();
+
+        $selectedOfferHtml=view('admin.campaigns.partials.offers-loop', compact('selectedOffers'))->render();
+
+        $message = str_replace('{Offers_Here}', $selectedOfferHtml, $content);
+
+        echo $message;
+
     }
 }

@@ -33,7 +33,7 @@
                 <label for="selected_template_id">{{ trans('cruds.campaign.fields.selected_template') }}</label>
                 <select class="form-control select2 selectTemplate {{ $errors->has('selected_template') ? 'is-invalid' : '' }}" name="selected_template_id" id="selected_template_id">
                     @foreach($selected_templates as $id => $entry)
-                        <option value="{{ $id }}" {{ old('selected_template_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        <option value="{{ $id }}" {{ @$_GET['TemplateID'] == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('selected_template'))
@@ -86,23 +86,10 @@
                 <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
 
                 <br/><br/>
-                <button type="button" onclick="LoadOffers()" class="btn btn-primary">Load Offers</button><br/>
+                <button type="button" id="LoadOffers" class="btn btn-primary">Load Offers</button><br/>
                 <br/>
             </div>
-            <script>
-                function LoadOffers(){
-                    var CampaignName = document.getElementById("name").value;
-                    var FromEmail = document.getElementById("from_email").value;
-                    var EmailSubject = document.getElementById("email_subject").value;
-                    var TemplateID = document.getElementById("selected_template_id").value;
-                    var OffersSelection = $("#campaign_offer_id").val();
-                    var data = CKEDITOR.instances.editor1.getData();
-                    var data2 = encodeURIComponent(data);
-                                
-                    window.location.replace("{{ route('admin.campaigns.create') }}?FromEmail="+FromEmail+"&EmailSubject="+EmailSubject+"&OfferSelection="+OffersSelection+"&CampaignName="+CampaignName);
-                        
-                }
-                </script>
+            
 
             <div class="form-group">
             <label onclick="vph();"><font color="blue"><u>View Placeholders</u></font></label>
@@ -134,10 +121,10 @@
 						<td>Last Name</td>
 						<td>{LastName}</td>
 					</tr>
-					{{-- <tr>
+					<tr>
 						<td>Offer Section</td>
 						<td>{Offers_Here}</td>
-					</tr> --}}
+					</tr>
                     <tr>
 						<td>Offer Image</td>
 						<td>{Offers_Image}</td>
@@ -222,42 +209,7 @@
 	</tbody>
 </table>
 
-@if ($selectedOffers)
-<table align='center' border='0' cellpadding='1' cellspacing='1' style='width:500px;'>
-<tbody>	
-@foreach($selectedOffers as $ID => $selectedOffer)
-@php
-    if($selectedOffer->payout_type == "cpa"){
-        $RevenueFigure = "$";
-        $payout = $RevenueFigure . $selectedOffer->payout_amount;
-    }else{
-        $RevenueFigure = "%";
-        $payout = $selectedOffer->payout_amount . $RevenueFigure;
-    }
-@endphp
-<tr>
-<td><p><span style='font-size:26px;'><strong>{{ $selectedOffer->name }}</strong></span></p>
-<span style='border-radius:3px;display:inline-block;font-size:12px;font-weight:bold;line-height:14px;color:#white;white-space:nowrap;
-vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'>
-<font color='white'>Payout: {{ $payout }}</font>
-</span>
-<br>
-<span style='color:#white;font-size:12px;'>
-<strong>Offer Id</strong>: {{ $selectedOffer->network_offer }}<br />
-<strong>Description</strong>: {{ nl2br($selectedOffer->description) }}<br /><br>
-<strong>Category</strong>: {{ $selectedOffer->category }}<br />
-<strong>Countries Accepted:</strong>  {{ $selectedOffer->countries }}
-</span>
-<br><br>
-<a href='{{ $selectedOffer->preview_url }}' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Preview</a> 
-<a href='https://netiquetteads.everflowclient.io/login' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Get Links</a>
-<br><br>
-</td>
-</tr>
-@endforeach
-</tbody>
-</table>
-@endif
+@include('admin.campaigns.partials.offers-loop')
 
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>
@@ -358,6 +310,40 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 
 @section('scripts')
 
+<script>
+    $('#LoadOffers').click(function(){
+        $this=$(this);
+        var CampaignName = document.getElementById("name").value;
+        var FromEmail = document.getElementById("from_email").value;
+        var EmailSubject = document.getElementById("email_subject").value;
+        var TemplateID = document.getElementById("selected_template_id").value;
+        var OffersSelection = $("#campaign_offer_id").val();
+        var data = CKEDITOR.instances.editor1.getData();
+        var data2 = encodeURIComponent(data);
+        $loader='<div class="spinner-border text-dark" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>';
+            $this.html($loader);
+
+            if(OffersSelection.length>0){
+                var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url:'{{ route("admin.campaigns.loadTemplate") }}',
+                        method:"POST",
+                        data: {
+                            OffersSelection: OffersSelection,content:data2,TemplateID:TemplateID,_token:_token
+                        },
+                        success:function(response) {
+                            console.log(response);
+                            $this.html('Load Offers');
+                            CKEDITOR.instances.editor1.setData(response);
+                        }
+                    })
+            } 
+        // window.location.replace("{{ route('admin.campaigns.create') }}?FromEmail="+FromEmail+"&EmailSubject="+EmailSubject+"&OfferSelection="+OffersSelection+"&CampaignName="+CampaignName+"&TemplateID="+TemplateID);
+    });
+    
+    </script>
 
 <script>
     $('.selectTemplate').change(function(){

@@ -117,6 +117,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('campaigns/ckmedia', 'CampaignController@storeCKEditorImages')->name('campaigns.storeCKEditorImages');
     Route::resource('campaigns', 'CampaignController');
     Route::post('getTemplateData', 'CampaignController@getTemplateData')->name('campaigns.getTemplateData');
+    Route::post('loadTemplate', 'CampaignController@loadTemplate')->name('campaigns.loadTemplate');
 
     // Subscriber
     Route::delete('subscribers/destroy', 'SubscriberController@massDestroy')->name('subscribers.massDestroy');
