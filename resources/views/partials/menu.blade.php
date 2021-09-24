@@ -288,18 +288,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @can('template_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.templates.index") }}" class="nav-link {{ request()->is("admin/templates") || request()->is("admin/templates/*") ? "active" : "" }}">
-                                        <i class="fa-fw nav-icon far fa-envelope">
-
-                                        </i>
-                                        <p>
-                                            {{ trans('cruds.template.title') }}
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
+                            
                             @can('campaign_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.campaigns.index") }}" class="nav-link {{ request()->is("admin/campaigns") || request()->is("admin/campaigns/*") ? "active" : "" }}">
@@ -308,6 +297,18 @@
                                         </i>
                                         <p>
                                             {{ trans('cruds.campaign.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('template_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.templates.index") }}" class="nav-link {{ request()->is("admin/templates") || request()->is("admin/templates/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon far fa-envelope">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.template.title') }}
                                         </p>
                                     </a>
                                 </li>
