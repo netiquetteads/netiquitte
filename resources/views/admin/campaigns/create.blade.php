@@ -344,7 +344,7 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                             OffersSelection: OffersSelection,content:data2,TemplateID:TemplateID,_token:_token
                         },
                         success:function(response) {
-                            console.log(response);
+                            // console.log(response);
                             $this.html('Load Offer');
                             CKEDITOR.instances.editor1.setData(response);
                         }
@@ -369,7 +369,7 @@ if($(this).val()==''){
             method:"POST",
             data:{id:tempId, _token:_token},
             success:function(data){
-                console.log('data',data);
+                // console.log('data',data);
               $('#email_subject').val(data.template.email_subject);
               $('#from_email').val(data.template.from_email);
               $("#campaign_offer_id").select2("val", [data.offers]);

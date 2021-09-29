@@ -167,6 +167,11 @@
         {Offer_Here}
 			</td>
 		</tr>
+    <tr>
+      <td>
+        @include('admin.campaigns.partials.offers-loop')
+      </td>
+    </tr>
 		<tr>
 			<td>
         {Offer_Image}
@@ -174,7 +179,7 @@
 		</tr>
 	</tbody>
 </table>
-
+{{--  
 @if ($selectedOffers)
 <table align='center' border='0' cellpadding='1' cellspacing='1' style='width:500px;'>
 <tbody>	
@@ -210,7 +215,7 @@
 @endforeach
 </tbody>
 </table>
-@endif
+@endif  --}}
 
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>

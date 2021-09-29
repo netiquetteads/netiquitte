@@ -136,9 +136,13 @@ class CampaignController extends Controller
             'subject' => $request->email_subject,
         ];
 
+        $input['message'] = str_replace('{Offer_Here}', '', $input['message']);
+        $input['message'] = str_replace('{Offer_Image}', '', $input['message']);
+
         if($request->SendingTo==1){
 
             $accounts=Account::where('AccountType',1)->where('AccountStatus','active')->where('SubscribedStatus','Subscribed')->get();
+            
             foreach ($accounts as $key => $account) {
 
                 $input['message']=str_replace('{ID}', $account->PlatformUserID, $input['message']);
@@ -287,16 +291,19 @@ class CampaignController extends Controller
     public function loadTemplate(Request $request)
     {
         $TemplateID=$request->TemplateID;
-        $template=Template::with('templateOffers')->where('id',$TemplateID)->first();
+
+        if ($TemplateID) {
+
+            $template=Template::with('templateOffers')->where('id',$TemplateID)->first();
+            $templateOffers=$template->templateOffers->pluck('id')->toArray();
+            $OffersSelection=$request->OffersSelection;
+            $uniqueOffers=array_diff($OffersSelection,$templateOffers);
+
+        } else {
+
+            $uniqueOffers=$request->OffersSelection;
+        }
         
-        $templateOffers=$template->templateOffers->pluck('id')->toArray();
-        $OffersSelection=$request->OffersSelection;
-
-        // $arrMerge=array_merge($OffersSelection,$templateOffers);
-        // $uniqueOffers=array_unique($arrMerge);
-
-        $uniqueOffers=array_diff($OffersSelection,$templateOffers);
-
         $content=urldecode($request->content);
 
         $selectedOffers = Offer::whereIn('id',$uniqueOffers)->get();
