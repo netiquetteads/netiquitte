@@ -84,10 +84,6 @@
                     <span class="text-danger">{{ $errors->first('campaign_offer') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
-
-                <br/><br/>
-                <button type="button" id="LoadOffers" class="btn btn-primary">Load Offer</button><br/>
-                <br/>
             </div>
             
 
@@ -209,6 +205,8 @@
         <tr>
 			<td>
         {Offer_Here}
+        <offers>
+        </offers>
 			</td>
 		</tr>
 		<tr>
@@ -218,8 +216,6 @@
 		</tr>
 	</tbody>
 </table>
-
-@include('admin.campaigns.partials.offers-loop')
 
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>
@@ -270,6 +266,12 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.content_helper') }}</span>
             </div>
+            
+                <div class="form-group">
+                    <button type="button" id="LoadOffers" class="btn btn-primary">Load Offer</button><br/>
+                    <br/>
+    
+              </div>
             <div class="form-group">
                 <label for="offer_image">{{ trans('cruds.campaign.fields.offer_image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('offer_image') ? 'is-invalid' : '' }}" id="offer_image-dropzone">
@@ -323,9 +325,6 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <script>
     $('#LoadOffers').click(function(){
         $this=$(this);
-        var CampaignName = document.getElementById("name").value;
-        var FromEmail = document.getElementById("from_email").value;
-        var EmailSubject = document.getElementById("email_subject").value;
         var TemplateID = document.getElementById("selected_template_id").value;
         var OffersSelection = $("#campaign_offer_id").val();
         var data = CKEDITOR.instances.editor1.getData();
@@ -350,7 +349,6 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                         }
                     })
             } 
-        // window.location.replace("{{ route('admin.campaigns.create') }}?FromEmail="+FromEmail+"&EmailSubject="+EmailSubject+"&OfferSelection="+OffersSelection+"&CampaignName="+CampaignName+"&TemplateID="+TemplateID);
     });
     
     </script>

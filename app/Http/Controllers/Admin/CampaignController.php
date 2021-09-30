@@ -290,29 +290,33 @@ class CampaignController extends Controller
 
     public function loadTemplate(Request $request)
     {
-        $TemplateID=$request->TemplateID;
+        // $TemplateID=$request->TemplateID;
 
-        if ($TemplateID) {
+        // if ($TemplateID) {
 
-            $template=Template::with('templateOffers')->where('id',$TemplateID)->first();
-            $templateOffers=$template->templateOffers->pluck('id')->toArray();
-            $OffersSelection=$request->OffersSelection;
-            $uniqueOffers=array_diff($OffersSelection,$templateOffers);
+        //     $template=Template::with('templateOffers')->where('id',$TemplateID)->first();
+        //     $templateOffers=$template->templateOffers->pluck('id')->toArray();
+        //     $OffersSelection=$request->OffersSelection;
+        //     $uniqueOffers=array_diff($OffersSelection,$templateOffers);
 
-        } else {
+        // } else {
 
-            $uniqueOffers=$request->OffersSelection;
-        }
+        //     $uniqueOffers=$request->OffersSelection;
+        // }
+
+        $uniqueOffers=$request->OffersSelection;
         
         $content=urldecode($request->content);
 
         $selectedOffers = Offer::whereIn('id',$uniqueOffers)->get();
 
         $selectedOfferHtml=view('admin.campaigns.partials.offers-loop', compact('selectedOffers'))->render();
-
-        $message = str_replace('{Offer_Here}', $selectedOfferHtml, $content);
-
-        echo $message;
+        
+        
+        $content = preg_replace('~<offers(.*?)</offers>~Usi', "", $content);
+        $content = str_replace('{Offer_Here}', '{Offer_Here}<offers>'.$selectedOfferHtml.'</offers>', $content);
+        
+        echo $content;
 
     }
 }

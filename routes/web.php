@@ -74,10 +74,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('mail-rooms', 'MailRoomController');
 
     // Template
-    Route::delete('templates/destroy', 'TemplateController@massDestroy')->name('templates.massDestroy');
-    Route::post('templates/media', 'TemplateController@storeMedia')->name('templates.storeMedia');
-    Route::post('templates/ckmedia', 'TemplateController@storeCKEditorImages')->name('templates.storeCKEditorImages');
-    Route::resource('templates', 'TemplateController');
+    // Route::delete('templates/destroy', 'TemplateController@massDestroy')->name('templates.massDestroy');
+    // Route::post('templates/media', 'TemplateController@storeMedia')->name('templates.storeMedia');
+    // Route::post('templates/ckmedia', 'TemplateController@storeCKEditorImages')->name('templates.storeCKEditorImages');
+    // Route::resource('templates', 'TemplateController');
 
     // Balances
     Route::delete('balances/destroy', 'BalancesController@massDestroy')->name('balances.massDestroy');

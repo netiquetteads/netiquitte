@@ -74,25 +74,8 @@
                   <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
               @endif
               <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
-
-              <br/><br/>
-                <button type="button" onclick="LoadOffers()" class="btn btn-primary">Load Offer</button><br/>
-                <br/>
-
           </div>
-          <script>
-            function LoadOffers(){
-                var TemplateName = document.getElementById("name").value;
-                var FromEmail = document.getElementById("from_email").value;
-                var EmailSubject = document.getElementById("email_subject").value;
-                var OffersSelection = $("#offer_selection_id").val();
-                var data = CKEDITOR.instances.editor1.getData();
-                var data2 = encodeURIComponent(data);
-                            
-                window.location.replace("{{ route('admin.templates.create') }}?FromEmail="+FromEmail+"&EmailSubject="+EmailSubject+"&OfferSelection="+OffersSelection+"&TemplateName="+TemplateName);
-                    
-            }
-            </script>
+          
           <div class="form-group">
             <label onclick="vph();"><font color="blue"><u>View Placeholders</u></font></label>
             <script>
@@ -164,14 +147,11 @@
 		</tr>
 		<tr>
 			<td>
-        {Offer_Here}
+          {Offer_Here}
+      <offers>
+      </offers>
 			</td>
 		</tr>
-    <tr>
-      <td>
-        @include('admin.campaigns.partials.offers-loop')
-      </td>
-    </tr>
 		<tr>
 			<td>
         {Offer_Image}
@@ -179,44 +159,6 @@
 		</tr>
 	</tbody>
 </table>
-{{--  
-@if ($selectedOffers)
-<table align='center' border='0' cellpadding='1' cellspacing='1' style='width:500px;'>
-<tbody>	
-@foreach($selectedOffers as $ID => $selectedOffer)
-@php
-    if($selectedOffer->payout_type == "cpa"){
-        $RevenueFigure = "$";
-        $payout = $RevenueFigure . $selectedOffer->payout_amount;
-    }else{
-        $RevenueFigure = "%";
-        $payout = $selectedOffer->payout_amount . $RevenueFigure;
-    }
-@endphp
-<tr>
-  <td><p><span style='font-size:26px;'><strong>{{ $selectedOffer->name }}</strong></span></p>
-  <span style='border-radius:3px;display:inline-block;font-size:12px;font-weight:bold;line-height:14px;color:#white;white-space:nowrap;
-  vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'>
-  <font color='white'>Payout: {{ $payout }}</font>
-  </span>
-  <br>
-  <span style='color:#white;font-size:12px;'>
-  <strong>Offer Id</strong>: {{ $selectedOffer->network_offer }}<br />
-  <strong>Description</strong>: {{ nl2br($selectedOffer->description) }}<br /><br>
-  <strong>Category</strong>: {{ $selectedOffer->category }}<br />
-  <strong>Countries Accepted:</strong>  {{ $selectedOffer->countries }}
-  </span>
-  <br><br>
-<a href='{{ $selectedOffer->preview_url }}' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Preview</a> 
-<a href='https://netiquetteads.everflowclient.io/login' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Get Links</a>
-<br><br>
-</td>
-</tr>
-@endforeach
-</tbody>
-</table>
-@endif  --}}
-
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>
 	</tbody>
@@ -264,6 +206,11 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                 <span class="help-block">{{ trans('cruds.template.fields.content_helper') }}</span>
             </div>
             <div class="form-group">
+                <button type="button" id="LoadOffers" class="btn btn-primary">Load Offer</button><br/>
+                <br/>
+
+          </div>
+            <div class="form-group">
                 <label for="offer_image">{{ trans('cruds.template.fields.offer_image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('offer_image') ? 'is-invalid' : '' }}" id="offer_image-dropzone">
                 </div>
@@ -283,9 +230,45 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 
 
 
+
 @endsection
 
 @section('scripts')
+
+
+<script>
+  $('#LoadOffers').click(function(){
+      $this=$(this);
+
+      var OffersSelection = $("#offer_selection_id").val();
+
+      var data = CKEDITOR.instances.editor1.getData();
+      var data2 = encodeURIComponent(data);
+      $loader='<div class="spinner-border text-dark" role="status">'+
+          '<span class="sr-only">Loading...</span>'+
+          '</div>';
+          $this.html($loader);
+
+          if(OffersSelection.length>0){
+              var _token = $('input[name="_token"]').val();
+                  $.ajax({
+                      url:'{{ route("admin.campaigns.loadTemplate") }}',
+                      method:"POST",
+                      data: {
+                          OffersSelection: OffersSelection,content:data2,_token:_token
+                      },
+                      success:function(response) {
+                          // console.log(response);
+                          $this.html('Load Offer');
+                          CKEDITOR.instances.editor1.setData(response);
+                      }
+                  })
+          } 
+      // window.location.replace("{{ route('admin.campaigns.create') }}?FromEmail="+FromEmail+"&EmailSubject="+EmailSubject+"&OfferSelection="+OffersSelection+"&CampaignName="+CampaignName+"&TemplateID="+TemplateID);
+  });
+  
+  </script>
+
 <script>
     $(document).ready(function () {
   function SimpleUploadAdapter(editor) {
