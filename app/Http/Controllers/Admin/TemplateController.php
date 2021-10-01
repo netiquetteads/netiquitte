@@ -27,7 +27,9 @@ class TemplateController extends Controller
             $query = Template::with(['offer_selection'])->select(sprintf('%s.*', (new Template())->table));
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
+            $table->editColumn('placeholder', function ($row) {
+                return '<input type="checkbox" name="selectdata" id="selectdata'.$row->id.'" value="'.$row->id.'">';
+            });
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
@@ -162,5 +164,11 @@ class TemplateController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function deleteSelectedTemplate(Request $request)
+    {
+        Template::destroy($request->ids);
+        echo 1;
     }
 }

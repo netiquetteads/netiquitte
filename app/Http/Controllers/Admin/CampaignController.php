@@ -58,17 +58,24 @@ class CampaignController extends Controller
                 return $row->email_subject ? $row->email_subject : '';
             });
             $table->addColumn('campaign_offer_name', function ($row) {
-                return $row->campaign_offer ? $row->campaign_offer->name : '';
+                if ($row->campaignOffers->count()>0){
+                    return implode(', ',$row->campaignOffers->pluck('name')->toArray());
+                }else{
+                    return '';
+                }
+            });
+            $table->addColumn('sentDateTime', function ($row) {
+                return date('d M Y h:i:s',strtotime($row->created_at));
             });
 
-            $table->editColumn('subs', function ($row) {
-                return $row->subs ? $row->subs : '';
-            });
-            $table->editColumn('opens', function ($row) {
-                return $row->opens ? $row->opens : '';
-            });
+            // $table->editColumn('subs', function ($row) {
+            //     return $row->subs ? $row->subs : '';
+            // });
+            // $table->editColumn('opens', function ($row) {
+            //     return $row->opens ? $row->opens : '';
+            // });
 
-            $table->rawColumns(['actions', 'placeholder', 'campaign_offer']);
+            $table->rawColumns(['actions', 'placeholder', 'campaign_offer','sentDateTime']);
 
             return $table->make(true);
         }
@@ -89,10 +96,15 @@ class CampaignController extends Controller
 
         $selected_templates = Template::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $AffiliateCount=Account::where('AccountType',1)->where('AccountStatus','active')->count();
-        $AdvertiserCount=Account::where('AccountType',2)->where('AccountStatus','active')->count();
-
-        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateCount','AdvertiserCount','selectedOffers','template'));
+        $AffiliateActiveCount=Account::where('AccountType',1)->where('AccountStatus','active')->count();
+        $AffiliateInactiveCount=Account::where('AccountType',1)->where('AccountStatus','inactive')->count();
+        $AffiliatePendingCount=Account::where('AccountType',1)->where('AccountStatus','pending')->count();
+        
+        $AdvertiserActiveCount=Account::where('AccountType',2)->where('AccountStatus','active')->count();
+        $AdvertiserInactiveCount=Account::where('AccountType',2)->where('AccountStatus','inactive')->count();
+        $AdvertiserPendingCount=Account::where('AccountType',2)->where('AccountStatus','pending')->count();        
+        
+        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateActiveCount','AffiliateInactiveCount','AffiliatePendingCount','AdvertiserActiveCount','AdvertiserInactiveCount','AdvertiserPendingCount','selectedOffers','template'));
     }
 
     public function store(StoreCampaignRequest $request)
@@ -111,25 +123,25 @@ class CampaignController extends Controller
 
         $content=$request->content;
 
-        $CampaignImg=Campaign::where('id',$campaign->id)->first();
+        // $CampaignImg=Campaign::where('id',$campaign->id)->first();
 
-        if ($CampaignImg->offer_image) {
-            $offerImg='<img width="100%" src="'.$CampaignImg->offer_image->getUrl().'" />';
-            $content = str_replace('{Offer_Image}', $offerImg, $content);
-            $CampaignImg->content=$content;
-            $CampaignImg->save();
-        }
+        // if ($CampaignImg->offer_image) {
+        //     $offerImg='<img width="100%" src="'.$CampaignImg->offer_image->getUrl().'" />';
+        //     $content = str_replace('{Offer_Image}', $offerImg, $content);
+        //     $CampaignImg->content=$content;
+        //     $CampaignImg->save();
+        // }
         
-        $TemplateData=[
-            'name'=>$request->name,
-            'email_subject'=>$request->email_subject,
-            'from_email'=>$request->from_email,
-            'content'=>$content,
-        ];
+        // $TemplateData=[
+        //     'name'=>$request->name,
+        //     'email_subject'=>$request->email_subject,
+        //     'from_email'=>$request->from_email,
+        //     'content'=>$content,
+        // ];
 
-        $template = Template::create($TemplateData);
+        // $template = Template::create($TemplateData);
 
-        $template->templateOffers()->sync($request->input('campaign_offer_id', []));
+        // $template->templateOffers()->sync($request->input('campaign_offer_id', []));
 
         $input = [
             'message' => $content,

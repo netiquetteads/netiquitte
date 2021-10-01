@@ -6,6 +6,8 @@
 <script>
     $( document ).ready( function() {
 				CKEDITOR.config.allowedContent = true;
+        CKEDITOR.config.height = 600; 
+        
 				CKEDITOR.replace('editor1',{
 					filebrowserUploadUrl: 'ckeditor/ck_upload.php',
 					filebrowserUploadMethod: 'form',
@@ -84,7 +86,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.content_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="offer_image">{{ trans('cruds.campaign.fields.offer_image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('offer_image') ? 'is-invalid' : '' }}" id="offer_image-dropzone">
                 </div>
@@ -92,7 +94,7 @@
                     <span class="text-danger">{{ $errors->first('offer_image') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.offer_image_helper') }}</span>
-            </div>
+            </div> --}}
             
             {{-- <div class="form-group">
                 <label for="subs">{{ trans('cruds.campaign.fields.subs') }}</label>

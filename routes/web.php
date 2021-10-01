@@ -102,7 +102,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('templates/media', 'TemplateController@storeMedia')->name('templates.storeMedia');
     Route::post('templates/ckmedia', 'TemplateController@storeCKEditorImages')->name('templates.storeCKEditorImages');
     Route::resource('templates', 'TemplateController');
-
+    Route::post('deleteSelectedTemplate', 'TemplateController@deleteSelectedTemplate')->name('templates.deleteSelectedTemplate');
+    
     // Campaign Results
     Route::delete('campaign-results/destroy', 'CampaignResultsController@massDestroy')->name('campaign-results.massDestroy');
     Route::resource('campaign-results', 'CampaignResultsController');

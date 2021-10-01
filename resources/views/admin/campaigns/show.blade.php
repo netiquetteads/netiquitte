@@ -52,10 +52,14 @@
                             {{ trans('cruds.campaign.fields.content') }}
                         </th>
                         <td>
-                            {!! $campaign->content !!}
+                            @php
+                                $content = str_replace('{Offer_Here}', '', $campaign->content);
+                                $content = str_replace('{Offer_Image}', '',$content);
+                            @endphp 
+                            {!! $content !!}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.campaign.fields.offer_image') }}
                         </th>
@@ -66,13 +70,16 @@
                                 </a>
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             {{ trans('cruds.campaign.fields.campaign_offer') }}
                         </th>
                         <td>
-                            {{ $campaign->campaign_offer->name ?? '' }}
+                            @if ($campaign->campaignOffers->count()>0)
+                                {{ implode(', ',$campaign->campaignOffers->pluck('name')->toArray()) }}
+                            @endif
+                            
                         </td>
                     </tr>
                     <tr>
@@ -84,6 +91,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>
+                            {{ trans('cruds.campaign.fields.sentDateTime') }}
+                        </th>
+                        <td>
+                            {{ date('d M Y h:i:s',strtotime($campaign->created_at)) }}
+                        </td>
+                    </tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.campaign.fields.subs') }}
                         </th>
@@ -106,7 +121,7 @@
                         <td>
                             {{ $campaign->opens }}
                         </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
             <div class="form-group">

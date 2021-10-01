@@ -10,6 +10,7 @@
 <script>
     $( document ).ready( function() {
 				CKEDITOR.config.allowedContent = true;
+                CKEDITOR.config.height = 600; 
 				CKEDITOR.replace('editor1',{
 					filebrowserUploadUrl: 'ckeditor/ck_upload.php',
 					filebrowserUploadMethod: 'form',
@@ -134,35 +135,66 @@
         </div>
             <label for="SendingTo">Send To:</label><br/>
 			<div class="form-check">
-				&nbsp;
-				<label class="radio-inline" for="SendingTo1">
-				<input type="radio" name="SendingTo" id="SendingTo1" value="1">
-					Affiliates({{ $AffiliateCount }})
-				</label>
-				&nbsp;
-				<label class="radio-inline" for="SendingTo2">
-				<input type="radio" name="SendingTo" id="SendingTo2" value="2">
-					Advertisers({{ $AdvertiserCount }})
-				</label> 
-				
-				&nbsp;
+				<label for="Affiliates">
+                    Affiliates - 
+                </label>
+
+                <label for="SendingToAffiliatesActive">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesActive" value="1">
+                    Active ({{ $AffiliateActiveCount }})
+                </label>
+
+                <label for="SendingToAffiliatesPending">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesPending" value="1">
+                    Pending ({{ $AffiliatePendingCount }})
+                </label>
+
+                <label for="SendingToAffiliatesInactive">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesInactive" value="1">
+                    Inactive ({{ $AffiliateInactiveCount }})
+                </label>
+
+				<br>
+				<label for="Advertisers">
+                    Advertisers - 
+                </label> 
+
+                <label for="SendingToAdvertisersActive">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersActive" value="2">
+					Active({{ $AdvertiserActiveCount }})
+                </label>
+
+                <label for="SendingToAdvertisersPending">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersPending" value="2">
+					Pending({{ $AdvertiserPendingCount }})
+                </label>
+
+                <label for="SendingToAdvertisersInactive">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersInactive" value="2">
+					Inactive({{ $AdvertiserInactiveCount }})
+                </label>
+
+                <br>
+                <label class="radio-inline" for="SendingTo5">
+                    <input type="radio" name="SendingTo" id="SendingTo5" value="5" onclick="SendSingleEmail();">
+                        Single Email
+                    </label> 
+                <br>
 				<label class="radio-inline" for="SendingTo3">
 				<input type="radio" name="SendingTo" id="SendingTo3" value="3">
 					Testing
 				</label> 
+                <br>
 				<label class="radio-inline" for="SendingTo4">
 				<input type="radio" name="SendingTo" id="SendingTo4" value="4">
 					Dev
 				</label> 
-				<label class="radio-inline" for="SendingTo5">
-				<input type="radio" name="SendingTo" id="SendingTo5" value="5" onclick="SendSingleEmail();">
-					Single Email
-				</label> 
-				<div id="SingleEmailDiv" style="display:none;">
-					<label>Please Enter an Email List</label><br/>
-					Please enter <b><u>ONE EMAIL PER LINE</u></b>
-					<textarea name="SingleEmailBox" class="form-control"></textarea><br/>
-				</div>
+                <br>
+                <div id="SingleEmailDiv" style="display:none;">
+                    <label>Please Enter an Email List</label><br/>
+                    Please enter <b><u>ONE EMAIL PER LINE</u></b>
+                    <textarea name="SingleEmailBox" class="form-control"></textarea><br/>
+                </div>
 				<br/>
 				<script>
 				function SendSingleEmail(){
@@ -209,11 +241,11 @@
         </offers>
 			</td>
 		</tr>
-		<tr>
+		{{-- <tr>
 			<td>
         {Offer_Image}
 			</td>
-		</tr>
+		</tr> --}}
 	</tbody>
 </table>
 
@@ -255,7 +287,7 @@
 </table>
 
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="{{ route('unsubscribe') }}?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
-690 A West Montrose Street, Clermont FL, USA, 34711<br />
+    4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>
 
 </textarea> 
@@ -272,7 +304,7 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                     <br/>
     
               </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="offer_image">{{ trans('cruds.campaign.fields.offer_image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('offer_image') ? 'is-invalid' : '' }}" id="offer_image-dropzone">
                 </div>
@@ -280,7 +312,7 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                     <span class="text-danger">{{ $errors->first('offer_image') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.offer_image_helper') }}</span>
-            </div>
+            </div> --}}
             
            
             {{-- <div class="form-group">
@@ -309,7 +341,7 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
             </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
+                    Send
                 </button>
             </div>
         </form>

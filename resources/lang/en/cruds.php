@@ -547,6 +547,7 @@ return [
             'campaign_offer_helper'    => ' ',
             'selected_template'        => 'Selected Template',
             'selected_template_helper' => 'Select the existing template you wan to use for this email',
+            'sentDateTime'               => 'Sent Date Time',
             'created_at'               => 'Created at',
             'created_at_helper'        => ' ',
             'updated_at'               => 'Updated at',

@@ -39,13 +39,16 @@
                         {{ trans('cruds.campaign.fields.campaign_offer') }}
                     </th>
                     <th>
+                        {{ trans('cruds.campaign.fields.sentDateTime') }}
+                    </th>
+                    {{-- <th>
                         {{ trans('cruds.campaign.fields.subs') }}
                     </th>
                     <th>
                         {{ trans('cruds.campaign.fields.opens') }}
-                    </th>
-                    <th>
-                        &nbsp;
+                    </th> --}}
+                    <th class="text-center">
+                      {{ trans('global.actions') }}
                     </th>
                 </tr>
             </thead>
@@ -104,13 +107,19 @@
 { data: 'name', name: 'name' },
 { data: 'email_subject', name: 'email_subject' },
 { data: 'campaign_offer_name', name: 'campaign_offer.name' },
-{ data: 'subs', name: 'subs' },
-{ data: 'opens', name: 'opens' },
+{ data: 'sentDateTime', name: 'sentDateTime' },
+// { data: 'subs', name: 'subs' },
+// { data: 'opens', name: 'opens' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
+    "createdRow": function( row, data, dataIndex ) {
+
+// Add a class to the cell in the second column
+$(row).children(':nth-child(7)').addClass('text-center');
+}
   };
   let table = $('.datatable-Campaign').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

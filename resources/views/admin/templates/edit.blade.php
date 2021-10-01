@@ -6,6 +6,7 @@
 <script>
     $( document ).ready( function() {
 				CKEDITOR.config.allowedContent = true;
+        CKEDITOR.config.height = 600; 
 				CKEDITOR.replace('editor1',{
 					filebrowserUploadUrl: 'ckeditor/ck_upload.php',
 					filebrowserUploadMethod: 'form',
@@ -57,7 +58,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.from_email_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
               <label for="offer_selection_id">{{ trans('cruds.template.fields.offer_selection') }}</label>
               <select class="form-control select2 {{ $errors->has('offer_selection') ? 'is-invalid' : '' }}" name="offer_selection_id[]" id="offer_selection_id" multiple data-placeholder="Choose offers..">
                   @foreach($offer_selections as $id => $entry)
@@ -70,7 +71,7 @@
                   <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
               @endif
               <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
-          </div>
+          </div> --}}
             <div class="form-group">
                 <label for="content">{{ trans('cruds.template.fields.content') }}</label>
                 <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1">{!! old('content', $template->content) !!}</textarea>
@@ -79,7 +80,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.content_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="offer_image">{{ trans('cruds.template.fields.offer_image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('offer_image') ? 'is-invalid' : '' }}" id="offer_image-dropzone">
                 </div>
@@ -87,7 +88,7 @@
                     <span class="text-danger">{{ $errors->first('offer_image') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.offer_image_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

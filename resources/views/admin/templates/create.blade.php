@@ -6,6 +6,7 @@
 <script>
     $( document ).ready( function() {
 				CKEDITOR.config.allowedContent = true;
+        CKEDITOR.config.height = 600; 
 				CKEDITOR.replace('editor1',{
 					filebrowserUploadUrl: 'ckeditor/ck_upload.php',
 					filebrowserUploadMethod: 'form',
@@ -55,7 +56,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.from_email_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
               <label for="offer_selection_id">{{ trans('cruds.template.fields.offer_selection') }}</label>
               <select class="form-control select2 {{ $errors->has('offer_selection') ? 'is-invalid' : '' }}" name="offer_selection_id[]" id="offer_selection_id" multiple data-placeholder="Choose offers..">
                 @php
@@ -74,7 +75,7 @@
                   <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
               @endif
               <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
-          </div>
+          </div> --}}
           
           <div class="form-group">
             <label onclick="vph();"><font color="blue"><u>View Placeholders</u></font></label>
@@ -152,11 +153,11 @@
       </offers>
 			</td>
 		</tr>
-		<tr>
+		{{-- <tr>
 			<td>
         {Offer_Image}
 			</td>
-		</tr>
+		</tr> --}}
 	</tbody>
 </table>
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
@@ -197,7 +198,7 @@
 </table>
 
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="{{ route('unsubscribe') }}?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
-690 A West Montrose Street, Clermont FL, USA, 34711<br />
+  4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>
                 </textarea>
                 @if($errors->has('content'))
@@ -205,12 +206,12 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.content_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <button type="button" id="LoadOffers" class="btn btn-primary">Load Offer</button><br/>
                 <br/>
 
-          </div>
-            <div class="form-group">
+          </div> --}}
+            {{-- <div class="form-group">
                 <label for="offer_image">{{ trans('cruds.template.fields.offer_image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('offer_image') ? 'is-invalid' : '' }}" id="offer_image-dropzone">
                 </div>
@@ -218,7 +219,7 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                     <span class="text-danger">{{ $errors->first('offer_image') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.offer_image_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
