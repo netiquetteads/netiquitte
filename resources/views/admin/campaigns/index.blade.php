@@ -4,6 +4,9 @@
     .dt-buttons{
       display: none;
     }
+    table.dataTable tbody td.select-checkbox::before, table.dataTable tbody td.select-checkbox::after, table.dataTable tbody th.select-checkbox::before, table.dataTable tbody th.select-checkbox::after {
+    display: none;
+}
   </style>
 @can('campaign_create')
     <div style="margin-bottom: 10px;" class="row">
@@ -11,6 +14,7 @@
             <a class="btn btn-success" href="{{ route('admin.campaigns.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.campaign.title_singular') }}
             </a>
+            <button class="btn btn-danger" id="deleteAll" disabled>Delete</button>
         </div>
     </div>
 @endcan
@@ -23,9 +27,9 @@
         <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Campaign">
             <thead>
                 <tr>
-                    <th width="10">
-
-                    </th>
+                  <th width="10">
+                    <input type="checkbox" name="selectall" id="selectall">
+                </th>
                     <th>
                         {{ trans('cruds.campaign.fields.id') }}
                     </th>
@@ -35,9 +39,9 @@
                     <th>
                         {{ trans('cruds.campaign.fields.email_subject') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.campaign.fields.campaign_offer') }}
-                    </th>
+                    </th> --}}
                     <th>
                         {{ trans('cruds.campaign.fields.sentDateTime') }}
                     </th>
@@ -106,7 +110,7 @@
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'email_subject', name: 'email_subject' },
-{ data: 'campaign_offer_name', name: 'campaign_offer.name' },
+// { data: 'campaign_offer_name', name: 'campaign_offer.name' },
 { data: 'sentDateTime', name: 'sentDateTime' },
 // { data: 'subs', name: 'subs' },
 // { data: 'opens', name: 'opens' },
@@ -129,5 +133,59 @@ $(row).children(':nth-child(7)').addClass('text-center');
   
 });
 
+</script>
+
+
+<script>
+  $(document).ready(function(){
+      $('#selectall').change(function(e){
+          e.preventDefault();
+          if($(this).prop('checked')==true){
+              $('input[name=selectdata]:checkbox').prop('checked',true);
+              $('#deleteAll').prop('disabled',false);
+          }else{
+              $('input[name=selectdata]:checkbox').prop('checked',false);
+              $('#deleteAll').prop('disabled',true);
+          }
+      })
+  });
+
+  $(document.body).on('change', 'input[name=selectdata]' ,function(e){
+      e.preventDefault();
+      var val = [];
+      $('input[name=selectdata]:checkbox:checked').each(function(i){
+        val[i] = $(this).val();
+      });
+
+      if (val.length>0) {
+          $('#deleteAll').prop('disabled',false);
+      } else {
+          $('#deleteAll').prop('disabled',true);
+      }
+  });
+
+  $(document.body).on('click', '#deleteAll' ,function(e){
+      e.preventDefault();
+      var val = [];
+      $('input[name=selectdata]:checkbox:checked').each(function(i){
+        val[i] = $(this).val();
+      });
+
+      if (confirm("Are you sure you want to delete?")) {
+          var _token = $('input[name="_token"]').val();
+                  $.ajax({
+                      url: "{{ route('admin.campaigns.deleteSelectedEmails') }}",
+                      method: "POST",
+                      data: {
+                          ids: val,
+                          _token: _token
+                      },
+                      success: function(response) {
+                          location.reload();
+                      }
+                  })
+      }
+
+  });
 </script>
 @endsection

@@ -30,7 +30,7 @@ class CampaignController extends Controller
             $query = Campaign::with(['campaign_offer', 'selected_template'])->select(sprintf('%s.*', (new Campaign())->table));
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
+            
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
@@ -46,6 +46,10 @@ class CampaignController extends Controller
                 'crudRoutePart',
                 'row'
             ));
+            });
+
+            $table->editColumn('placeholder', function ($row) {
+                return '<input type="checkbox" name="selectdata" id="selectdata'.$row->id.'" value="'.$row->id.'">';
             });
 
             $table->editColumn('id', function ($row) {
@@ -330,5 +334,11 @@ class CampaignController extends Controller
         
         echo $content;
 
+    }
+
+    public function deleteSelectedEmails(Request $request)
+    {
+        Campaign::destroy($request->ids);
+        echo 1;
     }
 }

@@ -119,6 +119,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('campaigns', 'CampaignController');
     Route::post('getTemplateData', 'CampaignController@getTemplateData')->name('campaigns.getTemplateData');
     Route::post('loadTemplate', 'CampaignController@loadTemplate')->name('campaigns.loadTemplate');
+    Route::post('deleteSelectedEmails', 'CampaignController@deleteSelectedEmails')->name('campaigns.deleteSelectedEmails');
 
     // Subscriber
     Route::delete('subscribers/destroy', 'SubscriberController@massDestroy')->name('subscribers.massDestroy');
