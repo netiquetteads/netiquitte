@@ -125,6 +125,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('subscribers/destroy', 'SubscriberController@massDestroy')->name('subscribers.massDestroy');
     Route::resource('subscribers', 'SubscriberController');
 
+    // Unsubscribers
+    Route::delete('unsubscribers/destroy', 'UnsubscribeController@massDestroy')->name('unsubscribers.massDestroy');
+    Route::resource('unsubscribers', 'UnsubscribeController');
     // Subscription
     Route::delete('subscriptions/destroy', 'SubscriptionController@massDestroy')->name('subscriptions.massDestroy');
     Route::resource('subscriptions', 'SubscriptionController');

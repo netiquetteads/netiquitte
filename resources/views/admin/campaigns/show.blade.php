@@ -98,6 +98,14 @@
                             {{ date('d M Y h:i:s',strtotime($campaign->created_at)) }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.campaign.fields.sentTo') }}
+                        </th>
+                        <td>
+                            {{ $campaign->send_to ?? '' }}
+                        </td>
+                    </tr>
                     {{-- <tr>
                         <th>
                             {{ trans('cruds.campaign.fields.subs') }}

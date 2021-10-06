@@ -144,6 +144,14 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ url("admin/affiliate/pending") }}" class="nav-link {{ request()->is("admin/affiliate/pending") ? "active" : "" }}">
+
+                                        <p>
+                                            {{ trans('cruds.affiliate.pending') }}
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ url("admin/affiliate/suspended") }}" class="nav-link {{ request()->is("admin/affiliate/suspended") ? "active" : "" }}">
 
                                         <p>
@@ -316,12 +324,12 @@
                         @endcan
                         @can('subscriber_access')
                                 <li class="nav-item">
-                                    <a href="{{ route("admin.subscribers.index") }}" class="nav-link {{ request()->is("admin/subscribers") || request()->is("admin/subscribers/*") ? "active" : "" }}">
+                                    <a href="{{ route("admin.unsubscribers.index") }}" class="nav-link {{ request()->is("admin/unsubscribers") || request()->is("admin/unsubscribers/*") ? "active" : "" }}">
                                         <i class="fa-fw nav-icon fas fa-user-check">
 
                                         </i>
                                         <p>
-                                            Unsubscribes
+                                            {{ trans('cruds.unsubscribers.title') }}
                                         </p>
                                     </a>
                                 </li>

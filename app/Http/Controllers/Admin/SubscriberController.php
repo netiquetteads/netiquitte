@@ -105,4 +105,9 @@ class SubscriberController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function unsubscribers()
+    {
+        # code...
+    }
 }

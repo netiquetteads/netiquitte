@@ -40,6 +40,7 @@ class Campaign extends Model implements HasMedia
         'subs',
         'unsubs',
         'opens',
+        'send_to',
         'created_at',
         'updated_at',
         'deleted_at',

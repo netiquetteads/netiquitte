@@ -157,6 +157,8 @@ class CampaignController extends Controller
 
         if($request->SendingTo==1){
 
+            $sendTo='Affiliates';
+
             $accounts=Account::where('AccountType',1)->where('AccountStatus','active')->where('SubscribedStatus','Subscribed')->get();
             
             foreach ($accounts as $key => $account) {
@@ -173,6 +175,9 @@ class CampaignController extends Controller
             
 
         }else if($request->SendingTo==2){
+
+            $sendTo='Advertisers';
+
             $accounts=Account::where('AccountType',2)->where('AccountStatus','active')->where('SubscribedStatus','Subscribed')->get();
             foreach ($accounts as $key => $account) {
                 
@@ -187,6 +192,8 @@ class CampaignController extends Controller
         }
         else if($request->SendingTo==3){
 
+            $sendTo='Testing';
+
             $input['message'] = str_replace('{FirstName}', "Test Admin", $input['message']);
             $input['message'] = str_replace('{LastName}', 'Test Admin', $input['message']);
             $input['message'] = str_replace('{Company}', 'Test Company', $input['message']);
@@ -196,6 +203,8 @@ class CampaignController extends Controller
 
         }else if($request->SendingTo==4){
 
+            $sendTo='Dev';
+
             $input['message'] = str_replace('{FirstName}', "Dev Admin", $input['message']);
             $input['message'] = str_replace('{LastName}', 'Dev Admin', $input['message']);
             $input['message'] = str_replace('{Company}', 'Dev Company', $input['message']);
@@ -204,6 +213,8 @@ class CampaignController extends Controller
             $this->sendMail($emails,$input);
             
         }else{
+
+            $sendTo='Single Email';
 
             $emails = explode("\n", str_replace("\r", "", $request->SingleEmailBox));
 
@@ -216,7 +227,10 @@ class CampaignController extends Controller
                 $this->sendMail($value,$input);
             }
             
-        }        
+        }
+
+        $campaign->send_to=$sendTo;
+        $campaign->save();
 
         return redirect()->route('admin.campaigns.index');
     }

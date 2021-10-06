@@ -45,6 +45,9 @@
                     <th>
                         {{ trans('cruds.campaign.fields.sentDateTime') }}
                     </th>
+                    <th>
+                        {{ trans('cruds.campaign.fields.sentTo') }}
+                    </th>
                     {{-- <th>
                         {{ trans('cruds.campaign.fields.subs') }}
                     </th>
@@ -112,6 +115,7 @@
 { data: 'email_subject', name: 'email_subject' },
 // { data: 'campaign_offer_name', name: 'campaign_offer.name' },
 { data: 'sentDateTime', name: 'sentDateTime' },
+{ data: 'send_to', name: 'send_to' },
 // { data: 'subs', name: 'subs' },
 // { data: 'opens', name: 'opens' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

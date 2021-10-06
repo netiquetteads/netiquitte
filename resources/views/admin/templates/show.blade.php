@@ -23,14 +23,14 @@
                             {{ $template->id }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.template.fields.offer_selection') }}
                         </th>
                         <td>
                             {{ $template->offer_selection->name ?? '' }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             {{ trans('cruds.template.fields.name') }}
@@ -47,14 +47,14 @@
                             {{ $template->email_subject }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.template.fields.from_name') }}
                         </th>
                         <td>
                             {{ $template->from_name }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             {{ trans('cruds.template.fields.from_email') }}
@@ -71,7 +71,7 @@
                             {!! $template->content !!}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.template.fields.offer_image') }}
                         </th>
@@ -82,7 +82,7 @@
                                 </a>
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
             <div class="form-group">
