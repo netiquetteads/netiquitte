@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use App\Http\Controllers\Controller;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
-class HomeController
+class HomeController extends Controller
 {
     public function index()
     {
