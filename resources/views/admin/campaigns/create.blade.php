@@ -140,17 +140,17 @@
                 </label>
 
                 <label for="SendingToAffiliatesActive">
-				    <input type="radio" name="SendingTo" id="SendingToAffiliatesActive" value="1">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesActive" value="1" class="sendto" status="active">
                     Active ({{ $AffiliateActiveCount }})
                 </label>
 
                 <label for="SendingToAffiliatesPending">
-				    <input type="radio" name="SendingTo" id="SendingToAffiliatesPending" value="1">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesPending" value="1" class="sendto" status="pending">
                     Pending ({{ $AffiliatePendingCount }})
                 </label>
 
                 <label for="SendingToAffiliatesInactive">
-				    <input type="radio" name="SendingTo" id="SendingToAffiliatesInactive" value="1">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesInactive" value="1" class="sendto" status="inactive">
                     Inactive ({{ $AffiliateInactiveCount }})
                 </label>
 
@@ -160,25 +160,26 @@
                 </label> 
 
                 <label for="SendingToAdvertisersActive">
-				<input type="radio" name="SendingTo" id="SendingToAdvertisersActive" value="2">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersActive" value="2" class="sendto" status="active">
 					Active({{ $AdvertiserActiveCount }})
                 </label>
 
                 <label for="SendingToAdvertisersPending">
-				<input type="radio" name="SendingTo" id="SendingToAdvertisersPending" value="2">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersPending" value="2" class="sendto" status="pending">
 					Pending({{ $AdvertiserPendingCount }})
                 </label>
 
                 <label for="SendingToAdvertisersInactive">
-				<input type="radio" name="SendingTo" id="SendingToAdvertisersInactive" value="2">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersInactive" value="2" class="sendto" status="inactive">
 					Inactive({{ $AdvertiserInactiveCount }})
                 </label>
 
+                <input type="hidden" name="SendingToStatus" id="sendToStatus">
                 <br>
                 <label class="radio-inline" for="SendingTo5">
                     <input type="radio" name="SendingTo" id="SendingTo5" value="5" onclick="SendSingleEmail();">
                         Single Email
-                    </label> 
+                </label>
                 <br>
 				<label class="radio-inline" for="SendingTo3">
 				<input type="radio" name="SendingTo" id="SendingTo3" value="3">
@@ -353,6 +354,12 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 @endsection
 
 @section('scripts')
+
+<script>
+    $('.sendto').click(function(){
+        $('#sendToStatus').val($(this).attr('status'));
+    });
+</script>
 
 <script>
     $('#LoadOffers').click(function(){

@@ -159,7 +159,7 @@ class CampaignController extends Controller
 
             $sendTo='Affiliates';
 
-            $accounts=Account::where('AccountType',1)->where('AccountStatus','active')->where('SubscribedStatus','Subscribed')->get();
+            $accounts=Account::where('AccountType',1)->where('AccountStatus',$request->SendingToStatus)->where('SubscribedStatus','Subscribed')->get();
             
             foreach ($accounts as $key => $account) {
 
@@ -171,14 +171,12 @@ class CampaignController extends Controller
 
                 $this->sendMail($account->EmailAddress,$input);
             }
-            
-            
 
         }else if($request->SendingTo==2){
 
             $sendTo='Advertisers';
 
-            $accounts=Account::where('AccountType',2)->where('AccountStatus','active')->where('SubscribedStatus','Subscribed')->get();
+            $accounts=Account::where('AccountType',2)->where('AccountStatus',$request->SendingToStatus)->where('SubscribedStatus','Subscribed')->get();
             foreach ($accounts as $key => $account) {
                 
                 $input['message']=str_replace('{ID}', $account->PlatformUserID, $input['message']);
@@ -188,6 +186,7 @@ class CampaignController extends Controller
                 $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
 
                 $this->sendMail($account->EmailAddress,$input);
+
             }
         }
         else if($request->SendingTo==3){
