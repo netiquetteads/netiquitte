@@ -17,27 +17,27 @@ class Controller extends BaseController
 
     public function __construct(Request $request)
 	{
-        $AffiliateAllCount  = Affiliate::count();
-        $AffiliateActiveCount  = Affiliate::where('account_status','active')->count();
-        $AffiliateInactiveCount  = Affiliate::where('account_status','inactive')->count();
-        $AffiliatePendingCount  = Affiliate::where('account_status','pending')->count();
-        $AffiliateSuspendedCount  = Affiliate::where('account_status','suspended')->count();
+        $AffiliateAllCountSidebar  = Affiliate::count();
+        $AffiliateActiveCountSidebar  = Affiliate::where('account_status','active')->count();
+        $AffiliateInactiveCountSidebar  = Affiliate::where('account_status','inactive')->count();
+        $AffiliatePendingCountSidebar  = Affiliate::where('account_status','pending')->count();
+        $AffiliateSuspendedCountSidebar  = Affiliate::where('account_status','suspended')->count();
 
-        $AdvertiserActiveCount  = Advertiser::where('account_status','active')->count();
-        $AdvertiserInactiveCount  = Advertiser::where('account_status','inactive')->count();
-        $AdvertiserPendingCount  = Advertiser::where('account_status','pending')->count();
-        $AdvertiserSuspendedCount  = Advertiser::where('account_status','suspended')->count();
+        $AdvertiserActiveCountSidebar  = Advertiser::where('account_status','active')->count();
+        $AdvertiserInactiveCountSidebar  = Advertiser::where('account_status','inactive')->count();
+        $AdvertiserPendingCountSidebar  = Advertiser::where('account_status','pending')->count();
+        $AdvertiserSuspendedCountSidebar  = Advertiser::where('account_status','suspended')->count();
 
-        View::share('AffiliateAllCount', $AffiliateAllCount);
-        View::share('AffiliateActiveCount', $AffiliateActiveCount);
-        View::share('AffiliateInactiveCount', $AffiliateInactiveCount);
-        View::share('AffiliatePendingCount', $AffiliatePendingCount);
-        View::share('AffiliateSuspendedCount', $AffiliateSuspendedCount);
+        View::share('AffiliateAllCountSidebar', $AffiliateAllCountSidebar);
+        View::share('AffiliateActiveCountSidebar', $AffiliateActiveCountSidebar);
+        View::share('AffiliateInactiveCountSidebar', $AffiliateInactiveCountSidebar);
+        View::share('AffiliatePendingCountSidebar', $AffiliatePendingCountSidebar);
+        View::share('AffiliateSuspendedCountSidebar', $AffiliateSuspendedCountSidebar);
 
-        View::share('AdvertiserActiveCount', $AdvertiserActiveCount);
-        View::share('AdvertiserInactiveCount', $AdvertiserInactiveCount);
-        View::share('AdvertiserPendingCount', $AdvertiserPendingCount);
-        View::share('AdvertiserSuspendedCount', $AdvertiserSuspendedCount);
+        View::share('AdvertiserActiveCountSidebar', $AdvertiserActiveCountSidebar);
+        View::share('AdvertiserInactiveCountSidebar', $AdvertiserInactiveCountSidebar);
+        View::share('AdvertiserPendingCountSidebar', $AdvertiserPendingCountSidebar);
+        View::share('AdvertiserSuspendedCountSidebar', $AdvertiserSuspendedCountSidebar);
 
     }
 }

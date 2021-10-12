@@ -11,6 +11,8 @@ use App\Models\Campaign;
 use App\Models\Offer;
 use App\Models\Template;
 use App\Models\Account;
+use App\Models\Affiliate;
+use App\Models\Advertiser;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -100,14 +102,30 @@ class CampaignController extends Controller
 
         $selected_templates = Template::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $AffiliateActiveCount=Account::where('AccountType',1)->where('AccountStatus','active')->count();
-        $AffiliateInactiveCount=Account::where('AccountType',1)->where('AccountStatus','inactive')->count();
-        $AffiliatePendingCount=Account::where('AccountType',1)->where('AccountStatus','pending')->count();
-        
-        $AdvertiserActiveCount=Account::where('AccountType',2)->where('AccountStatus','active')->count();
-        $AdvertiserInactiveCount=Account::where('AccountType',2)->where('AccountStatus','inactive')->count();
-        $AdvertiserPendingCount=Account::where('AccountType',2)->where('AccountStatus','pending')->count();        
-        
+        $AffiliateActiveCount=Affiliate::with(["Accounts" => function($q){
+            $q->where('AccountType', 1);
+        }])->where('account_status', 'active')->count();
+
+        $AffiliateInactiveCount=Affiliate::with(["Accounts" => function($q){
+            $q->where('AccountType', 1);
+        }])->where('account_status', 'inactive')->count();
+
+        $AffiliatePendingCount=Affiliate::with(["Accounts" => function($q){
+            $q->where('AccountType', 1);
+        }])->where('account_status', 'pending')->count();
+
+        $AdvertiserActiveCount=Advertiser::with(["Accounts" => function($q){
+            $q->where('AccountType', 2);
+        }])->where('account_status', 'active')->count();
+
+        $AdvertiserInactiveCount=Advertiser::with(["Accounts" => function($q){
+            $q->where('AccountType', 2);
+        }])->where('account_status', 'inactive')->count();
+
+        $AdvertiserPendingCount=Advertiser::with(["Accounts" => function($q){
+            $q->where('AccountType', 2);
+        }])->where('account_status', 'pending')->count();
+                        
         return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateActiveCount','AffiliateInactiveCount','AffiliatePendingCount','AdvertiserActiveCount','AdvertiserInactiveCount','AdvertiserPendingCount','selectedOffers','template'));
     }
 
@@ -159,33 +177,44 @@ class CampaignController extends Controller
 
             $sendTo='Affiliates';
 
-            $accounts=Account::where('AccountType',1)->where('AccountStatus',$request->SendingToStatus)->where('SubscribedStatus','Subscribed')->get();
+            // $accounts=Account::where('AccountType',1)->where('AccountStatus',$request->SendingToStatus)->where('SubscribedStatus','Subscribed')->get();
+
+            $accounts=Affiliate::with(["Accounts" => function($q){
+                $q->where('AccountType', 1)
+                ->where('SubscribedStatus','Subscribed');
+            }])->where('account_status', $request->SendingToStatus)->get();
             
             foreach ($accounts as $key => $account) {
 
-                $input['message']=str_replace('{ID}', $account->PlatformUserID, $input['message']);
-                $input['message']=str_replace('{AcctType}', $account->AccountType, $input['message']);
-                $input['message'] = str_replace('{FirstName}', $account->FirstName, $input['message']);
-                $input['message'] = str_replace('{LastName}', $account->LastName, $input['message']);
-                $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
+                $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
+                $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
+                $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
+                $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
+                $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
 
-                $this->sendMail($account->EmailAddress,$input);
+                $this->sendMail($account->Accounts->EmailAddress,$input);
             }
 
         }else if($request->SendingTo==2){
 
             $sendTo='Advertisers';
 
-            $accounts=Account::where('AccountType',2)->where('AccountStatus',$request->SendingToStatus)->where('SubscribedStatus','Subscribed')->get();
+            // $accounts=Account::where('AccountType',2)->where('AccountStatus',$request->SendingToStatus)->where('SubscribedStatus','Subscribed')->get();
+
+            $accounts=Advertiser::with(["Accounts" => function($q){
+                $q->where('AccountType', 2)
+                ->where('SubscribedStatus','Subscribed');
+            }])->where('account_status', $request->SendingToStatus)->get();
+
             foreach ($accounts as $key => $account) {
                 
-                $input['message']=str_replace('{ID}', $account->PlatformUserID, $input['message']);
-                $input['message']=str_replace('{AcctType}', $account->AccountType, $input['message']);
-                $input['message'] = str_replace('{FirstName}', $account->FirstName, $input['message']);
-                $input['message'] = str_replace('{LastName}', $account->LastName, $input['message']);
-                $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
+                $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
+                $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
+                $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
+                $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
+                $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
 
-                $this->sendMail($account->EmailAddress,$input);
+                $this->sendMail($account->Accounts->EmailAddress,$input);
 
             }
         }
