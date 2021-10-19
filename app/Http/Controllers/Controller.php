@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use App\Models\Advertiser;
 use App\Models\Affiliate;
+use App\Models\Offer;
 
 class Controller extends BaseController
 {
@@ -28,6 +29,12 @@ class Controller extends BaseController
         $AdvertiserPendingCountSidebar  = Advertiser::where('account_status','pending')->count();
         $AdvertiserSuspendedCountSidebar  = Advertiser::where('account_status','suspended')->count();
 
+        $OfferAllCountSidebar  = Offer::count();
+        $OfferActiveCountSidebar  = Offer::where('offer_status','active')->count();
+        $OfferPausedCountSidebar  = Offer::where('offer_status','paused')->count();
+        $OfferPendingCountSidebar  = Offer::where('offer_status','pending')->count();
+        $OfferDeletedCountSidebar  = Offer::where('offer_status','deleted')->count();
+
         View::share('AffiliateAllCountSidebar', $AffiliateAllCountSidebar);
         View::share('AffiliateActiveCountSidebar', $AffiliateActiveCountSidebar);
         View::share('AffiliateInactiveCountSidebar', $AffiliateInactiveCountSidebar);
@@ -38,6 +45,12 @@ class Controller extends BaseController
         View::share('AdvertiserInactiveCountSidebar', $AdvertiserInactiveCountSidebar);
         View::share('AdvertiserPendingCountSidebar', $AdvertiserPendingCountSidebar);
         View::share('AdvertiserSuspendedCountSidebar', $AdvertiserSuspendedCountSidebar);
+
+        View::share('OfferAllCountSidebar', $OfferAllCountSidebar);
+        View::share('OfferActiveCountSidebar', $OfferActiveCountSidebar);
+        View::share('OfferPausedCountSidebar', $OfferPausedCountSidebar);
+        View::share('OfferPendingCountSidebar', $OfferPendingCountSidebar);
+        View::share('OfferDeletedCountSidebar', $OfferDeletedCountSidebar);
 
     }
 }

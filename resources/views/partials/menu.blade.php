@@ -233,7 +233,7 @@
                                 <a href="{{ url("admin/offers") }}" class="nav-link {{ request()->is("admin/offers") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.all') }}
+                                        {{ trans('cruds.offer.all') }} ({{ $OfferAllCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -241,7 +241,7 @@
                                 <a href="{{ url("admin/offer/active") }}" class="nav-link {{ request()->is("admin/offer/active") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.active') }}
+                                        {{ trans('cruds.offer.active') }} ({{ $OfferActiveCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -249,7 +249,7 @@
                                 <a href="{{ url("admin/offer/paused") }}" class="nav-link {{ request()->is("admin/offer/paused") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.paused') }}
+                                        {{ trans('cruds.offer.paused') }} ({{ $OfferPausedCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -257,7 +257,7 @@
                                 <a href="{{ url("admin/offer/pending") }}" class="nav-link {{ request()->is("admin/offer/pending") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.pending') }}
+                                        {{ trans('cruds.offer.pending') }} ({{ $OfferPendingCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -265,7 +265,7 @@
                                 <a href="{{ url("admin/offer/deleted") }}" class="nav-link {{ request()->is("admin/offer/deleted") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.deleted') }}
+                                        {{ trans('cruds.offer.deleted') }} ({{ $OfferDeletedCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>

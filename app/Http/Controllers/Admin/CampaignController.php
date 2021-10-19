@@ -186,13 +186,16 @@ class CampaignController extends Controller
             
             foreach ($accounts as $key => $account) {
 
-                $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
-                $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
-                $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
-                $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
-                $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
+                if ($account->Accounts) {
+                    $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
+                    $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
+                    $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
+                    $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
+                    $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
 
-                $this->sendMail($account->Accounts->EmailAddress,$input);
+                    $this->sendMail($account->Accounts->EmailAddress,$input);
+                }
+                
             }
 
         }else if($request->SendingTo==2){
@@ -208,13 +211,15 @@ class CampaignController extends Controller
 
             foreach ($accounts as $key => $account) {
                 
-                $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
-                $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
-                $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
-                $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
-                $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
+                if ($account->Accounts) {
+                    $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
+                    $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
+                    $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
+                    $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
+                    $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
 
-                $this->sendMail($account->Accounts->EmailAddress,$input);
+                    $this->sendMail($account->Accounts->EmailAddress,$input);
+                }
 
             }
         }
