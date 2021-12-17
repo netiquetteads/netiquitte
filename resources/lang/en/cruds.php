@@ -2,8 +2,8 @@
 
 return [
     'userManagement' => [
-        'title'          => 'User management',
-        'title_singular' => 'User management',
+        'title'          => 'Accounts',
+        'title_singular' => 'Account',
     ],
     'permission' => [
         'title'          => 'Permissions',
@@ -40,8 +40,8 @@ return [
         ],
     ],
     'user' => [
-        'title'          => 'Users',
-        'title_singular' => 'User',
+        'title'          => 'Accounts',
+        'title_singular' => 'Account',
         'fields'         => [
             'id'                       => 'ID',
             'id_helper'                => ' ',

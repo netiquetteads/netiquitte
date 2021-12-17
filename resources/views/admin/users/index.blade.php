@@ -30,12 +30,12 @@
                     <th>
                         {{ trans('cruds.user.fields.email') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.user.fields.email_verified_at') }}
-                    </th>
-                    <th>
+                    </th> --}}
+                    {{-- <th>
                         {{ trans('cruds.user.fields.roles') }}
-                    </th>
+                    </th> --}}
                     <th>
                         &nbsp;
                     </th>
@@ -95,8 +95,8 @@
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'email', name: 'email' },
-{ data: 'email_verified_at', name: 'email_verified_at' },
-{ data: 'roles', name: 'roles.title' },
+// { data: 'email_verified_at', name: 'email_verified_at' },
+// { data: 'roles', name: 'roles.title' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

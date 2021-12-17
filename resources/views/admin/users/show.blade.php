@@ -39,14 +39,14 @@
                             {{ $user->email }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.user.fields.email_verified_at') }}
                         </th>
                         <td>
                             {{ $user->email_verified_at }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
@@ -57,7 +57,7 @@
                             @endforeach
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.user.fields.linkedin') }}
                         </th>
@@ -72,7 +72,7 @@
                         <td>
                             {{ $user->skype }}
                         </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
             <div class="form-group">

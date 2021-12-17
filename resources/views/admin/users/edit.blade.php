@@ -51,7 +51,7 @@
                 <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="linkedin">{{ trans('cruds.user.fields.linkedin') }}</label>
+                {{-- <label for="linkedin">{{ trans('cruds.user.fields.linkedin') }}</label>
                 <input class="form-control {{ $errors->has('linkedin') ? 'is-invalid' : '' }}" type="text" name="linkedin" id="linkedin" value="{{ old('linkedin', $user->linkedin) }}">
                 @if($errors->has('linkedin'))
                     <span class="text-danger">{{ $errors->first('linkedin') }}</span>
@@ -65,7 +65,7 @@
                     <span class="text-danger">{{ $errors->first('skype') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.skype_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="team_id">{{ trans('cruds.user.fields.team') }}</label>
                 <select class="form-control select2 {{ $errors->has('team') ? 'is-invalid' : '' }}" name="team_id" id="team_id">
