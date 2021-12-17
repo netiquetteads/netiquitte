@@ -11,6 +11,8 @@ use App\Models\Campaign;
 use App\Models\Offer;
 use App\Models\Template;
 use App\Models\Account;
+use App\Models\Affiliate;
+use App\Models\Advertiser;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -30,7 +32,7 @@ class CampaignController extends Controller
             $query = Campaign::with(['campaign_offer', 'selected_template'])->select(sprintf('%s.*', (new Campaign())->table));
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
+            
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
@@ -48,6 +50,10 @@ class CampaignController extends Controller
             ));
             });
 
+            $table->editColumn('placeholder', function ($row) {
+                return '<input type="checkbox" name="selectdata" id="selectdata'.$row->id.'" value="'.$row->id.'">';
+            });
+
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
@@ -58,17 +64,24 @@ class CampaignController extends Controller
                 return $row->email_subject ? $row->email_subject : '';
             });
             $table->addColumn('campaign_offer_name', function ($row) {
-                return $row->campaign_offer ? $row->campaign_offer->name : '';
+                if ($row->campaignOffers->count()>0){
+                    return implode(', ',$row->campaignOffers->pluck('name')->toArray());
+                }else{
+                    return '';
+                }
+            });
+            $table->addColumn('sentDateTime', function ($row) {
+                return date('d M Y h:i:s',strtotime($row->created_at));
             });
 
-            $table->editColumn('subs', function ($row) {
-                return $row->subs ? $row->subs : '';
-            });
-            $table->editColumn('opens', function ($row) {
-                return $row->opens ? $row->opens : '';
-            });
+            // $table->editColumn('subs', function ($row) {
+            //     return $row->subs ? $row->subs : '';
+            // });
+            // $table->editColumn('opens', function ($row) {
+            //     return $row->opens ? $row->opens : '';
+            // });
 
-            $table->rawColumns(['actions', 'placeholder', 'campaign_offer']);
+            $table->rawColumns(['actions', 'placeholder', 'campaign_offer','sentDateTime']);
 
             return $table->make(true);
         }
@@ -80,22 +93,47 @@ class CampaignController extends Controller
     {
         abort_if(Gate::denies('campaign_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $template=Template::where('id',$request->TemplateID)->first();
+
         $selectedOffers = Offer::where('offer_status','active')->whereIn('id',explode(',',$request->OfferSelection))->get();
+        
 
         $campaign_offers = Offer::where('offer_status','active')->pluck('name', 'id');
 
         $selected_templates = Template::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $AffiliateCount=Account::where('AccountType',1)->where('AccountStatus','active')->count();
-        $AdvertiserCount=Account::where('AccountType',2)->where('AccountStatus','active')->count();
+        $AffiliateActiveCount=Affiliate::with(["Accounts" => function($q){
+            $q->where('AccountType', 1);
+        }])->where('account_status', 'active')->count();
 
-        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateCount','AdvertiserCount','selectedOffers'));
+        $AffiliateInactiveCount=Affiliate::with(["Accounts" => function($q){
+            $q->where('AccountType', 1);
+        }])->where('account_status', 'inactive')->count();
+
+        $AffiliatePendingCount=Affiliate::with(["Accounts" => function($q){
+            $q->where('AccountType', 1);
+        }])->where('account_status', 'pending')->count();
+
+        $AdvertiserActiveCount=Advertiser::with(["Accounts" => function($q){
+            $q->where('AccountType', 2);
+        }])->where('account_status', 'active')->count();
+
+        $AdvertiserInactiveCount=Advertiser::with(["Accounts" => function($q){
+            $q->where('AccountType', 2);
+        }])->where('account_status', 'inactive')->count();
+
+        $AdvertiserPendingCount=Advertiser::with(["Accounts" => function($q){
+            $q->where('AccountType', 2);
+        }])->where('account_status', 'pending')->count();
+                        
+        return view('admin.campaigns.create', compact('campaign_offers', 'selected_templates','AffiliateActiveCount','AffiliateInactiveCount','AffiliatePendingCount','AdvertiserActiveCount','AdvertiserInactiveCount','AdvertiserPendingCount','selectedOffers','template'));
     }
 
     public function store(StoreCampaignRequest $request)
     {
 
         $campaign = Campaign::create($request->all());
+        $campaign->campaignOffers()->sync($request->input('campaign_offer_id', []));
 
         if ($request->input('offer_image', false)) {
             $campaign->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
@@ -105,53 +143,111 @@ class CampaignController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $campaign->id]);
         }
 
+        $content=$request->content;
+
+        // $CampaignImg=Campaign::where('id',$campaign->id)->first();
+
+        // if ($CampaignImg->offer_image) {
+        //     $offerImg='<img width="100%" src="'.$CampaignImg->offer_image->getUrl().'" />';
+        //     $content = str_replace('{Offer_Image}', $offerImg, $content);
+        //     $CampaignImg->content=$content;
+        //     $CampaignImg->save();
+        // }
+        
+        // $TemplateData=[
+        //     'name'=>$request->name,
+        //     'email_subject'=>$request->email_subject,
+        //     'from_email'=>$request->from_email,
+        //     'content'=>$content,
+        // ];
+
+        // $template = Template::create($TemplateData);
+
+        // $template->templateOffers()->sync($request->input('campaign_offer_id', []));
+
         $input = [
-            'message' => $request->content,
+            'message' => $content,
             'subject' => $request->email_subject,
         ];
 
+        $input['message'] = str_replace('{Offer_Here}', '', $input['message']);
+        $input['message'] = str_replace('{Offer_Image}', '', $input['message']);
+
         if($request->SendingTo==1){
 
-            $accounts=Account::where('AccountType',1)->where('AccountStatus','active')->get();
-            foreach ($accounts as $key => $account) {
-                $input['message'] = str_replace('{FirstName}', $account->FirstName, $input['message']);
-                $input['message'] = str_replace('{LastName}', $account->LastName, $input['message']);
-                $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
+            $sendTo='Affiliates';
 
-                $this->sendMail($account->EmailAddress,$input);
+            // $accounts=Account::where('AccountType',1)->where('AccountStatus',$request->SendingToStatus)->where('SubscribedStatus','Subscribed')->get();
+
+            $accounts=Affiliate::with(["Accounts" => function($q){
+                $q->where('AccountType', 1)
+                ->where('SubscribedStatus','Subscribed');
+            }])->where('account_status', $request->SendingToStatus)->get();
+            
+            foreach ($accounts as $key => $account) {
+
+                if ($account->Accounts) {
+                    $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
+                    $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
+                    $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
+                    $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
+                    $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
+
+                    $this->sendMail($account->Accounts->EmailAddress,$input);
+                }
+                
             }
-            
-            
 
         }else if($request->SendingTo==2){
-            $accounts=Account::where('AccountType',2)->where('AccountStatus','active')->get();
-            foreach ($accounts as $key => $account) {
-                $input['message'] = str_replace('{FirstName}', $account->FirstName, $input['message']);
-                $input['message'] = str_replace('{LastName}', $account->LastName, $input['message']);
-                $input['message'] = str_replace('{Company}', $account->Company, $input['message']);
 
-                $this->sendMail($account->EmailAddress,$input);
+            $sendTo='Advertisers';
+
+            // $accounts=Account::where('AccountType',2)->where('AccountStatus',$request->SendingToStatus)->where('SubscribedStatus','Subscribed')->get();
+
+            $accounts=Advertiser::with(["Accounts" => function($q){
+                $q->where('AccountType', 2)
+                ->where('SubscribedStatus','Subscribed');
+            }])->where('account_status', $request->SendingToStatus)->get();
+
+            foreach ($accounts as $key => $account) {
+                
+                if ($account->Accounts) {
+                    $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
+                    $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
+                    $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
+                    $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
+                    $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
+
+                    $this->sendMail($account->Accounts->EmailAddress,$input);
+                }
+
             }
         }
         else if($request->SendingTo==3){
+
+            $sendTo='Testing';
 
             $input['message'] = str_replace('{FirstName}', "Test Admin", $input['message']);
             $input['message'] = str_replace('{LastName}', 'Test Admin', $input['message']);
             $input['message'] = str_replace('{Company}', 'Test Company', $input['message']);
 
-            $emails = explode(",", $emails=env("TEST_EMAIL_TO"));
+            $emails = explode(",", env("TEST_EMAIL_TO"));
             $this->sendMail($emails,$input);
 
         }else if($request->SendingTo==4){
+
+            $sendTo='Dev';
 
             $input['message'] = str_replace('{FirstName}', "Dev Admin", $input['message']);
             $input['message'] = str_replace('{LastName}', 'Dev Admin', $input['message']);
             $input['message'] = str_replace('{Company}', 'Dev Company', $input['message']);
 
-            $emails = explode(",", $emails=env("DEV_EMAIL_TO"));
+            $emails = explode(",", env("DEV_EMAIL_TO"));
             $this->sendMail($emails,$input);
             
         }else{
+
+            $sendTo='Single Email';
 
             $emails = explode("\n", str_replace("\r", "", $request->SingleEmailBox));
 
@@ -166,8 +262,8 @@ class CampaignController extends Controller
             
         }
 
-        // \Mail::to($emails)->send(new CampaignMail($input));
-        
+        $campaign->send_to=$sendTo;
+        $campaign->save();
 
         return redirect()->route('admin.campaigns.index');
     }
@@ -194,6 +290,7 @@ class CampaignController extends Controller
     public function update(UpdateCampaignRequest $request, Campaign $campaign)
     {
         $campaign->update($request->all());
+        $campaign->campaignOffers()->sync($request->input('campaign_offer_id', []));
 
         if ($request->input('offer_image', false)) {
             if (!$campaign->offer_image || $request->input('offer_image') !== $campaign->offer_image->file_name) {
@@ -248,8 +345,47 @@ class CampaignController extends Controller
 
     public function getTemplateData(Request $request)
     {
-        $template=Template::where('id',$request->id)->first();
+        $data['template']=$template=Template::with('templateOffers')->where('id',$request->id)->first();
 
-        echo json_encode($template);
+        $data['offers']=$template->templateOffers->pluck('id')->toArray();
+        echo json_encode($data);
+    }
+
+    public function loadTemplate(Request $request)
+    {
+        // $TemplateID=$request->TemplateID;
+
+        // if ($TemplateID) {
+
+        //     $template=Template::with('templateOffers')->where('id',$TemplateID)->first();
+        //     $templateOffers=$template->templateOffers->pluck('id')->toArray();
+        //     $OffersSelection=$request->OffersSelection;
+        //     $uniqueOffers=array_diff($OffersSelection,$templateOffers);
+
+        // } else {
+
+        //     $uniqueOffers=$request->OffersSelection;
+        // }
+
+        $uniqueOffers=$request->OffersSelection;
+        
+        $content=urldecode($request->content);
+
+        $selectedOffers = Offer::whereIn('id',$uniqueOffers)->get();
+
+        $selectedOfferHtml=view('admin.campaigns.partials.offers-loop', compact('selectedOffers'))->render();
+        
+        
+        $content = preg_replace('~<offers(.*?)</offers>~Usi', "", $content);
+        $content = str_replace('{Offer_Here}', '{Offer_Here}<offers>'.$selectedOfferHtml.'</offers>', $content);
+        
+        echo $content;
+
+    }
+
+    public function deleteSelectedEmails(Request $request)
+    {
+        Campaign::destroy($request->ids);
+        echo 1;
     }
 }

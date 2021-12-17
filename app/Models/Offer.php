@@ -59,6 +59,8 @@ class Offer extends Model
         'today_revenue_amount',
         'payout_amount',
         'revenue_amount',
+        'countries',
+        'description',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -1,11 +1,20 @@
 @extends('layouts.admin')
 @section('content')
+<style>
+  .dt-buttons{
+    display: none;
+  }
+  table.dataTable tbody td.select-checkbox::before, table.dataTable tbody td.select-checkbox::after, table.dataTable tbody th.select-checkbox::before, table.dataTable tbody th.select-checkbox::after {
+    display: none;
+}
+</style>
 @can('template_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.templates.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.template.title_singular') }}
             </a>
+            <button class="btn btn-danger" id="deleteAll" disabled>Delete</button>
         </div>
     </div>
 @endcan
@@ -19,7 +28,7 @@
             <thead>
                 <tr>
                     <th width="10">
-
+                        <input type="checkbox" name="selectall" id="selectall">
                     </th>
                     <th>
                         {{ trans('cruds.template.fields.id') }}
@@ -27,8 +36,8 @@
                     <th>
                         {{ trans('cruds.template.fields.name') }}
                     </th>
-                    <th>
-                        &nbsp;
+                    <th class="text-center">
+                        {{ trans('global.actions') }}
                     </th>
                 </tr>
             </thead>
@@ -43,39 +52,7 @@
 @parent
 <script>
     $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('template_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.templates.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
   let dtOverrideGlobals = {
-    buttons: dtButtons,
     processing: true,
     serverSide: true,
     retrieve: true,
@@ -90,6 +67,11 @@
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
+    "createdRow": function( row, data, dataIndex ) {
+
+// Add a class to the cell in the second column
+$(row).children(':nth-child(4)').addClass('text-center');
+}
   };
   let table = $('.datatable-Template').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
@@ -99,5 +81,58 @@
   
 });
 
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('#selectall').change(function(e){
+            e.preventDefault();
+            if($(this).prop('checked')==true){
+                $('input[name=selectdata]:checkbox').prop('checked',true);
+                $('#deleteAll').prop('disabled',false);
+            }else{
+                $('input[name=selectdata]:checkbox').prop('checked',false);
+                $('#deleteAll').prop('disabled',true);
+            }
+        })
+    });
+
+    $(document.body).on('change', 'input[name=selectdata]' ,function(e){
+        e.preventDefault();
+        var val = [];
+        $('input[name=selectdata]:checkbox:checked').each(function(i){
+          val[i] = $(this).val();
+        });
+
+        if (val.length>0) {
+            $('#deleteAll').prop('disabled',false);
+        } else {
+            $('#deleteAll').prop('disabled',true);
+        }
+    });
+
+    $(document.body).on('click', '#deleteAll' ,function(e){
+        e.preventDefault();
+        var val = [];
+        $('input[name=selectdata]:checkbox:checked').each(function(i){
+          val[i] = $(this).val();
+        });
+
+        if (confirm("Are you sure you want to delete?")) {
+            var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{ route('admin.templates.deleteSelectedTemplate') }}",
+                        method: "POST",
+                        data: {
+                            ids: val,
+                            _token: _token
+                        },
+                        success: function(response) {
+                            location.reload();
+                        }
+                    })
+        }
+
+    });
 </script>
 @endsection

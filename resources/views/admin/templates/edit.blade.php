@@ -1,6 +1,21 @@
 @extends('layouts.admin')
 @section('content')
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('ckeditor/adapters/jquery.js') }}"></script>
+<script>
+    $( document ).ready( function() {
+				CKEDITOR.config.allowedContent = true;
+        CKEDITOR.config.height = 600; 
+				CKEDITOR.replace('editor1',{
+					filebrowserUploadUrl: 'ckeditor/ck_upload.php',
+					filebrowserUploadMethod: 'form',
+				});
 
+            // Add .js-ckeditor-enabled class to tag it as activated
+            $('#editor1').addClass('editor1-enabled');
+		});
+</script>
 <div class="card">
     <div class="card-header">
         {{ trans('global.edit') }} {{ trans('cruds.template.title_singular') }}
@@ -10,18 +25,7 @@
         <form method="POST" action="{{ route("admin.templates.update", [$template->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
-                <label for="offer_selection_id">{{ trans('cruds.template.fields.offer_selection') }}</label>
-                <select class="form-control select2 {{ $errors->has('offer_selection') ? 'is-invalid' : '' }}" name="offer_selection_id" id="offer_selection_id">
-                    @foreach($offer_selections as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('offer_selection_id') ? old('offer_selection_id') : $template->offer_selection->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('offer_selection'))
-                    <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
-            </div>
+            
             <div class="form-group">
                 <label for="name">{{ trans('cruds.template.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $template->name) }}">
@@ -38,14 +42,14 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.email_subject_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="from_name">{{ trans('cruds.template.fields.from_name') }}</label>
                 <input class="form-control {{ $errors->has('from_name') ? 'is-invalid' : '' }}" type="text" name="from_name" id="from_name" value="{{ old('from_name', $template->from_name) }}">
                 @if($errors->has('from_name'))
                     <span class="text-danger">{{ $errors->first('from_name') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.from_name_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="from_email">{{ trans('cruds.template.fields.from_email') }}</label>
                 <input class="form-control {{ $errors->has('from_email') ? 'is-invalid' : '' }}" type="email" name="from_email" id="from_email" value="{{ old('from_email', $template->from_email) }}">
@@ -54,15 +58,29 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.from_email_helper') }}</span>
             </div>
+            {{-- <div class="form-group">
+              <label for="offer_selection_id">{{ trans('cruds.template.fields.offer_selection') }}</label>
+              <select class="form-control select2 {{ $errors->has('offer_selection') ? 'is-invalid' : '' }}" name="offer_selection_id[]" id="offer_selection_id" multiple data-placeholder="Choose offers..">
+                  @foreach($offer_selections as $id => $entry)
+                      <option value="{{ $id }}" @if (in_array($id,$template->templateOffers->pluck('id')->toArray()))
+                        selected
+                    @endif>{{ $entry }}</option>
+                  @endforeach
+              </select>
+              @if($errors->has('offer_selection'))
+                  <span class="text-danger">{{ $errors->first('offer_selection') }}</span>
+              @endif
+              <span class="help-block">{{ trans('cruds.template.fields.offer_selection_helper') }}</span>
+          </div> --}}
             <div class="form-group">
                 <label for="content">{{ trans('cruds.template.fields.content') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="content">{!! old('content', $template->content) !!}</textarea>
+                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1">{!! old('content', $template->content) !!}</textarea>
                 @if($errors->has('content'))
                     <span class="text-danger">{{ $errors->first('content') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.content_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="offer_image">{{ trans('cruds.template.fields.offer_image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('offer_image') ? 'is-invalid' : '' }}" id="offer_image-dropzone">
                 </div>
@@ -70,7 +88,7 @@
                     <span class="text-danger">{{ $errors->first('offer_image') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.template.fields.offer_image_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

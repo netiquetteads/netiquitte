@@ -229,6 +229,20 @@ class EverflowApiController extends Controller
 	        $results=$response->json();
 
 	        foreach ($results['offers'] as $row) {
+
+				$Countries='';
+				$tmpCountries=$row['relationship']['ruleset']['countries'];
+				foreach($tmpCountries as $countryid => $countrycode){
+					$Countries .= $tmpCountries[$countryid]['country_code'] . " ";
+				}
+			
+				$response2 = Http::withHeaders([
+					'X-Eflow-API-Key' => env('EF_API_KEY'),
+				])
+				->get("https://api.eflow.team/v1/networks/offers/".$row['network_offer_id']);
+	
+				$singleOffer=$response2->object();
+
 	            $offer = Offer::updateOrCreate(
 					['network_offer' => $row['network_offer_id']],
 					[
@@ -255,6 +269,10 @@ class EverflowApiController extends Controller
 						'today_payout_amount'           => $row['today_payout_amount'],
 						'payout_type'                   => $row['payout_type'],
 						'revenue_type'                  => $row['revenue_type'],
+						'preview_url'                  	=> $singleOffer->preview_url,
+						'description'                  	=> $singleOffer->html_description,
+						'countries'                  	=> $Countries,
+						'source'                  	    => 'Everflow',
 					]
 				);
 

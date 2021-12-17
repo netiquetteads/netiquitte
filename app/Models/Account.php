@@ -30,4 +30,9 @@ class Account extends Model
         'updated_at',
     ];
 
+    // public function Affiliates()
+    // {
+    //     return $this->belongsToMany(Affiliate::class,'PlatformUserID');
+    // }
+
 }

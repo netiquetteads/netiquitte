@@ -116,4 +116,9 @@ class Affiliate extends Model implements HasMedia
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function Accounts()
+    {
+        return $this->belongsTo(Account::class,'id','PlatformUserID');
+    }
 }

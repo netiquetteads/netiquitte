@@ -22,6 +22,10 @@ class User extends Authenticatable
 
     public $table = 'users';
 
+    protected $appends = [
+        'photo',
+    ];
+
     protected $hidden = [
         'remember_token',
         'password',
@@ -38,9 +42,18 @@ class User extends Authenticatable
         'name',
         'email',
         'email_verified_at',
+        'approved',
         'password',
         'remember_token',
         'created_at',
+        'linkedin',
+        'skype',
+        'first_name',
+        'last_name',
+        'work_phone',
+        'cell_phone',
+        'instant_messaginid',
+        'instant_messaging_identifier',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -62,6 +75,11 @@ class User extends Authenticatable
         return $this->roles()->where('id', 1)->exists();
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
 
     public function isAdmin() 
     {
@@ -99,6 +117,26 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    // public function labels()
+    // {
+    //     return $this->belongsToMany(Label::class);
+    // }
+
+    // public function addresses()
+    // {
+    //     return $this->belongsToMany(Address::class);
+    // }
+
+    // public function adertisers()
+    // {
+    //     return $this->belongsToMany(Advertiser::class);
+    // }
+
+    // public function affiliates()
+    // {
+    //     return $this->belongsToMany(Affiliate::class);
+    // }
 
     public function team()
     {

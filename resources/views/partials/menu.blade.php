@@ -123,7 +123,7 @@
                                     <a href="{{ route("admin.affiliates.index") }}" class="nav-link {{ request()->is("admin/affiliates") || request()->is("admin/affiliates") ? "active" : "" }}">
                                         
                                         <p>
-                                            {{ trans('cruds.affiliate.all') }}
+                                            {{ trans('cruds.affiliate.all') }} ({{ $AffiliateAllCountSidebar ?? 0 }})
                                         </p>
                                     </a>
                                 </li>
@@ -131,7 +131,7 @@
                                     <a href="{{ url("admin/affiliate/active") }}" class="nav-link {{ request()->is("admin/affiliate/active") ? "active" : "" }}">
 
                                         <p>
-                                            {{ trans('cruds.affiliate.active') }}
+                                            {{ trans('cruds.affiliate.active') }} ({{ $AffiliateActiveCountSidebar ?? 0 }})
                                         </p>
                                     </a>
                                 </li>
@@ -139,7 +139,15 @@
                                     <a href="{{ url("admin/affiliate/inactive") }}" class="nav-link {{ request()->is("admin/affiliate/inactive") ? "active" : "" }}">
 
                                         <p>
-                                            {{ trans('cruds.affiliate.inactive') }}
+                                            {{ trans('cruds.affiliate.inactive') }} ({{ $AffiliateInactiveCountSidebar ?? 0 }})
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url("admin/affiliate/pending") }}" class="nav-link {{ request()->is("admin/affiliate/pending") ? "active" : "" }}">
+
+                                        <p>
+                                            {{ trans('cruds.affiliate.pending') }} ({{ $AffiliatePendingCountSidebar ?? 0 }})
                                         </p>
                                     </a>
                                 </li>
@@ -147,7 +155,7 @@
                                     <a href="{{ url("admin/affiliate/suspended") }}" class="nav-link {{ request()->is("admin/affiliate/suspended") ? "active" : "" }}">
 
                                         <p>
-                                            {{ trans('cruds.affiliate.suspended') }}
+                                            {{ trans('cruds.affiliate.suspended') }} ({{ $AffiliateSuspendedCountSidebar ?? 0 }})
                                         </p>
                                     </a>
                                 </li>
@@ -178,7 +186,7 @@
                                     <a href="{{ url("admin/advertiser/active") }}" class="nav-link {{ request()->is("admin/advertiser/active") ? "active" : "" }}">
                                         
                                         <p>
-                                            {{ trans('cruds.advertiser.active') }}
+                                            {{ trans('cruds.advertiser.active') }} ({{ $AdvertiserActiveCountSidebar ?? 0 }})
                                         </p>
                                     </a>
                                 </li>
@@ -186,7 +194,7 @@
                                     <a href="{{ url("admin/advertiser/inactive") }}" class="nav-link {{ request()->is("admin/advertiser/inactive") ? "active" : "" }}">
                                         
                                         <p>
-                                            {{ trans('cruds.advertiser.inactive') }}
+                                            {{ trans('cruds.advertiser.inactive') }} ({{ $AdvertiserInactiveCountSidebar ?? 0 }})
                                         </p>
                                     </a>
                                 </li>
@@ -194,7 +202,7 @@
                                     <a href="{{ url("admin/advertiser/pending") }}" class="nav-link {{ request()->is("admin/advertiser/pending") ? "active" : "" }}">
                                         
                                         <p>
-                                            {{ trans('cruds.advertiser.pending') }}
+                                            {{ trans('cruds.advertiser.pending') }} ({{ $AdvertiserPendingCountSidebar ?? 0 }})
                                         </p>
                                     </a>
                                 </li>
@@ -202,7 +210,7 @@
                                     <a href="{{ url("admin/advertiser/suspended") }}" class="nav-link {{ request()->is("admin/advertiser/suspended") ? "active" : "" }}">
                                         
                                         <p>
-                                            {{ trans('cruds.advertiser.suspended') }}
+                                            {{ trans('cruds.advertiser.suspended') }} ({{ $AdvertiserSuspendedCountSidebar ?? 0 }})
                                         </p>
                                     </a>
                                 </li>
@@ -225,7 +233,7 @@
                                 <a href="{{ url("admin/offers") }}" class="nav-link {{ request()->is("admin/offers") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.all') }}
+                                        {{ trans('cruds.offer.all') }} ({{ $OfferAllCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -233,7 +241,7 @@
                                 <a href="{{ url("admin/offer/active") }}" class="nav-link {{ request()->is("admin/offer/active") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.active') }}
+                                        {{ trans('cruds.offer.active') }} ({{ $OfferActiveCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -241,7 +249,7 @@
                                 <a href="{{ url("admin/offer/paused") }}" class="nav-link {{ request()->is("admin/offer/paused") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.paused') }}
+                                        {{ trans('cruds.offer.paused') }} ({{ $OfferPausedCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -249,7 +257,7 @@
                                 <a href="{{ url("admin/offer/pending") }}" class="nav-link {{ request()->is("admin/offer/pending") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.pending') }}
+                                        {{ trans('cruds.offer.pending') }} ({{ $OfferPendingCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -257,7 +265,7 @@
                                 <a href="{{ url("admin/offer/deleted") }}" class="nav-link {{ request()->is("admin/offer/deleted") ? "active" : "" }}">
                                     
                                     <p>
-                                        {{ trans('cruds.offer.deleted') }}
+                                        {{ trans('cruds.offer.deleted') }} ({{ $OfferDeletedCountSidebar ?? 0 }})
                                     </p>
                                 </a>
                             </li>
@@ -288,6 +296,8 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            
+                           
                             @can('template_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.templates.index") }}" class="nav-link {{ request()->is("admin/templates") || request()->is("admin/templates/*") ? "active" : "" }}">
@@ -301,18 +311,30 @@
                                 </li>
                             @endcan
                             @can('campaign_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.campaigns.index") }}" class="nav-link {{ request()->is("admin/campaigns") || request()->is("admin/campaigns/*") ? "active" : "" }}">
+                                    <i class="fa-fw nav-icon far fa-envelope">
+
+                                    </i>
+                                    <p>
+                                        {{ trans('cruds.campaign.title') }}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('subscriber_access')
                                 <li class="nav-item">
-                                    <a href="{{ route("admin.campaigns.index") }}" class="nav-link {{ request()->is("admin/campaigns") || request()->is("admin/campaigns/*") ? "active" : "" }}">
-                                        <i class="fa-fw nav-icon far fa-envelope">
+                                    <a href="{{ route("admin.unsubscribers.index") }}" class="nav-link {{ request()->is("admin/unsubscribers") || request()->is("admin/unsubscribers/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-user-check">
 
                                         </i>
                                         <p>
-                                            {{ trans('cruds.campaign.title') }}
+                                            {{ trans('cruds.unsubscribers.title') }}
                                         </p>
                                     </a>
                                 </li>
                             @endcan
-                            @can('campaign_result_access')
+                            {{-- @can('campaign_result_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.campaign-results.index") }}" class="nav-link {{ request()->is("admin/campaign-results") || request()->is("admin/campaign-results/*") ? "active" : "" }}">
                                         <i class="fa-fw nav-icon fas fa-history">
@@ -359,7 +381,7 @@
                                         </p>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
                         </ul>
                     </li>
                 @endcan

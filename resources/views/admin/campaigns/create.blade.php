@@ -10,6 +10,7 @@
 <script>
     $( document ).ready( function() {
 				CKEDITOR.config.allowedContent = true;
+                CKEDITOR.config.height = 600; 
 				CKEDITOR.replace('editor1',{
 					filebrowserUploadUrl: 'ckeditor/ck_upload.php',
 					filebrowserUploadMethod: 'form',
@@ -30,10 +31,10 @@
         <form method="POST" action="{{ route("admin.campaigns.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="selected_template_id">{{ trans('cruds.campaign.fields.selected_template') }}</label>
+                <label for="selected_template_id">Select Template for Email or Edit Current Content</label>
                 <select class="form-control select2 selectTemplate {{ $errors->has('selected_template') ? 'is-invalid' : '' }}" name="selected_template_id" id="selected_template_id">
                     @foreach($selected_templates as $id => $entry)
-                        <option value="{{ $id }}" {{ old('selected_template_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        <option value="{{ $id }}" {{ @$_GET['TemplateID'] == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('selected_template'))
@@ -42,12 +43,12 @@
                 <span class="help-block">{{ trans('cruds.campaign.fields.selected_template_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="name">{{ trans('cruds.campaign.fields.name') }}</label>
+                <label for="name">Nickname for Email</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', @$_GET['CampaignName']) }}">
                 @if($errors->has('name'))
                     <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.campaign.fields.name_helper') }}</span>
+                <span class="help-block">Enter a name you will be able to identify this email by. That way later you can find it.</span>
             </div>
             <div class="form-group">
                 <label for="email_subject">{{ trans('cruds.campaign.fields.email_subject') }}</label>
@@ -66,8 +67,8 @@
                 <span class="help-block">{{ trans('cruds.campaign.fields.from_email_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="campaign_offer_id">{{ trans('cruds.campaign.fields.campaign_offer') }}</label>
-                <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id" id="campaign_offer_id" multiple data-placeholder="Choose offers..">
+                <label for="campaign_offer_id">Select Offer for Email</label>
+                <select class="form-control select2 {{ $errors->has('campaign_offer') ? 'is-invalid' : '' }}" name="campaign_offer_id[]" id="campaign_offer_id" multiple data-placeholder="Choose offers..">
                     @php
                     $getOffers=array();
                         if(@$_GET['OfferSelection']){
@@ -84,25 +85,8 @@
                     <span class="text-danger">{{ $errors->first('campaign_offer') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.campaign_offer_helper') }}</span>
-
-                <br/><br/>
-                <button type="button" onclick="LoadOffers()" class="btn btn-primary">Load Offers</button><br/>
-                <br/>
             </div>
-            <script>
-                function LoadOffers(){
-                    var CampaignName = document.getElementById("name").value;
-                    var FromEmail = document.getElementById("from_email").value;
-                    var EmailSubject = document.getElementById("email_subject").value;
-                    var TemplateID = document.getElementById("selected_template_id").value;
-                    var OffersSelection = $("#campaign_offer_id").val();
-                    var data = CKEDITOR.instances.editor1.getData();
-                    var data2 = encodeURIComponent(data);
-                                
-                    window.location.replace("{{ route('admin.campaigns.create') }}?FromEmail="+FromEmail+"&EmailSubject="+EmailSubject+"&OfferSelection="+OffersSelection+"&CampaignName="+CampaignName);
-                        
-                }
-                </script>
+            
 
             <div class="form-group">
             <label onclick="vph();"><font color="blue"><u>View Placeholders</u></font></label>
@@ -136,7 +120,11 @@
 					</tr>
 					<tr>
 						<td>Offer Section</td>
-						<td>{Offers_Here}</td>
+						<td>{Offer_Here}</td>
+					</tr>
+                    <tr>
+						<td>Offer Image</td>
+						<td>{Offer_Image}</td>
 					</tr>
 					<tr>
 						<td>Company</td>
@@ -147,35 +135,67 @@
         </div>
             <label for="SendingTo">Send To:</label><br/>
 			<div class="form-check">
-				&nbsp;
-				<label class="radio-inline" for="SendingTo1">
-				<input type="radio" name="SendingTo" id="SendingTo1" value="1">
-					Affiliates({{ $AffiliateCount }})
-				</label>
-				&nbsp;
-				<label class="radio-inline" for="SendingTo2">
-				<input type="radio" name="SendingTo" id="SendingTo2" value="2">
-					Advertisers({{ $AdvertiserCount }})
-				</label> 
-				
-				&nbsp;
+				<label for="Affiliates">
+                    Affiliates - 
+                </label>
+
+                <label for="SendingToAffiliatesActive">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesActive" value="1" class="sendto" status="active">
+                    Active ({{ $AffiliateActiveCount }})
+                </label>
+
+                <label for="SendingToAffiliatesPending">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesPending" value="1" class="sendto" status="pending">
+                    Pending ({{ $AffiliatePendingCount }})
+                </label>
+
+                <label for="SendingToAffiliatesInactive">
+				    <input type="radio" name="SendingTo" id="SendingToAffiliatesInactive" value="1" class="sendto" status="inactive">
+                    Inactive ({{ $AffiliateInactiveCount }})
+                </label>
+
+				<br>
+				<label for="Advertisers">
+                    Advertisers - 
+                </label> 
+
+                <label for="SendingToAdvertisersActive">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersActive" value="2" class="sendto" status="active">
+					Active({{ $AdvertiserActiveCount }})
+                </label>
+
+                <label for="SendingToAdvertisersPending">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersPending" value="2" class="sendto" status="pending">
+					Pending({{ $AdvertiserPendingCount }})
+                </label>
+
+                <label for="SendingToAdvertisersInactive">
+				<input type="radio" name="SendingTo" id="SendingToAdvertisersInactive" value="2" class="sendto" status="inactive">
+					Inactive({{ $AdvertiserInactiveCount }})
+                </label>
+
+                <input type="hidden" name="SendingToStatus" id="sendToStatus">
+                <br>
+                <label class="radio-inline" for="SendingTo5">
+                    <input type="radio" name="SendingTo" id="SendingTo5" value="5" onclick="SendSingleEmail();">
+                        Single Email
+                </label>
+                <br>
 				<label class="radio-inline" for="SendingTo3">
 				<input type="radio" name="SendingTo" id="SendingTo3" value="3">
 					Testing
 				</label> 
+                <br>
 				<label class="radio-inline" for="SendingTo4">
 				<input type="radio" name="SendingTo" id="SendingTo4" value="4">
 					Dev
 				</label> 
-				<label class="radio-inline" for="SendingTo5">
-				<input type="radio" name="SendingTo" id="SendingTo5" value="5" onclick="SendSingleEmail();">
-					Single Email
-				</label> 
-				<div id="SingleEmailDiv" style="display:none;">
-					<label>Please Enter an Email List</label><br/>
-					Please enter <b><u>ONE EMAIL PER LINE</u></b>
-					<textarea name="SingleEmailBox" class="form-control"></textarea><br/>
-				</div>
+                <br>
+                <div id="SingleEmailDiv" style="display:none;">
+                    <label>Please Enter an Email List</label><br/>
+                    Please enter <b><u>ONE EMAIL PER LINE</u></b>
+                    <textarea name="SingleEmailBox" class="form-control"></textarea><br/>
+                </div>
 				<br/>
 				<script>
 				function SendSingleEmail(){
@@ -193,7 +213,7 @@
 
 
 
-                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1">
+                <textarea class="form-control {{ $errors->has('content') ? 'is-invalid' : '' }}" name="content" id="editor1" rows="300">
 
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>
@@ -215,35 +235,20 @@
 			<p>write content here</p>
 			</td>
 		</tr>
-	</tbody>
-</table>
-
-@if ($selectedOffers)
-<table align='center' border='0' cellpadding='1' cellspacing='1' style='width:500px;'>
-	<tbody>	
-			@foreach($selectedOffers as $ID => $selectedOffer)
-				
-		<tr>
+        <tr>
 			<td>
-<p><span style='font-size:26px;'><strong>{{ $selectedOffer->name }}</strong></span></p>
-<span style='border-radius:3px;display:inline-block;font-size:12px;font-weight:bold;line-height:14px;color:#white;white-space:nowrap;
-vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'><font color='white'>Payout: {{ $selectedOffer->payout }}</font></span>
-
-<p style='color:#white;font-size:12px;'><strong>Offer Id</strong>: {{ $selectedOffer->network_offer }}<br />
-<strong>Description</strong>:<br />
-<strong>Category</strong>: {{ $selectedOffer->category }}<br />
-<strong>Countries Accepted:</strong>  {{ $selectedOffer->category }}</p>
-<a href='http://netiquetteads.com/preview.php?id={{ $selectedOffer->network_offer }}' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Preview</a> 
-
-<a href='http://netiquetteads.com/client.php' style='color:#FFFFFF;text-decoration:none;display:inline-block;margin-bottom:0;font-size:13px;line-height:20px;text-align:center;vertical-align:middle;border-radius:3px;background:linear-gradient(to bottom, #4e73df 0%, #4e73df 100%);padding:4px 12px;border: 1px solid #aaaaaa;'>Get Links</a></div>
-</div>
+        {Offer_Here}
+        <offers>
+        </offers>
 			</td>
 		</tr>
-        @endforeach
-    </tbody>
+		{{-- <tr>
+			<td>
+        {Offer_Image}
+			</td>
+		</tr> --}}
+	</tbody>
 </table>
-
-@endif
 
 <table align="center" border="0" cellpadding="1" cellspacing="1" style="width:500px;">
 	<tbody>
@@ -282,8 +287,8 @@ vertical-align:baseline;background-color:#E81D26;padding:2px 4px;'><font color='
 	</tbody>
 </table>
 
-<p style="text-align: center;">If you no longer wish to receive our emails, please <a href="netiquetteads.com/unsubscribe.php?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
-690 A West Montrose Street, Clermont FL, USA, 34711<br />
+<p style="text-align: center;">If you no longer wish to receive our emails, please <a href="{{ route('unsubscribe') }}?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
+    4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>
 
 </textarea> 
@@ -294,7 +299,13 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.content_helper') }}</span>
             </div>
-            <div class="form-group">
+            
+                <div class="form-group">
+                    <button type="button" id="LoadOffers" class="btn btn-primary">Load Offer</button><br/>
+                    <br/>
+    
+              </div>
+            {{-- <div class="form-group">
                 <label for="offer_image">{{ trans('cruds.campaign.fields.offer_image') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('offer_image') ? 'is-invalid' : '' }}" id="offer_image-dropzone">
                 </div>
@@ -302,36 +313,36 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
                     <span class="text-danger">{{ $errors->first('offer_image') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.offer_image_helper') }}</span>
-            </div>
+            </div> --}}
             
            
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="subs">{{ trans('cruds.campaign.fields.subs') }}</label>
                 <input class="form-control {{ $errors->has('subs') ? 'is-invalid' : '' }}" type="number" name="subs" id="subs" value="{{ old('subs', '0') }}" step="1">
                 @if($errors->has('subs'))
                     <span class="text-danger">{{ $errors->first('subs') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.subs_helper') }}</span>
-            </div>
-            <div class="form-group">
+            </div> --}}
+            {{-- <div class="form-group">
                 <label for="unsubs">{{ trans('cruds.campaign.fields.unsubs') }}</label>
                 <input class="form-control {{ $errors->has('unsubs') ? 'is-invalid' : '' }}" type="number" name="unsubs" id="unsubs" value="{{ old('unsubs', '0') }}" step="1">
                 @if($errors->has('unsubs'))
                     <span class="text-danger">{{ $errors->first('unsubs') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.unsubs_helper') }}</span>
-            </div>
-            <div class="form-group">
+            </div> --}}
+            {{-- <div class="form-group">
                 <label for="opens">{{ trans('cruds.campaign.fields.opens') }}</label>
                 <input class="form-control {{ $errors->has('opens') ? 'is-invalid' : '' }}" type="number" name="opens" id="opens" value="{{ old('opens', '0') }}" step="1">
                 @if($errors->has('opens'))
                     <span class="text-danger">{{ $errors->first('opens') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.campaign.fields.opens_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
+                    Send
                 </button>
             </div>
         </form>
@@ -344,6 +355,42 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 
 @section('scripts')
 
+<script>
+    $('.sendto').click(function(){
+        $('#sendToStatus').val($(this).attr('status'));
+    });
+</script>
+
+<script>
+    $('#LoadOffers').click(function(){
+        $this=$(this);
+        var TemplateID = document.getElementById("selected_template_id").value;
+        var OffersSelection = $("#campaign_offer_id").val();
+        var data = CKEDITOR.instances.editor1.getData();
+        var data2 = encodeURIComponent(data);
+        $loader='<div class="spinner-border text-dark" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>';
+            $this.html($loader);
+
+            if(OffersSelection.length>0){
+                var _token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url:'{{ route("admin.campaigns.loadTemplate") }}',
+                        method:"POST",
+                        data: {
+                            OffersSelection: OffersSelection,content:data2,TemplateID:TemplateID,_token:_token
+                        },
+                        success:function(response) {
+                            // console.log(response);
+                            $this.html('Load Offer');
+                            CKEDITOR.instances.editor1.setData(response);
+                        }
+                    })
+            } 
+    });
+    
+    </script>
 
 <script>
     $('.selectTemplate').change(function(){
@@ -359,11 +406,11 @@ if($(this).val()==''){
             method:"POST",
             data:{id:tempId, _token:_token},
             success:function(data){
-                console.log('data',data.offer_selection_id);
-              $('#email_subject').val(data.email_subject);
-              $('#from_email').val(data.from_email);
-              $("#campaign_offer_id").select2("val", [data.offer_selection_id]);
-              CKEDITOR.instances['editor1'].setData(data.content)
+                // console.log('data',data);
+              $('#email_subject').val(data.template.email_subject);
+              $('#from_email').val(data.template.from_email);
+              $("#campaign_offer_id").select2("val", [data.offers]);
+              CKEDITOR.instances['editor1'].setData(data.template.content)
     
               
 

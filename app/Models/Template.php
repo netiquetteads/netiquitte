@@ -31,7 +31,7 @@ class Template extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'offer_selection_id',
+        // 'offer_selection_id',
         'name',
         'email_subject',
         'from_name',
@@ -51,6 +51,11 @@ class Template extends Model implements HasMedia
     public function offer_selection()
     {
         return $this->belongsTo(Offer::class, 'offer_selection_id');
+    }
+
+    public function templateOffers()
+    {
+        return $this->belongsToMany(Offer::class,'template_offers');
     }
     
     public function getOfferImageAttribute()

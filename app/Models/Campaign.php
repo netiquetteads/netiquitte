@@ -35,11 +35,12 @@ class Campaign extends Model implements HasMedia
         'email_subject',
         'from_email',
         'content',
-        'campaign_offer_id',
+        // 'campaign_offer_id',
         'selected_template_id',
         'subs',
         'unsubs',
         'opens',
+        'send_to',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -66,6 +67,11 @@ class Campaign extends Model implements HasMedia
     public function campaign_offer()
     {
         return $this->belongsTo(Offer::class, 'campaign_offer_id');
+    }
+
+    public function campaignOffers()
+    {
+        return $this->belongsToMany(Offer::class,'campaign_offers');
     }
 
     public function selected_template()
