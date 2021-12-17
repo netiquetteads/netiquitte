@@ -4,15 +4,15 @@
     }
 
   #balanceModal {
-/*  --ratio: 664 / 1000;
-  --container-width: 30rem;
-  display: block;
-  height: calc(100vw * var(--ratio));
-  max-height: calc(var(--container-width) * var(--ratio));
-  width: 100%;
-  max-width: var(--container-width);*/
-}
- 
+  /*  --ratio: 664 / 1000;
+    --container-width: 30rem;
+    display: block;
+    height: calc(100vw * var(--ratio));
+    max-height: calc(var(--container-width) * var(--ratio));
+    width: 100%;
+    max-width: var(--container-width);*/
+  }
+  
     @media screen and (min-width: 676px) {
     /*    #balanceModal {
           max-width: 600px;  

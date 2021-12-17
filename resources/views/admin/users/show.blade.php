@@ -31,12 +31,28 @@
                             {{ $user->id }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.user.fields.name') }}
                         </th>
                         <td>
                             {{ $user->name }}
+                        </td>
+                    </tr> --}}
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.first_name') }}
+                        </th>
+                        <td>
+                            {{ $user->first_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.last_name') }}
+                        </th>
+                        <td>
+                            {{ $user->last_name }}
                         </td>
                     </tr>
                     <tr>
@@ -47,14 +63,14 @@
                             {{ $user->email }}
                         </td>
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         <th>
                             {{ trans('cruds.user.fields.email_verified_at') }}
                         </th>
                         <td>
                             {{ $user->email_verified_at }}
                         </td>
-                    </tr> --}}
+                    </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.user.fields.roles') }}
@@ -95,22 +111,7 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.user.fields.first_name') }}
-                        </th>
-                        <td>
-                            {{ $user->first_name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.user.fields.last_name') }}
-                        </th>
-                        <td>
-                            {{ $user->last_name }}
-                        </td>
-                    </tr>
+                   
                     <tr>
                         <th>
                             {{ trans('cruds.user.fields.work_phone') }}

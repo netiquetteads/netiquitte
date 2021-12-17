@@ -7,5 +7,5 @@ return [
     'available_languages' => [
         'en' => 'English',
     ],
-    'registration_default_role' => '2',
+    'registration_default_role' => '1',
 ];

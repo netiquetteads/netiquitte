@@ -14,7 +14,6 @@ class AddToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->boolean('approved')->default(0)->nullable();
             $table->string('linkedin')->nullable();
             $table->string('skype')->nullable();
