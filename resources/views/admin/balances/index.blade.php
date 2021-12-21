@@ -11,9 +11,18 @@ if($Year == ""){
     .dt-buttons{
         display: none;
     }
-    table.dataTable tbody td.select-checkbox:before{
+    table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after{
         display: none;
     }
+    table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
+    background-color: transparent;
+}
+table.dataTable tbody tr {
+    background-color: transparent;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: transparent;
+}
     /* The Modal (background) */
     .modal {
       display: none; /* Hidden by default */
