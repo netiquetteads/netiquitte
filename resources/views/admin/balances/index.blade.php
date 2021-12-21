@@ -8,6 +8,12 @@ if($Year == ""){
 @section('content')
 
 <style>
+    .dt-buttons{
+        display: none;
+    }
+    table.dataTable tbody td.select-checkbox:before{
+        display: none;
+    }
     /* The Modal (background) */
     .modal {
       display: none; /* Hidden by default */

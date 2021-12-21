@@ -88,7 +88,6 @@ class BalancesController extends Controller
 
         $table='<thead>
         <tr>
-          <th></th>
           <th>Company Name</th>
           <th>January<br>'.$this->calculateNetworkMonthlyBalance("January",$Year).'</th>
           <th>February<br>'.$this->calculateNetworkMonthlyBalance("February",$Year).'</th>
@@ -177,7 +176,7 @@ class BalancesController extends Controller
     }
 
       $table .= "<tr>";
-      $table .= "<td></td>
+      $table .= "
                 <td>$Affiliate</td>
                   <td data-order='".$month[0]."'>
                       <font style='color:".$monthColor[0]."'>".$month[0]."</font>&nbsp;
