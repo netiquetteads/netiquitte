@@ -38,7 +38,7 @@ class SyncEverflowApisCommand extends Command
      */
     public function handle()
     {
-        
+        \Log::info("Cron: SyncEverflowApisJob");
         dispatch(new SyncEverflowApisJob());
 
         return 'Successfully Sync';
