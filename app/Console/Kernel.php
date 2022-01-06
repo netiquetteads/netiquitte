@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('sync:everflow')
-                 ->daily();
+        $schedule->command('sync:everflow')->daily();
+                //  ->everyMinute();
 
         $schedule->command('backup:clean')->daily()->at('01:30')
         ->onFailure(function () {

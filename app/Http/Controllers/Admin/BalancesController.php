@@ -10,11 +10,13 @@ use App\Models\Balance;
 use App\Models\PaymentMethod;
 use App\Models\PaymentStatus;
 use App\Models\BalanceContainer;
+use App\Models\Affiliate;
 use DateTime;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Mail\SendInvoiceMail;
 
 class BalancesController extends Controller
 {
@@ -270,7 +272,7 @@ class BalancesController extends Controller
         $payout=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('payout');
         $profit=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('profit');
 
-        $html= view('admin.balances.partials.banalce-model', compact('AffiliateID','Year','Month','balance','revenue','payout','profit'))->render();
+        $html= view('admin.balances.partials.balance-model', compact('AffiliateID','Year','Month','balance','revenue','payout','profit'))->render();
 
         echo $html;
         
@@ -454,4 +456,19 @@ class BalancesController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function sendInvoiceMail(Request $request)
+    {
+        $account=Affiliate::with(["Accounts" => function($q){
+            $q->where('AccountType', 1);
+        }])->where('id', $request->aid)->first();
+
+        $input = [
+            'message' => $request->invoiceData,
+            'subject' => 'Invoice for your account from Netiquette Ads',
+        ];
+
+        $send=\Mail::to($account->Accounts->EmailAddress)->send(new SendInvoiceMail($input));
+    }
+    
 }

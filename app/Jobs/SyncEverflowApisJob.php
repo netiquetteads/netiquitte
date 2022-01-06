@@ -317,8 +317,8 @@ class SyncEverflowApisJob implements ShouldQueue
 	{
 		try{
 
-			$fromDate = dd(date('Y-m-d', strtotime(date('Y-01-01'))));
-			$toDate = dd(date('Y-m-d', strtotime(date('Y-m-d'))));
+			$fromDate = date('Y-m-d', strtotime(date('Y-01-01')));
+			$toDate = date('Y-m-d', strtotime(date('Y-m-d')));
 			$begin = new DateTime($fromDate);
 			$end = new DateTime($toDate);
 

@@ -89,6 +89,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('SavePaymentStatus', 'BalancesController@SavePaymentStatus')->name('balances.SavePaymentStatus');
     Route::post('SavePaymentInfo', 'BalancesController@SavePaymentInfo')->name('balances.SavePaymentInfo');
     Route::post('SaveNotes', 'BalancesController@SaveNotes')->name('balances.SaveNotes');
+    Route::post('sendInvoiceMail', 'BalancesController@sendInvoiceMail')->name('balances.sendInvoiceMail');
 
     // Payment Status
     Route::delete('payment-statuses/destroy', 'PaymentStatusController@massDestroy')->name('payment-statuses.massDestroy');
