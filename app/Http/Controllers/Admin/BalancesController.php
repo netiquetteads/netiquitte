@@ -179,7 +179,7 @@ class BalancesController extends Controller
 
       $table .= "<tr>";
       $table .= "
-                <td>$Affiliate</td>
+                <td data-order='".$Affiliate."'>$Affiliate</td>
                   <td data-order='".$month[0]."'>
                       <font style='color:".$monthColor[0]."'>".$month[0]."</font>&nbsp;
 
@@ -252,7 +252,7 @@ class BalancesController extends Controller
                       
                       <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[11]."');\"></i>
                   </td>
-                  <td>".$this->calculateAffiliateYTDBalance($AffiliateID,$Year)."</td>";
+                  <td data-order='".$this->calculateAffiliateYTDBalance($AffiliateID,$Year)."'>".$this->calculateAffiliateYTDBalance($AffiliateID,$Year)."</td>";
         $table .= "</tr>";
 
     }

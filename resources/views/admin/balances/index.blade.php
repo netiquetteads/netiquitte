@@ -109,7 +109,7 @@ table.dataTable tbody tr {
 
     <div class="card-body">
         {{-- <input type="text" name="daterange" id="daterangepicker"> <br><br> --}}
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Balance" id="balanceTable">
+        <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-Balance" id="balanceTable">
             
         </table>
     </div>
@@ -159,7 +159,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                     success: function(response){
                         alert(response.message);
                         $this.html('Update');
-                        console.log('response',response);
+                        location.reload();
                     }
                 });
 });
