@@ -30,6 +30,9 @@
                   <th width="10">
                     <input type="checkbox" name="selectall" id="selectall">
                 </th>
+                <th width="10">
+                     
+                </th>
                     <th>
                         {{ trans('cruds.campaign.fields.id') }}
                     </th>
@@ -109,6 +112,12 @@
     aaSorting: [],
     ajax: "{{ route('admin.campaigns.index') }}",
     columns: [
+                {
+                "class":          "details-control",
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ""
+            },
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
