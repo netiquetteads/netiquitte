@@ -74,7 +74,7 @@
     aaSorting: [],
     ajax: "{{ route('admin.unsubscribers.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', orderable:false},
 { data: 'id', name: 'id' },
 { data: 'email', name: 'email' },
 // { data: 'actions', name: '{{ trans('global.actions') }}' }
