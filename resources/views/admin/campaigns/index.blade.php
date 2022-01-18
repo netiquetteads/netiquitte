@@ -31,6 +31,9 @@
                   <th width="10">
                     <input type="checkbox" name="selectall" id="selectall">
                 </th>
+                <th width="10">
+                     
+                </th>
                     <th>
                         {{ trans('cruds.campaign.fields.id') }}
                     </th>

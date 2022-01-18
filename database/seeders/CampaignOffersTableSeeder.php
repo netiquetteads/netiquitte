@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class RoleUserTableSeeder extends Seeder
+class CampaignOffersTableSeeder extends Seeder
 {
 
     /**
@@ -16,28 +16,28 @@ class RoleUserTableSeeder extends Seeder
     {
         
 
-        \DB::table('role_user')->delete();
+        \DB::table('campaign_offers')->delete();
         
-        \DB::table('role_user')->insert(array (
+        \DB::table('campaign_offers')->insert(array (
             0 => 
             array (
-                'user_id' => 1,
-                'role_id' => 1,
+                'campaign_id' => 1,
+                'offer_id' => 731,
             ),
             1 => 
             array (
-                'user_id' => 2,
-                'role_id' => 1,
+                'campaign_id' => 1,
+                'offer_id' => 814,
             ),
             2 => 
             array (
-                'user_id' => 3,
-                'role_id' => 1,
+                'campaign_id' => 1,
+                'offer_id' => 815,
             ),
             3 => 
             array (
-                'user_id' => 4,
-                'role_id' => 1,
+                'campaign_id' => 2,
+                'offer_id' => 731,
             ),
         ));
         
