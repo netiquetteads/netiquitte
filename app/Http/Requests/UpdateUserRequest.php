@@ -24,7 +24,15 @@ class UpdateUserRequest extends FormRequest
                 'required',
                 'array',
             ],
-            'name' => [
+            // 'name' => [
+            //     'string',
+            //     'required',
+            // ],
+            'first_name' => [
+                'string',
+                'required',
+            ],
+            'last_name' => [
                 'string',
                 'required',
             ],

@@ -8,6 +8,21 @@ if($Year == ""){
 @section('content')
 
 <style>
+    .dt-buttons{
+        display: none;
+    }
+    table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after{
+        display: none;
+    }
+    table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
+    background-color: transparent;
+}
+table.dataTable tbody tr {
+    background-color: transparent;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: transparent;
+}
     /* The Modal (background) */
     .modal {
       display: none; /* Hidden by default */
@@ -94,7 +109,7 @@ if($Year == ""){
 
     <div class="card-body">
         {{-- <input type="text" name="daterange" id="daterangepicker"> <br><br> --}}
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Balance" id="balanceTable">
+        <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-Balance" id="balanceTable">
             
         </table>
     </div>
@@ -144,7 +159,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                     success: function(response){
                         alert(response.message);
                         $this.html('Update');
-                        console.log('response',response);
+                        location.reload();
                     }
                 });
 });
@@ -187,6 +202,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
 </script>
 <script>
     var modal
+    let theEditor;
         function OpenTab(TabToOpen){
             var tabArray = ["Tab1","Tab2","Tab3","Tab4","Tab5"]; //put all tab names here
             console.log(TabToOpen);
@@ -214,15 +230,22 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                             ClassicEditor.create(
                             allEditors[i], {
                             }
-                            );
+                            ).then( editor => {
+                                theEditor = editor; // Save for later use.
+                            } );
                         }
                 }
             });
+            
+
             
             //SHOW HERE
                 
                 modal.style.display = "block";
         }
+        function getDataFromTheEditor() {
+                return theEditor.getData();
+            }
         function CloseModal(){
             modal = document.getElementById("modalStuff");
                 modal.style.display = "none";
@@ -256,7 +279,6 @@ $loader='<div class="spinner-border text-dark" role="status">'+
         }
         function SaveAccounting(Account,Type,Amount,Month,Year){
         var zGI = document.getElementById(Amount).value;
-        console.log(zGI);
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -379,8 +401,36 @@ $(document).ready(function() {
     }
     });
 
-			
-		} );
+    $(document.body).on('click', '.sendInvoiceMail' ,function(){
+
+        $this=$(this);
+        $loader='<div class="spinner-border text-dark" role="status">'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>';
+        $this.html($loader);
+
+        var aid=$(this).attr('aid');
+        var bid=$(this).attr('bid');
+
+        var invoiceData=getDataFromTheEditor();
+
+        $.ajax({
+            type: "POST",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "{{ route('admin.balances.sendInvoiceMail') }}",
+            data: {"aid":aid,invoiceData:invoiceData},
+            success: function(response){
+                $this.html('Send Email');
+                alert("Successfully sent invoice mail!");
+                location.reload();
+            }
+        });
+
+    });
+		
+});
+
+
 
 //     $(function () {
 //   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)

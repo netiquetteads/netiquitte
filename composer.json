@@ -22,6 +22,7 @@
         "laraveldaily/laravel-charts": "^0.1.24",
         "nwidart/laravel-modules": "^8.2",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
+        "spatie/laravel-backup": "^6.16",
         "spatie/laravel-medialibrary": "^8.7",
         "yajra/laravel-datatables-oracle": "^9.11"
     },

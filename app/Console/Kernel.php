@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\SyncEverflowApisCommand::class,
     ];
 
     /**
@@ -24,7 +24,24 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('sync:everflow')->daily();
+                //  ->everyMinute();
+
+        $schedule->command('backup:clean')->daily()->at('01:30')
+        ->onFailure(function () {
+            \Log::info('backup clean failed');
+         })
+         ->onSuccess(function () {
+            \Log::info('backup clean successfull');
+         });
+
+        $schedule->command('backup:run --only-db')->daily()->at('02:00')
+        ->onFailure(function () {
+            \Log::info('backup failed');
+         })
+         ->onSuccess(function () {
+            \Log::info('backup successfull');
+         });
     }
 
     /**

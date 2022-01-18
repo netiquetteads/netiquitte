@@ -59,7 +59,7 @@
     aaSorting: [],
     ajax: "{{ route('admin.templates.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', orderable:false },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

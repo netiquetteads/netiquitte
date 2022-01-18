@@ -2,8 +2,8 @@
 
 return [
     'userManagement' => [
-        'title'          => 'User management',
-        'title_singular' => 'User management',
+        'title'          => 'Accounts',
+        'title_singular' => 'Account',
     ],
     'permission' => [
         'title'          => 'Permissions',
@@ -39,9 +39,9 @@ return [
             'deleted_at_helper'  => ' ',
         ],
     ],
-      'user' => [
-        'title'          => 'Users',
-        'title_singular' => 'User',
+    'user' => [
+        'title'          => 'Accounts',
+        'title_singular' => 'Account',
         'fields'         => [
             'id'                                  => 'ID',
             'id_helper'                           => ' ',

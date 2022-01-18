@@ -31,12 +31,28 @@
                             {{ $user->id }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.user.fields.name') }}
                         </th>
                         <td>
                             {{ $user->name }}
+                        </td>
+                    </tr> --}}
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.first_name') }}
+                        </th>
+                        <td>
+                            {{ $user->first_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.user.fields.last_name') }}
+                        </th>
+                        <td>
+                            {{ $user->last_name }}
                         </td>
                     </tr>
                     <tr>
@@ -65,7 +81,7 @@
                             @endforeach
                         </td>
                     </tr>
-                    <tr>
+                     <tr>
                         <th>
                             {{ trans('cruds.user.fields.linkedin') }}
                         </th>
@@ -95,22 +111,7 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.user.fields.first_name') }}
-                        </th>
-                        <td>
-                            {{ $user->first_name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.user.fields.last_name') }}
-                        </th>
-                        <td>
-                            {{ $user->last_name }}
-                        </td>
-                    </tr>
+                   
                     <tr>
                         <th>
                             {{ trans('cruds.user.fields.work_phone') }}

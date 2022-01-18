@@ -46,6 +46,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::post('users/media', 'UsersController@storeMedia')->name('users.storeMedia');
     Route::resource('users', 'UsersController');
 
     // Audit Logs
@@ -88,6 +89,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('SavePaymentStatus', 'BalancesController@SavePaymentStatus')->name('balances.SavePaymentStatus');
     Route::post('SavePaymentInfo', 'BalancesController@SavePaymentInfo')->name('balances.SavePaymentInfo');
     Route::post('SaveNotes', 'BalancesController@SaveNotes')->name('balances.SaveNotes');
+    Route::post('sendInvoiceMail', 'BalancesController@sendInvoiceMail')->name('balances.sendInvoiceMail');
 
     // Payment Status
     Route::delete('payment-statuses/destroy', 'PaymentStatusController@massDestroy')->name('payment-statuses.massDestroy');

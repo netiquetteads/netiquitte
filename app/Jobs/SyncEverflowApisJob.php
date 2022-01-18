@@ -48,6 +48,7 @@ class SyncEverflowApisJob implements ShouldQueue
         $this->getAllAdvertiser();
         $this->getAllAffiliates();
         $this->getAllOffers();
+        $this->manualUpdate();
 
         Log::info('Successfully synced all apis');
     }
@@ -64,7 +65,8 @@ class SyncEverflowApisJob implements ShouldQueue
 	            'search_terms' => [array('search_type'=>'name','value'=>"")],
 	            // 'filters' => array('account_status'=>'active'),
 	        ]), 'json')
-	        ->post('https://api.eflow.team/v1/networks/advertiserstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
+	        ->post('https://api.eflow.team/v1/networks/advertiserstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager');
+	        // ->post('https://api.eflow.team/v1/networks/advertiserstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
 
 	        $results=$response->json();
 
@@ -149,7 +151,8 @@ class SyncEverflowApisJob implements ShouldQueue
 	            'search_terms' => [array('search_type'=>'name','value'=>"")],
 	            // 'filters' => array('account_status'=>'active'),
 	        ]), 'json')
-	        ->post('https://api.eflow.team/v1/networks/affiliatestable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
+	        ->post('https://api.eflow.team/v1/networks/affiliatestable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager');
+	        // ->post('https://api.eflow.team/v1/networks/affiliatestable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
 
 	        $results=$response->json();
 
@@ -228,11 +231,6 @@ class SyncEverflowApisJob implements ShouldQueue
 	        }
 
             Log::info('Affiliates Successfully Synced');
-            
-	        return response()->json([
-	            "message" => "Recorded successfully",
-	            "content" => $results
-	        ], 201);
 
 	    } catch (Exception $e) {
 			Log::info('Some Error In Affiliates Apis');
@@ -249,7 +247,8 @@ class SyncEverflowApisJob implements ShouldQueue
 	            'search_terms' => [array('search_type'=>'name','value'=>"")],
 	            // 'filters' => array('account_status'=>'active'),
 	        ]), 'json')
-	        ->post('https://api.eflow.team/v1/networks/offerstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
+	        ->post('https://api.eflow.team/v1/networks/offerstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager');
+	        // ->post('https://api.eflow.team/v1/networks/offerstable?relationship=ruleset&relationship=tracking_domain&relationship=account_manager&relationship=sales_manager&page=1&page_size=1000');
 
 	        $results=$response->json();
 
@@ -313,4 +312,118 @@ class SyncEverflowApisJob implements ShouldQueue
 			Log::info('Some Error In Offers Apis');
 		}    
     }
+
+	public function manualUpdate()
+	{
+		try{
+
+			$fromDate = date('Y-m-d', strtotime(date('Y-01-01')));
+			$toDate = date('Y-m-d', strtotime(date('Y-m-d')));
+			$begin = new DateTime($fromDate);
+			$end = new DateTime($toDate);
+
+			$interval = DateInterval::createFromDateString('1 month');
+			$period = new DatePeriod($begin, $interval, $end);
+					
+			foreach ($period as $key => $dt){
+				
+				$Year = $dt->format("Y");
+				$MonthName= $dt->format("F");
+
+				$response = Http::withHeaders([
+					'content-type' => 'application/json',
+					'x-eflow-api-key' => env('EF_API_KEY'),
+				])
+				->withBody(json_encode([
+					'from' => $fromDate,
+					'to' => $toDate,
+					'timezone_id' => 80,
+					'currency_id' => "USD",
+					'query' => array('filters'=>[],'settings'=>array('ignore_fail_traffic'=>false),'metric_filters'=>[],'exclusions'=>[]),
+					'columns' => array(array('column'=>'affiliate'),array('column'=>'offer')),
+				]), 'json')
+				->post('https://api.eflow.team/v1/networks/reporting/entity');
+	
+				$results=$response->json();
+	
+				$deResp = json_decode($response);
+				$MonthlyTotal = $deResp->summary->revenue;
+				$MonthlyPayout = $deResp->summary->payout;
+				$MonthlyProfit = $deResp->summary->profit;
+				$tmpTable = $deResp->table;
+
+				foreach ($tmpTable as $value){
+
+					$Affiliate = $value->columns[0]->label;
+					$AffiliateID = $value->columns[0]->id;
+					$Offer = $value->columns[1]->label;
+					$OfferID = $value->columns[1]->id;
+					$Revenue = $value->reporting->revenue;
+					$Payout = $value->reporting->payout;
+					$Profit = $value->reporting->profit;
+	
+					$BalanceContainer=new BalanceContainer;
+					$BalanceContainer->time_year=$Year;
+					$BalanceContainer->time_month=$MonthName;
+					$BalanceContainer->affiliate=$Affiliate;
+					$BalanceContainer->affiliate_id=$AffiliateID;
+					$BalanceContainer->offer=$Offer;
+					$BalanceContainer->offer_id=$OfferID;
+					$BalanceContainer->revenue=$Revenue;
+					$BalanceContainer->payout=$Payout;
+					$BalanceContainer->profit=$Profit;
+					$BalanceContainer->save();
+					
+				}
+
+				$containers=BalanceContainer::select('affiliate','affiliate_id','time_month','monthly_status')->distinct()->get();
+
+				foreach ($containers as $key => $container) {
+					$Affiliate = $container->affiliate;
+					$AffiliateID = $container->affiliate_id;
+					$Month = $container->time_month;
+					$MonthlyStatus = $container->monthly_status;
+	
+					$revenue=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('revenue');
+					$payout=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('payout');
+					$profit=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('profit');
+					
+					$balance = Balance::updateOrCreate(
+						[
+							'affiliate_id' => $AffiliateID,
+							'accounting_year' => $Year,
+							'accounting_month' => $MonthName
+						],
+						[
+							'affiliate_id'           => $AffiliateID,
+							'accounting_year'        => $Year,
+							'accounting_month'       => $MonthName,
+							'affiliate'              => $Affiliate,
+							'payout'                 => $payout,
+							'revenue'                => $revenue,
+							'profit'                 => $profit,
+						]
+					);
+					
+	
+					
+				}
+	
+				BalanceContainer::query()->truncate();
+
+				
+					
+			}
+
+			
+			Log::info('Balance Successfully Synced');
+
+
+		} catch (Exception $e) {
+
+			Log::info('Some Error In Balance Apis');
+
+		}  
+		
+	}
 }

@@ -25,17 +25,20 @@
                         {{ trans('cruds.user.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.user.fields.name') }}
+                        {{ trans('cruds.user.fields.first_name') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.user.fields.last_name') }}
                     </th>
                     <th>
                         {{ trans('cruds.user.fields.email') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.user.fields.email_verified_at') }}
-                    </th>
-                    <th>
+                    </th> --}}
+                    {{-- <th>
                         {{ trans('cruds.user.fields.roles') }}
-                    </th>
+                    </th> --}}
                     <th>
                         &nbsp;
                     </th>
@@ -44,8 +47,6 @@
         </table>
     </div>
 </div>
-
-
 
 @endsection
 @section('scripts')
@@ -92,17 +93,19 @@
     ajax: "{{ route('admin.users.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
-{ data: 'email', name: 'email' },
-{ data: 'email_verified_at', name: 'email_verified_at' },
-{ data: 'roles', name: 'roles.title' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    { data: 'id', name: 'id' },
+    { data: 'first_name', name: 'first_name' },
+    { data: 'last_name', name: 'last_name' },
+    { data: 'email', name: 'email' },
+    // { data: 'email_verified_at', name: 'email_verified_at' },
+    // { data: 'roles', name: 'roles.title' },
+    { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
+
   let table = $('.datatable-User').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
