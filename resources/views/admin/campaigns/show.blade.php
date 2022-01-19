@@ -49,6 +49,30 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.campaign.fields.email_sent') }}
+                        </th>
+                        <td>
+                            {{ $campaign->tempEmails->count() }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.campaign.fields.opens') }}
+                        </th>
+                        <td>
+                            {{ $campaign->tempEmails->where('email_opened','opened')->count() }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.campaign.fields.unopened') }}
+                        </th>
+                        <td>
+                            {{ $campaign->tempEmails->where('email_opened','')->count() }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.campaign.fields.content') }}
                         </th>
                         <td>
@@ -106,30 +130,31 @@
                             {{ $campaign->send_to ?? '' }}
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <th>
-                            {{ trans('cruds.campaign.fields.subs') }}
-                        </th>
-                        <td>
-                            {{ $campaign->subs }}
+                    @if ($campaign->tempEmails->count()>0)
+                    <tr>
+                        <td colspan="2">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Email Address</th>
+                                    <th>Open Date</th>
+                                    <th>Open Time</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($campaign->tempEmails as $item)
+                                    <tr>
+                                        <td>{{ $item->email }}</td>
+                                        <td>{{ $item->email_open_date }}</td>
+                                        <td>{{ $item->email_open_time }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.campaign.fields.unsubs') }}
-                        </th>
-                        <td>
-                            {{ $campaign->unsubs }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.campaign.fields.opens') }}
-                        </th>
-                        <td>
-                            {{ $campaign->opens }}
-                        </td>
-                    </tr> --}}
+                    @endif
+                    
                 </tbody>
             </table>
             <div class="form-group">

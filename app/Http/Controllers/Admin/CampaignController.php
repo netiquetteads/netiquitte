@@ -13,12 +13,12 @@ use App\Models\Template;
 use App\Models\Account;
 use App\Models\Affiliate;
 use App\Models\Advertiser;
+use App\Models\TempEmail;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use App\Mail\CampaignMail;
 
 class CampaignController extends Controller
 {
@@ -28,8 +28,12 @@ class CampaignController extends Controller
     {
         abort_if(Gate::denies('campaign_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        // $query = Campaign::with(['campaign_offer', 'selected_template','tempEmails'])->get();
+
+        // dd($query);
+
         if ($request->ajax()) {
-            $query = Campaign::with(['campaign_offer', 'selected_template'])->select(sprintf('%s.*', (new Campaign())->table));
+            $query = Campaign::with(['campaign_offer', 'selected_template','tempEmails'])->select(sprintf('%s.*', (new Campaign())->table));
             $table = Datatables::of($query);
 
             
@@ -73,6 +77,18 @@ class CampaignController extends Controller
             $table->addColumn('sentDateTime', function ($row) {
                 return date('d M Y h:i:s',strtotime($row->created_at));
             });
+
+            $table->editColumn('opens', function ($row) {
+                return $row->tempEmails->where('email_opened','opened')->count();
+            });
+            
+            $table->editColumn('unopened', function ($row) {
+                return $row->tempEmails->where('email_opened','')->count();
+            });
+            
+            // $table->editColumn('email_sent', function ($row) {
+            //     return $row->tempEmails->count();
+            // });
 
             // $table->editColumn('subs', function ($row) {
             //     return $row->subs ? $row->subs : '';
@@ -131,7 +147,7 @@ class CampaignController extends Controller
 
     public function store(StoreCampaignRequest $request)
     {
-
+        
         $campaign = Campaign::create($request->all());
         $campaign->campaignOffers()->sync($request->input('campaign_offer_id', []));
 
@@ -166,12 +182,22 @@ class CampaignController extends Controller
         // $template->templateOffers()->sync($request->input('campaign_offer_id', []));
 
         $input = [
-            'message' => $content,
-            'subject' => $request->email_subject,
+            'email_body' => $content,
+            'email_subject' => $request->email_subject,
+            'from_name' => '',
+            'email' => '',
+            'email_name' => $request->name,
+            'email_from' => $request->from_email,
+            'sent_to' => '',
+            'email_status' => 'pending',
+            'email_opened' => '',
+            'email_open_date' => '',
+            'email_open_time' => '',
+            'campaign_id' => $campaign->id,
         ];
 
-        $input['message'] = str_replace('{Offer_Here}', '', $input['message']);
-        $input['message'] = str_replace('{Offer_Image}', '', $input['message']);
+        $input['email_body'] = str_replace('{Offer_Here}', '', $input['email_body']);
+        $input['email_body'] = str_replace('{Offer_Image}', '', $input['email_body']);
 
         if($request->SendingTo==1){
 
@@ -187,13 +213,16 @@ class CampaignController extends Controller
             foreach ($accounts as $key => $account) {
 
                 if ($account->Accounts) {
-                    $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
-                    $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
-                    $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
-                    $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
-                    $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
+                    $input['email_body']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['email_body']);
+                    $input['email_body']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['email_body']);
+                    $input['email_body'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['email_body']);
+                    $input['email_body'] = str_replace('{LastName}', $account->Accounts->LastName, $input['email_body']);
+                    $input['email_body'] = str_replace('{Company}', $account->Accounts->Company, $input['email_body']);
 
-                    $this->sendMail($account->Accounts->EmailAddress,$input);
+                    $input['email']=$account->Accounts->EmailAddress;
+                    $input['from_name']=$account->Accounts->FirstName;
+                    $input['sent_to']=$sendTo;
+                    $this->saveTempMail($input);
                 }
                 
             }
@@ -212,13 +241,16 @@ class CampaignController extends Controller
             foreach ($accounts as $key => $account) {
                 
                 if ($account->Accounts) {
-                    $input['message']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['message']);
-                    $input['message']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['message']);
-                    $input['message'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['message']);
-                    $input['message'] = str_replace('{LastName}', $account->Accounts->LastName, $input['message']);
-                    $input['message'] = str_replace('{Company}', $account->Accounts->Company, $input['message']);
+                    $input['email_body']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['email_body']);
+                    $input['email_body']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['email_body']);
+                    $input['email_body'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['email_body']);
+                    $input['email_body'] = str_replace('{LastName}', $account->Accounts->LastName, $input['email_body']);
+                    $input['email_body'] = str_replace('{Company}', $account->Accounts->Company, $input['email_body']);
 
-                    $this->sendMail($account->Accounts->EmailAddress,$input);
+                    $input['email']=$account->Accounts->EmailAddress;
+                    $input['from_name']=$account->Accounts->FirstName;
+                    $input['sent_to']=$sendTo;
+                    $this->saveTempMail($input);
                 }
 
             }
@@ -227,23 +259,37 @@ class CampaignController extends Controller
 
             $sendTo='Testing';
 
-            $input['message'] = str_replace('{FirstName}', "Test Admin", $input['message']);
-            $input['message'] = str_replace('{LastName}', 'Test Admin', $input['message']);
-            $input['message'] = str_replace('{Company}', 'Test Company', $input['message']);
+            $input['email_body'] = str_replace('{FirstName}', "Test Admin", $input['email_body']);
+            $input['email_body'] = str_replace('{LastName}', 'Test Admin', $input['email_body']);
+            $input['email_body'] = str_replace('{Company}', 'Test Company', $input['email_body']);
 
             $emails = explode(",", env("TEST_EMAIL_TO"));
-            $this->sendMail($emails,$input);
+
+            foreach ($emails as $key => $email) {
+                $input['email']=$email;
+                $input['from_name']=$email;
+                $input['sent_to']=$sendTo;
+                $this->saveTempMail($input);
+            }
 
         }else if($request->SendingTo==4){
 
             $sendTo='Dev';
 
-            $input['message'] = str_replace('{FirstName}', "Dev Admin", $input['message']);
-            $input['message'] = str_replace('{LastName}', 'Dev Admin', $input['message']);
-            $input['message'] = str_replace('{Company}', 'Dev Company', $input['message']);
+            $input['email_body'] = str_replace('{FirstName}', "Dev Admin", $input['email_body']);
+            $input['email_body'] = str_replace('{LastName}', 'Dev Admin', $input['email_body']);
+            $input['email_body'] = str_replace('{Company}', 'Dev Company', $input['email_body']);
 
             $emails = explode(",", env("DEV_EMAIL_TO"));
-            $this->sendMail($emails,$input);
+
+            foreach ($emails as $key => $email) {
+                $input['email']=$email;
+                $input['from_name']=$email;
+                $input['sent_to']=$sendTo;
+                $this->saveTempMail($input);
+            }
+
+            
             
         }else{
 
@@ -251,13 +297,16 @@ class CampaignController extends Controller
 
             $emails = explode("\n", str_replace("\r", "", $request->SingleEmailBox));
 
-            foreach ($emails as $key => $value) {
+            foreach ($emails as $key => $email) {
 
-                $input['message'] = str_replace('{FirstName}', $value, $input['message']);
-                $input['message'] = str_replace('{LastName}', $value, $input['message']);
-                $input['message'] = str_replace('{Company}', $value, $input['message']);
+                $input['email_body'] = str_replace('{FirstName}', $email, $input['email_body']);
+                $input['email_body'] = str_replace('{LastName}', $email, $input['email_body']);
+                $input['email_body'] = str_replace('{Company}', $email, $input['email_body']);
 
-                $this->sendMail($value,$input);
+                $input['email']=$email;
+                $input['from_name']=$email;
+                $input['sent_to']=$sendTo;
+                $this->saveTempMail($input);
             }
             
         }
@@ -268,9 +317,9 @@ class CampaignController extends Controller
         return redirect()->route('admin.campaigns.index');
     }
 
-    public function sendMail($emails,$input)
+    public function saveTempMail($input)
     {
-        $send=\Mail::to($emails)->send(new CampaignMail($input));
+        $tempEmail=TempEmail::create($input);
         return true;
     }
 

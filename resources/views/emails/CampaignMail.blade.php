@@ -1,1 +1,1 @@
-{!! $input['message'] !!}
+{!! $input['email_body'] !!}

@@ -22,6 +22,8 @@ class Campaign extends Model implements HasMedia
 
     protected $appends = [
         'offer_image',
+        'sent_date',
+        'sent_time',
     ];
 
     protected $dates = [
@@ -41,6 +43,8 @@ class Campaign extends Model implements HasMedia
         'unsubs',
         'opens',
         'send_to',
+        'unopened',
+        'total_emails_sent',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -64,6 +68,20 @@ class Campaign extends Model implements HasMedia
         return $file;
     }
 
+    public function getSentDateAttribute()
+    {
+        $date=date('d-m-Y',strtotime($this->created_at));
+
+        return $date;
+    }
+
+    public function getSentTimeAttribute()
+    {
+        $date=date('h:i:s',strtotime($this->created_at));
+
+        return $date;
+    }
+
     public function campaign_offer()
     {
         return $this->belongsTo(Offer::class, 'campaign_offer_id');
@@ -77,6 +95,11 @@ class Campaign extends Model implements HasMedia
     public function selected_template()
     {
         return $this->belongsTo(Template::class, 'selected_template_id');
+    }
+
+    public function tempEmails()
+    {
+        return $this->hasMany(TempEmail::class);
     }
 
     protected function serializeDate(DateTimeInterface $date)
