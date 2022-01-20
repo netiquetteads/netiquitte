@@ -31,6 +31,8 @@ class UnsubscribeController extends Controller
             $tempEmail=TempEmail::where('email',$request->eid)->where('campaign_id',$request->cid)->where('email_opened','')->first();
             if ($tempEmail) {
                 $tempEmail->email_opened='opened';
+                $tempEmail->email_open_date=date("Y-m-d");
+                $tempEmail->email_open_time=date('h:i:s');
                 $tempEmail->save();
             }
         }
