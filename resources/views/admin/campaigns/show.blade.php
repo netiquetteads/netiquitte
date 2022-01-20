@@ -116,10 +116,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.campaign.fields.sentDateTime') }}
+                            {{ trans('cruds.campaign.fields.sent_date') }}
                         </th>
                         <td>
-                            {{ date('d M Y h:i:s',strtotime($campaign->created_at)) }}
+                            {{ date('d M Y',strtotime($campaign->created_at)) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.campaign.fields.sent_time') }}
+                        </th>
+                        <td>
+                            {{ date('h:i:s',strtotime($campaign->created_at)) }}
                         </td>
                     </tr>
                     <tr>
@@ -132,6 +140,9 @@
                     </tr>
                     @if ($campaign->tempEmails->count()>0)
                     <tr>
+                        <th colspan="2">Open Emails</th>
+                    </tr>
+                    <tr>
                         <td colspan="2">
                             <table class="table">
                                 <thead class="thead-dark">
@@ -142,10 +153,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($campaign->tempEmails as $item)
+                                    @foreach ($campaign->tempEmails->where('email_opened','opened'); as $item)
                                     <tr>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->email_open_date }}</td>
+                                        <td>{{ date('M d Y',strtotime($item->email_open_date)) }}</td>
                                         <td>{{ $item->email_open_time }}</td>
                                     </tr>
                                     @endforeach

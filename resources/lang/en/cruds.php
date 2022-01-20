@@ -600,6 +600,8 @@ return [
             'sent_date_helper'             => ' ',
             'sent_time'                    => 'Sent Time',
             'sent_time_helper'             => ' ',
+            'stats'                    => 'Stats',
+            'stats_helper'             => ' ',
         ],
     ],
     'subscriber' => [

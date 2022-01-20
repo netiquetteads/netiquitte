@@ -75,29 +75,30 @@ class CampaignController extends Controller
                 }
             });
             $table->addColumn('sentDateTime', function ($row) {
-                return date('d M Y h:i:s',strtotime($row->created_at));
+                return date('M d Y',strtotime($row->created_at));
+            });
+
+            $table->editColumn('stats', function ($row) {
+                return $row->tempEmails->where('email_opened','opened')->count().' / '.$row->tempEmails->count();
             });
 
             $table->editColumn('opens', function ($row) {
                 return $row->tempEmails->where('email_opened','opened')->count();
+            });
+
+            $table->editColumn('sent_date', function ($row) {
+                return date('M d Y',strtotime($row->sent_date));
             });
             
             $table->editColumn('unopened', function ($row) {
                 return $row->tempEmails->where('email_opened','')->count();
             });
             
-            // $table->editColumn('email_sent', function ($row) {
-            //     return $row->tempEmails->count();
-            // });
+            $table->editColumn('send_to', function ($row) {
+                return $row->send_to ?? '';
+            });
 
-            // $table->editColumn('subs', function ($row) {
-            //     return $row->subs ? $row->subs : '';
-            // });
-            // $table->editColumn('opens', function ($row) {
-            //     return $row->opens ? $row->opens : '';
-            // });
-
-            $table->rawColumns(['actions', 'placeholder', 'campaign_offer','sentDateTime']);
+            $table->rawColumns(['actions', 'placeholder', 'campaign_offer','sentDateTime','stats']);
 
             return $table->make(true);
         }

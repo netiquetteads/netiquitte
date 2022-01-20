@@ -40,24 +40,24 @@
                     <th>
                         {{ trans('cruds.campaign.fields.name') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.campaign.fields.email_subject') }}
-                    </th>
+                    </th> --}}
                     {{-- <th>
                         {{ trans('cruds.campaign.fields.campaign_offer') }}
                     </th> --}}
                     <th>
-                        {{ trans('cruds.campaign.fields.sentDateTime') }}
+                        {{ trans('cruds.campaign.fields.sent_date') }}
                     </th>
                     <th>
                         {{ trans('cruds.campaign.fields.sentTo') }}
                     </th>
                     <th>
-                        {{ trans('cruds.campaign.fields.opens') }}
+                        {{ trans('cruds.campaign.fields.stats') }}
                     </th>
-                    <th>
+                    {{-- <th>
                         {{ trans('cruds.campaign.fields.unopened') }}
-                    </th>
+                    </th> --}}
                     <th class="text-center">
                       {{ trans('global.actions') }}
                     </th>
@@ -195,29 +195,33 @@ $.fn.dataTable.Api.register( 'clearPipeline()', function () {
 function format ( d ) {
     console.log('tabeldata',d);
     // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; min-width:600px;" >'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.list') }}:</td>'+
+            '<th>{{ trans('cruds.campaign.fields.email_subject') }}:</th>'+
+            '<td>'+d.email_subject+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<th>{{ trans('cruds.campaign.fields.list') }}:</th>'+
             '<td>'+d.send_to+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.email_sent') }}:</td>'+
+            '<th>{{ trans('cruds.campaign.fields.email_sent') }}:</th>'+
             '<td>'+d.temp_emails.length+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.opens') }}:</td>'+
+            '<th>{{ trans('cruds.campaign.fields.opens') }}:</th>'+
             '<td>'+d.opens+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.unopened') }}:</td>'+
+            '<th>{{ trans('cruds.campaign.fields.unopened') }}:</th>'+
             '<td>'+d.unopened+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.sent_date') }}:</td>'+
+            '<th>{{ trans('cruds.campaign.fields.sent_date') }}:</th>'+
             '<td>'+d.sent_date+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.sent_time') }}:</td>'+
+            '<th>{{ trans('cruds.campaign.fields.sent_time') }}:</th>'+
             '<td>'+d.sent_time+'</td>'+
         '</tr>'+
     '</table>';
@@ -263,11 +267,11 @@ $(document).ready(function() {
             { "data": "placeholder","orderable":      false  },
             { "data": "id" },
             { "data": "name" },
-            { "data": "email_subject" },
+            // { "data": "email_subject" },
             { "data": "sentDateTime" },
             { "data": "send_to" },
-            { "data": "opens" },
-            { "data": "unopened" },
+            { "data": "stats" },
+            // { "data": "unopened" },
             { "data": "actions" }
         ],
         "order": [[1, 'asc']]
