@@ -267,7 +267,7 @@ class CampaignController extends Controller
 
             foreach ($emails as $key => $email) {
                 $input['email']=$email;
-                $input['from_name']=$email;
+                $input['from_name']='Test Admin';
                 $input['sent_to']=$sendTo;
                 $this->saveTempMail($input);
             }
@@ -284,7 +284,7 @@ class CampaignController extends Controller
 
             foreach ($emails as $key => $email) {
                 $input['email']=$email;
-                $input['from_name']=$email;
+                $input['from_name']='Dev Admin';
                 $input['sent_to']=$sendTo;
                 $this->saveTempMail($input);
             }
@@ -299,12 +299,27 @@ class CampaignController extends Controller
 
             foreach ($emails as $key => $email) {
 
-                $input['email_body'] = str_replace('{FirstName}', $email, $input['email_body']);
-                $input['email_body'] = str_replace('{LastName}', $email, $input['email_body']);
-                $input['email_body'] = str_replace('{Company}', $email, $input['email_body']);
+                $account=Account::where('EmailAddress',$email)->first();
 
+                if ($account) {
+                    $firstName=$account->FirstName;
+                    $lastName=$account->LastName;
+                    $company=$account->Company;
+                } else {
+                    $firstName='';
+                    $lastName='';
+                    $company='';
+                }
+                
+
+                $input['email_body'] = str_replace('{FirstName}', $firstName, $input['email_body']);
+                $input['email_body'] = str_replace('{LastName}', $lastName, $input['email_body']);
+                $input['email_body'] = str_replace('{Company}', $company, $input['email_body']);
+
+                
+                
                 $input['email']=$email;
-                $input['from_name']=$email;
+                $input['from_name']=$firstName;
                 $input['sent_to']=$sendTo;
                 $this->saveTempMail($input);
             }
