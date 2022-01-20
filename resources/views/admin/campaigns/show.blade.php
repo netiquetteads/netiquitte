@@ -6,13 +6,33 @@
         {{ trans('global.show') }} {{ trans('cruds.campaign.title') }}
     </div>
 
+    
+
     <div class="card-body">
         <div class="form-group">
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.campaigns.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
+            <a class="btn btn-default" href="{{ route('admin.campaigns.index') }}">
+                {{ trans('global.back_to_list') }}
+            </a>
+        </div>
+
+        <div class="card card-primary card-outline card-outline-tabs">
+            <div class="card-header p-0 border-bottom-0">
+              <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="custom-tabs-four-overview-tab" data-toggle="pill" href="#custom-tabs-four-overview" role="tab" aria-controls="custom-tabs-four-overview" aria-selected="true">Overview</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="custom-tabs-four-reporting-tab" data-toggle="pill" href="#custom-tabs-four-reporting" role="tab" aria-controls="custom-tabs-four-reporting" aria-selected="false">Reporting</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="custom-tabs-four-email-preview-tab" data-toggle="pill" href="#custom-tabs-four-email-preview" role="tab" aria-controls="custom-tabs-four-email-preview" aria-selected="false">Email Preview</a>
+                </li>
+              </ul>
             </div>
+            <div class="card-body">
+              <div class="tab-content" id="custom-tabs-four-tabContent">
+                <div class="tab-pane fade show active" id="custom-tabs-four-overview" role="tabpanel" aria-labelledby="custom-tabs-four-overview-tab">
+                   
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
@@ -71,18 +91,7 @@
                             {{ $campaign->tempEmails->where('email_opened','')->count() }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.campaign.fields.content') }}
-                        </th>
-                        <td>
-                            @php
-                                $content = str_replace('{Offer_Here}', '', $campaign->content);
-                                $content = str_replace('{Offer_Image}', '',$content);
-                            @endphp 
-                            {!! $content !!}
-                        </td>
-                    </tr>
+                   
                     {{-- <tr>
                         <th>
                             {{ trans('cruds.campaign.fields.offer_image') }}
@@ -138,12 +147,12 @@
                             {{ $campaign->send_to ?? '' }}
                         </td>
                     </tr>
-                    @if ($campaign->tempEmails->count()>0)
-                    <tr>
-                        <th colspan="2">Open Emails</th>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
+                    
+                    
+                </tbody>
+            </table>
+                </div>
+                <div class="tab-pane fade" id="custom-tabs-four-reporting" role="tabpanel" aria-labelledby="custom-tabs-four-reporting-tab">
                             <table class="table">
                                 <thead class="thead-dark">
                                 <tr>
@@ -153,27 +162,30 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($campaign->tempEmails->where('email_opened','opened'); as $item)
-                                    <tr>
-                                        <td>{{ $item->email }}</td>
-                                        <td>{{ date('M d Y',strtotime($item->email_open_date)) }}</td>
-                                        <td>{{ $item->email_open_time }}</td>
-                                    </tr>
-                                    @endforeach
+                                    @if ($campaign->tempEmails->count()>0)
+                                        @foreach ($campaign->tempEmails->where('email_opened','opened'); as $item)
+                                        <tr>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ date('M d Y',strtotime($item->email_open_date)) }}</td>
+                                            <td>{{ $item->email_open_time }}</td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
-                        </td>
-                    </tr>
-                    @endif
                     
-                </tbody>
-            </table>
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.campaigns.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
+                </div>
+                <div class="tab-pane fade" id="custom-tabs-four-email-preview" role="tabpanel" aria-labelledby="custom-tabs-four-email-preview-tab">
+                    @php
+                        $content = str_replace('{Offer_Here}', '', $campaign->content);
+                        $content = str_replace('{Offer_Image}', '',$content);
+                    @endphp 
+                    {!! $content !!}
+                </div>
+               
+              </div>
             </div>
-        </div>
+            
     </div>
 </div>
 
