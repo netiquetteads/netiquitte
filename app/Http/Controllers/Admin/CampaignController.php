@@ -79,7 +79,7 @@ class CampaignController extends Controller
             });
 
             $table->editColumn('stats', function ($row) {
-                return $row->tempEmails->where('email_opened','opened')->count().' / '.$row->tempEmails->count();
+                return '<span title="Opens">'.$row->tempEmails->where('email_opened','opened')->count().'</span> / <span title="Sent">'.$row->tempEmails->count().'</span>';
             });
 
             $table->editColumn('opens', function ($row) {
