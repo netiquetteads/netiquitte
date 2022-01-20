@@ -14,6 +14,7 @@ Auth::routes();
 
 Route::get('/unsubscribe', 'UnsubscribeController@index')->name('unsubscribe');
 Route::get('/success', 'UnsubscribeController@success')->name('success');
+Route::get('openEmail', 'UnsubscribeController@openEmail')->name('openEmail');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -122,6 +123,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('getTemplateData', 'CampaignController@getTemplateData')->name('campaigns.getTemplateData');
     Route::post('loadTemplate', 'CampaignController@loadTemplate')->name('campaigns.loadTemplate');
     Route::post('deleteSelectedEmails', 'CampaignController@deleteSelectedEmails')->name('campaigns.deleteSelectedEmails');
+    
 
     // Subscriber
     Route::delete('subscribers/destroy', 'SubscriberController@massDestroy')->name('subscribers.massDestroy');

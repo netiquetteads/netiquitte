@@ -319,6 +319,8 @@ class CampaignController extends Controller
 
     public function saveTempMail($input)
     {
+        $url=url('').'/openEmail?eid='.$input['email'].'&cid='.$input['campaign_id'];
+        $input['email_body'] = $input['email_body'] . "<img src='".$url."' width='1' height='1' />";
         $tempEmail=TempEmail::create($input);
         return true;
     }
