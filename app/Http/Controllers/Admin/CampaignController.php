@@ -305,16 +305,24 @@ class CampaignController extends Controller
                     $firstName=$account->FirstName;
                     $lastName=$account->LastName;
                     $company=$account->Company;
+
+                    $input['email_body'] = str_replace('{FirstName}', $firstName, $input['email_body']);
+                    $input['email_body'] = str_replace('{LastName}', $lastName, $input['email_body']);
+                    $input['email_body'] = str_replace('{Company}', $company, $input['email_body']);
+
                 } else {
                     $firstName='';
                     $lastName='';
                     $company='';
+
+                    $input['email_body'] = str_replace('{FirstName}', $firstName, $input['email_body']);
+                    $input['email_body'] = str_replace('{LastName}', $lastName, $input['email_body']);
+                    $input['email_body'] = str_replace('{Company}', $company, $input['email_body']);
+                    $input['email_body'] = str_replace('Hey', '', $input['email_body']);
                 }
                 
 
-                $input['email_body'] = str_replace('{FirstName}', $firstName, $input['email_body']);
-                $input['email_body'] = str_replace('{LastName}', $lastName, $input['email_body']);
-                $input['email_body'] = str_replace('{Company}', $company, $input['email_body']);
+                
 
                 
                 
