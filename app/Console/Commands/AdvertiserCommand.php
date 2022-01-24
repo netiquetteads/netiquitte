@@ -120,7 +120,7 @@ class AdvertiserCommand extends Command
 
 	        }
 
-            Log::info('Advertisers Successfully Synced');
+            // Log::info('Advertisers Successfully Synced');
 
 	    } catch (Exception $e) {
 			

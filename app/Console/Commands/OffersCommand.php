@@ -102,7 +102,7 @@ class OffersCommand extends Command
 				);
 	        }
 
-            Log::info('Offers Successfully Synced');
+            // Log::info('Offers Successfully Synced');
             
 	    } catch (Exception $e) {
 			Log::info('Some Error In Offers Apis');

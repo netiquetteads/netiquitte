@@ -35,10 +35,10 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('backup:clean')->daily()->at('01:30')
         ->onFailure(function () {
-            \Log::info('backup clean failed');
+            // \Log::info('backup clean failed');
          })
          ->onSuccess(function () {
-            \Log::info('backup clean successfull');
+            // \Log::info('backup clean successfull');
          });
 
         $schedule->command('backup:run --only-db')->daily()->at('02:00')

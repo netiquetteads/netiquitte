@@ -141,7 +141,7 @@ class BalancesCommand extends Command
 				BalanceContainer::query()->truncate();					
 			}
 			
-			Log::info('Balance Successfully Synced');
+			// Log::info('Balance Successfully Synced');
 
 		} catch (Exception $e) {
 

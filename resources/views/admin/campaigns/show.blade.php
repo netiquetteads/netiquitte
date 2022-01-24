@@ -153,6 +153,18 @@
             </table>
                 </div>
                 <div class="tab-pane fade" id="custom-tabs-four-reporting" role="tabpanel" aria-labelledby="custom-tabs-four-reporting-tab">
+
+                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="custom-tabs-four-opened-tab" data-toggle="pill" href="#custom-tabs-four-opened" role="tab" aria-controls="custom-tabs-four-opened" aria-selected="true">Opened Email</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="custom-tabs-four-unopened-tab" data-toggle="pill" href="#custom-tabs-four-unopened" role="tab" aria-controls="custom-tabs-four-unopened" aria-selected="false">Unopened Email</a>
+                        </li>
+                      </ul>
+                      
+                      <div class="tab-content" id="custom-tabs-two-tabContent">
+                        <div class="tab-pane fade show active" id="custom-tabs-four-opened" role="tabpanel" aria-labelledby="custom-tabs-four-opened-tab">
                             <table class="table">
                                 <thead class="thead-dark">
                                 <tr>
@@ -173,6 +185,30 @@
                                     @endif
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="tab-pane" id="custom-tabs-four-unopened" role="tabpanel" aria-labelledby="custom-tabs-four-unopened-tab">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Email Address</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($campaign->tempEmails->count()>0)
+                                        @foreach ($campaign->tempEmails->where('email_opened',''); as $item)
+                                        <tr>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->email_status }}</td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                      </div>
+
+                            
                     
                 </div>
                 <div class="tab-pane fade" id="custom-tabs-four-email-preview" role="tabpanel" aria-labelledby="custom-tabs-four-email-preview-tab">

@@ -119,7 +119,7 @@ class AffiliatesCommand extends Command
 
 	        }
 
-            Log::info('Affiliates Successfully Synced');
+            // Log::info('Affiliates Successfully Synced');
 
 	    } catch (Exception $e) {
 			Log::info('Some Error In Affiliates Apis');
