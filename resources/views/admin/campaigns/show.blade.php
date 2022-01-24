@@ -156,10 +156,10 @@
 
                     <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                         <li class="nav-item">
-                          <a class="nav-link active" id="custom-tabs-four-opened-tab" data-toggle="pill" href="#custom-tabs-four-opened" role="tab" aria-controls="custom-tabs-four-opened" aria-selected="true">Opened Email</a>
+                          <a class="nav-link active" id="custom-tabs-four-opened-tab" data-toggle="pill" href="#custom-tabs-four-opened" role="tab" aria-controls="custom-tabs-four-opened" aria-selected="true">Opened Email ({{ $campaign->tempEmails->where('email_opened','opened')->count() }})</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="custom-tabs-four-unopened-tab" data-toggle="pill" href="#custom-tabs-four-unopened" role="tab" aria-controls="custom-tabs-four-unopened" aria-selected="false">Unopened Email</a>
+                          <a class="nav-link" id="custom-tabs-four-unopened-tab" data-toggle="pill" href="#custom-tabs-four-unopened" role="tab" aria-controls="custom-tabs-four-unopened" aria-selected="false">Unopened Email ({{ $campaign->tempEmails->where('email_opened','!=','opened')->count() }})</a>
                         </li>
                       </ul>
                       
@@ -168,6 +168,7 @@
                             <table class="table">
                                 <thead class="thead-dark">
                                 <tr>
+                                    <th>S.No</th>
                                     <th>Email Address</th>
                                     <th>Open Date</th>
                                     <th>Open Time</th>
@@ -175,8 +176,9 @@
                                 </thead>
                                 <tbody>
                                     @if ($campaign->tempEmails->count()>0)
-                                        @foreach ($campaign->tempEmails->where('email_opened','opened'); as $item)
+                                        @foreach ($campaign->tempEmails->where('email_opened','opened') as $key => $item)
                                         <tr>
+                                            <td>{{ $key+1 }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ date('M d Y',strtotime($item->email_open_date)) }}</td>
                                             <td>{{ $item->email_open_time }}</td>
@@ -190,16 +192,21 @@
                             <table class="table">
                                 <thead class="thead-dark">
                                 <tr>
+                                    <th>S.No</th>
                                     <th>Email Address</th>
                                     <th>Status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     @if ($campaign->tempEmails->count()>0)
-                                        @foreach ($campaign->tempEmails->where('email_opened',''); as $item)
-                                        <tr>
-                                            <td>{{ $item->email }}</td>
-                                            <td>{{ $item->email_status }}</td>
+                                    @php
+                                        $i=1;
+                                    @endphp
+                                        @foreach ($campaign->tempEmails->where('email_opened','!=','opened') as $unitem)
+                                        <tr> 
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $unitem->email }}</td>
+                                            <td>{{ $unitem->email_status }}</td>
                                         </tr>
                                         @endforeach
                                     @endif
