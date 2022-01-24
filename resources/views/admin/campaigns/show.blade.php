@@ -156,10 +156,10 @@
 
                     <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
                         <li class="nav-item">
-                          <a class="nav-link active" id="custom-tabs-four-opened-tab" data-toggle="pill" href="#custom-tabs-four-opened" role="tab" aria-controls="custom-tabs-four-opened" aria-selected="true">Opened Email ({{ $campaign->tempEmails->where('email_opened','opened')->count() }})</a>
+                          <a class="nav-link active" id="custom-tabs-four-opened-tab" data-toggle="pill" href="#custom-tabs-four-opened" role="tab" aria-controls="custom-tabs-four-opened" aria-selected="true">Opened Email <b>({{ $campaign->tempEmails->where('email_opened','opened')->count() }})</b></a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="custom-tabs-four-unopened-tab" data-toggle="pill" href="#custom-tabs-four-unopened" role="tab" aria-controls="custom-tabs-four-unopened" aria-selected="false">Unopened Email ({{ $campaign->tempEmails->where('email_opened','!=','opened')->count() }})</a>
+                          <a class="nav-link" id="custom-tabs-four-unopened-tab" data-toggle="pill" href="#custom-tabs-four-unopened" role="tab" aria-controls="custom-tabs-four-unopened" aria-selected="false">Unopened Email <b> ({{ $campaign->tempEmails->where('email_opened','!=','opened')->count() }})</b></a>
                         </li>
                       </ul>
                       
@@ -176,9 +176,12 @@
                                 </thead>
                                 <tbody>
                                     @if ($campaign->tempEmails->count()>0)
+                                    @php
+                                        $j=1;
+                                    @endphp
                                         @foreach ($campaign->tempEmails->where('email_opened','opened') as $key => $item)
                                         <tr>
-                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $j++ }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ date('M d Y',strtotime($item->email_open_date)) }}</td>
                                             <td>{{ $item->email_open_time }}</td>
