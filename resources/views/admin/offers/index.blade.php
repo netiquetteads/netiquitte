@@ -122,7 +122,7 @@
 { data: 'revenue', name: 'revenue' },
 { data: 'offer_status', name: 'offer_status' },
 { data: 'margin', name: 'margin' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: 'actions' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

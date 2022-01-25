@@ -214,12 +214,15 @@ class CampaignController extends Controller
             foreach ($accounts as $key => $account) {
 
                 if ($account->Accounts) {
-                    $input['email_body']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['email_body']);
-                    $input['email_body']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['email_body']);
+
+                    $input['email_body']=$content;
+
+                    $input['email_body'] = str_replace('{ID}', $account->Accounts->PlatformUserID, $input['email_body']);
+                    $input['email_body'] = str_replace('{AcctType}', $account->Accounts->AccountType, $input['email_body']);
                     $input['email_body'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['email_body']);
                     $input['email_body'] = str_replace('{LastName}', $account->Accounts->LastName, $input['email_body']);
                     $input['email_body'] = str_replace('{Company}', $account->Accounts->Company, $input['email_body']);
-
+                    
                     $input['email']=$account->Accounts->EmailAddress;
                     $input['from_name']=$account->Accounts->FirstName;
                     $input['sent_to']=$sendTo;
@@ -227,6 +230,8 @@ class CampaignController extends Controller
                 }
                 
             }
+
+            // dd($names);
 
         }else if($request->SendingTo==2){
 
@@ -242,6 +247,9 @@ class CampaignController extends Controller
             foreach ($accounts as $key => $account) {
                 
                 if ($account->Accounts) {
+
+                    $input['email_body']=$content;
+                    
                     $input['email_body']=str_replace('{ID}', $account->Accounts->PlatformUserID, $input['email_body']);
                     $input['email_body']=str_replace('{AcctType}', $account->Accounts->AccountType, $input['email_body']);
                     $input['email_body'] = str_replace('{FirstName}', $account->Accounts->FirstName, $input['email_body']);
@@ -289,8 +297,6 @@ class CampaignController extends Controller
                 $input['sent_to']=$sendTo;
                 $this->saveTempMail($input);
             }
-
-            
             
         }else{
 

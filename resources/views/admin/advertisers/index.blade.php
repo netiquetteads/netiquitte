@@ -106,7 +106,7 @@
 // { data: 'attribution_method', name: 'attribution_method' },
 // { data: 'email_attribution_method', name: 'email_attribution_method' },
 // { data: 'network_advertiserid', name: 'network_advertiserid' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: 'actions' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

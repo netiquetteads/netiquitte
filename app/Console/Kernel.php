@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('sync:affiliates')->everyThirtyMinutes();
         $schedule->command('sync:offers')->everyThirtyMinutes();
         $schedule->command('sync:balances')->hourly();
-
+ 
         $schedule->command('send:emails')->everyFiveMinutes();
                 //  ->everyMinute();
 
