@@ -1,8 +1,16 @@
 <?php
-$Year = @$_GET['year'];
-if($Year == ""){
-	$Year = date('Y');
+$getstart = @$_GET['start'];
+$getend = @$_GET['end'];
+
+if ($getstart && $getend) {
+    $start = $getstart;
+    $end = $getend;
+} else {
+    $start = date('Y-01-01');
+    $end = date('Y-m-d');
 }
+// $start = date('Y-01-01');
+// $end = date('Y-m-d');
 ?>
 @extends('layouts.admin')
 @section('content')
@@ -147,7 +155,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
     $this.html($loader);
     
     var fromDate=$( "#from" ).val();
-        var toDate=$( "#to" ).val();
+    var toDate=$( "#to" ).val();
 
     // console.log(fromDate,toDate);
 
@@ -167,38 +175,64 @@ $loader='<div class="spinner-border text-dark" role="status">'+
  </script>
 
 <script>
-//     $('#daterangepicker').daterangepicker({
-//     "showDropdowns": true,
-//     // "startDate": "08/18/2021",
-//     // "endDate": "08/24/2021"
-//     // minDate: moment().subtract(12, 'years')
+    $('#clearFilter').click(function(){
+        window.location.href = "{{ url('admin/balances') }}";
+    });
+
     
-// }, function(start, end, label) {
-//   console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-//   console.log(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+    $('#daterangepicker').daterangepicker({
+    "showDropdowns": true,
+    "linkedCalendars": false,
+    "startDate": moment().startOf('month'),
+    "endDate": moment()
+    // minDate: moment().subtract(12, 'years')
+    
+}, function(start, end, label) {
+  console.log(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
 
-//     $.ajax({
-//         type: "POST",
-//         async:true,
-//         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-//         url: "{{ route('admin.balances.getTabledata') }}",
-//         data: {"Year":{{ $Year }},"start":start.format('YYYY-MM-DD'),"end":end.format('YYYY-MM-DD')},
-//         success: function(response){
-//             $('#balanceTable').html(response);
-//             table = $('.datatable-Balance').DataTable();
+  window.location.href = "{{ url('admin/balances') }}?start="+start.format('YYYY-MM-DD')+"&end="+end.format('YYYY-MM-DD');
+  
+    // $.ajax({
+    //     type: "POST",
+    //     async:true,
+    //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    //     url: "{{ route('admin.balances.getTabledata') }}",
+    //     data: {"start":start.format('YYYY-MM-DD'),"end":end.format('YYYY-MM-DD')},
+    //     success: function(response){
+    //         $('#balanceTable').html(response);
+    //         table = $('.datatable-Balance').DataTable();
 
-//             table.clear().draw();
-//             // table.rows.add(NewlyCreatedData); // Add new data
-//             table.columns.adjust().draw(); // Redraw the DataTable
-//         }
-//     });
+    //         table.clear().draw();
+    //         // table.rows.add(NewlyCreatedData); // Add new data
+    //         table.columns.adjust().draw(); // Redraw the DataTable
+    //     }
+    // });
 
-// });
+});
 
-// $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-//     console.log(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-//     //   $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
-//   });
+$('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+    console.log(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+    //   $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+
+    window.location.href = "{{ url('admin/balances') }}?start="+picker.startDate.format('YYYY-MM-DD')+"&end="+picker.endDate.format('YYYY-MM-DD');
+
+    // $.ajax({
+    //     type: "POST",
+    //     async:true,
+    //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    //     url: "{{ route('admin.balances.getTabledata') }}",
+    //     data: {"start":picker.startDate.format('YYYY-MM-DD'),"end":picker.endDate.format('YYYY-MM-DD')},
+    //     success: function(response){
+    //         $('#balanceTable').html(response);
+    //         table = $('.datatable-Balance').DataTable();
+
+    //         table.clear().draw();
+    //         // table.rows.add(NewlyCreatedData); // Add new data
+    //         table.columns.adjust().draw(); // Redraw the DataTable
+    //     }
+    // });
+
+  });
 </script>
 <script>
     var modal
@@ -221,7 +255,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                 async:true,
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: "{{ route('admin.balances.getModeldata') }}",
-                data: {"Year":{{ $Year }},"AffiliateID":AffiliateID,"Month":Month},
+                data: {"Year":Year,"AffiliateID":AffiliateID,"Month":Month},
                 success: function(response){
                     modal.innerHTML = response;
                         //CKEDITOR.disableAutoInline = true;
@@ -391,7 +425,7 @@ $(document).ready(function() {
     type: "POST",
     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
     url: "{{ route('admin.balances.getTabledata') }}",
-    data: {"Year":{{ $Year }}},
+    data: {'start':'{{ $start }}','end':'{{ $end }}'},
     success: function(response){
         $('#balanceTable').html(response);
         table = $('.datatable-Balance').DataTable( {

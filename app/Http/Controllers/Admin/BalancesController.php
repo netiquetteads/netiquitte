@@ -79,180 +79,108 @@ class BalancesController extends Controller
     public function getTabledata(Request $request)
     {
 
-        $Year=$request->Year;
+        // $Year=$request->Year;
         $start=$request->start;
         $end=$request->end;
 
-        $startMonth=date('F',strtotime($start));
-        $startYear=date('Y',strtotime($start));
-        $endMonth=date('F',strtotime($end));
-        $endYear=date('Y',strtotime($end));
+        $start=strtotime($start);
+        $end=strtotime($end);
 
         $table='<thead>
         <tr>
-          <th>Company Name</th>
-          <th>January<br>'.$this->calculateNetworkMonthlyBalance("January",$Year).'</th>
-          <th>February<br>'.$this->calculateNetworkMonthlyBalance("February",$Year).'</th>
-          <th>March<br>'.$this->calculateNetworkMonthlyBalance("March",$Year).'</th>
-          <th>April<br>'.$this->calculateNetworkMonthlyBalance("April",$Year).'</th>
-          <th>May<br>'.$this->calculateNetworkMonthlyBalance("May",$Year).'</th>
-          <th>June<br>'.$this->calculateNetworkMonthlyBalance("June",$Year).'</th>
-          <th>July<br>'.$this->calculateNetworkMonthlyBalance("July",$Year).'</th>
-          <th>August<br>'.$this->calculateNetworkMonthlyBalance("August",$Year).'</th>
-          <th>September<br>'.$this->calculateNetworkMonthlyBalance("September",$Year).'</th>
-          <th>October<br>'.$this->calculateNetworkMonthlyBalance("October",$Year).'</th>
-          <th>November<br>'.$this->calculateNetworkMonthlyBalance("November",$Year).'</th>
-          <th>December<br>'.$this->calculateNetworkMonthlyBalance("December",$Year).'</th>
-          <th>Balance<br>'.$this->calculateNetworkYTDBalance($Year).'</th>
-        </tr>
+        <th>Company Name</th>';
+
+        while ( $start < $end ) {
+            
+            $table .='<th>'.date("M Y", $start).'</th>';
+          
+            $start = strtotime("+1 month", $start);
+          }
+          
+          $table .='<th>Total</th>
+          </tr>
       </thead>';
 
       if($start && $end){
 
-        $balances = Balance::where('accounting_year','>=',$startYear)->where('accounting_year','<=',$endYear)->groupBy('affiliate_id')->get();
-
-        // $balances = Balance::where('accounting_year','>=',$startYear)->where('accounting_month','>=',$startMonth)->where('accounting_year','<=',$endYear)->where('accounting_month','<=',$endMonth)->groupBy('affiliate_id')->get();
+        $balances = Balance::where('accounting_year','>=',date('Y',$start))->where('accounting_year','<=',date('Y',$start))->groupBy('affiliate_id')->get();
 
       }else{
-        $balances = Balance::groupBy('affiliate_id')->get();
+        $balances = Balance::groupBy('affiliate_id')->where('accounting_year',date('Y',$start))->get();
       }
     
-
      foreach ($balances as $key => $balance) {
     
      $AffiliateID = null;
      $AffiliateID = $balance->affiliate_id;
      $Affiliate = $balance->affiliate;
-                        
-     // Calculate Monthly Start
-     $monthArr = array(
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-    );
+
+     $payout = null;
+     $monthColor = null;
     
-    $month = null;
-    $monthColor = null;
-    
-    $monthVar = 0;
+     $totalPayout = 0;
 
-    foreach($monthArr as $k => $v)
-						{
-        list($status, $month[$monthVar]) = $this->grabMonthlyPayout($AffiliateID, $Year, $v);
+     $start=$request->start;
+     $end=$request->end;
 
-        if($status == 'PAID')
-        {
-            $monthColor[$monthVar] = '#3cb371;font-weight: bold;';
-        }
-        if($status == 'PENDING')
-        {
-            $monthColor[$monthVar] = 'orange;font-weight: bold;';
-        }
-        if($status == 'ISSUE')
-        {
-            $monthColor[$monthVar] = 'red;font-weight: bold;';
-        }
-
-        if($status == '')
-        {
-            $monthColor[$monthVar] = 'black;font-weight: normal;';
-        }
-
-        if($month[$monthVar] == '' || $month[$monthVar] == '0')
-        {
-            $month[$monthVar] = '$0.00';
-        }else{
-            $month[$monthVar] = "$".round($month[$monthVar],2);
-        }
-        
-        $monthVar++;
-    }
+     $start=strtotime($start);
+     $end=strtotime($end);
+     
 
       $table .= "<tr>";
       $table .= "
-                <td data-order='".$Affiliate."'>$Affiliate</td>
-                  <td data-order='".$month[0]."'>
-                      <font style='color:".$monthColor[0]."'>".$month[0]."</font>&nbsp;
+                <td data-order='".$Affiliate."'>$Affiliate</td>";
+                
+        while ( $start < $end ) {
 
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[0]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[1]."'>
-                      <font style='color:".$monthColor[1]."'>".$month[1]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[1]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[2]."'>
-                      <font style='color:".$monthColor[2]."'>".$month[2]."</font>&nbsp; 
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[2]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[3]."'>
-                      <font style='color:".$monthColor[3]."'>".$month[3]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[3]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[4]."'>
-                      <font style='color:".$monthColor[4]."'>".$month[4]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[4]."');\"></i>
-                      
-                  </td>
-                  
-                  <td data-order='".$month[5]."'>
-                      <font style='color:".$monthColor[5]."'>".$month[5]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[5]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[6]."'>
-                      <font style='color:".$monthColor[6]."'>".$month[6]."</font>&nbsp;
+            $cYear = date("Y", $start);
+            $cMonth = date("F", $start);
 
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[6]."');\"></i>
-                  </td>
+            list($status, $payout) = $this->grabMonthlyPayout($AffiliateID, $cYear, $cMonth);
+
+            if($status == 'PAID')
+            {
+                $monthColor = '#3cb371;font-weight: bold;';
+            }
+            if($status == 'PENDING')
+            {
+                $monthColor = 'orange;font-weight: bold;';
+            }
+            if($status == 'ISSUE')
+            {
+                $monthColor = 'red;font-weight: bold;';
+            }
+
+            if($status == '')
+            {
+                $monthColor = 'black;font-weight: normal;';
+            }
+
+            if($payout == '' || $payout == '0')
+            {
+                $payout = '$0.00';
+
+                $tpay=0.00;
+            }else{
+                $tpay=round($payout,2);
+                $payout = "$".round($payout,2);
+                
+            }
+
+            $totalPayout=$totalPayout+$tpay;
+            
+            
+            $table .= "<td data-order='".$payout."'>
+                      <font style='color:".$monthColor."'>".$payout."</font>&nbsp;
+
+                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$cYear','".$cMonth."');\"></i>
+                  </td>";
+          
+            $start = strtotime("+1 month", $start);
+          }
+                
                   
-                  <td data-order='".$month[7]."'>
-                      <font style='style='color:".$monthColor[7]."'>".$month[7]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[7]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[8]."'>
-                      <font style='color:".$monthColor[8]."'>".$month[8]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[8]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[9]."'>
-                      <font style='color:".$monthColor[9]."'>".$month[9]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[9]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[10]."'>
-                      <font style='color:".$monthColor[10]."'>".$month[10]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[10]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[11]."'>
-                      <font style='color:".$monthColor[11]."'>".$month[11]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[11]."');\"></i>
-                  </td>
-                  <td data-order='".$this->calculateAffiliateYTDBalance($AffiliateID,$Year)."'>".$this->calculateAffiliateYTDBalance($AffiliateID,$Year)."</td>";
+                  $table .= "<td data-order='$".$totalPayout."'>$".$totalPayout."</td>";
         $table .= "</tr>";
 
     }
@@ -271,6 +199,7 @@ class BalancesController extends Controller
         $revenue=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('revenue');
         $payout=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('payout');
         $profit=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('profit');
+        
 
         $html= view('admin.balances.partials.balance-model', compact('AffiliateID','Year','Month','balance','revenue','payout','profit'))->render();
 

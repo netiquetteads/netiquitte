@@ -31,12 +31,15 @@
         {{-- </div> --}}
     </div>
     <div class="manualFilterBox">
-        <div class="input-group input-daterange">
+        {{-- <div class="input-group input-daterange">
             <input type="text" id="from" autocomplete="off">
             <label for="to">to</label>
             <input type="text" id="to" autocomplete="off">
             <button class="btn btn-info" id="CustomManualUpdate">Update</button>
-        </div>
+        </div> --}}
+        <input type="text" name="daterange" id="daterangepicker">
+
+        <button id="clearFilter">Clear Filter</button>
     </div>
     {{--  <input type="text" id="manualUpdatePicker" autocomplete="off">  --}}
 {{--  <label for="from">From</label>

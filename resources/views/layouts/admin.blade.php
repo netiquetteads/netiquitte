@@ -24,6 +24,8 @@
     <link href="{{ asset('datepicker/css/datepicker.css') }}" rel="stylesheet" />
     {{--  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  --}}
     {{--  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">  --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     @yield('styles')
 </head>
 
@@ -198,6 +200,7 @@
     <script src="{{ asset('datepicker/js/bootstrap-datepicker.js') }}"></script>
     {{--  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  --}}
     {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>  --}}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script>
         $("#syncAdvertisers").click(function(e){
