@@ -141,17 +141,17 @@ class BalancesController extends Controller
             if($status == 'PAID')
             {
                 $monthColor = 'black;font-weight: bold;';
-                $bgColor = '#3cb371;';
+                $bgColor = '#ADF5B0;';
             }
             if($status == 'PENDING')
             {
-                $monthColor = 'white;font-weight: bold;';
-                $bgColor = 'red;';
+                $monthColor = 'black;font-weight: bold;';
+                $bgColor = '#EC7063;';
             }
             if($status == 'ISSUE')
             {
                 $monthColor = 'black;font-weight: bold;';
-                $bgColor = 'orange;';
+                $bgColor = '#FCE7D2;';
             }
 
             if($status == '')
