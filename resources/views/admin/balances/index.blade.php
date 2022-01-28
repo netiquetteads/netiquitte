@@ -1,112 +1,108 @@
-<?php
-$getstart = @$_GET['start'];
-$getend = @$_GET['end'];
-
-if ($getstart && $getend) {
-    $start = date('m/d/Y',strtotime($getstart));
-    $end = date('m/d/Y',strtotime($getend));
-} else {
-    $start = date('01/01/Y');
-    $end = date('m/d/Y');
-}
-// dd($start,$end);
-// $start = date('01/01/2020');
-// $end = date('01/01/2021');
-?>
 @extends('layouts.admin')
-@section('content')
 
-<style>
-    .dt-buttons{
-        display: none;
+@section('styles')
+
+    <style>
+        .dt-buttons{
+            display: none;
+        }
+        table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after{
+            display: none;
+        }
+        table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
+        background-color: transparent;
+        }
+        table.dataTable tbody tr {
+            background-color: transparent;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: transparent;
+        }
+        /* The Modal (background) */
+        .modal {
+          display: none; /* Hidden by default */
+          position: fixed; /* Stay in place */
+          z-index: 9999; /* Sit on top */
+          padding-top: 100px; /* Location of the box */
+          left: 0;
+          top: 0;
+          width: 100%; /* Full width */
+          height: 100%; /* Full height */
+          overflow: auto; /* Enable scroll if needed */
+          background-color: rgb(0,0,0); /* Fallback color */
+          background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content */
+        .modal-content {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+        }
+        
+        /* The Close Button */
+        .close {
+          color: #aaaaaa;
+          float: right;
+          font-size: 28px;
+          font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+          color: #000;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        .tabstyle {
+            display: inline-block;
+            font-size: 12px;
+            font-weight:bold;
+            text-align: center;
+            border-radius: 25px 25px 0px 0px;
+            background: #e0e0e0;
+            padding: 10px; 
+            width: 200px;
+            height: 30px;
+        }
+        .manualFilterBox{
+            float: right;
+        }
+        .manualFilterBox .btn-info{
+            margin-left: 20px !important;
+        }
+        .input-group label{
+            padding: 0px 10px;
+            line-height: 30px;
+        }
+        .modal-lg {
+        max-width: 950px;
+        }
+        .card-title {
+            margin-bottom: 20px !important;
+        }
+    </style>
+@endsection
+
+@php
+    $getstart = @$_GET['start'];
+    $getend = @$_GET['end'];
+
+    if ($getstart && $getend) {
+        $start = date('m/d/Y',strtotime($getstart));
+        $end = date('m/d/Y',strtotime($getend));
+    } else {
+        $start = date('01/01/Y');
+        $end = date('m/d/Y');
     }
-    table.dataTable tbody td.select-checkbox:before,table.dataTable tbody td.select-checkbox:after{
-        display: none;
-    }
-    table.dataTable tbody>tr.selected, table.dataTable tbody>tr>.selected {
-    background-color: transparent;
-}
-table.dataTable tbody tr {
-    background-color: transparent;
-}
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: transparent;
-}
-    /* The Modal (background) */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 9999; /* Sit on top */
-      padding-top: 100px; /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-    
-    /* Modal Content */
-    .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-    
-    /* The Close Button */
-    .close {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .tabstyle {
-        display: inline-block;
-        font-size: 12px;
-        font-weight:bold;
-        text-align: center;
-        border-radius: 25px 25px 0px 0px;
-        background: #e0e0e0;
-        padding: 10px; 
-        width: 200px;
-        height: 30px;
-    }
-    .manualFilterBox{
-        float: right;
-    }
-    .manualFilterBox .btn-info{
-        margin-left: 20px !important;
-    }
-    .input-group label{
-        padding: 0px 10px;
-        line-height: 30px;
-    }
-    .modal-lg {
-    max-width: 950px;
-}
-.card-title {
-    margin-bottom: 20px !important;
-}
-    </style> 
-{{-- @can('balance_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.balances.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.balance.title_singular') }}
-            </a>
-        </div>
-    </div>
-@endcan --}}
+    // dd($start,$end);
+    // $start = date('01/01/2020');
+    // $end = date('01/01/2021');
+@endphp
+
+@section('content')
 
 @include('admin.balances.partials.header-section')
 
