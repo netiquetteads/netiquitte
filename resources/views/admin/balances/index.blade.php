@@ -3,14 +3,15 @@ $getstart = @$_GET['start'];
 $getend = @$_GET['end'];
 
 if ($getstart && $getend) {
-    $start = $getstart;
-    $end = $getend;
+    $start = date('m/d/Y',strtotime($getstart));
+    $end = date('m/d/Y',strtotime($getend));
 } else {
-    $start = date('Y-01-01');
-    $end = date('Y-m-d');
+    $start = date('01/01/Y');
+    $end = date('m/d/Y');
 }
-// $start = date('Y-01-01');
-// $end = date('Y-m-d');
+// dd($start,$end);
+// $start = date('01/01/2020');
+// $end = date('01/01/2021');
 ?>
 @extends('layouts.admin')
 @section('content')
@@ -183,8 +184,10 @@ $loader='<div class="spinner-border text-dark" role="status">'+
     $('#daterangepicker').daterangepicker({
     "showDropdowns": true,
     "linkedCalendars": false,
-    "startDate": moment().startOf('month'),
-    "endDate": moment()
+    "startDate": '{{ $start }}',
+    "endDate": '{{ $end }}'
+    // "startDate": moment().startOf('month'),
+    // "endDate": moment()
     // minDate: moment().subtract(12, 'years')
     
 }, function(start, end, label) {

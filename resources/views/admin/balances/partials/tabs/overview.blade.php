@@ -1,5 +1,5 @@
                   <div class="tab-pane text-left fade show active" id="vert-tabs-overview" role="tabpanel" aria-labelledby="vert-tabs-overview-tab">
-					<table class="table">
+					<table class="table" style="width: 80%;">
 						<tr>
 							<td>
 								Revenue
@@ -15,7 +15,7 @@
 									}
 									echo "$".$revenueAmt;
 									@endphp
-									<i style='' class="fa fa-edit" aria-hidden="true" onclick="OverViewEdit('RevenueOriginal','RevenueEdit');"></i>
+									<i style='' class="fa fa-edit float-right" aria-hidden="true" onclick="OverViewEdit('RevenueOriginal','RevenueEdit');"></i>
 								</div>
 								<div id="RevenueEdit" style="display:none">
 									<input type="text" id="RevenueEditValue" value="{{$revenueAmt}}">&nbsp;
@@ -25,7 +25,13 @@
 						</tr>
 						<tr>
 							<td>
-								Payout
+								Payout @if ($balance->monthly_status=='PAID')
+										<span class="badge bg-success">PAID</span>
+									@elseif($balance->monthly_status=='PENDING')
+										<span class="badge bg-danger">NOT PAID</span>
+									@elseif($balance->monthly_status=='ISSUE')
+									<span class="badge bg-warning">ISSUE</span>
+								@endif
 							</td>
 							<td>
 								<div id="PayoutOriginal">
@@ -38,7 +44,7 @@
 									}
 									echo "$".$payoutAmt;
 									@endphp
-									<i style='' class="fa fa-edit" aria-hidden="true" onclick="OverViewEdit('PayoutOriginal','PayoutEdit');"></i>
+									<i style='' class="fa fa-edit float-right" aria-hidden="true" onclick="OverViewEdit('PayoutOriginal','PayoutEdit');"></i>
 								</div>
 								<div id="PayoutEdit" style="display:none">
 									<input type="text" id="PayoutEditValue" value="{{$payoutAmt}}">&nbsp;
@@ -61,12 +67,28 @@
 									}
 									echo "$".$profitAmt;
 									@endphp
-									<i style='' class="fa fa-edit" aria-hidden="true" onclick="OverViewEdit('ProfitOrig','ProfitEdit');"></i>
+									<i style='' class="fa fa-edit float-right" aria-hidden="true" onclick="OverViewEdit('ProfitOrig','ProfitEdit');"></i>
 								</div>
 								<div id='ProfitEdit' style="display:none">
 									<input type="text" id="ProfitEditValue" value="{{$profitAmt}}">&nbsp;
 									<button class='btn btn-success' onclick="SaveAccounting('{{ $AffiliateID }}','Profit','ProfitEditValue','{{ $Month }}','{{ $Year }}')">Save</button>
 								</div>
+							</td>
+						</tr>
+
+						<tr>
+							<th>TOTAL</th>
+							<td>
+								<strong>
+									{{-- @if ($balance->monthly_status=='PAID')
+										<span class="badge bg-success">PAID</span>
+									@elseif($balance->monthly_status=='PENDING')
+										<span class="badge bg-danger">NOT PAID</span>
+									@elseif($balance->monthly_status=='ISSUE')
+										<span class="badge bg-warning">ISSUE</span>
+									@endif --}}
+									${{ $revenueAmt+$payoutAmt+$profitAmt }}
+								</strong>
 							</td>
 						</tr>
 					</table>

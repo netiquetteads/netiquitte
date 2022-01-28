@@ -59,15 +59,15 @@ class BalancesCommand extends Command
 			foreach ($period as $key => $dt){
 				
 				$Year = $dt->format("Y");
-				$MonthName= $dt->format("F");
+				$MonthName= $dt->format("F");	
 
 				$response = Http::withHeaders([
 					'content-type' => 'application/json',
 					'x-eflow-api-key' => env('EF_API_KEY'),
 				])
 				->withBody(json_encode([
-					'from' => $fromDate,
-					'to' => $toDate,
+					'from' => $dt->format("Y-m-d"),
+					'to' => $dt->format("Y-m-t"),
 					'timezone_id' => 80,
 					'currency_id' => "USD",
 					'query' => array('filters'=>[],'settings'=>array('ignore_fail_traffic'=>false),'metric_filters'=>[],'exclusions'=>[]),
@@ -110,14 +110,15 @@ class BalancesCommand extends Command
 				$containers=BalanceContainer::select('affiliate','affiliate_id','time_month','monthly_status')->distinct()->get();
 
 				foreach ($containers as $key => $container) {
+					
 					$Affiliate = $container->affiliate;
 					$AffiliateID = $container->affiliate_id;
 					$Month = $container->time_month;
 					$MonthlyStatus = $container->monthly_status;
 	
-					$revenue=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('revenue');
-					$payout=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('payout');
-					$profit=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->sum('profit');
+					$revenue=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->where('time_year',$Year)->sum('revenue');
+					$payout=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->where('time_year',$Year)->sum('payout');
+					$profit=BalanceContainer::where('affiliate_id',$AffiliateID)->where('time_month',$Month)->where('time_year',$Year)->sum('profit');
 					
 					$balance = Balance::updateOrCreate(
 						[

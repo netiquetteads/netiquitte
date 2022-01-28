@@ -140,20 +140,24 @@ class BalancesController extends Controller
 
             if($status == 'PAID')
             {
-                $monthColor = '#3cb371;font-weight: bold;';
+                $monthColor = 'black;font-weight: bold;';
+                $bgColor = '#3cb371;';
             }
             if($status == 'PENDING')
             {
-                $monthColor = 'orange;font-weight: bold;';
+                $monthColor = 'white;font-weight: bold;';
+                $bgColor = 'red;';
             }
             if($status == 'ISSUE')
             {
-                $monthColor = 'red;font-weight: bold;';
+                $monthColor = 'black;font-weight: bold;';
+                $bgColor = 'orange;';
             }
 
             if($status == '')
             {
                 $monthColor = 'black;font-weight: normal;';
+                $bgColor = '';
             }
 
             if($payout == '' || $payout == '0')
@@ -170,7 +174,7 @@ class BalancesController extends Controller
             $totalPayout=$totalPayout+$tpay;
             
             
-            $table .= "<td data-order='".$payout."'>
+            $table .= "<td data-order='".$payout."' style='background: ".$bgColor."'>
                       <font style='color:".$monthColor."'>".$payout."</font>&nbsp;
 
                       <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$cYear','".$cMonth."');\"></i>
@@ -194,7 +198,7 @@ class BalancesController extends Controller
         $Year = $request->Year;
         $Month = $request->Month;
 
-        $balance=Balance::where('affiliate_id',$AffiliateID)->first();
+        $balance=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->first();
 
         $revenue=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('revenue');
         $payout=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('payout');
