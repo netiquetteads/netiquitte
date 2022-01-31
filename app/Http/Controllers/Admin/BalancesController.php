@@ -138,11 +138,15 @@ class BalancesController extends Controller
 
             list($status, $payout) = $this->grabMonthlyPayout($AffiliateID, $cYear, $cMonth);
 
-            if($status == 'PAID')
+            if($payout == '' || $payout == '0')
             {
-                $monthColor = 'black;font-weight: bold;';
-                $bgColor = '#ADF5B0;';
+                $payout = '$0.00';
+                $tpay=0.00;
+            }else{
+                $tpay=round($payout,2);
+                $payout = "$".round($payout,2);
             }
+            
             if($status == 'PENDING')
             {
                 $monthColor = 'black;font-weight: bold;';
@@ -160,18 +164,17 @@ class BalancesController extends Controller
                 $bgColor = '';
             }
 
-            if($payout == '' || $payout == '0')
+            if($status == 'PAID')
             {
-                $payout = '$0.00';
+                $monthColor = 'black;font-weight: bold;';
+                $bgColor = '#ADF5B0;';
 
-                $tpay=0.00;
             }else{
-                $tpay=round($payout,2);
-                $payout = "$".round($payout,2);
-                
+                $totalPayout=$totalPayout+$tpay;
             }
+            
 
-            $totalPayout=$totalPayout+$tpay;
+            
             
             
             $table .= "<td data-order='".$payout."' style='background: ".$bgColor."'>
@@ -184,7 +187,7 @@ class BalancesController extends Controller
           }
                 
                   
-                  $table .= "<td data-order='$".$totalPayout."'>$".$totalPayout."</td>";
+                  $table .= "<td id='totalAmount".$AffiliateID."' data-order='$".$totalPayout."'>$".$totalPayout."</td>";
         $table .= "</tr>";
 
     }
@@ -197,15 +200,15 @@ class BalancesController extends Controller
         $AffiliateID = $request->AffiliateID;
         $Year = $request->Year;
         $Month = $request->Month;
+        $total = $request->total;
 
         $balance=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->first();
 
         $revenue=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('revenue');
         $payout=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('payout');
-        $profit=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('profit');
-        
+        $profit=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('profit');        
 
-        $html= view('admin.balances.partials.balance-model', compact('AffiliateID','Year','Month','balance','revenue','payout','profit'))->render();
+        $html= view('admin.balances.partials.balance-model', compact('AffiliateID','Year','Month','balance','revenue','payout','profit','total'))->render();
 
         echo $html;
         

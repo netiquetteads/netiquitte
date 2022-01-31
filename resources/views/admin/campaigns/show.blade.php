@@ -136,7 +136,7 @@
                             {{ trans('cruds.campaign.fields.sent_time') }}
                         </th>
                         <td>
-                            {{ date('h:i:s',strtotime($campaign->created_at)) }}
+                            {{ date('h:i:s a',strtotime($campaign->created_at)) }}
                         </td>
                     </tr>
                     <tr>
@@ -147,8 +147,6 @@
                             {{ $campaign->send_to ?? '' }}
                         </td>
                     </tr>
-                    
-                    
                 </tbody>
             </table>
                 </div>
