@@ -27,10 +27,12 @@
 							<td style="width: 45%;text-align:right;">
 								@if ($balance->monthly_status=='PAID')
                         <span class="badge bg-success float-left">PAID</span>
-                    @elseif($balance->monthly_status=='PENDING')
+                    @elseif($balance->monthly_status=='UNPAID')
                         <span class="badge bg-danger float-left">NOT PAID</span>
-                    @elseif($balance->monthly_status=='ISSUE')
-                    <span class="badge bg-warning float-left">PENDING ISSUE</span>
+                    {{-- @elseif($balance->monthly_status=='ISSUE')
+                    <span class="badge bg-warning float-left">PENDING ISSUE</span> --}}
+					@else
+					<span class="badge bg-warning float-left">PENDING</span>
                 @endif   Payout 							
 							</td>
 							<td style="width: 45%;text-align:right;">
@@ -83,12 +85,12 @@
 								
 								@if ($balance->monthly_status=='PAID')
 								<span class="text-success">$ 00.00 </span><strong>/ {{ $total }}</strong>
-								@elseif($balance->monthly_status=='PENDING')
+								@elseif($balance->monthly_status=='UNPAID')
 									<span class="text-danger">${{ $payoutAmt }} </span><strong>/ {{ $total }}</strong>
-								@elseif($balance->monthly_status=='ISSUE')
-									<span class="text-warning">${{ $payoutAmt }} </span><strong>/ {{ $total }}</strong>
+								{{-- @elseif($balance->monthly_status=='ISSUE')
+									<span class="text-warning">${{ $payoutAmt }} </span><strong>/ {{ $total }}</strong> --}}
 								@else
-									<span class="text-default">${{ $payoutAmt }} </span><strong>/ {{ $total }}</strong>
+									<span class="text-warning">${{ $payoutAmt }} </span><strong>/ {{ $total }}</strong>
                 				@endif
 
 							</td>

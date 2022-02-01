@@ -147,22 +147,22 @@ class BalancesController extends Controller
                 $payout = "$".round($payout,2);
             }
             
-            if($status == 'PENDING')
+            if($status == 'UNPAID')
             {
                 $monthColor = 'black;font-weight: bold;';
                 $bgColor = '#EC7063;';
             }
-            if($status == 'ISSUE')
+            if($status == 'PENDING' || $status == '')
             {
                 $monthColor = 'black;font-weight: bold;';
                 $bgColor = '#FCE7D2;';
             }
 
-            if($status == '')
-            {
-                $monthColor = 'black;font-weight: normal;';
-                $bgColor = '';
-            }
+            // if($status == '')
+            // {
+            //     $monthColor = 'black;font-weight: bold;';
+            //     $bgColor = '#FCE7D2;';
+            // }
 
             if($status == 'PAID')
             {
