@@ -78,7 +78,7 @@
 							</td>
 						</tr>
 						<tr>
-							<th style="width: 45%;text-align:right;">TOTAL</th>
+							<th style="width: 45%;text-align:right;">TOTAL UNPAID</th>
 							<td style="width: 45%;text-align:right;">
 								
 								@if ($balance->monthly_status=='PAID')
