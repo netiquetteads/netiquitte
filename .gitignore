@@ -14,3 +14,9 @@ yarn-error.log
 composer.lock
 /.idea
 /.idea/*
+.idea/phpunit.xml
+.idea/php.xml
+.idea/netiquitte.iml
+.idea/misc.xml
+.idea/deployment.xml
+.idea/code-comments.xml
