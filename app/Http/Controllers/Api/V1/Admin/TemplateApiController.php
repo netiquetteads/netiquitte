@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateTemplateRequest;
 use App\Http\Resources\Admin\TemplateResource;
 use App\Models\Template;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TemplateApiController extends Controller
@@ -28,7 +27,7 @@ class TemplateApiController extends Controller
         $template = Template::create($request->all());
 
         if ($request->input('offer_image', false)) {
-            $template->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
+            $template->addMedia(storage_path('tmp/uploads/'.basename($request->input('offer_image'))))->toMediaCollection('offer_image');
         }
 
         return (new TemplateResource($template))
@@ -48,11 +47,11 @@ class TemplateApiController extends Controller
         $template->update($request->all());
 
         if ($request->input('offer_image', false)) {
-            if (!$template->offer_image || $request->input('offer_image') !== $template->offer_image->file_name) {
+            if (! $template->offer_image || $request->input('offer_image') !== $template->offer_image->file_name) {
                 if ($template->offer_image) {
                     $template->offer_image->delete();
                 }
-                $template->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
+                $template->addMedia(storage_path('tmp/uploads/'.basename($request->input('offer_image'))))->toMediaCollection('offer_image');
             }
         } elseif ($template->offer_image) {
             $template->offer_image->delete();

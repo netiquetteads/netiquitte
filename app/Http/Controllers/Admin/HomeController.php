@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class HomeController extends Controller
 {
@@ -35,8 +35,8 @@ class HomeController extends Controller
                 if (isset($settings1['filter_period'])) {
                     switch ($settings1['filter_period']) {
                 case 'week': $start = date('Y-m-d', strtotime('last Monday')); break;
-                case 'month': $start = date('Y-m') . '-01'; break;
-                case 'year': $start = date('Y') . '-01-01'; break;
+                case 'month': $start = date('Y-m').'-01'; break;
+                case 'year': $start = date('Y').'-01-01'; break;
             }
                     if (isset($start)) {
                         return $query->where($settings1['filter_field'], '>=', $start);

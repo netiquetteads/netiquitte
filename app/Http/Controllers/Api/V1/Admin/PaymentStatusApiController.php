@@ -8,7 +8,6 @@ use App\Http\Requests\UpdatePaymentStatusRequest;
 use App\Http\Resources\Admin\PaymentStatusResource;
 use App\Models\PaymentStatus;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentStatusApiController extends Controller

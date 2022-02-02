@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateResultsTrackingRequest;
 use App\Http\Resources\Admin\ResultsTrackingResource;
 use App\Models\ResultsTracking;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResultsTrackingApiController extends Controller

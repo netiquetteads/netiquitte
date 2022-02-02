@@ -11,7 +11,6 @@ Route::get('/home', function () {
 
 Auth::routes();
 
-
 Route::get('/unsubscribe', 'UnsubscribeController@index')->name('unsubscribe');
 Route::get('/success', 'UnsubscribeController@success')->name('success');
 Route::get('openEmail', 'UnsubscribeController@openEmail')->name('openEmail');
@@ -61,7 +60,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
     Route::get('user-alerts/read', 'UserAlertsController@read');
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
- 
+
     // Label
     Route::delete('labels/destroy', 'LabelController@massDestroy')->name('labels.massDestroy');
     Route::resource('labels', 'LabelController');
@@ -106,7 +105,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('templates/ckmedia', 'TemplateController@storeCKEditorImages')->name('templates.storeCKEditorImages');
     Route::resource('templates', 'TemplateController');
     Route::post('deleteSelectedTemplate', 'TemplateController@deleteSelectedTemplate')->name('templates.deleteSelectedTemplate');
-    
+
     // Campaign Results
     Route::delete('campaign-results/destroy', 'CampaignResultsController@massDestroy')->name('campaign-results.massDestroy');
     Route::resource('campaign-results', 'CampaignResultsController');
@@ -123,7 +122,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('getTemplateData', 'CampaignController@getTemplateData')->name('campaigns.getTemplateData');
     Route::post('loadTemplate', 'CampaignController@loadTemplate')->name('campaigns.loadTemplate');
     Route::post('deleteSelectedEmails', 'CampaignController@deleteSelectedEmails')->name('campaigns.deleteSelectedEmails');
-    
 
     // Subscriber
     Route::delete('subscribers/destroy', 'SubscriberController@massDestroy')->name('subscribers.massDestroy');
@@ -159,15 +157,13 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     }
 });
 
-
-Route::get('/r', function ()
-{
+Route::get('/r', function () {
     function philsroutes()
     {
         $routeCollection = Route::getRoutes();
 
         echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">';
-        echo "<div class='container'><div class='col-md-12'><a target='_blank' href='". url('/') ."' type='button' class='btn btn-primary' style='position: fixed;top:5rem;right:3em;'>Live Site</a><table class='table table-striped' style='width:100%'>";
+        echo "<div class='container'><div class='col-md-12'><a target='_blank' href='".url('/')."' type='button' class='btn btn-primary' style='position: fixed;top:5rem;right:3em;'>Live Site</a><table class='table table-striped' style='width:100%'>";
         echo '<tr>';
         //  echo '<td><h4>Domain</h4></td>';
         echo "<td width='10%'><h4>HTTP Method</h4></td>";
@@ -191,5 +187,4 @@ Route::get('/r', function ()
     }
 
     return philsroutes();
-
 })->name('assigned-routes');

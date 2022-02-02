@@ -41,11 +41,11 @@ class AffiliateController extends Controller
         $affiliate = Affiliate::create($request->all());
 
         if ($request->input('logo', false)) {
-            $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
+            $affiliate->addMedia(storage_path('tmp/uploads/'.basename($request->input('logo'))))->toMediaCollection('logo');
         }
 
         if ($request->input('featured_image', false)) {
-            $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+            $affiliate->addMedia(storage_path('tmp/uploads/'.basename($request->input('featured_image'))))->toMediaCollection('featured_image');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -71,22 +71,22 @@ class AffiliateController extends Controller
         $affiliate->update($request->all());
 
         if ($request->input('logo', false)) {
-            if (!$affiliate->logo || $request->input('logo') !== $affiliate->logo->file_name) {
+            if (! $affiliate->logo || $request->input('logo') !== $affiliate->logo->file_name) {
                 if ($affiliate->logo) {
                     $affiliate->logo->delete();
                 }
-                $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
+                $affiliate->addMedia(storage_path('tmp/uploads/'.basename($request->input('logo'))))->toMediaCollection('logo');
             }
         } elseif ($affiliate->logo) {
             $affiliate->logo->delete();
         }
 
         if ($request->input('featured_image', false)) {
-            if (!$affiliate->featured_image || $request->input('featured_image') !== $affiliate->featured_image->file_name) {
+            if (! $affiliate->featured_image || $request->input('featured_image') !== $affiliate->featured_image->file_name) {
                 if ($affiliate->featured_image) {
                     $affiliate->featured_image->delete();
                 }
-                $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+                $affiliate->addMedia(storage_path('tmp/uploads/'.basename($request->input('featured_image'))))->toMediaCollection('featured_image');
             }
         } elseif ($affiliate->featured_image) {
             $affiliate->featured_image->delete();
@@ -124,10 +124,10 @@ class AffiliateController extends Controller
     {
         abort_if(Gate::denies('affiliate_create') && Gate::denies('affiliate_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Affiliate();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Affiliate();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

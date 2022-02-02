@@ -15,7 +15,6 @@ class AddCountryOffersTable extends Migration
     {
         Schema::table('offers', function (Blueprint $table) {
             $table->string('countries')->nullable();
-        }); 
+        });
     }
-
 }

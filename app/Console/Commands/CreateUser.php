@@ -27,16 +27,16 @@ class CreateUser extends Command
      */
     public function handle()
     {
-        $name     = $this->ask('User name');
-        $email    = $this->ask('User email');
+        $name = $this->ask('User name');
+        $email = $this->ask('User email');
         $password = $this->ask('User password');
 
         $model = config('createuser.model');
 
         $user = new $model();
 
-        $user->name     = $name;
-        $user->email    = $email;
+        $user->name = $name;
+        $user->email = $email;
         $user->password = bcrypt($password);
 
         $user->save();

@@ -8,7 +8,6 @@ use App\Http\Requests\UpdatePaymentMethodRequest;
 use App\Http\Resources\Admin\PaymentMethodResource;
 use App\Models\PaymentMethod;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentMethodApiController extends Controller

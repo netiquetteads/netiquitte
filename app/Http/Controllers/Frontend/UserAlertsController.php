@@ -68,7 +68,7 @@ class UserAlertsController extends Controller
     {
         $alerts = \Auth::user()->userUserAlerts()->where('read', false)->get();
         foreach ($alerts as $alert) {
-            $pivot       = $alert->pivot;
+            $pivot = $alert->pivot;
             $pivot->read = true;
             $pivot->save();
         }

@@ -11,7 +11,7 @@ class CreateAffiliatesTable extends Migration
         Schema::create('affiliates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-	        $table->string('account_status')->nullable();
+            $table->string('account_status')->nullable();
             $table->string('everflow_account')->nullable();
             $table->string('account_manager_name')->nullable();
             $table->string('account_executive_name')->nullable();
@@ -25,8 +25,8 @@ class CreateAffiliatesTable extends Migration
             $table->integer('account_executiveid')->nullable();
             $table->integer('account_managerid')->nullable();
             $table->integer('networkid')->nullable();
-	        $table->string('time_created')->nullable();
-	        $table->string('time_saved')->nullable();
+            $table->string('time_created')->nullable();
+            $table->string('time_saved')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

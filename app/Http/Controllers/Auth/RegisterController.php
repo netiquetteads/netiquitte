@@ -41,7 +41,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        if (request()->has('signature') && !request()->hasValidSignature()) {
+        if (request()->has('signature') && ! request()->hasValidSignature()) {
             return redirect()->route('register');
         }
 
@@ -76,7 +76,7 @@ class RegisterController extends Controller
             'team_id'  => request()->input('team', null),
         ]);
 
-        if (!request()->has('team')) {
+        if (! request()->has('team')) {
             $team = \App\Models\Team::create([
                 'owner_id' => $user->id,
                 'name'     => $data['email'],

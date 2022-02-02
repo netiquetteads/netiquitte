@@ -10,7 +10,7 @@ use App\Models\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;  
+use Yajra\DataTables\Facades\DataTables;
 
 class TeamController extends Controller
 {
@@ -19,7 +19,6 @@ class TeamController extends Controller
         abort_if(Gate::denies('team_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-
             $query = Team::with(['owner'])->get();
 
             $table = Datatables::of($query);
@@ -54,7 +53,6 @@ class TeamController extends Controller
             $table->rawColumns(['actions', 'placeholder', 'owner_name']);
 
             return $table->make(true);
-
         }
 
         return view('admin.teams.index');
@@ -69,9 +67,9 @@ class TeamController extends Controller
 
     public function store(StoreTeamRequest $request)
     {
-        $data             = $request->all();
+        $data = $request->all();
         $data['owner_id'] = auth()->user()->id;
-        $team             = Team::create($data);
+        $team = Team::create($data);
 
         return redirect()->route('admin.teams.index');
     }

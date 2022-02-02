@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Gate;
-use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 use App\Models\Account;
+use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class UnsubscribeController extends Controller
 {
@@ -19,7 +17,7 @@ class UnsubscribeController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Account::where('SubscribedStatus','Unsubscribed')->get();
+            $query = Account::where('SubscribedStatus', 'Unsubscribed')->get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -52,7 +50,7 @@ class UnsubscribeController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.unsubscribers.index');        
+        return view('admin.unsubscribers.index');
     }
 
     /**

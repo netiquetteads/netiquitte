@@ -5,14 +5,13 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreUserRequest extends FormRequest
 {
     public function authorize()
     {
         return true;
-            //Gate::allows('user_create');
+        //Gate::allows('user_create');
     }
 
     public function rules()
@@ -103,6 +102,5 @@ class StoreUserRequest extends FormRequest
                 'array',
             ],
         ];
- 
     }
 }

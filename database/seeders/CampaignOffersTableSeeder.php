@@ -6,41 +6,32 @@ use Illuminate\Database\Seeder;
 
 class CampaignOffersTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('campaign_offers')->delete();
-        
-        \DB::table('campaign_offers')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('campaign_offers')->insert([
+            0 => [
                 'campaign_id' => 1,
                 'offer_id' => 731,
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'campaign_id' => 1,
                 'offer_id' => 814,
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'campaign_id' => 1,
                 'offer_id' => 815,
-            ),
-            3 => 
-            array (
+            ],
+            3 => [
                 'campaign_id' => 2,
                 'offer_id' => 731,
-            ),
-        ));
-        
-        
+            ],
+        ]);
     }
 }

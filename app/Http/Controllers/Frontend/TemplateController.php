@@ -38,7 +38,7 @@ class TemplateController extends Controller
         $template = Template::create($request->all());
 
         if ($request->input('offer_image', false)) {
-            $template->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
+            $template->addMedia(storage_path('tmp/uploads/'.basename($request->input('offer_image'))))->toMediaCollection('offer_image');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -60,11 +60,11 @@ class TemplateController extends Controller
         $template->update($request->all());
 
         if ($request->input('offer_image', false)) {
-            if (!$template->offer_image || $request->input('offer_image') !== $template->offer_image->file_name) {
+            if (! $template->offer_image || $request->input('offer_image') !== $template->offer_image->file_name) {
                 if ($template->offer_image) {
                     $template->offer_image->delete();
                 }
-                $template->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
+                $template->addMedia(storage_path('tmp/uploads/'.basename($request->input('offer_image'))))->toMediaCollection('offer_image');
             }
         } elseif ($template->offer_image) {
             $template->offer_image->delete();
@@ -100,10 +100,10 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_create') && Gate::denies('template_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Template();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Template();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

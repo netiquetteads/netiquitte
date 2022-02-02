@@ -43,7 +43,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware(['web', 'auth'])
                 ->as('development.')
-                ->group(base_path('routes/development.php'));    
+                ->group(base_path('routes/development.php'));
 
             Route::middleware('web')
                 ->namespace($this->namespace)

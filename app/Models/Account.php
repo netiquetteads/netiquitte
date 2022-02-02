@@ -34,5 +34,4 @@ class Account extends Model
     // {
     //     return $this->belongsToMany(Affiliate::class,'PlatformUserID');
     // }
-
 }

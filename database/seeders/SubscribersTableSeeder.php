@@ -6,19 +6,13 @@ use Illuminate\Database\Seeder;
 
 class SubscribersTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('subscribers')->delete();
-        
-        
-        
     }
 }

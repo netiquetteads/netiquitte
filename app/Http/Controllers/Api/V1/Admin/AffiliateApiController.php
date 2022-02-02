@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateAffiliateRequest;
 use App\Http\Resources\Admin\AffiliateResource;
 use App\Models\Affiliate;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AffiliateApiController extends Controller
@@ -28,11 +27,11 @@ class AffiliateApiController extends Controller
         $affiliate = Affiliate::create($request->all());
 
         if ($request->input('logo', false)) {
-            $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
+            $affiliate->addMedia(storage_path('tmp/uploads/'.basename($request->input('logo'))))->toMediaCollection('logo');
         }
 
         if ($request->input('featured_image', false)) {
-            $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+            $affiliate->addMedia(storage_path('tmp/uploads/'.basename($request->input('featured_image'))))->toMediaCollection('featured_image');
         }
 
         return (new AffiliateResource($affiliate))
@@ -52,22 +51,22 @@ class AffiliateApiController extends Controller
         $affiliate->update($request->all());
 
         if ($request->input('logo', false)) {
-            if (!$affiliate->logo || $request->input('logo') !== $affiliate->logo->file_name) {
+            if (! $affiliate->logo || $request->input('logo') !== $affiliate->logo->file_name) {
                 if ($affiliate->logo) {
                     $affiliate->logo->delete();
                 }
-                $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('logo'))))->toMediaCollection('logo');
+                $affiliate->addMedia(storage_path('tmp/uploads/'.basename($request->input('logo'))))->toMediaCollection('logo');
             }
         } elseif ($affiliate->logo) {
             $affiliate->logo->delete();
         }
 
         if ($request->input('featured_image', false)) {
-            if (!$affiliate->featured_image || $request->input('featured_image') !== $affiliate->featured_image->file_name) {
+            if (! $affiliate->featured_image || $request->input('featured_image') !== $affiliate->featured_image->file_name) {
                 if ($affiliate->featured_image) {
                     $affiliate->featured_image->delete();
                 }
-                $affiliate->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+                $affiliate->addMedia(storage_path('tmp/uploads/'.basename($request->input('featured_image'))))->toMediaCollection('featured_image');
             }
         } elseif ($affiliate->featured_image) {
             $affiliate->featured_image->delete();

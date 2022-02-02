@@ -32,5 +32,4 @@ class TempEmail extends Model
         'created_at',
         'updated_at',
     ];
-
 }

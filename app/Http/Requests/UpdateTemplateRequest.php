@@ -5,14 +5,13 @@ namespace App\Http\Requests;
 use App\Models\Template;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class UpdateTemplateRequest extends FormRequest
 {
     public function authorize()
     {
         return true;
-            //Gate::allows('template_edit');
+        //Gate::allows('template_edit');
     }
 
     public function rules()

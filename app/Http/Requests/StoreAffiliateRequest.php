@@ -5,14 +5,13 @@ namespace App\Http\Requests;
 use App\Models\Affiliate;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreAffiliateRequest extends FormRequest
 {
     public function authorize()
     {
         return true;
-            //Gate::allows('affiliate_create');
+        //Gate::allows('affiliate_create');
     }
 
     public function rules()
@@ -38,7 +37,7 @@ class StoreAffiliateRequest extends FormRequest
                 'numeric',
             ],
             'last_login' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'date_format:'.config('panel.date_format').' '.config('panel.time_format'),
                 'nullable',
             ],
             'network_country_code' => [

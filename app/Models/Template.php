@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use \DateTimeInterface;
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -55,16 +55,16 @@ class Template extends Model implements HasMedia
 
     public function templateOffers()
     {
-        return $this->belongsToMany(Offer::class,'template_offers');
+        return $this->belongsToMany(Offer::class, 'template_offers');
     }
-    
+
     public function getOfferImageAttribute()
     {
         $file = $this->getMedia('offer_image')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;

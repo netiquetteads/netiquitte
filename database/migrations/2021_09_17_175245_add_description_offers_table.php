@@ -17,5 +17,4 @@ class AddDescriptionOffersTable extends Migration
             $table->text('description')->nullable();
         });
     }
-
 }

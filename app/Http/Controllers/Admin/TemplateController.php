@@ -66,21 +66,20 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $selectedOffers = Offer::where('offer_status','active')->whereIn('id',explode(',',$request->OfferSelection))->get();
+        $selectedOffers = Offer::where('offer_status', 'active')->whereIn('id', explode(',', $request->OfferSelection))->get();
 
-        $offer_selections = Offer::where('offer_status','active')->pluck('name', 'id');
+        $offer_selections = Offer::where('offer_status', 'active')->pluck('name', 'id');
 
-        return view('admin.templates.create', compact('offer_selections','selectedOffers'));
+        return view('admin.templates.create', compact('offer_selections', 'selectedOffers'));
     }
 
     public function store(StoreTemplateRequest $request)
     {
-
         $template = Template::create($request->all());
         $template->templateOffers()->sync($request->input('offer_selection_id', []));
 
         if ($request->input('offer_image', false)) {
-            $template->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
+            $template->addMedia(storage_path('tmp/uploads/'.basename($request->input('offer_image'))))->toMediaCollection('offer_image');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -101,13 +100,13 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $offer_selections = Offer::where('offer_status','active')->pluck('name', 'id');
+        $offer_selections = Offer::where('offer_status', 'active')->pluck('name', 'id');
 
-        $selectedOffers = Offer::where('offer_status','active')->whereIn('id',explode(',',$request->OfferSelection))->get();
+        $selectedOffers = Offer::where('offer_status', 'active')->whereIn('id', explode(',', $request->OfferSelection))->get();
 
         $template->load('offer_selection');
 
-        return view('admin.templates.edit', compact('offer_selections', 'template','selectedOffers'));
+        return view('admin.templates.edit', compact('offer_selections', 'template', 'selectedOffers'));
     }
 
     public function update(UpdateTemplateRequest $request, Template $template)
@@ -116,11 +115,11 @@ class TemplateController extends Controller
         $template->templateOffers()->sync($request->input('offer_selection_id', []));
 
         if ($request->input('offer_image', false)) {
-            if (!$template->offer_image || $request->input('offer_image') !== $template->offer_image->file_name) {
+            if (! $template->offer_image || $request->input('offer_image') !== $template->offer_image->file_name) {
                 if ($template->offer_image) {
                     $template->offer_image->delete();
                 }
-                $template->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
+                $template->addMedia(storage_path('tmp/uploads/'.basename($request->input('offer_image'))))->toMediaCollection('offer_image');
             }
         } elseif ($template->offer_image) {
             $template->offer_image->delete();
@@ -158,10 +157,10 @@ class TemplateController extends Controller
     {
         abort_if(Gate::denies('template_create') && Gate::denies('template_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Template();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Template();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
