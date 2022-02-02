@@ -77,7 +77,7 @@ class Campaign extends Model implements HasMedia
 
     public function getSentTimeAttribute()
     {
-        $date=date('h:i:s',strtotime($this->created_at));
+        $date=date('h:i:s a',strtotime($this->created_at));
 
         return $date;
     }

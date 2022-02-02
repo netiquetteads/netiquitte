@@ -249,12 +249,13 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
         }
         function OpenModal(AffiliateID, Year, Month){
             modal = document.getElementById("modalStuff");
+            var total=$('#totalAmount'+AffiliateID).data('order');
             $.ajax({
                 type: "POST",
                 async:true,
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: "{{ route('admin.balances.getModeldata') }}",
-                data: {"Year":Year,"AffiliateID":AffiliateID,"Month":Month},
+                data: {"Year":Year,"AffiliateID":AffiliateID,"Month":Month,total:total},
                 success: function(response){
                     modal.innerHTML = response;
                         //CKEDITOR.disableAutoInline = true;
