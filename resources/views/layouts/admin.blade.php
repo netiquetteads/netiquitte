@@ -29,7 +29,7 @@
     @yield('styles')
 </head>
 
-<style>
+    <style>
         body.sidebar-open > .nav-sidebar .nav-item.menu-open {background-color: #212529!important; }
         li.menu-open>ul>li {margin-left: 20px!important }
         body.sidebar-open > li[class*="nav-item.has-treeview.menu-open"]>ul>li  { margin-left: 20px!important }
@@ -70,7 +70,7 @@
                 </li>
                                 <li class="adminbuttonbar">
                     <div class="btn-group">
-                        
+
                         @if(Auth::user()->isAdmin())
                          <a type="button"  target="_blank" href="{{ url('r') }}" class="btn btn-outline-success" title="Route Endpoints">Routes</a>
                          <a type="button" target="_blank" href="{{ url('/telescope') }}" class="btn btn-outline-success" title="Requests & Responses">Telescope</a>
@@ -78,7 +78,7 @@
                           @endif
 
                         {{--  <a type="button" class="btn btn-outline-success" title="User Account Profile Area">Account Profile</a>--}}
-            
+
                         <a target="_blank" href="{{ url('/') }}" type="button" class="btn btn-info" title="View The Live Site">Live Site</a>
                 </div>
                 </li>
@@ -152,6 +152,9 @@
                         </ul>
                     </div>
                 @endif
+
+
+                    @flasher_render
                 @yield('content')
             </section>
             <!-- /.content -->
@@ -262,7 +265,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                     $this.html('SYNC Offers');
                 }
             })
-        }); 
+        });
     </script>
 
 
