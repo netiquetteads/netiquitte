@@ -6,21 +6,17 @@ use Illuminate\Database\Seeder;
 
 class CampaignsTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('campaigns')->delete();
-        
-        \DB::table('campaigns')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('campaigns')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'School Seekers Pause Notice',
                 'email_subject' => 'Offer Paused',
@@ -105,18 +101,17 @@ class CampaignsTableSeeder extends Seeder
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-14 04:55:37',
                 'updated_at' => '2022-01-14 04:56:43',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Affiliates',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'name' => 'phillip test',
                 'email_subject' => 'test to phillip',
@@ -187,18 +182,16 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-14 19:57:04',
                 'updated_at' => '2022-01-14 19:57:11',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-        ));
-        
-        
+            ],
+        ]);
     }
 }

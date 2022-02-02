@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateCampaignResultRequest;
 use App\Http\Resources\Admin\CampaignResultResource;
 use App\Models\CampaignResult;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CampaignResultsApiController extends Controller

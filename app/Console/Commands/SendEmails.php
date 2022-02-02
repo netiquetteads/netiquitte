@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Models\TempEmail;
 use App\Mail\CampaignMail;
+use App\Models\TempEmail;
+use Illuminate\Console\Command;
 
 class SendEmails extends Command
 {
@@ -39,14 +39,13 @@ class SendEmails extends Command
      */
     public function handle()
     {
-        $tempEmails=TempEmail::where('email_status','pending')->orderBy('id','desc')->get();
+        $tempEmails = TempEmail::where('email_status', 'pending')->orderBy('id', 'desc')->get();
 
         foreach ($tempEmails as $key => $tempEmail) {
-            $send=\Mail::to($tempEmail->email)->send(new CampaignMail($tempEmail));
+            $send = \Mail::to($tempEmail->email)->send(new CampaignMail($tempEmail));
 
-            $tempEmail->email_status='sent';
+            $tempEmail->email_status = 'sent';
             $tempEmail->save();
         }
-        
     }
 }

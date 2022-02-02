@@ -2,17 +2,15 @@
 
 namespace App\Http\Requests;
 
-use App\Models\AccountStatus;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreAccountStatusRequest extends FormRequest
 {
     public function authorize()
     {
         return true;
-            //Gate::allows('account_status_create');
+        //Gate::allows('account_status_create');
     }
 
     public function rules()

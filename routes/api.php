@@ -68,5 +68,4 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
 
     // Subscription
     Route::apiResource('subscriptions', 'SubscriptionApiController');
-
 });

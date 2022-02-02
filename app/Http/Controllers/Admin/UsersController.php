@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -12,8 +13,7 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;  
-use App\Http\Controllers\Traits\MediaUploadingTrait;  
+use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
@@ -24,7 +24,6 @@ class UsersController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            
             $query = User::with(['roles', 'team'])->get();
 
             $table = Datatables::of($query);
@@ -94,9 +93,9 @@ class UsersController extends Controller
         $user->roles()->sync($request->input('roles', []));
 
         if ($request->input('photo', false)) {
-            $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            $user->addMedia(storage_path('tmp/uploads/'.basename($request->input('photo'))))->toMediaCollection('photo');
         }
-        
+
         return redirect()->route('admin.users.index');
     }
 
@@ -119,11 +118,11 @@ class UsersController extends Controller
         $user->roles()->sync($request->input('roles', []));
 
         if ($request->input('photo', false)) {
-            if (!$user->photo || $request->input('photo') !== $user->photo->file_name) {
+            if (! $user->photo || $request->input('photo') !== $user->photo->file_name) {
                 if ($user->photo) {
                     $user->photo->delete();
                 }
-                $user->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+                $user->addMedia(storage_path('tmp/uploads/'.basename($request->input('photo'))))->toMediaCollection('photo');
             }
         } elseif ($user->photo) {
             $user->photo->delete();

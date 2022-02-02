@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Jobs\SyncEverflowApisJob;
+use Illuminate\Console\Command;
 
 class SyncEverflowApisCommand extends Command
 {
@@ -39,8 +39,7 @@ class SyncEverflowApisCommand extends Command
     public function handle()
     {
         dispatch(new SyncEverflowApisJob());
-        \Log::info("Cron: SyncEverflowApisJob");
-        
+        \Log::info('Cron: SyncEverflowApisJob');
 
         return 'Successfully Sync';
     }

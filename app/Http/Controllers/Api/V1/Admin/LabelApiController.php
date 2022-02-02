@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateLabelRequest;
 use App\Http\Resources\Admin\LabelResource;
 use App\Models\Label;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class LabelApiController extends Controller

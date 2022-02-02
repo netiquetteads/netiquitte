@@ -15,14 +15,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class OfferController extends Controller
 {
-    public function index(Request $request, $status='')
+    public function index(Request $request, $status = '')
     {
         abort_if(Gate::denies('offer_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            
             if ($status) {
-                $query = Offer::with(['affiliate'])->select(sprintf('%s.*', (new Offer())->table))->where('offer_status',$status);
+                $query = Offer::with(['affiliate'])->select(sprintf('%s.*', (new Offer())->table))->where('offer_status', $status);
             } else {
                 $query = Offer::with(['affiliate'])->select(sprintf('%s.*', (new Offer())->table));
             }

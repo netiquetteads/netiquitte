@@ -9,7 +9,6 @@ use App\Models\QaTopic;
 use App\Models\User;
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class MessengerController extends Controller
 {
@@ -23,7 +22,7 @@ class MessengerController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        $title   = trans('global.all_messages');
+        $title = trans('global.all_messages');
         $unreads = $this->unreadTopics();
 
         return view('admin.messenger.index', compact('topics', 'title', 'unreads'));
@@ -144,7 +143,7 @@ class MessengerController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        $inboxUnreadCount  = 0;
+        $inboxUnreadCount = 0;
         $outboxUnreadCount = 0;
 
         foreach ($topics as $topic) {
@@ -154,9 +153,9 @@ class MessengerController extends Controller
                     && $message->read_at === null
                 ) {
                     if ($topic->creator_id !== Auth::id()) {
-                        ++$inboxUnreadCount;
+                        $inboxUnreadCount++;
                     } else {
-                        ++$outboxUnreadCount;
+                        $outboxUnreadCount++;
                     }
                 }
             }

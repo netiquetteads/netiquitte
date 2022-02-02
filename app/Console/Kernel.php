@@ -29,24 +29,24 @@ class Kernel extends ConsoleKernel
         $schedule->command('sync:affiliates')->everyThirtyMinutes();
         $schedule->command('sync:offers')->everyThirtyMinutes();
         $schedule->command('sync:balances')->hourly();
- 
+
         $schedule->command('send:emails')->everyMinute();
-                //  ->everyMinute();
+        //  ->everyMinute();
 
         $schedule->command('backup:clean')->daily()->at('01:30')
         ->onFailure(function () {
             // \Log::info('backup clean failed');
-         })
+        })
          ->onSuccess(function () {
-            // \Log::info('backup clean successfull');
+             // \Log::info('backup clean successfull');
          });
 
         $schedule->command('backup:run --only-db')->daily()->at('02:00')
         ->onFailure(function () {
             \Log::info('backup failed');
-         })
+        })
          ->onSuccess(function () {
-            \Log::info('backup successfull');
+             \Log::info('backup successfull');
          });
     }
 

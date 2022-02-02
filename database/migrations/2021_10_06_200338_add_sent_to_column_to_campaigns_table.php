@@ -17,5 +17,4 @@ class AddSentToColumnToCampaignsTable extends Migration
             $table->string('send_to')->nullable();
         });
     }
-
 }

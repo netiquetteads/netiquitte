@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\Models\Offer;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreOfferRequest extends FormRequest
 {
@@ -65,11 +64,11 @@ class StoreOfferRequest extends FormRequest
                 'max:2147483647',
             ],
             'time_created' => [
-                'date_format:' . config('panel.time_format'),
+                'date_format:'.config('panel.time_format'),
                 'nullable',
             ],
             'time_saved' => [
-                'date_format:' . config('panel.time_format'),
+                'date_format:'.config('panel.time_format'),
                 'nullable',
             ],
             'destination_url' => [

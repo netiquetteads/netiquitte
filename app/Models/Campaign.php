@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use \DateTimeInterface;
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -60,9 +60,9 @@ class Campaign extends Model implements HasMedia
     {
         $file = $this->getMedia('offer_image')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;
@@ -70,14 +70,14 @@ class Campaign extends Model implements HasMedia
 
     public function getSentDateAttribute()
     {
-        $date=date('d-m-Y',strtotime($this->created_at));
+        $date = date('d-m-Y', strtotime($this->created_at));
 
         return $date;
     }
 
     public function getSentTimeAttribute()
     {
-        $date=date('h:i:s a',strtotime($this->created_at));
+        $date = date('h:i:s a', strtotime($this->created_at));
 
         return $date;
     }
@@ -89,7 +89,7 @@ class Campaign extends Model implements HasMedia
 
     public function campaignOffers()
     {
-        return $this->belongsToMany(Offer::class,'campaign_offers');
+        return $this->belongsToMany(Offer::class, 'campaign_offers');
     }
 
     public function selected_template()

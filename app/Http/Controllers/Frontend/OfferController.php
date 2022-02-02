@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Affiliate;
 use App\Models\Offer;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class OfferController extends Controller

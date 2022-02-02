@@ -17,6 +17,4 @@ class AddBalanceDateToBalanceContainerTable extends Migration
             $table->date('balance_date')->nullable();
         });
     }
-
-    
 }

@@ -25,5 +25,4 @@ class AddToUsersTable extends Migration
             $table->string('instant_messaging_identifier')->nullable();
         });
     }
- 
 }

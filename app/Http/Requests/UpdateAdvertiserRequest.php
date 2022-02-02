@@ -5,14 +5,13 @@ namespace App\Http\Requests;
 use App\Models\Advertiser;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class UpdateAdvertiserRequest extends FormRequest
 {
     public function authorize()
     {
         return true;
-            //Gate::allows('advertiser_edit');
+        //Gate::allows('advertiser_edit');
     }
 
     public function rules()
@@ -38,7 +37,7 @@ class UpdateAdvertiserRequest extends FormRequest
                 'numeric',
             ],
             'last_login' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'date_format:'.config('panel.date_format').' '.config('panel.time_format'),
                 'nullable',
             ],
             'network_country_code' => [

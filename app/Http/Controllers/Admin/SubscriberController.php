@@ -108,6 +108,6 @@ class SubscriberController extends Controller
 
     public function unsubscribers()
     {
-        # code...
+        // code...
     }
 }

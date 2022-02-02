@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateSubscriberRequest;
 use App\Http\Resources\Admin\SubscriberResource;
 use App\Models\Subscriber;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SubscriberApiController extends Controller

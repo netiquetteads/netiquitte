@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 
 class SystemCalendarController extends Controller
 {
@@ -25,12 +24,12 @@ class SystemCalendarController extends Controller
             foreach ($source['model']::all() as $model) {
                 $crudFieldValue = $model->getAttributes()[$source['date_field']];
 
-                if (!$crudFieldValue) {
+                if (! $crudFieldValue) {
                     continue;
                 }
 
                 $events[] = [
-                    'title' => trim($source['prefix'] . ' ' . $model->{$source['field']} . ' ' . $source['suffix']),
+                    'title' => trim($source['prefix'].' '.$model->{$source['field']}.' '.$source['suffix']),
                     'start' => $crudFieldValue,
                     'url'   => route($source['route'], $model->id),
                 ];
