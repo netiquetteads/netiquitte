@@ -78,14 +78,13 @@ class BalancesController extends Controller
 
     public function getTabledata(Request $request)
     {
-
         // $Year=$request->Year;
-        $start=$request->start;
-        $end=$request->end;
+        $startDate=$request->start;
+        $endDate=$request->end;
 
-        $start=strtotime($start);
-        $end=strtotime($end);
-
+        $start=strtotime($request->start);
+        $end=strtotime($request->end);
+        
         $table='<thead>
         <tr>
         <th>Company Name</th>';
@@ -101,12 +100,12 @@ class BalancesController extends Controller
           </tr>
       </thead>';
 
-      if($start && $end){
+      if($startDate && $endDate){
 
-        $balances = Balance::where('accounting_year','>=',date('Y',$start))->where('accounting_year','<=',date('Y',$start))->groupBy('affiliate_id')->get();
+        $balances = Balance::where('accounting_year','>=',date('Y',strtotime($startDate)))->where('accounting_year','<=',date('Y',strtotime($endDate)))->groupBy('affiliate_id')->get();
 
       }else{
-        $balances = Balance::groupBy('affiliate_id')->where('accounting_year',date('Y',$start))->get();
+        $balances = Balance::groupBy('affiliate_id')->where('accounting_year',date('Y',$startDate))->get();
       }
     
      foreach ($balances as $key => $balance) {
