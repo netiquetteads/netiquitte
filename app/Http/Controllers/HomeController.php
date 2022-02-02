@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Flasher\Prime\FlasherInterface;
 
+
 class HomeController extends Controller
 {
     /**

@@ -11,12 +11,13 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\View;
+use Flasher\Toastr\Prime\ToastrFactory;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request, ToastrFactory $flasher)
     {
         $AffiliateAllCountSidebar = Affiliate::count();
         $AffiliateActiveCountSidebar = Affiliate::where('account_status', 'active')->count();
@@ -51,5 +52,7 @@ class Controller extends BaseController
         View::share('OfferPausedCountSidebar', $OfferPausedCountSidebar);
         View::share('OfferPendingCountSidebar', $OfferPendingCountSidebar);
         View::share('OfferDeletedCountSidebar', $OfferDeletedCountSidebar);
+
+
     }
 }
