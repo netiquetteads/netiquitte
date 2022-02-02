@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Advertiser;
 use App\Models\Affiliate;
 use App\Models\Offer;
+use Flasher\Toastr\Prime\ToastrFactory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -16,7 +17,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request, ToastrFactory $flasher)
     {
         $AffiliateAllCountSidebar = Affiliate::count();
         $AffiliateActiveCountSidebar = Affiliate::where('account_status', 'active')->count();

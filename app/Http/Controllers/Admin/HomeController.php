@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Flasher\Notyf\Prime\NotyfFactory;
+use Flasher\Prime\FlasherInterface;
+use Flasher\SweetAlert\Prime\SweetAlertFactory;
+use Flasher\Toastr\Prime\ToastrFactory;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(SweetAlertFactory $sweetFlasher, NotyfFactory $notyFlasher, FlasherInterface $flasher, ToastrFactory $toastrFlasher)
     {
         $settings1 = [
             'chart_title'           => 'Emails Sent',
@@ -45,6 +49,11 @@ class HomeController extends Controller
             })
                 ->{$settings1['aggregate_function'] ?? 'count'}($settings1['aggregate_field'] ?? '*');
         }
+
+        $sweetFlasher->addSuccess('Data has been saved successfully!');
+        $notyFlasher->addSuccess('Data has been saved successfully!');
+        $flasher->addSuccess('Data has been saved successfully!');
+        $toastrFlasher->addSuccess('Data has been saved successfully!');
 
         return view('home', compact('settings1'));
     }
