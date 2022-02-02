@@ -50,10 +50,10 @@ class HomeController extends Controller
                 ->{$settings1['aggregate_function'] ?? 'count'}($settings1['aggregate_field'] ?? '*');
         }
 
-        $sweetFlasher->addSuccess('Data has been saved successfully!');
-        $notyFlasher->addSuccess('Data has been saved successfully!');
-        $flasher->addSuccess('Data has been saved successfully!');
-        $toastrFlasher->addSuccess('Data has been saved successfully!');
+//        $sweetFlasher->addSuccess('Data has been saved successfully!');
+//        $notyFlasher->addSuccess('Data has been saved successfully!');
+//        $flasher->addSuccess('Data has been saved successfully!');
+//        $toastrFlasher->addSuccess('Data has been saved successfully!');
 
         return view('home', compact('settings1'));
     }
