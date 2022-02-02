@@ -1,49 +1,49 @@
 <?php
 
-return array(
+return [
     'default' => 'template',
 
     'root_script' => 'https://cdn.jsdelivr.net/npm/@flasher/flasher@0.6.1/dist/flasher.min.js',
 
-    'template_factory' => array(
+    'template_factory' => [
         'default' => 'tailwindcss',
-        'templates' => array(
-            'tailwindcss' => array(
+        'templates' => [
+            'tailwindcss' => [
                 'view' => 'flasher::tailwindcss',
-                'styles' => array(
+                'styles' => [
                     'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
                     'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
-                ),
-            ),
-            'tailwindcss_bg' => array(
+                ],
+            ],
+            'tailwindcss_bg' => [
                 'view' => 'flasher::tailwindcss_bg',
-                'styles' => array(
+                'styles' => [
                     'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/base.min.css',
                     'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.11/utilities.css',
-                ),
-            ),
-            'bootstrap' => array(
+                ],
+            ],
+            'bootstrap' => [
                 'view' => 'flasher::bootstrap',
-                'styles' => array(
+                'styles' => [
                     'https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css',
-                ),
-            ),
-        ),
-    ),
+                ],
+            ],
+        ],
+    ],
 
     'auto_create_from_session' => true,
 
-    'types_mapping' => array(
-        'success' => array('success'),
-        'error' => array('error', 'danger'),
-        'warning' => array('warning', 'alarm'),
-        'info' => array('info', 'notice', 'alert'),
-    ),
+    'types_mapping' => [
+        'success' => ['success'],
+        'error' => ['error', 'danger'],
+        'warning' => ['warning', 'alarm'],
+        'info' => ['info', 'notice', 'alert'],
+    ],
 
-    'observer_events' => array(
-        'exclude' => array(
+    'observer_events' => [
+        'exclude' => [
             'forceDeleted',
             'restored',
-        ),
-    ),
-);
+        ],
+    ],
+];
