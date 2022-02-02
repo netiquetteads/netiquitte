@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Advertiser;
 use App\Models\Affiliate;
 use App\Models\Offer;
+use Flasher\Toastr\Prime\ToastrFactory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\View;
-use Flasher\Toastr\Prime\ToastrFactory;
 
 class Controller extends BaseController
 {
@@ -52,7 +52,5 @@ class Controller extends BaseController
         View::share('OfferPausedCountSidebar', $OfferPausedCountSidebar);
         View::share('OfferPendingCountSidebar', $OfferPendingCountSidebar);
         View::share('OfferDeletedCountSidebar', $OfferDeletedCountSidebar);
-
-
     }
 }
