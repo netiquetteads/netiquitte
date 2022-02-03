@@ -21,3 +21,4 @@ composer.lock
 .idea/misc.xml
 .idea/deployment.xml
 .idea/code-comments.xml
+.idea/php.xml
