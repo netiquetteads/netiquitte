@@ -25,7 +25,7 @@
     {{--  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  --}}
     {{--  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">  --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     @yield('styles')
 </head>
 
@@ -204,10 +204,37 @@
     {{--  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  --}}
     {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>  --}}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script>
+
+const notyf = new Notyf({
+    position: {
+                x: 'right',
+                y: 'top',
+            },
+  types: [
+    {
+      type: 'info',
+      background: 'blue',
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'warning'
+      },
+      dismissible: true
+    }
+  ]
+});
+
+
         $("#syncAdvertisers").click(function(e){
             e.preventDefault();
+
+            notyf.open({
+                type: 'info',
+                message: 'The advertisers update has been triggered!',
+                duration: 9000,
+            });
 
             $this=$(this);
 $loader='<div class="spinner-border text-dark" role="status">'+
@@ -215,19 +242,30 @@ $loader='<div class="spinner-border text-dark" role="status">'+
             '</div>';
     $this.html($loader);
 
+    
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: '{{ route('api.advertiser.getAllAdvertiser') }}',
                 success: function() {
                     console.log("SYNC Advertisers Successful!");
-                    alert("SYNC Advertisers Successful!");
+                    // alert("SYNC Advertisers Successful!");
+                    notyf.success({
+                        message: 'SYNC Advertisers Successful!',
+                        duration: 9000,
+                    });
                     $this.html('SYNC Advertisers');
                 }
             })
         });
         $("#syncAffiliates").click(function(e){
             e.preventDefault();
+
+            notyf.open({
+                type: 'info',
+                message: 'The affiliates update has been triggered!',
+                duration: 9000,
+            });
 
             $this=$(this);
 $loader='<div class="spinner-border text-dark" role="status">'+
@@ -241,13 +279,23 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                 url: '{{ route('api.advertiser.getAllAffiliates') }}',
                 success: function() {
                     console.log("SYNC Affiliates Successful!");
-                    alert("SYNC Affiliates Successful!");
+                    // alert("SYNC Affiliates Successful!");
+                    notyf.success({
+                        message: 'SYNC Affiliates Successful!',
+                        duration: 9000,
+                    });
                     $this.html('SYNC Affiliates');
                 }
             })
         });
         $("#syncOffers").click(function(e){
             e.preventDefault();
+
+            notyf.open({
+                type: 'info',
+                message: 'The offers update has been triggered!',
+                duration: 9000,
+            });
 
             $this=$(this);
 $loader='<div class="spinner-border text-dark" role="status">'+
@@ -261,7 +309,11 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                 url: '{{ route('api.advertiser.getAllOffers') }}',
                 success: function() {
                     console.log("SYNC Offers Successful!");
-                    alert("SYNC Offers Successful!");
+                    // alert("SYNC Offers Successful!");
+                    notyf.success({
+                        message: 'SYNC Offers Successful!',
+                        duration: 9000,
+                    });
                     $this.html('SYNC Offers');
                 }
             })

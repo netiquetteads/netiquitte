@@ -103,6 +103,9 @@ class BalancesController extends Controller
             $balances = Balance::groupBy('affiliate_id')->where('accounting_year', date('Y', $startDate))->get();
         }
 
+        $grandTotal = 0;
+        $grandMonthlyTotal = [];
+
         foreach ($balances as $key => $balance) {
             $AffiliateID = null;
             $AffiliateID = $balance->affiliate_id;
@@ -157,6 +160,12 @@ class BalancesController extends Controller
                     $bgColor = '#ADF5B0;';
                 } else {
                     $totalPayout = $totalPayout + $tpay;
+
+                    if (@$grandMonthlyTotal[$cYear.$cMonth]) {
+                        $grandMonthlyTotal[$cYear.$cMonth] = $tpay + $grandMonthlyTotal[$cYear.$cMonth];
+                    } else {
+                        $grandMonthlyTotal[$cYear.$cMonth] = $tpay;
+                    }
                 }
 
                 $table .= "<td data-order='".$payout."' style='background: ".$bgColor."'>
@@ -168,9 +177,18 @@ class BalancesController extends Controller
                 $start = strtotime('+1 month', $start);
             }
 
+            $grandTotal = $grandTotal + $totalPayout;
+
             $table .= "<td id='totalAmount".$AffiliateID."' data-order='$".$totalPayout."'>$".$totalPayout.'</td>';
             $table .= '</tr>';
         }
+
+        // dump($grandMonthlyTotal);
+        $table .= '<tr><th>Total</th>';
+        foreach ($grandMonthlyTotal as $key => $value) {
+            $table .= '<th>$'.$value.'</th>';
+        }
+        $table .= '<th>$'.$grandTotal.'</th></tr>';
 
         echo $table;
     }
