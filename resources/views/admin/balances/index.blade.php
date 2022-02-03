@@ -32,7 +32,7 @@
           background-color: rgb(0,0,0); /* Fallback color */
           background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
-        
+
         /* Modal Content */
         .modal-content {
           background-color: #fefefe;
@@ -41,7 +41,7 @@
           border: 1px solid #888;
           width: 80%;
         }
-        
+
         /* The Close Button */
         .close {
           color: #aaaaaa;
@@ -49,7 +49,7 @@
           font-size: 28px;
           font-weight: bold;
         }
-        
+
         .close:hover,
         .close:focus {
           color: #000;
@@ -63,7 +63,7 @@
             text-align: center;
             border-radius: 25px 25px 0px 0px;
             background: #e0e0e0;
-            padding: 10px; 
+            padding: 10px;
             width: 200px;
             height: 30px;
         }
@@ -109,13 +109,13 @@
 <div class="card">
     <div class="card-header">
         Accounting Overview
-        
+
     </div>
 
     <div class="card-body">
         {{-- <input type="text" name="daterange" id="daterangepicker"> <br><br> --}}
         <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-Balance" id="balanceTable">
-            
+
         </table>
     </div>
 </div>
@@ -123,14 +123,14 @@
 @endsection
 
 <div id='modalStuff' class="modal">
-						
+
 </div>
 
 @section('scripts')
 @parent
 
 <script>
- 
+
  $('.input-daterange input').each(function() {
     $(this).datepicker({
         changeMonth:true,
@@ -141,32 +141,32 @@
     }).on('changeDate', function(e){
         $(this).datepicker('hide');
     });
-});    
-    
+});
+
 
 $('#CustomManualUpdate').click(function(){
     $this=$(this);
-$loader='<div class="spinner-border text-dark" role="status">'+
+    $loader='<div class="spinner-border text-dark" role="status">'+
             '<span class="sr-only">Loading...</span>'+
             '</div>';
     $this.html($loader);
-    
+
     var fromDate=$( "#from" ).val();
     var toDate=$( "#to" ).val();
 
     // console.log(fromDate,toDate);
 
-                $.ajax({
-                    type: "GET",
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: "{{ route('api.balance.manualUpdate') }}?fromDate="+fromDate+"&toDate="+toDate,
-                    data: "check",
-                    success: function(response){
-                        alert(response.message);
-                        $this.html('Update');
-                        location.reload();
-                    }
-                });
+    $.ajax({
+        type: "GET",
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: "{{ route('api.balance.manualUpdate') }}?fromDate="+fromDate+"&toDate="+toDate,
+        data: "check",
+        success: function(response){
+            alert(response.message);
+            $this.html('Update');
+            location.reload();
+        }
+    });
 });
 
  </script>
@@ -176,7 +176,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
         window.location.href = "{{ url('admin/balances') }}";
     });
 
-    
+
     $('#daterangepicker').daterangepicker({
     "showDropdowns": true,
     "linkedCalendars": false,
@@ -185,12 +185,12 @@ $loader='<div class="spinner-border text-dark" role="status">'+
     // "startDate": moment().startOf('month'),
     // "endDate": moment()
     // minDate: moment().subtract(12, 'years')
-    
+
 }, function(start, end, label) {
   console.log(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
 
   window.location.href = "{{ url('admin/balances') }}?start="+start.format('YYYY-MM-DD')+"&end="+end.format('YYYY-MM-DD');
-  
+
     // $.ajax({
     //     type: "POST",
     //     async:true,
@@ -243,8 +243,8 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
 
             function myFunction(item, index) {
               document.getElementById(item).style.display = "none";
-            } 
-                
+            }
+
             document.getElementById(TabToOpen).style.display = "block";
         }
         function OpenModal(AffiliateID, Year, Month){
@@ -270,11 +270,11 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
                         }
                 }
             });
-            
 
-            
+
+
             //SHOW HERE
-                
+
                 modal.style.display = "block";
         }
         function getDataFromTheEditor() {
@@ -290,7 +290,7 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
                 modal.style.display = "none";
             }
         }
-        
+
         function OverViewEdit(MainDiv,EditDiv){
             var x = document.getElementById(MainDiv);
             var y = document.getElementById(EditDiv);
@@ -337,7 +337,7 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
                 }
             });
         }
-        
+
         function PaymentDisplay(AffiliateID){
         var x = document.getElementById("PaymentType").value;
         console.log("------"+x);
@@ -354,10 +354,10 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
             document.getElementById("PaymentContainer").innerHTML = "<label>Paypal Email:</label><input class='form-control' id='PaypalAccount' type='text'><br><button type='button' class='btn btn-success' onclick=\"SavePaymentInfo('"+AffiliateID+"','PAYPAL');\">Save Payment Information</button>";
         }
     }
-    
+
     function SavePaymentInfo(x,y){
         if(y == "WIRE"){
-            
+
             var WireAccountName = document.getElementById("WireAccountName").value;
             var WireAccountNumber = document.getElementById("WireAccountNumber").value;
             var WireAccountRouting = document.getElementById("WireAccountRouting").value;
@@ -376,7 +376,7 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
         if(y == "ACH"){
             var ACHAccountName = document.getElementById("ACHAccountName").value;
             var ACHAccountNumber = document.getElementById("ACHAccountNumber").value;
-            var ACHRoutingNumber = document.getElementById("ACHRoutingNumber").value;	
+            var ACHRoutingNumber = document.getElementById("ACHRoutingNumber").value;
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -402,7 +402,7 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
                 });
         }
     }
-    
+
     function SaveNotes(AccountID){
         var Notes = document.getElementById("PublisherNotes").value;
         $.ajax({
@@ -461,7 +461,7 @@ $(document).ready(function() {
         });
 
     });
-		
+
 });
 
 
@@ -525,7 +525,7 @@ $(document).ready(function() {
 //       $($.fn.dataTable.tables(true)).DataTable()
 //           .columns.adjust();
 //   });
-  
+
 // });
 
 </script>
