@@ -25,5 +25,4 @@ class AddFieldsToPaymentMethods extends Migration
             $table->boolean('swift_select')->default(0)->nullable();
         });
     }
-
 }
