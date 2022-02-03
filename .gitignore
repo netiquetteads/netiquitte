@@ -13,8 +13,8 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 composer.lock
-/.idea
-/.idea/*
+.idea
+.idea/*
 .idea/phpunit.xml
 .idea/php.xml
 .idea/netiquitte.iml
