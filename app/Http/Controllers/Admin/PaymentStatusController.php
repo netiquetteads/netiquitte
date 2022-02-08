@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\MassDestroyPaymentStatusRequest;
 use App\Http\Requests\StorePaymentStatusRequest;
 use App\Http\Requests\UpdatePaymentStatusRequest;
 use App\Models\PaymentStatus;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 

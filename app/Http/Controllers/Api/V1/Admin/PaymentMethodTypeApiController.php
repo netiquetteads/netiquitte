@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\PaymentMethodType;
-use Gate;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Admin\PaymentMethodTypeResource;
+use App\Models\PaymentMethodType;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PaymentMethodTypeApiController extends Controller
 {

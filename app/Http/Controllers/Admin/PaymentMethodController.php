@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\MassDestroyPaymentMethodRequest;
 use App\Http\Requests\StorePaymentMethodRequest;
 use App\Http\Requests\UpdatePaymentMethodRequest;
+use App\Models\Affiliate;
 use App\Models\PaymentMethod;
 use App\Models\PaymentMethodType;
-use App\Models\Affiliate;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -20,7 +20,7 @@ class PaymentMethodController extends Controller
     {
         abort_if(Gate::denies('payment_method_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-         if ($request->ajax()) {
+        if ($request->ajax()) {
             $query = PaymentMethod::select(sprintf('%s.*', (new PaymentMethod())->table));
             $table = Datatables::of($query);
 
@@ -64,10 +64,10 @@ class PaymentMethodController extends Controller
     {
         abort_if(Gate::denies('payment_method_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $paymentMethodTypes=PaymentMethodType::get();
-        $affiliates=Affiliate::get();
+        $paymentMethodTypes = PaymentMethodType::get();
+        $affiliates = Affiliate::get();
 
-        return view('admin.paymentMethods.create', compact('paymentMethodTypes','affiliates'));
+        return view('admin.paymentMethods.create', compact('paymentMethodTypes', 'affiliates'));
     }
 
     public function store(StorePaymentMethodRequest $request)
@@ -81,10 +81,10 @@ class PaymentMethodController extends Controller
     {
         abort_if(Gate::denies('payment_method_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $paymentMethodTypes=PaymentMethodType::get();
-        $affiliates=Affiliate::get();
+        $paymentMethodTypes = PaymentMethodType::get();
+        $affiliates = Affiliate::get();
 
-        return view('admin.paymentMethods.edit', compact('paymentMethod','paymentMethodTypes','affiliates'));
+        return view('admin.paymentMethods.edit', compact('paymentMethod', 'paymentMethodTypes', 'affiliates'));
     }
 
     public function update(UpdatePaymentMethodRequest $request, PaymentMethod $paymentMethod)
@@ -116,5 +116,4 @@ class PaymentMethodController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
-
 }

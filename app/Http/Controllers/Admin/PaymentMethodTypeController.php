@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\PaymentMethodType;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -144,34 +144,29 @@ class PaymentMethodTypeController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    
     public function fetchPayment(Request $request)
     {
-        if($request->get('query'))
-        {
+        if ($request->get('query')) {
             $query = $request->get('query');
             $data = PaymentMethodType::where('name', 'LIKE', "%{$query}%")
                 ->get();
 
-                $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-                if ($data->count()>0) {
-                    
-                        foreach($data as $row)
-                        {
-                            $output .= '
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            if ($data->count() > 0) {
+                foreach ($data as $row) {
+                    $output .= '
                             <li class="auto" id="'.$row->id.'"><a href="javascript:void(0);">'.$row->name.'</a></li>
                             ';
-                        }
-                            
-                }else{
-                    $output .= '
+                }
+            } else {
+                $output .= '
                             <li class="add"><a href="javascript:void(0);">Add "<span>'.$query.'</span>"</a></li>
                             ';
-                }
+            }
 
-                $output .= '</ul>';
-            
-                echo $output;
+            $output .= '</ul>';
+
+            echo $output;
         }
     }
 }

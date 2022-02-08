@@ -56,12 +56,11 @@ class PaymentMethod extends Model
 
     public function payment_method_type()
     {
-        return $this->belongsTo(PaymentMethodType::class,'payment_method_type_id');
+        return $this->belongsTo(PaymentMethodType::class, 'payment_method_type_id');
     }
 
     public function affiliate()
     {
-        return $this->belongsTo(Affiliate::class,'affiliate_id');
+        return $this->belongsTo(Affiliate::class, 'affiliate_id');
     }
-    
 }
