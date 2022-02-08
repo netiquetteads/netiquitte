@@ -11,10 +11,10 @@
             @csrf
             <div class="form-group">
                 <label>{{ trans('cruds.paymentMethod.fields.name') }}</label>
-                <select class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" id="name">
-                    <option value disabled {{ old('name', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\PaymentMethod::NAME_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('name', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                <select class="form-control select2 {{ $errors->has('payment_method_type_id') ? 'is-invalid' : '' }}" name="payment_method_type_id" id="payment_method_type_id">
+                    <option value disabled {{ old('payment_method_type_id', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach($paymentMethodTypes as $key => $paymentMethodType)
+                        <option value="{{ $paymentMethodType->id }}" {{ old('payment_method_type_id', '') === (string) $paymentMethodType->id ? 'selected' : '' }}>{{ $paymentMethodType->name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('name'))
@@ -22,6 +22,27 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.name_helper') }}</span>
             </div>
+            <div class="form-group">
+                <label>{{ trans('cruds.paymentMethod.fields.affiliates') }}</label>
+                <select class="form-control select2 {{ $errors->has('affiliate_id') ? 'is-invalid' : '' }}" name="affiliate_id" id="affiliate_id">
+                    <option value disabled {{ old('affiliate_id', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach($affiliates as $key => $affiliate)
+                        <option value="{{ $affiliate->id }}" {{ old('affiliate_id', '') === (string) $affiliate->id ? 'selected' : '' }}>{{ $affiliate->name }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('name'))
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.paymentMethod.fields.name_helper') }}</span>
+            </div>
+            {{--  <div class="form-group">
+                <label for="name">{{ trans('cruds.paymentMethod.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}">
+                @if($errors->has('name'))
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.paymentMethod.fields.name_helper') }}</span>
+            </div>  --}}
             <div class="form-group">
                 <label for="account_name">{{ trans('cruds.paymentMethod.fields.account_name') }}</label>
                 <input class="form-control {{ $errors->has('account_name') ? 'is-invalid' : '' }}" type="text" name="account_name" id="account_name" value="{{ old('account_name', '') }}">
@@ -61,6 +82,22 @@
                     <span class="text-danger">{{ $errors->first('paypal_email') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.paypal_email_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="custom_email">{{ trans('cruds.paymentMethod.fields.custom_email') }}</label>
+                <input class="form-control {{ $errors->has('custom_email') ? 'is-invalid' : '' }}" type="email" name="custom_email" id="custom_email" value="{{ old('custom_email') }}">
+                @if($errors->has('custom_email'))
+                    <span class="text-danger">{{ $errors->first('custom_email') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.paymentMethod.fields.custom_email_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="explanation">{{ trans('cruds.paymentMethod.fields.explanation') }}</label>
+                <textarea class="form-control {{ $errors->has('explanation') ? 'is-invalid' : '' }}" name="explanation" id="explanation" cols="30" rows="5">{{ old('explanation') }}</textarea>
+                @if($errors->has('explanation'))
+                    <span class="text-danger">{{ $errors->first('explanation') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.paymentMethod.fields.explanation_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

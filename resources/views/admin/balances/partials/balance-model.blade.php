@@ -51,7 +51,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-edit"></i>
-                        ({{ $AffiliateID }}) <strong>{{ $balance->affiliate }}</strong>
+                        ({{ $AffiliateID }}) <strong>{{ $balance->affiliate ?? '' }}</strong>
                     </h3>
                 </div>
                 <div class="card-body">

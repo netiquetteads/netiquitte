@@ -505,6 +505,18 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('payment_method_type_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.payment-method-type.index") }}" class="nav-link {{ request()->is("admin/payment-method-type") || request()->is("admin/payment-method-type/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fab fa-cc-apple-pay">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.paymentMethodType.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endcan

@@ -99,6 +99,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('payment-methods/destroy', 'PaymentMethodController@massDestroy')->name('payment-methods.massDestroy');
     Route::resource('payment-methods', 'PaymentMethodController');
 
+    // Payment Method Type
+    Route::delete('payment-method-type/destroy', 'PaymentMethodTypeController@massDestroy')->name('payment-method-type.massDestroy');
+    Route::post('fetchPayment', 'PaymentMethodTypeController@fetchPayment')->name('autocomplete.fetch-payments');
+    Route::resource('payment-method-type', 'PaymentMethodTypeController');
+    
     // Template
     Route::delete('templates/destroy', 'TemplateController@massDestroy')->name('templates.massDestroy');
     Route::post('templates/media', 'TemplateController@storeMedia')->name('templates.storeMedia');

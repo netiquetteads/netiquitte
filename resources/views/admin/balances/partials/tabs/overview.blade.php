@@ -25,9 +25,9 @@
 						</tr>
 						<tr>
 							<td style="width: 45%;text-align:right;">
-								@if ($balance->monthly_status=='PAID')
+								@if (@$balance->monthly_status=='PAID')
                         <span class="badge bg-success float-left">PAID</span>
-                    @elseif($balance->monthly_status=='UNPAID')
+                    @elseif(@$balance->monthly_status=='UNPAID')
                         <span class="badge bg-danger float-left">NOT PAID</span>
                     {{-- @elseif($balance->monthly_status=='ISSUE')
                     <span class="badge bg-warning float-left">PENDING ISSUE</span> --}}
@@ -83,9 +83,9 @@
 							<th style="width: 45%;text-align:right;">TOTAL UNPAID</th>
 							<td style="width: 45%;text-align:right;">
 								
-								@if ($balance->monthly_status=='PAID')
+								@if (@$balance->monthly_status=='PAID')
 								<span class="text-success">$ 00.00 </span><strong>/ {{ $total }}</strong>
-								@elseif($balance->monthly_status=='UNPAID')
+								@elseif(@$balance->monthly_status=='UNPAID')
 									<span class="text-danger">${{ $payoutAmt }} </span><strong>/ {{ $total }}</strong>
 								{{-- @elseif($balance->monthly_status=='ISSUE')
 									<span class="text-warning">${{ $payoutAmt }} </span><strong>/ {{ $total }}</strong> --}}

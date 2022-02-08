@@ -1,34 +1,31 @@
 @extends('layouts.admin')
 @section('content')
-@can('payment_method_create')
+@can('payment_method_type_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.payment-methods.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.paymentMethod.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.payment-method-type.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.paymentMethodType.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.paymentMethod.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.paymentMethodType.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PaymentMethod">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-PaymentMethodType">
             <thead>
                 <tr>
                     <th width="10">
 
                     </th>
                     <th>
-                        {{ trans('cruds.paymentMethod.fields.id') }}
+                        {{ trans('cruds.paymentMethodType.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.paymentMethod.fields.affiliate') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.paymentMethod.fields.name') }}
+                        {{ trans('cruds.paymentMethodType.fields.name') }}
                     </th>
                     <th>
                         &nbsp;
@@ -47,11 +44,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('payment_method_delete')
+@can('payment_method_type_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.payment-methods.massDestroy') }}",
+    url: "{{ route('admin.payment-method-type.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -83,11 +80,10 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.payment-methods.index') }}",
+    ajax: "{{ route('admin.payment-method-type.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'affiliate', name: 'affiliate' },
 { data: 'name', name: 'name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
@@ -95,7 +91,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
-  let table = $('.datatable-PaymentMethod').DataTable(dtOverrideGlobals);
+  let table = $('.datatable-PaymentMethodType').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

@@ -83,6 +83,17 @@
         .card-title {
             margin-bottom: 20px !important;
         }
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #495057 !important;
+}
+#paymentList .dropdown-menu li{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+#paymentList .dropdown-menu{
+    padding: 0;
+}
     </style>
 @endsection
 
@@ -130,6 +141,135 @@
 @parent
 
 <script>
+
+$(document).ready(function(){
+
+    
+
+    $(document).on('click', '#SavePaymentInfo' ,function (e) {
+        var paymentMethodFormData=$('#paymentMethodForm').serialize();
+        
+        var id=$('#paymentMethodId').val();
+        if (id) {
+            var url="{{ url('') }}/api/v1/payment-methods/"+id;
+            var type='PUT';
+        } else {
+            var url="{{ route('api.payment-methods.store') }}";
+            var type='POST';
+        }
+        
+        $.ajax({
+            type: type,
+            url: url,
+            data: paymentMethodFormData,
+            success: function(response){
+                location.reload();
+            }
+        });
+    });
+    
+    $(document).on('change', '.selectFields input[type="checkbox"]' ,function (e) {
+        if(this.checked) {
+            
+            if(this.value==1){
+                $('#name_div').show();
+            }
+            if(this.value==3){
+                $('#account_name_div').show();
+            }
+            if(this.value==4){
+                $('#account_number_div').show();
+            }
+            if(this.value==5){
+                $('#routing_number_div').show();
+            }
+            if(this.value==6){
+                $('#explanation_div').show();
+            }
+            if(this.value==7){
+                $('#custom_email_div').show();
+            }
+            if(this.value==8){
+                $('#swift_div').show();
+            }
+            if(this.value==9){
+                $('#paypal_email_div').show();
+            }
+        }else{
+            if(this.value==1){
+                $('#name_div').hide();
+            }
+            if(this.value==3){
+                $('#account_name_div').hide();
+            }
+            if(this.value==4){
+                $('#account_number_div').hide();
+            }
+            if(this.value==5){
+                $('#routing_number_div').hide();
+            }
+            if(this.value==6){
+                $('#explanation_div').hide();
+            }
+            if(this.value==7){
+                $('#custom_email_div').hide();
+            }
+            if(this.value==8){
+                $('#swift_div').hide();
+            }
+            if(this.value==9){
+                $('#paypal_email_div').hide();
+            }
+        }
+    });
+
+
+    $(document).on('keyup', '#payment_method' ,function (e) {
+       var query = $(this).val();
+       var affiliate_id = $('#AffiliateID').val();
+       if(query != '')
+       {
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+         url:"{{ route('admin.autocomplete.fetch-payments') }}",
+         method:"POST",
+         data:{query:query,affiliate_id:affiliate_id, _token:_token},
+         success:function(data){
+          $('#paymentList').fadeIn();  
+          $('#paymentList').html(data);
+         }
+        });
+       }else{
+        $('#paymentList').fadeOut();
+        $('#paymentMethodTypeId').val('');
+       }
+   });
+
+   $(document).on('click', '#paymentList ul li.auto', function(){  
+       $('#payment_method').val($(this).text());
+       $('#paymentMethodTypeId').val($(this).attr('id'));
+       $('#paymentList').fadeOut();
+   });
+
+   $(document).on('click', '#paymentList ul li.add', function(){ 
+       
+       var name = $(this).find('span').text();
+       $('#payment_method').val(name);  
+       $('#paymentList').fadeOut();
+
+       $.ajax({
+        type: "POST",
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: "{{ route('api.payment-method-type.store') }}",
+        data: {name:name},
+        success: function(response){
+            $('#paymentMethodTypeId').val(response.data.id);
+        }
+    });
+
+   });  
+
+});
 
  $('.input-daterange input').each(function() {
     $(this).datepicker({

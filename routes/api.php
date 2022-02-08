@@ -49,6 +49,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     // Payment Method
     Route::apiResource('payment-methods', 'PaymentMethodApiController');
 
+    // Payment Method Type
+    Route::apiResource('payment-method-type', 'PaymentMethodTypeApiController');
+
     // Template
     Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
     Route::apiResource('templates', 'TemplateApiController');

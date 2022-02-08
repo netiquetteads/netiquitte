@@ -25,10 +25,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.paymentMethod.fields.affiliate') }}
+                        </th>
+                        <td>
+                            {{ $paymentMethod->affiliate->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.paymentMethod.fields.name') }}
                         </th>
                         <td>
-                            {{ App\Models\PaymentMethod::NAME_SELECT[$paymentMethod->name] ?? '' }}
+                            {{ $paymentMethod->payment_method_type->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -69,6 +77,22 @@
                         </th>
                         <td>
                             {{ $paymentMethod->paypal_email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.paymentMethod.fields.custom_email') }}
+                        </th>
+                        <td>
+                            {{ $paymentMethod->custom_email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.paymentMethod.fields.explanation') }}
+                        </th>
+                        <td>
+                            {{ $paymentMethod->explanation }}
                         </td>
                     </tr>
                 </tbody>
