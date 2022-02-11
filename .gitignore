@@ -22,3 +22,5 @@ composer.lock
 .idea/deployment.xml
 .idea/code-comments.xml
 .idea/php.xml
+.vscode/settings.json
+storage/migrations.code-workspace
