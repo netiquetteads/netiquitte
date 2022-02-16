@@ -72,7 +72,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="vert-tabs-payment-tab" data-toggle="pill" href="#vert-tabs-payment" role="tab"
-                                       aria-controls="vert-tabs-payment" aria-selected="false">Payment</a>
+                                       aria-controls="vert-tabs-payment" aria-selected="false">Payment Info</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="vert-tabs-notes-tab" data-toggle="pill" href="#vert-tabs-notes" role="tab"

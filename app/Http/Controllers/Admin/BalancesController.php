@@ -396,10 +396,12 @@ class BalancesController extends Controller
         $account = Affiliate::with(['Accounts' => function ($q) {
             $q->where('AccountType', 1);
         }])->where('id', $request->aid)->first();
+ 
+        $invoiceData = str_replace('{FirstName}', $account->Accounts->FirstName, $request->invoiceData);
 
         $input = [
-            'message' => $request->invoiceData,
-            'subject' => 'Invoice for your account from Netiquette Ads',
+            'message' => $invoiceData,
+            'subject' => $account->Accounts->FirstName. ', You have Been Paid',
         ];
 
         $send = \Mail::to($account->Accounts->EmailAddress)->send(new SendInvoiceMail($input));

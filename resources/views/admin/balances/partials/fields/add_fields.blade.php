@@ -60,12 +60,12 @@
             <div class="form-check {{ $errors->has('explanation_select') ? 'is-invalid' : '' }}">
                 <input type="hidden" name="explanation_select" value="0">
                 <input class="form-check-input" type="checkbox" name="explanation_select" id="explanation_select" value="6" {{ @$paymentMethod->explanation_select || old('explanation_select', 0) === 6 ? 'checked' : '' }}>
-                <label class="form-check-label" for="explanation_select">{{ trans('cruds.paymentMethod.fields.explanation_select') }}</label>
+                <label class="form-check-label" for="explanation_select">{{ trans('cruds.paymentMethod.fields.notes_select') }}</label>
             </div>
             @if($errors->has('explanation_select'))
                 <span class="text-danger">{{ $errors->first('explanation_select') }}</span>
             @endif
-            <span class="help-block">{{ trans('cruds.paymentMethod.fields.explanation_select_helper') }}</span>
+            <span class="help-block">{{ trans('cruds.paymentMethod.fields.notes_select_helper') }}</span>
         </div>
         <div class="form-group selectFields" id="custom_email_select_div">
             <div class="form-check {{ $errors->has('custom_email_select') ? 'is-invalid' : '' }}">
@@ -99,6 +99,28 @@
                 <span class="text-danger">{{ $errors->first('paypal_email_select') }}</span>
             @endif
             <span class="help-block">{{ trans('cruds.paymentMethod.fields.paypal_email_select_helper') }}</span>
+        </div>
+        <div class="form-group selectFields">
+            <div class="form-check {{ $errors->has('w8_select') ? 'is-invalid' : '' }}">
+                <input type="hidden" name="w8_select" value="0">
+                <input class="form-check-input" type="checkbox" name="w8_select" id="w8_select" value="10" {{ @$paymentMethod->w8_select || old('w8_select', 0) === 10 ? 'checked' : '' }}>
+                <label class="form-check-label" for="w8_select">{{ trans('cruds.paymentMethod.fields.w8_select') }}</label>
+            </div>
+            @if($errors->has('w8_select'))
+                <span class="text-danger">{{ $errors->first('w8_select') }}</span>
+            @endif
+            <span class="help-block">{{ trans('cruds.paymentMethod.fields.w8_select_helper') }}</span>
+        </div>
+        <div class="form-group selectFields">
+            <div class="form-check {{ $errors->has('w9_select') ? 'is-invalid' : '' }}">
+                <input type="hidden" name="w9_select" value="0">
+                <input class="form-check-input" type="checkbox" name="w9_select" id="w9_select" value="11" {{ @$paymentMethod->w9_select || old('w9_select', 0) === 11 ? 'checked' : '' }}>
+                <label class="form-check-label" for="w9_select">{{ trans('cruds.paymentMethod.fields.w9_select') }}</label>
+            </div>
+            @if($errors->has('w9_select'))
+                <span class="text-danger">{{ $errors->first('w9_select') }}</span>
+            @endif
+            <span class="help-block">{{ trans('cruds.paymentMethod.fields.w9_select_helper') }}</span>
         </div>
 
 
@@ -164,13 +186,28 @@
             <span class="help-block">{{ trans('cruds.paymentMethod.fields.custom_email_helper') }}</span>
         </div>
         <div class="form-group" id="explanation_div" @if(@$paymentMethod->explanation_select==false) style="display: none;" @endif>
-            <label for="explanation">{{ trans('cruds.paymentMethod.fields.explanation') }}</label>
+            <label for="explanation">{{ trans('cruds.paymentMethod.fields.notes') }}</label>
             <textarea class="form-control {{ $errors->has('explanation') ? 'is-invalid' : '' }}" name="explanation" id="explanation" cols="30" rows="5">{{ old('explanation', @$paymentMethod->explanation) }}</textarea>
             @if($errors->has('explanation'))
                 <span class="text-danger">{{ $errors->first('explanation') }}</span>
             @endif
-            <span class="help-block">{{ trans('cruds.paymentMethod.fields.explanation_helper') }}</span>
+            <span class="help-block">{{ trans('cruds.paymentMethod.fields.notes_helper') }}</span>
         </div>
-
+        <div class="form-group" id="w8_div" @if(@$paymentMethod->w8_select==false) style="display: none;" @endif>
+            <label for="w8">{{ trans('cruds.paymentMethod.fields.w8') }}</label>
+            <input class="form-control {{ $errors->has('w8') ? 'is-invalid' : '' }}" type="text" name="w8" id="w8" value="{{ old('w8', @$paymentMethod->w8) }}">
+            @if($errors->has('w8'))
+                <span class="text-danger">{{ $errors->first('w8') }}</span>
+            @endif
+            <span class="help-block">{{ trans('cruds.paymentMethod.fields.w8_helper') }}</span>
+        </div>
+        <div class="form-group" id="w9_div" @if(@$paymentMethod->w9_select==false) style="display: none;" @endif>
+            <label for="w9">{{ trans('cruds.paymentMethod.fields.w9') }}</label>
+            <input class="form-control {{ $errors->has('w9') ? 'is-invalid' : '' }}" type="text" name="w9" id="w9" value="{{ old('w9', @$paymentMethod->w9) }}">
+            @if($errors->has('w9'))
+                <span class="text-danger">{{ $errors->first('w9') }}</span>
+            @endif
+            <span class="help-block">{{ trans('cruds.paymentMethod.fields.w9_helper') }}</span>
+        </div>
     </div>
 </div>
