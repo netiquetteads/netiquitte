@@ -195,12 +195,7 @@ $(document).ready(function(){
             if(this.value==9){
                 $('#paypal_email_div').show();
             }
-            if(this.value==10){
-                $('#w8_div').show();
-            }
-            if(this.value==11){
-                $('#w9_div').show();
-            }
+            
         }else{
             if(this.value==1){
                 $('#name_div').hide();
@@ -226,12 +221,7 @@ $(document).ready(function(){
             if(this.value==9){
                 $('#paypal_email_div').hide();
             }
-            if(this.value==10){
-                $('#w8_div').hide();
-            }
-            if(this.value==11){
-                $('#w9_div').hide();
-            }
+            
         }
     });
 

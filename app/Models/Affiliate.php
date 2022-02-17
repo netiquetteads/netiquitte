@@ -60,6 +60,8 @@ class Affiliate extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'w8',
+        'w9',
     ];
 
     public function registerMediaConversions(Media $media = null): void

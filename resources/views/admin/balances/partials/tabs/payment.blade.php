@@ -38,6 +38,30 @@
 
                         <br>
                         <input type="hidden" name="affiliate_id" id="AffiliateID" value="{{ $AffiliateID  }}">
+                        <div class="row float-left">
+                            <div class="form-group col-md-6">
+                                <div class="form-check {{ $errors->has('w8') ? 'is-invalid' : '' }}">
+                                    <input type="hidden" name="w8" value="0">
+                                    <input class="form-check-input" type="checkbox" name="w8" id="w8" value="1" {{ @$affiliate->w8 || old('w8', 0) === 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="w8">{{ trans('cruds.paymentMethod.fields.w8') }}</label>
+                                </div>
+                                @if($errors->has('w8'))
+                                    <span class="text-danger">{{ $errors->first('w8') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.paymentMethod.fields.w8_helper') }}</span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="form-check {{ $errors->has('w9') ? 'is-invalid' : '' }}">
+                                    <input type="hidden" name="w9" value="0">
+                                    <input class="form-check-input" type="checkbox" name="w9" id="w9" value="1" {{ @$affiliate->w9 || old('w9', 0) === 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="w9">{{ trans('cruds.paymentMethod.fields.w9') }}</label>
+                                </div>
+                                @if($errors->has('w9'))
+                                    <span class="text-danger">{{ $errors->first('w9') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.paymentMethod.fields.w9_helper') }}</span>
+                            </div>
+                        </div>
                         <button type="button" class="btn btn-success float-right" id="SavePaymentInfo">Save Payment Information</button>
                     </form>
                   </div>
