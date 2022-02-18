@@ -203,7 +203,7 @@ class BalancesController extends Controller
 
         $paymentMethod = PaymentMethod::where('affiliate_id', $AffiliateID)->first();
 
-        $affiliate=Affiliate::where('id', $AffiliateID)->first();
+        $affiliate = Affiliate::where('id', $AffiliateID)->first();
 
         $paymentMailLogs=PaymentMailLogs::where('affiliate_id', $AffiliateID)->orderBy('id','DESC')->get();
 
