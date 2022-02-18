@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\TempEmail;
+use App\Models\PaymentMailLogs;
 use Illuminate\Http\Request;
 
 class UnsubscribeController extends Controller
@@ -31,6 +32,19 @@ class UnsubscribeController extends Controller
             $tempEmail = TempEmail::where('email', $request->eid)->where('campaign_id', $request->cid)->where('email_opened', '')->first();
             if ($tempEmail) {
                 $tempEmail->email_opened = 'opened';
+                $tempEmail->email_open_date = date('Y-m-d');
+                $tempEmail->email_open_time = date('h:i:s');
+                $tempEmail->save();
+            }
+        }
+    }
+
+    public function paymentOpenEmail(Request $request)
+    {
+        if ($request->id) {
+            $tempEmail = PaymentMailLogs::where('id', $request->id)->where('affiliate_id', $request->aid)->where('email_opened', 0)->first();
+            if ($tempEmail) {
+                $tempEmail->email_opened = 1;
                 $tempEmail->email_open_date = date('Y-m-d');
                 $tempEmail->email_open_time = date('h:i:s');
                 $tempEmail->save();

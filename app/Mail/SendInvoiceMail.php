@@ -30,9 +30,9 @@ class SendInvoiceMail extends Mailable
     {
         return $this->markdown('emails.SendInvoiceMail')
                     ->with([
-                        'message' => $this->input['message'],
+                        'email_body' => $this->input['email_body'],
                     ])
                     ->from('info@netiquetteads.com', 'Netiquette Ads')
-                    ->subject($this->input['subject']);
+                    ->subject($this->input['email_subject']);
     }
 }

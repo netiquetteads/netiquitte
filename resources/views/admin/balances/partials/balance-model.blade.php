@@ -82,6 +82,10 @@
                                     <a class="nav-link" id="vert-tabs-email-tab" data-toggle="pill" href="#vert-tabs-email" role="tab"
                                        aria-controls="vert-tabs-email" aria-selected="false">Email Invoice</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="vert-tabs-mail-logs-tab" data-toggle="pill" href="#vert-tabs-mail-logs" role="tab"
+                                       aria-controls="vert-tabs-mail-logs" aria-selected="false">Mail Logs</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="card-body">
@@ -96,6 +100,8 @@
                                 @include('admin.balances.partials.tabs.notes')
 
                                 @include('admin.balances.partials.tabs.email')
+
+                                @include('admin.balances.partials.tabs.mail-logs')
                             </div>
                         </div>
                         <!-- /.card -->

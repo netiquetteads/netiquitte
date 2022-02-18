@@ -78,7 +78,7 @@
             line-height: 30px;
         }
         .modal-lg {
-        max-width: 950px;
+        max-width: 1050px;
         }
         .card-title {
             margin-bottom: 20px !important;
