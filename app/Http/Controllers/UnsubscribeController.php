@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
-use App\Models\TempEmail;
 use App\Models\PaymentMailLogs;
+use App\Models\TempEmail;
 use Illuminate\Http\Request;
 
 class UnsubscribeController extends Controller
