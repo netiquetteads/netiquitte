@@ -26,6 +26,22 @@
                 <span class="help-block">{{ trans('cruds.userAlert.fields.alert_link_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="roles">{{ trans('cruds.userAlert.fields.role') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles[]" id="roles" multiple>
+                    @foreach($roles as $id => $role)
+                        <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('roles'))
+                    <span class="text-danger">{{ $errors->first('roles') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.userAlert.fields.role_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="users">{{ trans('cruds.userAlert.fields.user') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -33,13 +49,29 @@
                 </div>
                 <select class="form-control select2 {{ $errors->has('users') ? 'is-invalid' : '' }}" name="users[]" id="users" multiple>
                     @foreach($users as $id => $user)
-                        <option value="{{ $id }}" {{ in_array($id, old('users', [])) ? 'selected' : '' }}>{{ $user }}</option>
+                        <option value="{{ $user->id }}" {{ in_array($id, old('users', [])) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('users'))
                     <span class="text-danger">{{ $errors->first('users') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.userAlert.fields.user_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="teams">{{ trans('cruds.userAlert.fields.team') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('teams') ? 'is-invalid' : '' }}" name="teams[]" id="teams" multiple>
+                    @foreach($teams as $id => $team)
+                        <option value="{{ $id }}" {{ in_array($id, old('teams', [])) ? 'selected' : '' }}>{{ $team }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('teams'))
+                    <span class="text-danger">{{ $errors->first('teams') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.userAlert.fields.team_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

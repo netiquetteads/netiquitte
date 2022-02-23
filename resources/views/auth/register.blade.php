@@ -3,8 +3,8 @@
 <div class="login-box">
     <div class="login-logo">
         <div class="login-logo">
-            <a href="#">
-                {{ trans('panel.site_title') }}
+            <a href="javascript:void(0);">
+                <img src="{{ url('images/cpa_marketing_netiquette_logo.png') }}" alt="NetiquetteAds Logo">
             </a>
         </div>
     </div>
@@ -19,10 +19,18 @@
                 <div>
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" required autofocus placeholder="{{ trans('global.user_name') }}" value="{{ old('name', null) }}">
-                        @if($errors->has('name'))
+                        <input type="text" name="first_name" class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}" required autofocus placeholder="{{ trans('global.first_name') }}" value="{{ old('first_name', null) }}">
+                        @if($errors->has('first_name'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('name') }}
+                                {{ $errors->first('first_name') }}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="last_name" class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}" required autofocus placeholder="{{ trans('global.last_name') }}" value="{{ old('last_name', null) }}">
+                        @if($errors->has('last_name'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('last_name') }}
                             </div>
                         @endif
                     </div>

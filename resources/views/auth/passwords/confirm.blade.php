@@ -25,8 +25,8 @@
 <div class="lockscreen">
     <div class="lockscreen-wrapper">
         <div class="lockscreen-logo">
-            <a href="{{ route('admin.home') }}">
-                {{ trans('panel.site_title') }}
+            <a href="javascript:void(0);">
+                <img src="{{ url('images/cpa_marketing_netiquette_logo.png') }}" alt="NetiquetteAds Logo">
             </a>
         </div>
 
