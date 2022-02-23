@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserAlertRequest;
 use App\Http\Requests\StoreUserAlertRequest;
+use App\Models\Role;
+use App\Models\Team;
 use App\Models\User;
 use App\Models\UserAlert;
-use App\Models\Team;
-use App\Models\Role;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ class UserAlertsController extends Controller
         abort_if(Gate::denies('user_alert_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = UserAlert::with(['users','roles','teams'])->select(sprintf('%s.*', (new UserAlert())->table));
+            $query = UserAlert::with(['users', 'roles', 'teams'])->select(sprintf('%s.*', (new UserAlert())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -76,7 +76,7 @@ class UserAlertsController extends Controller
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user','team','role']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'team', 'role']);
 
             return $table->make(true);
         }
@@ -92,7 +92,7 @@ class UserAlertsController extends Controller
         $teams = Team::all()->pluck('name', 'id');
         $roles = Role::all()->pluck('title', 'id');
 
-        return view('admin.userAlerts.create', compact('users','teams','roles'));
+        return view('admin.userAlerts.create', compact('users', 'teams', 'roles'));
     }
 
     public function store(StoreUserAlertRequest $request)
@@ -109,7 +109,7 @@ class UserAlertsController extends Controller
     {
         abort_if(Gate::denies('user_alert_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $userAlert->load('users','roles','teams');
+        $userAlert->load('users', 'roles', 'teams');
 
         return view('admin.userAlerts.show', compact('userAlert'));
     }
