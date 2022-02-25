@@ -45,7 +45,7 @@ class UnsubscribeController extends Controller
                 return $row->email ?? '';
             });
 
-            $table->rawColumns(['email', 'placeholder','actions']);
+            $table->rawColumns(['email', 'placeholder', 'actions']);
 
             return $table->make(true);
         }
@@ -88,11 +88,10 @@ class UnsubscribeController extends Controller
             // print_r($response->headers());
             // print $response->body() . "\n";
         } catch (Exception $ex) {
-            echo 'Caught exception: '.  $ex->getMessage();
+            echo 'Caught exception: '.$ex->getMessage();
         }
 
         return redirect()->route('admin.unsubscribers.index');
-
     }
 
     /**
@@ -139,7 +138,6 @@ class UnsubscribeController extends Controller
      */
     public function destroy(Unsubscriber $unsubscriber)
     {
-
         $apiKey = env('SENDGRID_API_KEY');
         $sg = new \SendGrid($apiKey);
         $email = $unsubscriber->email;
@@ -150,7 +148,7 @@ class UnsubscribeController extends Controller
             // print_r($response->headers());
             // print $response->body() . "\n";
         } catch (Exception $ex) {
-            echo 'Caught exception: '.  $ex->getMessage();
+            echo 'Caught exception: '.$ex->getMessage();
         }
 
         $unsubscriber->delete();

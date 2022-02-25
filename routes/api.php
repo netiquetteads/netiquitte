@@ -70,7 +70,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     Route::apiResource('subscribers', 'SubscriberApiController');
     Route::post('subscribers/GetUnsubscribes', 'SubscriberApiController@GetUnsubscribes')->name('subscribers.GetUnsubscribes');
 
-    
     // Subscription
     Route::apiResource('subscriptions', 'SubscriptionApiController');
 });

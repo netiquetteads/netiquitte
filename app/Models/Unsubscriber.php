@@ -16,5 +16,4 @@ class Unsubscriber extends Model
         'created_at',
         'updated_at',
     ];
-
 }

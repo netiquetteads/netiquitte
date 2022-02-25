@@ -56,9 +56,8 @@ class SubscriberApiController extends Controller
 
     public function GetUnsubscribes()
     {
-       
         $apiKey = env('SENDGRID_API_KEY');
-        
+
         $sg = new \SendGrid($apiKey);
         try {
             $response = $sg->client->suppression()->unsubscribes()->get();
@@ -66,19 +65,18 @@ class SubscriberApiController extends Controller
             // print_r($response->headers());
             // print $response->body() . "\n";
 
-            $results=json_decode($response->body());
-            
+            $results = json_decode($response->body());
+
             foreach ($results as $key => $result) {
-                $unsubscriber = Unsubscriber::where('email',$result->email)->first();
-                if(empty($unsubscriber)){
+                $unsubscriber = Unsubscriber::where('email', $result->email)->first();
+                if (empty($unsubscriber)) {
                     Unsubscriber::create(['email'=>$result->email]);
                 }
             }
 
             echo 'done';
-
         } catch (Exception $ex) {
-            echo 'Caught exception: '.  $ex->getMessage();
+            echo 'Caught exception: '.$ex->getMessage();
         }
     }
 }

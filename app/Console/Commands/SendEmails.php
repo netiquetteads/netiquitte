@@ -44,11 +44,11 @@ class SendEmails extends Command
         foreach ($tempEmails as $key => $tempEmail) {
             // $send = \Mail::to($tempEmail->email)->send(new CampaignMail($tempEmail));
 
-            $email = new \SendGrid\Mail\Mail(); 
-            $email->setFrom("info@netiquetteads.com", "Netiquette Ads");
+            $email = new \SendGrid\Mail\Mail();
+            $email->setFrom('info@netiquetteads.com', 'Netiquette Ads');
             $email->setSubject($tempEmail->email_subject);
             $email->addTo($tempEmail->email, $tempEmail->from_name);
-            $email->addContent("text/html", $tempEmail->email_body);
+            $email->addContent('text/html', $tempEmail->email_body);
             $sendgrid = new \SendGrid(env('SENDGRID_API_KEY'));
             try {
                 $response = $sendgrid->send($email);
@@ -58,7 +58,7 @@ class SendEmails extends Command
                 // \Log::info($tempEmail->email);
             } catch (Exception $e) {
                 // echo 'Caught exception: '. $e->getMessage() ."\n";
-                \Log::info($tempEmail->email .' Caught exception: '. $e->getMessage() ."\n");
+                \Log::info($tempEmail->email.' Caught exception: '.$e->getMessage()."\n");
             }
 
             $tempEmail->email_status = 'sent';
