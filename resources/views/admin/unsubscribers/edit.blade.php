@@ -3,14 +3,14 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.subscriber.title_singular') }}
+        {{ trans('global.edit') }} {{ trans('cruds.unsubscribers.title_singular') }}
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.subscribers.update", [$subscriber->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.unsubscribers.update", [$unsubscriber->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="company_name">{{ trans('cruds.subscriber.fields.company_name') }}</label>
                 <input class="form-control {{ $errors->has('company_name') ? 'is-invalid' : '' }}" type="text" name="company_name" id="company_name" value="{{ old('company_name', $subscriber->company_name) }}">
                 @if($errors->has('company_name'))
@@ -33,14 +33,14 @@
                     <span class="text-danger">{{ $errors->first('last_name') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.subscriber.fields.last_name_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
-                <label for="email">{{ trans('cruds.subscriber.fields.email') }}</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $subscriber->email) }}">
+                <label for="email">{{ trans('cruds.unsubscribers.fields.email') }}</label>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $unsubscriber->email) }}">
                 @if($errors->has('email'))
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.subscriber.fields.email_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.unsubscribers.fields.email_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

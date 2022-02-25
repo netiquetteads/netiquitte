@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('sync:balances')->hourly();
 
         $schedule->command('send:emails')->everyMinute();
+        $schedule->command('update:unsubscriber')->everyMinute();
         //  ->everyMinute();
 
         $schedule->command('backup:clean')->daily()->at('01:30')

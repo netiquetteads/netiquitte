@@ -12,7 +12,7 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.campaigns.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.campaign.title_singular') }}
+                Send {{ trans('cruds.campaign.title_singular') }}
             </a>
             <button class="btn btn-danger" id="deleteAll" disabled>Delete</button>
         </div>

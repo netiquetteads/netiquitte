@@ -29,7 +29,8 @@
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-medialibrary": "^8.7",
-        "yajra/laravel-datatables-oracle": "^9.11"
+        "yajra/laravel-datatables-oracle": "^9.11",
+        "sendgrid/sendgrid": "~7"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -46,7 +47,7 @@
         "platform": {
             "ext-pcntl": "7.3",
             "ext-posix": "7.3",
-            "php":  "7.4"
+            "php": "7.4"
         }
     },
     "extra": {

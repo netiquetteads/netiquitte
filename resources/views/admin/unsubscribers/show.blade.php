@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.subscriber.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.unsubscribers.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.subscribers.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.unsubscribers.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -20,10 +20,10 @@
                             {{ trans('cruds.subscriber.fields.id') }}
                         </th>
                         <td>
-                            {{ $subscriber->id }}
+                            {{ $unsubscriber->id }}
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.subscriber.fields.company_name') }}
                         </th>
@@ -46,19 +46,19 @@
                         <td>
                             {{ $subscriber->last_name }}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
-                            {{ trans('cruds.subscriber.fields.email') }}
+                            {{ trans('cruds.unsubscribers.fields.email') }}
                         </th>
                         <td>
-                            {{ $subscriber->email }}
+                            {{ $unsubscriber->email }}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.subscribers.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.unsubscribers.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
