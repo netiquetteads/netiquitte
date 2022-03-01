@@ -722,7 +722,7 @@ return [
             'deleted_at_helper'         => ' ',
         ],
     ],
-        'taskManagement' => [
+    'taskManagement' => [
         'title'          => 'Task management',
         'title_singular' => 'Task management',
     ],
