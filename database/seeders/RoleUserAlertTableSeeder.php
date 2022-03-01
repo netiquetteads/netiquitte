@@ -6,19 +6,13 @@ use Illuminate\Database\Seeder;
 
 class RoleUserAlertTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('role_user_alert')->delete();
-        
-        
-        
     }
 }
