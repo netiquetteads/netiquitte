@@ -42,8 +42,7 @@ class PaymentMethodsTableSeeder extends Seeder
                 'paypal_email_select' => 9,
                 'payment_method_type_id' => 1,
                 'affiliate_id' => 172,
-                'w8' => NULL,
-                'w9' => NULL,
+
             ),
             1 => 
             array (
@@ -68,8 +67,7 @@ class PaymentMethodsTableSeeder extends Seeder
                 'paypal_email_select' => 9,
                 'payment_method_type_id' => 1,
                 'affiliate_id' => 172,
-                'w8' => NULL,
-                'w9' => NULL,
+
             ),
             2 => 
             array (
@@ -94,8 +92,7 @@ class PaymentMethodsTableSeeder extends Seeder
                 'paypal_email_select' => 0,
                 'payment_method_type_id' => 2,
                 'affiliate_id' => 1,
-                'w8' => NULL,
-                'w9' => NULL,
+
             ),
         ));
         
