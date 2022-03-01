@@ -2,22 +2,25 @@
 
 namespace Database\Seeders;
 
+
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-
-        $this->call(UsersTableSeeder::class);
-
-        $this->call(RolesTableSeeder::class);
-        $this->call(PermissionsTableSeeder::class);
-        $this->call(AccountsTableSeeder::class);
-        $this->call(AdvertisersTableSeeder::class);
-        $this->call(BalancesTableSeeder::class);
+ 
+$this->call(UsersTableSeeder::class);
+$this->call(PermissionsTableSeeder::class);
+$this->call(RolesTableSeeder::class);           
+$this->call(AccountsTableSeeder::class);
+$this->call(AdvertisersTableSeeder::class);
+$this->call(BalancesTableSeeder::class);
 
         Schema::disableForeignKeyConstraints();
         $this->call(AccountStatusesTableSeeder::class);
@@ -50,5 +53,11 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleUserTableSeeder::class);
         Schema::disableForeignKeyConstraints();
         $this->call(PermissionRoleTableSeeder::class);
+        $this->call(PaymentMailLogsTableSeeder::class);
+        $this->call(PaymentMethodTypeTableSeeder::class);
+        $this->call(RoleUserAlertTableSeeder::class);
+        $this->call(TeamUserAlertTableSeeder::class);
+        $this->call(TempEmailsTableSeeder::class);
+        $this->call(UnsubscribersTableSeeder::class);
     }
 }
