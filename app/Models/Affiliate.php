@@ -64,19 +64,18 @@ class Affiliate extends Model implements HasMedia
         'w9',
     ];
 
-    
     public function scopePublished($query)
     {
         // $affiliates = Affiliate::published()->get();
         // $affiliates = Affiliate::published()->count();
         return $query->where('published', 1);
-    }   
+    }
 
     public function scopeIsActive($query)
     {
         //$affiliates = Affiliate::isActive()->count();
         return $query->where('account_status', 'active');
-    }   
+    }
 
     public function registerMediaConversions(Media $media = null): void
     {
