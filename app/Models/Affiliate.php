@@ -23,7 +23,7 @@ class Affiliate extends Model implements HasMedia
 
     public $table = 'affiliates';
 
-    protected $with = ['accounts','media'];
+    protected $with = ['accounts', 'media'];
 
     protected $appends = [
         'logo',
