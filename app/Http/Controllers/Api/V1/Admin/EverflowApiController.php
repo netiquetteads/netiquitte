@@ -439,15 +439,15 @@ class EverflowApiController extends Controller
                 'content-type' => 'application/json',
                 'x-eflow-api-key' => env('EF_API_KEY'),
             ])
-        ->withBody(json_encode([
-            'from' => $first_day_this_month,
-            'to' => $last_day_this_month,
-            'timezone_id' => 80,
-            'currency_id' => 'USD',
-            'query' => ['filters'=>[], 'settings'=>['ignore_fail_traffic'=>false], 'metric_filters'=>[], 'exclusions'=>[]],
-            'columns' => [['column'=>'affiliate'], ['column'=>'offer']],
-        ]), 'json')
-        ->post('https://api.eflow.team/v1/networks/reporting/entity');
+            ->withBody(json_encode([
+                'from' => $first_day_this_month,
+                'to' => $last_day_this_month,
+                'timezone_id' => 80,
+                'currency_id' => 'USD',
+                'query' => ['filters'=>[], 'settings'=>['ignore_fail_traffic'=>false], 'metric_filters'=>[], 'exclusions'=>[]],
+                'columns' => [['column'=>'affiliate'], ['column'=>'offer']],
+            ]), 'json')
+            ->post('https://api.eflow.team/v1/networks/reporting/entity');
 
             $results = $response->json();
 
@@ -563,15 +563,15 @@ class EverflowApiController extends Controller
                     'content-type' => 'application/json',
                     'x-eflow-api-key' => env('EF_API_KEY'),
                 ])
-            ->withBody(json_encode([
-                'from' => $Year.'-'.$MonthNum.'-01',
-                'to' => $Year.'-'.$MonthNum.'-'.$last_day_this_month,
-                'timezone_id' => 80,
-                'currency_id' => 'USD',
-                'query' => ['filters'=>[], 'settings'=>['ignore_fail_traffic'=>false], 'metric_filters'=>[], 'exclusions'=>[]],
-                'columns' => [['column'=>'affiliate'], ['column'=>'offer']],
-            ]), 'json')
-            ->post('https://api.eflow.team/v1/networks/reporting/entity');
+                ->withBody(json_encode([
+                    'from' => $Year.'-'.$MonthNum.'-01',
+                    'to' => $Year.'-'.$MonthNum.'-'.$last_day_this_month,
+                    'timezone_id' => 80,
+                    'currency_id' => 'USD',
+                    'query' => ['filters'=>[], 'settings'=>['ignore_fail_traffic'=>false], 'metric_filters'=>[], 'exclusions'=>[]],
+                    'columns' => [['column'=>'affiliate'], ['column'=>'offer']],
+                ]), 'json')
+                ->post('https://api.eflow.team/v1/networks/reporting/entity');
 
                 $results = $response->json();
 
