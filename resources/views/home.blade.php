@@ -28,6 +28,8 @@
                                 @include('partials.dash.barchart')
                             </div>
                             <!-- /.col (RIGHT) -->
+                           
+
                         </div>
                         <!-- /.row -->
                         {{-- @include('partials.dash.revenue') --}}
@@ -42,7 +44,8 @@
 @section('scripts')
 
 @parent
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
 {!! $chart5->renderJs() !!}
 {!! $chart6->renderJs() !!}
