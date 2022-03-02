@@ -3,11 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
-use App\Http\Controllers\Controller;
-use Flasher\Notyf\Prime\NotyfFactory;
-use Flasher\Prime\FlasherInterface;
-use Flasher\SweetAlert\Prime\SweetAlertFactory;
-use Flasher\Toastr\Prime\ToastrFactory;
 
 class HomeController
 {
@@ -38,8 +33,8 @@ class HomeController
                 if (isset($settings1['filter_period'])) {
                     switch ($settings1['filter_period']) {
                 case 'week': $start = date('Y-m-d', strtotime('last Monday')); break;
-                case 'month': $start = date('Y-m') . '-01'; break;
-                case 'year': $start = date('Y') . '-01-01'; break;
+                case 'month': $start = date('Y-m').'-01'; break;
+                case 'year': $start = date('Y').'-01-01'; break;
             }
                     if (isset($start)) {
                         return $query->where($settings1['filter_field'], '>=', $start);
@@ -74,8 +69,8 @@ class HomeController
                 if (isset($settings2['filter_period'])) {
                     switch ($settings2['filter_period']) {
                 case 'week': $start = date('Y-m-d', strtotime('last Monday')); break;
-                case 'month': $start = date('Y-m') . '-01'; break;
-                case 'year': $start = date('Y') . '-01-01'; break;
+                case 'month': $start = date('Y-m').'-01'; break;
+                case 'year': $start = date('Y').'-01-01'; break;
             }
                     if (isset($start)) {
                         return $query->where($settings2['filter_field'], '>=', $start);
@@ -110,8 +105,8 @@ class HomeController
                 if (isset($settings3['filter_period'])) {
                     switch ($settings3['filter_period']) {
                 case 'week': $start = date('Y-m-d', strtotime('last Monday')); break;
-                case 'month': $start = date('Y-m') . '-01'; break;
-                case 'year': $start = date('Y') . '-01-01'; break;
+                case 'month': $start = date('Y-m').'-01'; break;
+                case 'year': $start = date('Y').'-01-01'; break;
             }
                     if (isset($start)) {
                         return $query->where($settings3['filter_field'], '>=', $start);
@@ -146,8 +141,8 @@ class HomeController
                 if (isset($settings4['filter_period'])) {
                     switch ($settings4['filter_period']) {
                 case 'week': $start = date('Y-m-d', strtotime('last Monday')); break;
-                case 'month': $start = date('Y-m') . '-01'; break;
-                case 'year': $start = date('Y') . '-01-01'; break;
+                case 'month': $start = date('Y-m').'-01'; break;
+                case 'year': $start = date('Y').'-01-01'; break;
             }
                     if (isset($start)) {
                         return $query->where($settings4['filter_field'], '>=', $start);
@@ -215,7 +210,6 @@ class HomeController
 
         // dd($chart7);
 
-
 //        $sweetFlasher->addSuccess('Data has been saved successfully!');
 //        $notyFlasher->addSuccess('Data has been saved successfully!');
 //        $flasher->addSuccess('Data has been saved successfully!');
@@ -223,4 +217,4 @@ class HomeController
 
         return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4'));
     }
-} 
+}
