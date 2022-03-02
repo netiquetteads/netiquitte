@@ -14,7 +14,7 @@ class DropSelectFieldsToPaymentMethodsTable extends Migration
     public function up()
     {
         Schema::table('payment_methods', function (Blueprint $table) {
-            $table->dropColumn(['company_select', 'account_num_select', 'routing_select', 'explanation_select','custom_email_select','swift_select','account_name_select','paypal_email_select']);
+            $table->dropColumn(['company_select', 'account_num_select', 'routing_select', 'explanation_select', 'custom_email_select', 'swift_select', 'account_name_select', 'paypal_email_select']);
         });
     }
 }

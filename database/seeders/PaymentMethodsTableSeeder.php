@@ -16,7 +16,7 @@ class PaymentMethodsTableSeeder extends Seeder
         \DB::table('payment_methods')->delete();
 
         \DB::table('payment_methods')->insert([
-            0 => array(
+            0 => [
                 'id' => 1,
                 'account_name' => null,
                 'account_number' => null,
@@ -39,9 +39,8 @@ class PaymentMethodsTableSeeder extends Seeder
                 'payment_method_type_id' => 1,
                 'affiliate_id' => 172,
 
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
 
                 'id' => 2,
                 'account_name' => 'fehsyedh',
@@ -64,12 +63,10 @@ class PaymentMethodsTableSeeder extends Seeder
                 'paypal_email_select' => 9,
                 'payment_method_type_id' => 1,
                 'affiliate_id' => 172,
- 
 
-            ),
-            2 => 
-            array (
- 
+            ],
+            2 => [
+
                 'id' => 3,
                 'account_name' => 'Netiquette Ads LLC',
                 'account_number' => '2436475868',
@@ -91,12 +88,8 @@ class PaymentMethodsTableSeeder extends Seeder
                 'paypal_email_select' => 0,
                 'payment_method_type_id' => 2,
                 'affiliate_id' => 1,
- 
 
-            ),
+            ],
         ]);
-        
-        
- 
     }
 }
