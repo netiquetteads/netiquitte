@@ -2,8 +2,9 @@
 
 						<form id="paymentMethodForm" method="POST">
                             @csrf
+                            <input type="hidden" name="id" id="paymentMethodId" value="{{ @$paymentMethod->id }}">
                             {{--  @method('PUT')  --}}
-                            <input type="hidden" name="payment_method_type_id" id="paymentMethodTypeId" value="{{ @$paymentMethod->payment_method_type->id }}">
+                            {{-- <input type="hidden" name="payment_method_type_id" id="paymentMethodTypeId" value="{{ @$paymentMethod->payment_method_type->id }}">
                             <input type="hidden" name="id" id="paymentMethodId" value="{{ @$paymentMethod->id }}">
                         <div class="container box">
 						<div class="form-group">
@@ -12,7 +13,7 @@
 						 <div id="paymentList" style="position: absolute;">
 						 </div>
 						</div>
-                    </div>
+                    </div> --}}
 						{{--  {{ csrf_field() }}  --}}
 
                      {{--  <label>Please select a payment method</label>
@@ -32,9 +33,29 @@
                         <div id='PaymentContainer' style='display:none'>
                         </div>
                         <br/>  --}}
+                        
+                        
+                        <div class="row">
+                            <div class="form-group col-md-8">
+                                <label for="payment_method">Please select a payment method</label>
+                                <select name="payment_method_type_id" id="payment_method" class="form-control select2" style="width: 100%;">
+                                    <option value="">Select</option>
+                                    @foreach ($paymentMethodTypes as $type)
+                                    <option value="{{ $type->id }}" @if (@$paymentMethod->payment_method_type_id==$type->id)
+                                        selected
+                                    @endif>{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+    
+                            <div class="form-group col-md-4">
+                                <button type="button" class="btn btn-success mt-4 float-right" data-toggle="modal" data-target="#createMethodModal">Create a new method</button>
+                            </div>
+                        </div>						
 
-
-						@include('admin.balances.partials.fields.add_fields')
+                        <div id="add_fields">
+						    @include('admin.balances.partials.fields.add_fields')
+                        </div>
 
                         <br>
                         <input type="hidden" name="affiliate_id" id="AffiliateID" value="{{ $AffiliateID  }}">

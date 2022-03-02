@@ -11,6 +11,7 @@ use App\Models\Affiliate;
 use App\Models\Balance;
 use App\Models\PaymentMailLogs;
 use App\Models\PaymentMethod;
+use App\Models\PaymentMethodType;
 use App\Models\PaymentStatus;
 use Gate;
 use Illuminate\Http\Request;
@@ -201,7 +202,9 @@ class BalancesController extends Controller
         $Month = $request->Month;
         $total = $request->total;
 
-        $paymentMethod = PaymentMethod::where('affiliate_id', $AffiliateID)->first();
+        $paymentMethod = PaymentMethod::where('affiliate_id', $AffiliateID)->first(); 
+
+        $paymentMethodTypes = PaymentMethodType::get();
 
         $affiliate = Affiliate::where('id', $AffiliateID)->first();
 
@@ -213,7 +216,7 @@ class BalancesController extends Controller
         $payout = Balance::where('affiliate_id', $AffiliateID)->where('accounting_year', $Year)->where('accounting_month', $Month)->sum('payout');
         $profit = Balance::where('affiliate_id', $AffiliateID)->where('accounting_year', $Year)->where('accounting_month', $Month)->sum('profit');
 
-        $html = view('admin.balances.partials.balance-model', compact('AffiliateID', 'Year', 'Month', 'balance', 'revenue', 'payout', 'profit', 'total', 'paymentMethod', 'affiliate', 'paymentMailLogs'))->render();
+        $html = view('admin.balances.partials.balance-model', compact('AffiliateID', 'Year', 'Month', 'balance', 'revenue', 'payout', 'profit', 'total', 'paymentMethod', 'affiliate', 'paymentMailLogs','paymentMethodTypes'))->render();
 
         echo $html;
     }

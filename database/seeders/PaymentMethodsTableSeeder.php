@@ -16,7 +16,7 @@ class PaymentMethodsTableSeeder extends Seeder
         \DB::table('payment_methods')->delete();
 
         \DB::table('payment_methods')->insert([
-            0 => [
+            0 => array(
                 'id' => 1,
                 'account_name' => null,
                 'account_number' => null,
@@ -94,7 +94,7 @@ class PaymentMethodsTableSeeder extends Seeder
  
 
             ),
-        ));
+        ]);
         
         
  

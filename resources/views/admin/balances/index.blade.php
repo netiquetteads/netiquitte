@@ -137,6 +137,8 @@
 
 </div>
 
+@include('admin.balances.partials.create-method-modal')
+
 @section('scripts')
 @parent
 
@@ -144,11 +146,38 @@
 
 $(document).ready(function(){
 
-    
+    $(document).on('click', '#submitMethodType' ,function (e) {
+        var methodTypeFormData=$('#methodTypeForm').serialize();
+        
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('admin.payment-method-type.createNewMethod') }}",
+            data: methodTypeFormData,
+            success: function(response){
+                $('#payment_method').html(response);
+                $('#createMethodModal').modal('hide');
+                $('#methodTypeForm')[0].reset();
+            }
+        });
+
+    });
+
+    $(document).on('change', '#payment_method' ,function (e) {
+        var id = $(this).val();
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('admin.payment-method-type.getPaymentFields') }}",
+            data: {id:id,_token:_token},
+            success: function(response){
+                $('#add_fields').html(response);
+            }
+        });
+    });
 
     $(document).on('click', '#SavePaymentInfo' ,function (e) {
         var paymentMethodFormData=$('#paymentMethodForm').serialize();
-        
+
         var id=$('#paymentMethodId').val();
         if (id) {
             var url="{{ url('') }}/api/v1/payment-methods/"+id;
@@ -168,108 +197,108 @@ $(document).ready(function(){
         });
     });
     
-    $(document).on('change', '.selectFields input[type="checkbox"]' ,function (e) {
-        if(this.checked) {
+    // $(document).on('change', '.selectFields input[type="checkbox"]' ,function (e) {
+    //     if(this.checked) {
             
-            if(this.value==1){
-                $('#name_div').show();
-            }
-            if(this.value==3){
-                $('#account_name_div').show();
-            }
-            if(this.value==4){
-                $('#account_number_div').show();
-            }
-            if(this.value==5){
-                $('#routing_number_div').show();
-            }
-            if(this.value==6){
-                $('#explanation_div').show();
-            }
-            if(this.value==7){
-                $('#custom_email_div').show();
-            }
-            if(this.value==8){
-                $('#swift_div').show();
-            }
-            if(this.value==9){
-                $('#paypal_email_div').show();
-            }
+    //         if(this.value==1){
+    //             $('#name_div').show();
+    //         }
+    //         if(this.value==3){
+    //             $('#account_name_div').show();
+    //         }
+    //         if(this.value==4){
+    //             $('#account_number_div').show();
+    //         }
+    //         if(this.value==5){
+    //             $('#routing_number_div').show();
+    //         }
+    //         if(this.value==6){
+    //             $('#explanation_div').show();
+    //         }
+    //         if(this.value==7){
+    //             $('#custom_email_div').show();
+    //         }
+    //         if(this.value==8){
+    //             $('#swift_div').show();
+    //         }
+    //         if(this.value==9){
+    //             $('#paypal_email_div').show();
+    //         }
             
-        }else{
-            if(this.value==1){
-                $('#name_div').hide();
-            }
-            if(this.value==3){
-                $('#account_name_div').hide();
-            }
-            if(this.value==4){
-                $('#account_number_div').hide();
-            }
-            if(this.value==5){
-                $('#routing_number_div').hide();
-            }
-            if(this.value==6){
-                $('#explanation_div').hide();
-            }
-            if(this.value==7){
-                $('#custom_email_div').hide();
-            }
-            if(this.value==8){
-                $('#swift_div').hide();
-            }
-            if(this.value==9){
-                $('#paypal_email_div').hide();
-            }
+    //     }else{
+    //         if(this.value==1){
+    //             $('#name_div').hide();
+    //         }
+    //         if(this.value==3){
+    //             $('#account_name_div').hide();
+    //         }
+    //         if(this.value==4){
+    //             $('#account_number_div').hide();
+    //         }
+    //         if(this.value==5){
+    //             $('#routing_number_div').hide();
+    //         }
+    //         if(this.value==6){
+    //             $('#explanation_div').hide();
+    //         }
+    //         if(this.value==7){
+    //             $('#custom_email_div').hide();
+    //         }
+    //         if(this.value==8){
+    //             $('#swift_div').hide();
+    //         }
+    //         if(this.value==9){
+    //             $('#paypal_email_div').hide();
+    //         }
             
-        }
-    });
+    //     }
+    // });
 
 
-    $(document).on('keyup', '#payment_method' ,function (e) {
-       var query = $(this).val();
-       var affiliate_id = $('#AffiliateID').val();
-       if(query != '')
-       {
-        var _token = $('input[name="_token"]').val();
-        $.ajax({
-         url:"{{ route('admin.autocomplete.fetch-payments') }}",
-         method:"POST",
-         data:{query:query,affiliate_id:affiliate_id, _token:_token},
-         success:function(data){
-          $('#paymentList').fadeIn();  
-          $('#paymentList').html(data);
-         }
-        });
-       }else{
-        $('#paymentList').fadeOut();
-        $('#paymentMethodTypeId').val('');
-       }
-   });
+//     $(document).on('keyup', '#payment_method' ,function (e) {
+//        var query = $(this).val();
+//        var affiliate_id = $('#AffiliateID').val();
+//        if(query != '')
+//        {
+//         var _token = $('input[name="_token"]').val();
+//         $.ajax({
+//          url:"",
+//          method:"POST",
+//          data:{query:query,affiliate_id:affiliate_id, _token:_token},
+//          success:function(data){
+//           $('#paymentList').fadeIn();  
+//           $('#paymentList').html(data);
+//          }
+//         });
+//        }else{
+//         $('#paymentList').fadeOut();
+//         $('#paymentMethodTypeId').val('');
+//        }
+//    });
 
-   $(document).on('click', '#paymentList ul li.auto', function(){  
-       $('#payment_method').val($(this).text());
-       $('#paymentMethodTypeId').val($(this).attr('id'));
-       $('#paymentList').fadeOut();
-   });
+//    $(document).on('click', '#paymentList ul li.auto', function(){  
+//        $('#payment_method').val($(this).text());
+//        $('#paymentMethodTypeId').val($(this).attr('id'));
+//        $('#paymentList').fadeOut();
+//    });
 
-   $(document).on('click', '#paymentList ul li.add', function(){ 
+//    $(document).on('click', '#paymentList ul li.add', function(){ 
        
-       var name = $(this).find('span').text();
-       $('#payment_method').val(name);  
-       $('#paymentList').fadeOut();
+//        var name = $(this).find('span').text();
+//        $('#payment_method').val(name);  
+//        $('#paymentList').fadeOut();
 
-       $.ajax({
-        type: "POST",
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        url: "{{ route('api.payment-method-type.store') }}",
-        data: {name:name},
-        success: function(response){
-            $('#paymentMethodTypeId').val(response.data.id);
-        }
-    });
+//        $.ajax({
+//         type: "POST",
+//         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+//         url: "{{ route('api.payment-method-type.store') }}",
+//         data: {name:name},
+//         success: function(response){
+//             $('#paymentMethodTypeId').val(response.data.id);
+//         }
+//     });
 
-   });  
+//    });  
 
 });
 
@@ -410,6 +439,7 @@ $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
                                 theEditor = editor; // Save for later use.
                             } );
                         }
+                        $('.select2').select2();
                 }
             });
 

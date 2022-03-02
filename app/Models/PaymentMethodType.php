@@ -19,6 +19,13 @@ class PaymentMethodType extends Model
 
     protected $fillable = [
         'name',
+        'account_name_select',
+        'paypal_email_select',
+        'account_num_select',
+        'routing_select',
+        'notes_select',
+        'custom_email_select',
+        'swift_select',
         'created_at',
         'updated_at',
     ];

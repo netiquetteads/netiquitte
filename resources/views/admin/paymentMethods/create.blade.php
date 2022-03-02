@@ -43,7 +43,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.name_helper') }}</span>
             </div>  --}}
-            <div class="form-group">
+            <div class="form-group" id="account_name_div" style="display: none;">
                 <label for="account_name">{{ trans('cruds.paymentMethod.fields.account_name') }}</label>
                 <input class="form-control {{ $errors->has('account_name') ? 'is-invalid' : '' }}" type="text" name="account_name" id="account_name" value="{{ old('account_name', '') }}">
                 @if($errors->has('account_name'))
@@ -51,7 +51,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.account_name_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="account_number_div"  style="display: none;">
                 <label for="account_number">{{ trans('cruds.paymentMethod.fields.account_number') }}</label>
                 <input class="form-control {{ $errors->has('account_number') ? 'is-invalid' : '' }}" type="text" name="account_number" id="account_number" value="{{ old('account_number', '') }}">
                 @if($errors->has('account_number'))
@@ -59,7 +59,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.account_number_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="routing_number_div" style="display: none;">
                 <label for="routing_number">{{ trans('cruds.paymentMethod.fields.routing_number') }}</label>
                 <input class="form-control {{ $errors->has('routing_number') ? 'is-invalid' : '' }}" type="text" name="routing_number" id="routing_number" value="{{ old('routing_number', '') }}">
                 @if($errors->has('routing_number'))
@@ -67,7 +67,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.routing_number_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="swift_div" style="display: none;">
                 <label for="swift">{{ trans('cruds.paymentMethod.fields.swift') }}</label>
                 <input class="form-control {{ $errors->has('swift') ? 'is-invalid' : '' }}" type="text" name="swift" id="swift" value="{{ old('swift', '') }}">
                 @if($errors->has('swift'))
@@ -75,7 +75,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.swift_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="paypal_email_div" style="display: none;">
                 <label for="paypal_email">{{ trans('cruds.paymentMethod.fields.paypal_email') }}</label>
                 <input class="form-control {{ $errors->has('paypal_email') ? 'is-invalid' : '' }}" type="email" name="paypal_email" id="paypal_email" value="{{ old('paypal_email') }}">
                 @if($errors->has('paypal_email'))
@@ -83,7 +83,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.paypal_email_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="custom_email_div" style="display: none;">
                 <label for="custom_email">{{ trans('cruds.paymentMethod.fields.custom_email') }}</label>
                 <input class="form-control {{ $errors->has('custom_email') ? 'is-invalid' : '' }}" type="email" name="custom_email" id="custom_email" value="{{ old('custom_email') }}">
                 @if($errors->has('custom_email'))
@@ -91,13 +91,13 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.paymentMethod.fields.custom_email_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="explanation">{{ trans('cruds.paymentMethod.fields.explanation') }}</label>
+            <div class="form-group" id="explanation_div" style="display: none;">
+                <label for="explanation">{{ trans('cruds.paymentMethod.fields.notes') }}</label>
                 <textarea class="form-control {{ $errors->has('explanation') ? 'is-invalid' : '' }}" name="explanation" id="explanation" cols="30" rows="5">{{ old('explanation') }}</textarea>
                 @if($errors->has('explanation'))
                     <span class="text-danger">{{ $errors->first('explanation') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.paymentMethod.fields.explanation_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.paymentMethod.fields.notes_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -109,5 +109,69 @@
 </div>
 
 
+
+@endsection
+
+
+@section('scripts')
+@parent
+
+<script>
+    $('#payment_method_type_id').change(function(){
+        var id = $(this).val();
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            type: 'POST',
+            dataType:'json',
+            url: "{{ route('admin.payment-methods.getPaymentType') }}",
+            data: {id:id,_token:_token},
+            success: function(response){
+                console.log(response);
+                if(response.account_name_select){
+                    $('#account_name_div').show();
+                }
+                if(!response.account_name_select){
+                    $('#account_name_div').hide();
+                }
+                if(response.account_num_select){
+                    $('#account_number_div').show();
+                }
+                if(!response.account_num_select){
+                    $('#account_number_div').hide();
+                }
+                if(response.custom_email_select){
+                    $('#custom_email_div').show();
+                }
+                if(!response.custom_email_select){
+                    $('#custom_email_div').hide();
+                }
+                if(response.notes_select){
+                    $('#explanation_div').show();
+                }
+                if(!response.notes_select){
+                    $('#explanation_div').hide();
+                }
+                if(response.paypal_email_select){
+                    $('#paypal_email_div').show();
+                }
+                if(!response.paypal_email_select){
+                    $('#paypal_email_div').hide();
+                }
+                if(response.routing_select){
+                    $('#routing_number_div').show();
+                }
+                if(!response.routing_select){
+                    $('#routing_number_div').hide();
+                }
+                if(response.swift_select){
+                    $('#swift_div').show();
+                }
+                if(!response.swift_select){
+                    $('#swift_div').hide();
+                }
+            }
+        });
+    });
+</script>
 
 @endsection

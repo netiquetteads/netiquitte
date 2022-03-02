@@ -116,4 +116,10 @@ class PaymentMethodController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function getPaymentType(Request $request)
+    {
+        $data=PaymentMethodType::where('id',$request->id)->first();
+        echo json_encode($data);
+    }
 }

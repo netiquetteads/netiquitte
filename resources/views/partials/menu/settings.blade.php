@@ -1,5 +1,5 @@
                 @can('setting_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/account-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/labels*") ? "menu-open" : "" }} {{ request()->is("admin/payment-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/payment-methods*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/account-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/labels*") ? "menu-open" : "" }} {{ request()->is("admin/payment-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/payment-methods*") ? "menu-open" : "" }} {{ request()->is("admin/payment-method-type*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-cogs">
 
