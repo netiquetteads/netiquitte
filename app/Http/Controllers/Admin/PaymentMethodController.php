@@ -119,7 +119,7 @@ class PaymentMethodController extends Controller
 
     public function getPaymentType(Request $request)
     {
-        $data=PaymentMethodType::where('id',$request->id)->first();
+        $data = PaymentMethodType::where('id', $request->id)->first();
         echo json_encode($data);
     }
 }

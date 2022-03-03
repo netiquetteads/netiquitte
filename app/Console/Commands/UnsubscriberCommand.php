@@ -57,7 +57,6 @@ class UnsubscriberCommand extends Command
                     }
                 }
             }
-            
 
             echo 'done';
         } catch (Exception $ex) {

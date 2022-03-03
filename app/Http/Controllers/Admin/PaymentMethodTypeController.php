@@ -151,20 +151,19 @@ class PaymentMethodTypeController extends Controller
         $paymentMethodTypes = PaymentMethodType::get();
 
         $html = '<option value="">Select</option>';
-        
+
         foreach ($paymentMethodTypes as $key => $paymentMethodType) {
-            $html .=' <option value="'.$paymentMethodType->id.'">'.$paymentMethodType->name.'</option>';
+            $html .= ' <option value="'.$paymentMethodType->id.'">'.$paymentMethodType->name.'</option>';
         }
 
         echo $html;
-
     }
 
     public function getPaymentFields(Request $request)
     {
-        $paymentMethodType = PaymentMethodType::where('id',$request->id)->first();
+        $paymentMethodType = PaymentMethodType::where('id', $request->id)->first();
 
-        $html = view('admin.balances.partials.fields.add_fields',compact('paymentMethodType'))->render();
+        $html = view('admin.balances.partials.fields.add_fields', compact('paymentMethodType'))->render();
 
         echo $html;
     }
