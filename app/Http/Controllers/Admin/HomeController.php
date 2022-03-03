@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
-class HomeController
+class HomeController extends Controller
 {
     public function index()
     {
+        // dd(date("m",strtotime("February")));
         $settings1 = [
             'chart_title'           => 'Affiliates',
             'chart_type'            => 'number_block',

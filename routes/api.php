@@ -41,6 +41,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     Route::apiResource('offers', 'OfferApiController');
 
     // Balances
+    Route::get('getChartData', 'BalancesApiController@getChartData')->name('balances.getChartData');
     Route::apiResource('balances', 'BalancesApiController');
 
     // Payment Status
