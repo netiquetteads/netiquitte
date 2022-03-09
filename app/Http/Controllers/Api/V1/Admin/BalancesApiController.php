@@ -7,9 +7,9 @@ use App\Http\Requests\StoreBalanceRequest;
 use App\Http\Requests\UpdateBalanceRequest;
 use App\Http\Resources\Admin\BalanceResource;
 use App\Models\Balance;
+use DB;
 use Gate;
 use Symfony\Component\HttpFoundation\Response;
-use DB;
 
 class BalancesApiController extends Controller
 {
@@ -56,7 +56,6 @@ class BalancesApiController extends Controller
 
     public function getChartData()
     {
-
         $lastYearProfit = Balance::select(
             DB::raw("SUM(profit) as profit"),
             DB::raw("SUM(revenue) as revenue"),
@@ -66,13 +65,12 @@ class BalancesApiController extends Controller
             DB::raw("CAST(accounting_year as SIGNED integer) as year"),
         )
         // ->whereBetween('accounting_year', [date("Y",strtotime("-1 year")), date("Y")])
-        ->where('accounting_year',date("Y",strtotime("-1 year")))
-        ->groupBy('accounting_month','accounting_year')
-        ->orderBy('month','ASC')
-        ->orderBy('year','ASC')
+        ->where('accounting_year', date('Y', strtotime('-1 year')))
+        ->groupBy('accounting_month', 'accounting_year')
+        ->orderBy('month', 'ASC')
+        ->orderBy('year', 'ASC')
         ->get();
 
-        
         $currentYearProfit = Balance::select(
             DB::raw("SUM(profit) as profit"),
             DB::raw("SUM(revenue) as revenue"),
@@ -82,22 +80,22 @@ class BalancesApiController extends Controller
             DB::raw("CAST(accounting_year as SIGNED integer) as year"),
             )
             // ->whereBetween('accounting_year', [date("Y",strtotime("-1 year")), date("Y")])
-            ->where('accounting_year',date("Y"))
-            ->groupBy('accounting_month','accounting_year')
-            ->orderBy('month','ASC')
-            ->orderBy('year','ASC')
+            ->where('accounting_year', date('Y'))
+            ->groupBy('accounting_month', 'accounting_year')
+            ->orderBy('month', 'ASC')
+            ->orderBy('year', 'ASC')
             ->get();
 
         $data = [
-            date("Y",strtotime("-1 year")) => [
+            date('Y', strtotime('-1 year')) => [
                 'profit'=>$lastYearProfit->pluck('profit'),
                 'revenue'=>$lastYearProfit->pluck('revenue'),
-                'payout'=>$lastYearProfit->pluck('payout')
+                'payout'=>$lastYearProfit->pluck('payout'),
             ],
-            date("Y") => [
+            date('Y') => [
                 'profit'=>$currentYearProfit->pluck('profit'),
                 'revenue'=>$currentYearProfit->pluck('revenue'),
-                'payout'=>$currentYearProfit->pluck('payout')
+                'payout'=>$currentYearProfit->pluck('payout'),
             ],
         ];
 
