@@ -62,8 +62,8 @@ class BalancesApiController extends Controller
             DB::raw("SUM(revenue) as revenue"),
             DB::raw("SUM(payout) as payout"),
             DB::raw("accounting_month"),
-            DB::raw("CAST(date_format(str_to_date(accounting_month,'%M'),'%c') as INT) as month"),
-            DB::raw("CAST(accounting_year as INT) as year"),
+            DB::raw("CAST(date_format(str_to_date(accounting_month,'%M'),'%c') as SIGNED integer) as month"),
+            DB::raw("CAST(accounting_year as SIGNED integer) as year"),
         )
         // ->whereBetween('accounting_year', [date("Y",strtotime("-1 year")), date("Y")])
         ->where('accounting_year',date("Y",strtotime("-1 year")))
@@ -78,8 +78,8 @@ class BalancesApiController extends Controller
             DB::raw("SUM(revenue) as revenue"),
             DB::raw("SUM(payout) as payout"),
             DB::raw("accounting_month"),
-            DB::raw("CAST(date_format(str_to_date(accounting_month,'%M'),'%c') as INT) as month"),
-            DB::raw("CAST(accounting_year as INT) as year"),
+            DB::raw("CAST(date_format(str_to_date(accounting_month,'%M'),'%c') as SIGNED integer) as month"),
+            DB::raw("CAST(accounting_year as SIGNED integer) as year"),
             )
             // ->whereBetween('accounting_year', [date("Y",strtotime("-1 year")), date("Y")])
             ->where('accounting_year',date("Y"))
