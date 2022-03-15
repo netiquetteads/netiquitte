@@ -23,9 +23,9 @@
                     <div class="row">
 
                         @include('partials.dash.widgets')
-                        <div class="row">
+
                         @include('partials.dash.emails_sent')
-                        </div>
+                
                         <div class="row">
                             <div class="col-md-6">
                                 @can('only_admin')
