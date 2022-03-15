@@ -55,13 +55,6 @@ class SeedAllCommand extends Command
 
         $tab = DB::select('SHOW TABLES');
 
-        // $this->output->progressStart(count($tab));
-
-        // https://symfony.com/doc/current/components/console/helpers/progressbar.html
-        // https://mattstauffer.com/blog/advanced-input-output-with-artisan-commands-tables-and-progress-bars-in-laravel-5.1/
-        // https://stackoverflow.com/questions/37319676/using-a-progress-bar-while-seeding-a-database-in-laravel
-        // $i = 0;
-        // while ($i++ < 50) {
         foreach (DB::select('SHOW TABLES') as $value) {
             foreach ($value as $tableName) {
                 if (! in_array($tableName, ['migrations', 'cache', 'sessions', 'password_resets', 'telescope_entries', 'telescope_entries_tags', 'telescope_monitoring'])) {
@@ -80,10 +73,6 @@ class SeedAllCommand extends Command
                 }
             }
         }
-        // }
-
-        // $this->output->progressFinish();
-
         $this->info('All Seeders Were Created!');
         $time = $start->diffInSeconds(now());
         $this->info("Processed in $time seconds");
