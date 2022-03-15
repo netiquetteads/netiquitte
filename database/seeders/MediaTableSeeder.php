@@ -6,21 +6,17 @@ use Illuminate\Database\Seeder;
 
 class MediaTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('media')->delete();
-        
-        \DB::table('media')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('media')->insert([
+            0 => [
                 'id' => 1,
                 'model_type' => 'App\\Models\\User',
                 'model_id' => 2,
@@ -38,9 +34,8 @@ class MediaTableSeeder extends Seeder
                 'order_column' => 1,
                 'created_at' => '2021-12-17 21:07:11',
                 'updated_at' => '2021-12-17 21:07:12',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'model_type' => 'App\\Models\\Advertiser',
                 'model_id' => 91,
@@ -58,9 +53,7 @@ class MediaTableSeeder extends Seeder
                 'order_column' => 2,
                 'created_at' => '2022-03-13 20:43:41',
                 'updated_at' => '2022-03-13 20:43:42',
-            ),
-        ));
-        
-        
+            ],
+        ]);
     }
 }
