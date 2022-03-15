@@ -28,7 +28,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     @yield('styles')
-</head>
 
     <style>
         body.sidebar-open > .nav-sidebar .nav-item.menu-open {background-color: #212529!important; }
@@ -59,7 +58,7 @@
         .br-red {background: #dc3545 !important; }
         .hidden {display:none; }
      </style>
-
+</head>
 
 <body class="sidebar-mini layout-fixed" style="height: auto;">
     <div class="wrapper">
@@ -73,10 +72,10 @@
                     <div class="btn-group">
 
                         @if(Auth::user()->isAdmin())
-                         <a type="button"  target="_blank" href="{{ url('r') }}" class="btn btn-outline-success" title="Route Endpoints">Routes</a>
-                         <a type="button" target="_blank" href="{{ url('/telescope') }}" class="btn btn-outline-success" title="Requests & Responses">Telescope</a>
-                         <a type="button"  target="_blank" href="{{ url('/logs') }}" class="btn btn-outline-success" title="Application Logs">Logs</a>
-                          @endif
+                            <a type="button"  target="_blank" href="{{ url('r') }}" class="btn btn-outline-success" title="Route Endpoints">Routes</a>
+                            <a type="button" target="_blank" href="{{ url('/telescope') }}" class="btn btn-outline-success" title="Requests & Responses">Telescope</a>
+                            <a type="button"  target="_blank" href="{{ url('/logs') }}" class="btn btn-outline-success" title="Application Logs">Logs</a>
+                        @endif
 
                         {{--  <a type="button" class="btn btn-outline-success" title="User Account Profile Area">Account Profile</a>--}}
 
@@ -201,7 +200,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('datepicker/js/bootstrap-datepicker.js') }}"></script>
@@ -246,7 +245,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
             '</div>';
     $this.html($loader);
 
-    
+
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
