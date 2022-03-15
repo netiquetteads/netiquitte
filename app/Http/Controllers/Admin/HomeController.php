@@ -294,7 +294,38 @@ class HomeController extends Controller
             }
         }
 
-        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4', 'events', 'settings_sent_emails'));
+        $settings9 = [
+            'chart_title'           => 'Sent Emails',
+            'chart_type'            => 'latest_entries',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\MailRoom',
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'day',
+            'aggregate_function'    => 'count',
+            'filter_field'          => 'created_at',
+            'group_by_field_format' => 'm/d/Y H:i:s',
+            'column_class'          => 'col-md-12',
+            'entries_number'        => '10',
+            'fields'                => [
+                'name'       => '',
+                'created_at' => '',
+            ],
+            'translation_key' => 'mailRoom',
+        ];
+
+        $settings9['data'] = [];
+        if (class_exists($settings9['model'])) {
+            $settings9['data'] = $settings9['model']::latest()
+                ->take($settings9['entries_number'])
+                ->get();
+        }
+
+        if (!array_key_exists('fields', $settings9)) {
+            $settings9['fields'] = [];
+        }
+
+        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4',
+            'events', 'settings_sent_emails', 'settings9'));
 
         // ->with('year',json_encode($year,JSON_NUMERIC_CHECK))
             // ->with('user',json_encode($user,JSON_NUMERIC_CHECK));
