@@ -898,6 +898,13 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2022-03-15 13:36:39',
                 'deleted_at' => null,
             ],
+            126 =>[
+                'id'    => 128,
+                'title' => 'setting_access',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
+            ],
         ]);
     }
 }
