@@ -779,73 +779,124 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2022-03-15 13:36:39',
                 'deleted_at' => null,
             ],
-            [
+            109 =>[
                 'id'    => 110,
                 'title' => 'task_management_access',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            110 =>[
                 'id'    => 112,
                 'title' => 'task_status_create',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            111 =>[
                 'id'    => 113,
                 'title' => 'task_status_edit',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            112 =>[
                 'id'    => 114,
                 'title' => 'task_status_show',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            113 =>[
                 'id'    => 115,
                 'title' => 'task_status_delete',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            114 =>[
                 'id'    => 116,
                 'title' => 'task_status_access',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            115 =>[
                 'id'    => 117,
                 'title' => 'task_tag_create',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            116 =>[
                 'id'    => 118,
                 'title' => 'task_tag_edit',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            117 =>[
                 'id'    => 119,
                 'title' => 'task_tag_show',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            118 =>[
                 'id'    => 120,
                 'title' => 'task_tag_delete',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            119 =>[
                 'id'    => 121,
                 'title' => 'task_tag_access',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            120 =>[
                 'id'    => 122,
                 'title' => 'task_create',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            121 =>[
                 'id'    => 123,
                 'title' => 'task_edit',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            122 =>[
                 'id'    => 124,
                 'title' => 'task_show',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            123 =>[
                 'id'    => 125,
                 'title' => 'task_delete',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            124 =>[
                 'id'    => 126,
                 'title' => 'task_access',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
-            [
+            125 =>[
                 'id'    => 127,
                 'title' => 'tasks_calendar_access',
+                'created_at' => '2022-03-15 13:36:39',
+                'updated_at' => '2022-03-15 13:36:39',
+                'deleted_at' => null,
             ],
         ]);
     }
