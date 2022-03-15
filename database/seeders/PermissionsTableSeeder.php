@@ -779,6 +779,74 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => '2022-03-15 13:36:39',
                 'deleted_at' => null,
             ],
+            [
+                'id'    => 110,
+                'title' => 'task_management_access',
+            ],
+            [
+                'id'    => 112,
+                'title' => 'task_status_create',
+            ],
+            [
+                'id'    => 113,
+                'title' => 'task_status_edit',
+            ],
+            [
+                'id'    => 114,
+                'title' => 'task_status_show',
+            ],
+            [
+                'id'    => 115,
+                'title' => 'task_status_delete',
+            ],
+            [
+                'id'    => 116,
+                'title' => 'task_status_access',
+            ],
+            [
+                'id'    => 117,
+                'title' => 'task_tag_create',
+            ],
+            [
+                'id'    => 118,
+                'title' => 'task_tag_edit',
+            ],
+            [
+                'id'    => 119,
+                'title' => 'task_tag_show',
+            ],
+            [
+                'id'    => 120,
+                'title' => 'task_tag_delete',
+            ],
+            [
+                'id'    => 121,
+                'title' => 'task_tag_access',
+            ],
+            [
+                'id'    => 122,
+                'title' => 'task_create',
+            ],
+            [
+                'id'    => 123,
+                'title' => 'task_edit',
+            ],
+            [
+                'id'    => 124,
+                'title' => 'task_show',
+            ],
+            [
+                'id'    => 125,
+                'title' => 'task_delete',
+            ],
+            [
+                'id'    => 126,
+                'title' => 'task_access',
+            ],
+            [
+                'id'    => 127,
+                'title' => 'tasks_calendar_access',
+            ],
         ]);
     }
 }
