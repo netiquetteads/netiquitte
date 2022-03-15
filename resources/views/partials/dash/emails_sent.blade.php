@@ -1,3 +1,4 @@
+<div class="col-md-6">
 <div class="{{ $settings9['column_class'] }}" style="overflow-x: auto;">
     <h3>{{ $settings9['chart_title'] }}</h3>
     <table class="table table-bordered table-striped">
@@ -35,4 +36,4 @@
         </tbody>
     </table>
 </div>
-
+</div>
