@@ -30,8 +30,6 @@ class PaymentMethodsTableSeeder extends Seeder
                 'custom_email' => null,
                 'payment_method_type_id' => 1,
                 'affiliate_id' => 172,
-                'w8' => null,
-                'w9' => null,
             ],
             1 => [
                 'id' => 2,
@@ -47,8 +45,6 @@ class PaymentMethodsTableSeeder extends Seeder
                 'custom_email' => 'dhdgfh',
                 'payment_method_type_id' => 1,
                 'affiliate_id' => 172,
-                'w8' => null,
-                'w9' => null,
             ],
             2 => [
                 'id' => 3,
@@ -64,8 +60,6 @@ class PaymentMethodsTableSeeder extends Seeder
                 'custom_email' => null,
                 'payment_method_type_id' => 2,
                 'affiliate_id' => 1,
-                'w8' => null,
-                'w9' => null,
             ],
         ]);
     }

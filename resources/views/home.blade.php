@@ -41,8 +41,7 @@
 
                         </div>
                         <!-- /.row -->
-                        {{-- @include('partials.dash.revenue') --}}
-                        {{-- @include('partials.dash.profit') --}}
+
                     </div>
 
                     <div class="row">
