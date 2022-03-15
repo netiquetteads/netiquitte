@@ -277,6 +277,7 @@ class HomeController extends Controller
         //        $toastrFlasher->addSuccess('Data has been saved successfully!');
 
         $events = [];
+
         foreach ($this->sources as $source) {
             foreach ($source['model']::all() as $model) {
                 $crudFieldValue = $model->getAttributes()[$source['date_field']];
