@@ -8,7 +8,6 @@ use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class HomeController extends Controller
 {
-
     public $sources = [
         [
             'model'      => '\App\Models\Campaign',
@@ -238,24 +237,24 @@ class HomeController extends Controller
         //        $flasher->addSuccess('Data has been saved successfully!');
         //        $toastrFlasher->addSuccess('Data has been saved successfully!');
 
-            $events = [];
-            foreach ($this->sources as $source) {
-                foreach ($source['model']::all() as $model) {
-                    $crudFieldValue = $model->getAttributes()[$source['date_field']];
+        $events = [];
+        foreach ($this->sources as $source) {
+            foreach ($source['model']::all() as $model) {
+                $crudFieldValue = $model->getAttributes()[$source['date_field']];
 
-                    if (! $crudFieldValue) {
-                        continue;
-                    }
-
-                    $events[] = [
-                        'title' => trim($source['prefix'].' '.$model->{$source['field']}.' '.$source['suffix']),
-                        'start' => $crudFieldValue,
-                        'url'   => route($source['route'], $model->id),
-                    ];
+                if (! $crudFieldValue) {
+                    continue;
                 }
-            }
 
-        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4','events'));
+                $events[] = [
+                    'title' => trim($source['prefix'].' '.$model->{$source['field']}.' '.$source['suffix']),
+                    'start' => $crudFieldValue,
+                    'url'   => route($source['route'], $model->id),
+                ];
+            }
+        }
+
+        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4', 'events'));
         // ->with('year',json_encode($year,JSON_NUMERIC_CHECK))
             // ->with('user',json_encode($user,JSON_NUMERIC_CHECK));
     }
