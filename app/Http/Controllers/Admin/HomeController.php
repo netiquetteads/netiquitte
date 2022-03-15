@@ -7,6 +7,18 @@ use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class HomeController extends Controller
 {
+
+    public $sources = [
+        [
+            'model'      => '\App\Models\Campaign',
+            'date_field' => 'created_at',
+            'field'      => 'name',
+            'prefix'     => '',
+            'suffix'     => '',
+            'route'      => 'admin.campaigns.edit',
+        ],
+    ];
+
     public function index()
     {
         // dd(date("m",strtotime("February")));
@@ -212,11 +224,28 @@ class HomeController extends Controller
 
         // dd($chart7);
 
-//        $sweetFlasher->addSuccess('Data has been saved successfully!');
-//        $notyFlasher->addSuccess('Data has been saved successfully!');
-//        $flasher->addSuccess('Data has been saved successfully!');
-//        $toastrFlasher->addSuccess('Data has been saved successfully!');
+        //        $sweetFlasher->addSuccess('Data has been saved successfully!');
+        //        $notyFlasher->addSuccess('Data has been saved successfully!');
+        //        $flasher->addSuccess('Data has been saved successfully!');
+        //        $toastrFlasher->addSuccess('Data has been saved successfully!');
 
-        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4'));
+            $events = [];
+            foreach ($this->sources as $source) {
+                foreach ($source['model']::all() as $model) {
+                    $crudFieldValue = $model->getAttributes()[$source['date_field']];
+
+                    if (! $crudFieldValue) {
+                        continue;
+                    }
+
+                    $events[] = [
+                        'title' => trim($source['prefix'].' '.$model->{$source['field']}.' '.$source['suffix']),
+                        'start' => $crudFieldValue,
+                        'url'   => route($source['route'], $model->id),
+                    ];
+                }
+            }
+
+        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4','events'));
     }
 }
