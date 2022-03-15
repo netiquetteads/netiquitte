@@ -17,5 +17,4 @@ class DropFromPaymentMethods extends Migration
             $table->dropColumn(['w8', 'w9']);
         });
     }
-
 }
