@@ -1,7 +1,11 @@
 @extends('layouts.admin')
+@section('styles')
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
+@endsection
+
 @section('content')
 
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
+
 
 <div class="content">
     <div class="row">
@@ -62,7 +66,7 @@
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
-    
+
 
 {!! $chart5->renderJs() !!}
 {!! $chart6->renderJs() !!}
@@ -82,7 +86,7 @@ $(document).ready(function () {
   $(function () {
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-    
+
     getData();
     async function getData() {
                 const response = await fetch('{{ route("api.balances.getChartData") }}');
