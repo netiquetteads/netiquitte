@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
+
 <div class="content">
     <div class="row">
         <div class="col-lg-12">
@@ -41,6 +44,10 @@
                         <!-- /.row -->
 
                     </div>
+
+                    <div class="row">
+                      <div id='calendar'></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,23 +60,35 @@
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
+    
+
 {!! $chart5->renderJs() !!}
 {!! $chart6->renderJs() !!}
 {!! $chart7->renderJs() !!}
 
 <script>
+
+$(document).ready(function () {
+            // page is now ready, initialize the calendar...
+            events={!! json_encode($events) !!};
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                events: events,
+            })
+        });
+
   $(function () {
 
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
-
-
-
+    
     getData();
     async function getData() {
                 const response = await fetch('{{ route("api.balances.getChartData") }}');
                 // console.log(response);
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
 
 
   var barrChartData = {
