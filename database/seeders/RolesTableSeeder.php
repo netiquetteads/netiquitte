@@ -30,6 +30,13 @@ class RolesTableSeeder extends Seeder
                 'updated_at' => null,
                 'deleted_at' => null,
             ],
+            2 => [
+                'id' => 3,
+                'title' => 'Neti Associate',
+                'created_at' => '2022-03-15 13:36:17',
+                'updated_at' => '2022-03-15 13:36:17',
+                'deleted_at' => null,
+            ],
         ]);
     }
 }

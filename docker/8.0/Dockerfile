@@ -1,4 +1,4 @@
-FROM ubuntu:21.04
+FROM ubuntu:21.10
 
 LABEL maintainer="Taylor Otwell"
 
@@ -14,6 +14,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
     && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 \
+    libmcrypt-dev libxml2-dev libzip-dev zlib1g-dev \
     && mkdir -p ~/.gnupg \
     && chmod 600 ~/.gnupg \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
@@ -28,7 +29,6 @@ RUN apt-get update \
        php8.0-xml php8.0-zip php8.0-bcmath php8.0-soap \
        php8.0-intl php8.0-readline php8.0-pcov \
        php8.0-msgpack php8.0-igbinary php8.0-ldap \
-       php8.0-redis php8.0-swoole php8.0-xdebug \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
     && apt-get install -y nodejs \
@@ -42,6 +42,10 @@ RUN apt-get update \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+# Install Redis Extension
+RUN pecl channel-update pecl.php.net && pecl install mcrypt
 
 RUN update-alternatives --set php /usr/bin/php8.0
 
@@ -57,4 +61,4 @@ RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
 
-ENTRYPOINT ["start-container"]
+ENTRYPOINT ["bash","start-container"]

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class HomeController extends Controller
@@ -222,6 +223,14 @@ class HomeController extends Controller
 
         $chart7 = new LaravelChart($settings7);
 
+        $year = ['2020', '2021', '2022'];
+
+        $user = [];
+
+        foreach ($year as $key => $value) {
+            $user[] = User::where(\DB::raw("DATE_FORMAT(created_at, '%Y')"), $value)->count();
+        }
+
         // dd($chart7);
 
         //        $sweetFlasher->addSuccess('Data has been saved successfully!');
@@ -247,5 +256,7 @@ class HomeController extends Controller
             }
 
         return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4','events'));
+        // ->with('year',json_encode($year,JSON_NUMERIC_CHECK))
+            // ->with('user',json_encode($user,JSON_NUMERIC_CHECK));
     }
 }

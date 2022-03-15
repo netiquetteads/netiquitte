@@ -64,7 +64,7 @@ class SeedAllCommand extends Command
         // while ($i++ < 50) {
         foreach (DB::select('SHOW TABLES') as $value) {
             foreach ($value as $tableName) {
-                if (! in_array($tableName, ['migrations', 'cache', 'sessions', 'password_resets', 'users', 'permissions', 'audit_logs', 'telescope_entries', 'telescope_entries_tags', 'telescope_monitoring'])) {
+                if (! in_array($tableName, ['migrations', 'cache', 'sessions', 'password_resets', 'telescope_entries', 'telescope_entries_tags', 'telescope_monitoring'])) {
                     $loopstart = now();
                     Artisan::call('iseed', [
                         'tables' => $tableName,

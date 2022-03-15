@@ -2,7 +2,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ number_format($OfferActiveCountSidebar) }}</h3>
+                <h3>Active {{ number_format($OfferActiveCountSidebar) }}</h3>
 
                 <p>{{ $settings3['chart_title'] }}</p>
               </div>
@@ -21,7 +21,7 @@
               <div class="inner">
                 <h3>{{ number_format($AdvertiserActiveCountSidebar) }}{{-- <sup style="font-size: 20px">%</sup> --}}</h3>
 
-                <p>Total {{ $settings2['chart_title'] }}</p>
+                <p>Active {{ $settings2['chart_title'] }}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-users"></i>
@@ -38,7 +38,7 @@
               <div class="inner">
                 <h3>{{ number_format($AffiliateActiveCountSidebar) }}</h3>
 
-                <p>Total Affiliates</p>
+                <p>Active Affiliates</p>
               </div>
               <div class="icon">
                 <i class="fas fa-user-plus"></i>
