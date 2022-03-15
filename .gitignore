@@ -24,3 +24,8 @@ composer.lock
 .idea/php.xml
 .vscode/settings.json
 storage/migrations.code-workspace
+.idea/php.xml
+.idea/netiquitte.iml
+.idea/misc.xml
+.idea/deployment.xml
+.idea/code-comments.xml
