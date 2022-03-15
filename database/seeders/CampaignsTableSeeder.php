@@ -6,21 +6,17 @@ use Illuminate\Database\Seeder;
 
 class CampaignsTableSeeder extends Seeder
 {
-
     /**
-     * Auto generated seed file
+     * Auto generated seed file.
      *
      * @return void
      */
     public function run()
     {
-        
-
         \DB::table('campaigns')->delete();
-        
-        \DB::table('campaigns')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('campaigns')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'School Seekers Pause Notice',
                 'email_subject' => 'Offer Paused',
@@ -105,18 +101,17 @@ class CampaignsTableSeeder extends Seeder
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-14 04:55:37',
                 'updated_at' => '2022-01-14 04:56:43',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Affiliates',
-            ),
-            1 => 
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'name' => 'phillip test',
                 'email_subject' => 'test to phillip',
@@ -187,18 +182,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-14 19:57:04',
                 'updated_at' => '2022-01-20 19:28:39',
                 'deleted_at' => '2022-01-20 19:28:39',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            2 => 
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'name' => 'test',
                 'email_subject' => 'test',
@@ -304,18 +298,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-18 17:10:37',
                 'updated_at' => '2022-02-17 04:39:50',
                 'deleted_at' => '2022-02-17 04:39:50',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
-                'send_to' => NULL,
-            ),
-            3 => 
-            array (
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
+                'send_to' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'name' => 'Test 2',
                 'email_subject' => 'Test 2',
@@ -421,18 +414,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-19 00:55:57',
                 'updated_at' => '2022-02-17 04:39:50',
                 'deleted_at' => '2022-02-17 04:39:50',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            4 => 
-            array (
+            ],
+            4 => [
                 'id' => 5,
                 'name' => 'Test 3',
                 'email_subject' => 'Test 3',
@@ -534,18 +526,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-19 00:58:25',
                 'updated_at' => '2022-02-17 04:39:50',
                 'deleted_at' => '2022-02-17 04:39:50',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Testing',
-            ),
-            5 => 
-            array (
+            ],
+            5 => [
                 'id' => 6,
                 'name' => 'temp email',
                 'email_subject' => 'testing from temp email',
@@ -691,18 +682,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-19 21:02:20',
                 'updated_at' => '2022-02-17 04:39:50',
                 'deleted_at' => '2022-02-17 04:39:50',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            6 => 
-            array (
+            ],
+            6 => [
                 'id' => 7,
                 'name' => 'Owen Testing Wed Jan 19th',
                 'email_subject' => 'Owen Testing Wed Jan 19th',
@@ -842,18 +832,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-20 00:32:56',
                 'updated_at' => '2022-02-17 04:39:50',
                 'deleted_at' => '2022-02-17 04:39:50',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            7 => 
-            array (
+            ],
+            7 => [
                 'id' => 8,
                 'name' => 'open email',
                 'email_subject' => 'testing email for open',
@@ -924,18 +913,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-20 11:14:13',
                 'updated_at' => '2022-01-20 11:52:42',
                 'deleted_at' => '2022-01-20 11:52:42',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            8 => 
-            array (
+            ],
+            8 => [
                 'id' => 9,
                 'name' => 'open email',
                 'email_subject' => 'testing email for open',
@@ -1081,18 +1069,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-20 11:53:29',
                 'updated_at' => '2022-02-17 04:39:51',
                 'deleted_at' => '2022-02-17 04:39:51',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            9 => 
-            array (
+            ],
+            9 => [
                 'id' => 10,
                 'name' => 'PHILLIP TEST #1',
                 'email_subject' => 'test to phillip',
@@ -1212,18 +1199,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-20 19:30:29',
                 'updated_at' => '2022-02-17 04:39:51',
                 'deleted_at' => '2022-02-17 04:39:51',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            10 => 
-            array (
+            ],
+            10 => [
                 'id' => 11,
                 'name' => 'Test Jan 20th',
                 'email_subject' => 'Test Jan 20th',
@@ -1373,18 +1359,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-21 01:37:10',
                 'updated_at' => '2022-02-17 04:39:51',
                 'deleted_at' => '2022-02-17 04:39:51',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            11 => 
-            array (
+            ],
+            11 => [
                 'id' => 12,
                 'name' => 'Test Lockman',
                 'email_subject' => 'Test Lockman',
@@ -1531,18 +1516,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-21 01:43:15',
                 'updated_at' => '2022-02-17 04:39:51',
                 'deleted_at' => '2022-02-17 04:39:51',
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            12 => 
-            array (
+            ],
+            12 => [
                 'id' => 13,
                 'name' => 'New Offer Alert - Sunday January 23rd 2022',
                 'email_subject' => 'New Offer Alert - Sunday January 23rd 2022',
@@ -1728,18 +1712,17 @@ MULTIPLE LANDING PAGES AVAILABLE, WILL BE SEPARATE TRACKING LINKS, CAN BE PROVID
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-23 14:15:18',
                 'updated_at' => '2022-01-23 14:15:26',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Affiliates',
-            ),
-            13 => 
-            array (
+            ],
+            13 => [
                 'id' => 14,
                 'name' => 'Lifepoints Now Live',
                 'email_subject' => 'Lifepoints Now Live',
@@ -1854,18 +1837,17 @@ No Incentive, Pop Traffic, Contextual Traffic or Client-Based Software Traffic i
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-24 23:14:42',
                 'updated_at' => '2022-01-24 23:14:49',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Affiliates',
-            ),
-            14 => 
-            array (
+            ],
+            14 => [
                 'id' => 15,
                 'name' => 'Top Offer Alert',
                 'email_subject' => 'Top Offer Alert',
@@ -1966,18 +1948,17 @@ Up to 3x per school matched.<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-01-29 00:20:50',
                 'updated_at' => '2022-01-29 00:20:56',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Affiliates',
-            ),
-            15 => 
-            array (
+            ],
+            15 => [
                 'id' => 16,
                 'name' => 'Paused Offer Alert - Tuesday February 15th 2022',
                 'email_subject' => 'Paused Offer Alert - Tuesday February 15th 2022',
@@ -2081,18 +2062,17 @@ vertical-align:baseline;background-color:#E81D26;padding:2px 4px;"><font color="
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-15 23:43:15',
                 'updated_at' => '2022-02-15 23:43:21',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Affiliates',
-            ),
-            16 => 
-            array (
+            ],
+            16 => [
                 'id' => 17,
                 'name' => 'Phillip Test 2-23',
                 'email_subject' => 'making sure sendgrid responds correctly',
@@ -2198,18 +2178,17 @@ Free Samples Plan - Lisa Zhou &amp; Tao Jiang<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-23 22:45:39',
                 'updated_at' => '2022-02-23 22:45:39',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Dev',
-            ),
-            17 => 
-            array (
+            ],
+            17 => [
                 'id' => 18,
                 'name' => 'Phillip Test 2-23 #2',
                 'email_subject' => 'Phillips Test For Sendgrid Response #2',
@@ -2280,18 +2259,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-23 23:09:12',
                 'updated_at' => '2022-02-23 23:09:12',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            18 => 
-            array (
+            ],
+            18 => [
                 'id' => 19,
                 'name' => 'Phillip Test 2-23 #3',
                 'email_subject' => 'Phillips Test For Sendgrid Response #3',
@@ -2362,18 +2340,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-23 23:19:07',
                 'updated_at' => '2022-02-23 23:19:08',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            19 => 
-            array (
+            ],
+            19 => [
                 'id' => 20,
                 'name' => 'Phillip Test 2-23 #4',
                 'email_subject' => 'Phillips Test For Sendgrid Response #4',
@@ -2444,18 +2421,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-23 23:19:50',
                 'updated_at' => '2022-02-23 23:19:50',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            20 => 
-            array (
+            ],
+            20 => [
                 'id' => 21,
                 'name' => 'Phillip Test 2-23 #5',
                 'email_subject' => 'Phillips Test For Sendgrid Response #5',
@@ -2526,18 +2502,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-23 23:20:15',
                 'updated_at' => '2022-02-23 23:20:15',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            21 => 
-            array (
+            ],
+            21 => [
                 'id' => 22,
                 'name' => 'Phillip Test 2-23 #6',
                 'email_subject' => 'Phillips Test For Sendgrid Response #6',
@@ -2608,18 +2583,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-23 23:20:36',
                 'updated_at' => '2022-02-23 23:20:36',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Single Email',
-            ),
-            22 => 
-            array (
+            ],
+            22 => [
                 'id' => 23,
                 'name' => 'Phillip Test 2-23 #1 Testing Sent',
                 'email_subject' => 'Phillips Test For Sendgrid Response #1 Testing Sent',
@@ -2690,18 +2664,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-23 23:22:10',
                 'updated_at' => '2022-02-23 23:22:10',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Testing',
-            ),
-            23 => 
-            array (
+            ],
+            23 => [
                 'id' => 24,
                 'name' => 'Phillip Test 2-23 #1 Dev Sent',
                 'email_subject' => 'Phillips Test For Sendgrid Response #1 Dev Sent',
@@ -2772,18 +2745,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-23 23:22:39',
                 'updated_at' => '2022-02-23 23:22:39',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Dev',
-            ),
-            24 => 
-            array (
+            ],
+            24 => [
                 'id' => 25,
                 'name' => 'February\'s Top Offer',
                 'email_subject' => 'February\'s Top Offer',
@@ -2876,18 +2848,17 @@ Traffic: All Except Incent, US only<br />
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="http://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-24 01:04:29',
                 'updated_at' => '2022-02-24 01:04:35',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Affiliates',
-            ),
-            25 => 
-            array (
+            ],
+            25 => [
                 'id' => 26,
                 'name' => 'testing email tapas',
                 'email_subject' => 'testing email for SG',
@@ -2958,18 +2929,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-24 08:01:47',
                 'updated_at' => '2022-02-24 08:01:47',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Dev',
-            ),
-            26 => 
-            array (
+            ],
+            26 => [
                 'id' => 27,
                 'name' => 'new testing email with sg api on server',
                 'email_subject' => 'new testing email with sg api on server',
@@ -3040,18 +3010,17 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 <p style="text-align: center;">If you no longer wish to receive our emails, please <a href="https://dev.netiquetteads.com/unsubscribe?id={ID}&amp;type={AcctType}">unsubscribe here</a><br />
 4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-02-24 13:47:52',
                 'updated_at' => '2022-02-24 13:47:52',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Dev',
-            ),
-            27 => 
-            array (
+            ],
+            27 => [
                 'id' => 28,
                 'name' => 'Out Of Office',
                 'email_subject' => 'Publisher Consultant Out Of Office',
@@ -3131,18 +3100,16 @@ Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a>
 
 <p style="text-align: center;">4327 S Hwy 27, Suite 423, Clermont FL, USA, 34711, USA<br />
 Email us&nbsp;<a href="mailto:info@netiquetteads.com">info@netiquetteads.com</a></p>',
-                'subs' => NULL,
-                'unsubs' => NULL,
-                'opens' => NULL,
+                'subs' => null,
+                'unsubs' => null,
+                'opens' => null,
                 'created_at' => '2022-03-02 09:30:02',
                 'updated_at' => '2022-03-02 09:30:09',
-                'deleted_at' => NULL,
-                'campaign_offer_id' => NULL,
-                'selected_template_id' => NULL,
+                'deleted_at' => null,
+                'campaign_offer_id' => null,
+                'selected_template_id' => null,
                 'send_to' => 'Affiliates',
-            ),
-        ));
-        
-        
+            ],
+        ]);
     }
 }
