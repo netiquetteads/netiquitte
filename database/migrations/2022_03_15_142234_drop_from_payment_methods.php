@@ -13,8 +13,17 @@ class DropFromPaymentMethods extends Migration
      */
     public function up()
     {
-        Schema::table('payment_methods', function (Blueprint $table) {
-            $table->dropColumn(['w8', 'w9']);
-        });
+        if (Schema::hasColumn('payment_methods', 'w8'))
+        {
+            Schema::table('payment_methods', function (Blueprint $table) {
+                $table->dropColumn('w8');
+            });
+        }
+        if (Schema::hasColumn('payment_methods', 'w9'))
+        {
+            Schema::table('payment_methods', function (Blueprint $table) {
+                $table->dropColumn('w9');
+            });
+        }
     }
 }
