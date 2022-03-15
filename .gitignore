@@ -29,3 +29,5 @@ storage/migrations.code-workspace
 .idea/misc.xml
 .idea/deployment.xml
 .idea/code-comments.xml
+.idea/netiquitte.iml
+.idea/php.xml
