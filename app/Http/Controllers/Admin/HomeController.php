@@ -250,8 +250,8 @@ class HomeController extends Controller
                 if (isset($settings_sent_emails['filter_period'])) {
                     switch ($settings_sent_emails['filter_period']) {
                         case 'week': $start = date('Y-m-d', strtotime('last Monday')); break;
-                        case 'month': $start = date('Y-m') . '-01'; break;
-                        case 'year': $start = date('Y') . '-01-01'; break;
+                        case 'month': $start = date('Y-m').'-01'; break;
+                        case 'year': $start = date('Y').'-01-01'; break;
                     }
                     if (isset($start)) {
                         return $query->where($settings_sent_emails['filter_field'], '>=', $start);
@@ -293,10 +293,7 @@ class HomeController extends Controller
             }
         }
 
-
-        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4', 'events','settings_sent_emails'));
-
-
+        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4', 'events', 'settings_sent_emails'));
 
         // ->with('year',json_encode($year,JSON_NUMERIC_CHECK))
             // ->with('user',json_encode($user,JSON_NUMERIC_CHECK));
