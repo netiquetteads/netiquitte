@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder
 
         \DB::table('users')->insert([
 
-
             0 => [
                 'id' => 1,
                 'name' => '',

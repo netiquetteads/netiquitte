@@ -21,6 +21,12 @@
             <div class="form-group">
                 <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
                 <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all-access" style="border-radius: 0">Access</span>
+                    <span class="btn btn-info btn-xs select-all-create" style="border-radius: 0">Create</span>
+                    <span class="btn btn-info btn-xs select-all-edit" style="border-radius: 0">Edit</span>
+                    <span class="btn btn-info btn-xs select-all-show" style="border-radius: 0">Show</span>
+                    <span class="btn btn-danger btn-xs select-all-delete" style="border-radius: 0">Delete</span>
+                    
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                     <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                 </div>

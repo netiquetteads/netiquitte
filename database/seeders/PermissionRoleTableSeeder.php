@@ -28,7 +28,7 @@ class PermissionRoleTableSeeder extends Seeder
                 substr($permission->title, 0, 5) != 'role_' &&
                 substr($permission->title, 0, 11) != 'permission_' &&
                 substr($permission->title, 0, 5) != 'team_';
-                substr($permission->title, 0, -6) != 'delete';
+            substr($permission->title, 0, -6) != 'delete';
         });
         Role::findOrFail(3)->permissions()->sync($associate_permissions);
     }
