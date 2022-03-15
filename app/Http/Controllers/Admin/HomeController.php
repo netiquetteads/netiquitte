@@ -211,6 +211,45 @@ class HomeController extends Controller
 
         $chart7 = new LaravelChart($settings7);
 
+        $settings_sent_emails = [
+            'chart_title'           => 'Emails Sent',
+            'chart_type'            => 'number_block',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Models\Campaign',
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'day',
+            'aggregate_function'    => 'sum',
+            'aggregate_field'       => 'subs',
+            'filter_field'          => 'created_at',
+            'filter_period'         => 'month',
+            'group_by_field_format' => 'm/d/Y H:i:s',
+            'column_class'          => 'col-md-4',
+            'entries_number'        => '5',
+            'translation_key'       => 'campaign',
+        ];
+
+        $settings_sent_emails['total_number'] = 0;
+
+        if (class_exists($settings_sent_emails['model'])) {
+            $settings_sent_emails['total_number'] = $settings_sent_emails['model']::when(isset($settings_sent_emails['filter_field']), function ($query) use ($settings_sent_emails) {
+                if (isset($settings_sent_emails['filter_days'])) {
+                    return $query->where($settings_sent_emails['filter_field'], '>=',
+                        now()->subDays($settings_sent_emails['filter_days'])->format('Y-m-d'));
+                }
+                if (isset($settings_sent_emails['filter_period'])) {
+                    switch ($settings_sent_emails['filter_period']) {
+                        case 'week': $start = date('Y-m-d', strtotime('last Monday')); break;
+                        case 'month': $start = date('Y-m') . '-01'; break;
+                        case 'year': $start = date('Y') . '-01-01'; break;
+                    }
+                    if (isset($start)) {
+                        return $query->where($settings_sent_emails['filter_field'], '>=', $start);
+                    }
+                }
+            })
+                ->{$settings_sent_emails['aggregate_function'] ?? 'count'}($settings_sent_emails['aggregate_field'] ?? '*');
+        }
+
         $year = ['2020', '2021', '2022'];
 
         $user = [];
@@ -226,7 +265,7 @@ class HomeController extends Controller
 //        $flasher->addSuccess('Data has been saved successfully!');
 //        $toastrFlasher->addSuccess('Data has been saved successfully!');
 
-        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4'));
+        return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4','settings_sent_emails'));
         // ->with('year',json_encode($year,JSON_NUMERIC_CHECK))
             // ->with('user',json_encode($user,JSON_NUMERIC_CHECK));
     }

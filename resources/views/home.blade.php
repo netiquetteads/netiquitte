@@ -14,8 +14,9 @@
                     </div>
                     @endif
                     <div class="row">
-                        {{-- @include('partials.dash.old-icons') --}}
+
                         @include('partials.dash.widgets')
+                        @include('partials.dash.emails_sent')
                         <div class="row">
                             <div class="col-md-6">
                                 @can('only_admin')
