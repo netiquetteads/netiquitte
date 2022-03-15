@@ -18,17 +18,23 @@
                         @include('partials.dash.widgets')
                         <div class="row">
                             <div class="col-md-6">
-                                @include('partials.dash.leftbox')
+                                @can('only_admin')
+                                    @include('partials.dash.leftbox')
+                                @endcan
                             </div>
                             <!-- /.col (LEFT) -->
                             <div class="col-md-6">
-                                @include('partials.dash.rightbox')
+                                @can('only_admin')
+                                    @include('partials.dash.rightbox')
+                                @endcan
                             </div>
                             <div class="col-md-12">
-                                @include('partials.dash.barchart')
+                                @can('only_admin')
+                                    @include('partials.dash.barchart')
+                                @endcan
                             </div>
                             <!-- /.col (RIGHT) -->
-                           
+
 
                         </div>
                         <!-- /.row -->
@@ -53,11 +59,11 @@
 
 <script>
   $(function () {
-    
+
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
-    
-    
+
+
     getData();
     async function getData() {
                 const response = await fetch('{{ route("api.balances.getChartData") }}');
@@ -65,7 +71,7 @@
                 const data = await response.json();
                 console.log(data);
 
-                
+
   var barrChartData = {
       // make this year to date dynamic
       labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
@@ -203,7 +209,7 @@ var areaChartData = {
     //- LINE CHART -
     //--------------
 
-    
+
 // Paid Total-------------------------------------------
 
 var lineChartData = {
@@ -266,7 +272,7 @@ var lineChartData = {
       data: lineChartData,
       options: lineChartOptions
     })
-   
+
     }
 
   });
