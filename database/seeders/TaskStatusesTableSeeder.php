@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class JobsTableSeeder extends Seeder
+class TaskStatusesTableSeeder extends Seeder
 {
 
     /**
@@ -16,7 +16,7 @@ class JobsTableSeeder extends Seeder
     {
         
 
-        \DB::table('jobs')->delete();
+        \DB::table('task_statuses')->delete();
         
         
         
