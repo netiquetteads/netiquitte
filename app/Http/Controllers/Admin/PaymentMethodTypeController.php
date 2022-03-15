@@ -144,29 +144,27 @@ class PaymentMethodTypeController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function fetchPayment(Request $request)
+    public function createNewMethod(Request $request)
     {
-        if ($request->get('query')) {
-            $query = $request->get('query');
-            $data = PaymentMethodType::where('name', 'LIKE', "%{$query}%")
-                ->get();
+        PaymentMethodType::create($request->all());
 
-            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-            if ($data->count() > 0) {
-                foreach ($data as $row) {
-                    $output .= '
-                            <li class="auto" id="'.$row->id.'"><a href="javascript:void(0);">'.$row->name.'</a></li>
-                            ';
-                }
-            } else {
-                $output .= '
-                            <li class="add"><a href="javascript:void(0);">Add "<span>'.$query.'</span>"</a></li>
-                            ';
-            }
+        $paymentMethodTypes = PaymentMethodType::get();
 
-            $output .= '</ul>';
+        $html = '<option value="">Select</option>';
 
-            echo $output;
+        foreach ($paymentMethodTypes as $key => $paymentMethodType) {
+            $html .= ' <option value="'.$paymentMethodType->id.'">'.$paymentMethodType->name.'</option>';
         }
+
+        echo $html;
+    }
+
+    public function getPaymentFields(Request $request)
+    {
+        $paymentMethodType = PaymentMethodType::where('id', $request->id)->first();
+
+        $html = view('admin.balances.partials.fields.add_fields', compact('paymentMethodType'))->render();
+
+        echo $html;
     }
 }

@@ -2,14 +2,14 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{ number_format($settings3['total_number']) }}</h3>
+                <h3>{{ number_format($OfferActiveCountSidebar) }}</h3>
 
                 <p>{{ $settings3['chart_title'] }}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-laptop"></i>
               </div>
-              <a href="#" class="small-box-footer">
+              <a href="{{ url("admin/offer/active") }}" class="small-box-footer">
                 More info <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
@@ -19,14 +19,14 @@
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>{{ number_format($settings2['total_number']) }}{{-- <sup style="font-size: 20px">%</sup> --}}</h3>
+                <h3>{{ number_format($AdvertiserActiveCountSidebar) }}{{-- <sup style="font-size: 20px">%</sup> --}}</h3>
 
                 <p>Total {{ $settings2['chart_title'] }}</p>
               </div>
               <div class="icon">
                 <i class="fas fa-users"></i>
               </div>
-              <a href="#" class="small-box-footer">
+              <a href="{{ url("admin/advertiser/active") }}" class="small-box-footer">
                 More info <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
@@ -36,14 +36,14 @@
             <!-- small card -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{ number_format($settings1['total_number']) }}</h3>
+                <h3>{{ number_format($AffiliateActiveCountSidebar) }}</h3>
 
                 <p>Total Affiliates</p>
               </div>
               <div class="icon">
                 <i class="fas fa-user-plus"></i>
               </div>
-              <a href="#" class="small-box-footer">
+              <a href="{{ url("admin/affiliate/active") }}" class="small-box-footer">
                 More info <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
@@ -60,7 +60,7 @@
               <div class="icon">
                 <i class="fas fa-envelope"></i>
               </div>
-              <a href="#" class="small-box-footer">
+              <a href="{{ route("admin.campaigns.index") }}" class="small-box-footer">
                 More info <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>

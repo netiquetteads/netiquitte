@@ -49,10 +49,12 @@ class UnsubscriberCommand extends Command
 
             $results = json_decode($response->body());
 
-            foreach ($results as $key => $result) {
-                $unsubscriber = Unsubscriber::where('email', $result->email)->first();
-                if (empty($unsubscriber)) {
-                    Unsubscriber::create(['email'=>$result->email]);
+            if ($results) {
+                foreach ($results as $key => $result) {
+                    $unsubscriber = Unsubscriber::where('email', $result->email)->first();
+                    if (empty($unsubscriber)) {
+                        Unsubscriber::create(['email'=>$result->email]);
+                    }
                 }
             }
 

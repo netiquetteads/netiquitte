@@ -56,11 +56,98 @@
     
     var areaChartCanvas = $('#areaChart').get(0).getContext('2d')
 
-    var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    
+    
+    getData();
+    async function getData() {
+                const response = await fetch('{{ route("api.balances.getChartData") }}');
+                // console.log(response);
+                const data = await response.json();
+                console.log(data);
+
+                
+  var barrChartData = {
+      // make this year to date dynamic
+      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
       datasets: [
         {
-          label               : '2022',
+          label               : "{{ date('Y') }}",
+          backgroundColor     : 'rgba(34,68,237,0.9)',
+          // backgroundColor     : 'rgba(197,15,109,0.9)',
+          borderColor         : 'rgba(34,68,237,0.8)',
+          // borderColor         : 'rgba(197,15,109,0.8)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(34,68,237,1)',
+          // pointStrokeColor    : 'rgba(197,15,109,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(34,68,237,1)',
+          // pointHighlightStroke: 'rgba(197,15,109,1)',
+          data                : data["{{ date('Y') }}"]['profit']
+        },
+        {
+          label               : "{{ date('Y',strtotime('-1 year')) }}",
+          backgroundColor     : 'rgba(49, 73, 176, 0.6)',
+          borderColor         : 'rgba(49, 73, 176, 1)',
+          pointRadius         : false,
+          pointColor          : 'rgba(49, 73, 176, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          // make this year to date dynamic
+          data                : data["{{ date('Y',strtotime('-1 year')) }}"]['profit']
+        },
+      ]
+    }
+    var barrChartOptions = {
+      maintainAspectRatio : false,
+      responsive : true,
+      legend: {
+        display: true
+      },
+      scales: {
+        xAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }],
+        yAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }]
+      }
+    }
+
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, barrChartData)
+    var temp0 = barrChartData.datasets[0]
+    var temp1 = barrChartData.datasets[1]
+    barrChartData.datasets[0] = temp1
+    barrChartData.datasets[1] = temp0
+
+    var barrChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      datasetFill             : false
+    }
+
+    new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barrChartData,
+      options: barrChartOptions
+    })
+
+// revenue-------------------------------------------
+
+var areaChartData = {
+  labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
+      datasets: [
+        {
+          label               : "{{ date('Y') }}",
           backgroundColor     : 'rgba(60,141,188,0.9)',
           borderColor         : 'rgba(60,141,188,0.8)',
           pointRadius          : false,
@@ -68,10 +155,10 @@
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
+          data                : data["{{ date('Y') }}"]['revenue']
         },
         {
-          label               : '2021',
+          label               : "{{ date('Y',strtotime('-1 year')) }}",
           backgroundColor     : 'rgba(210, 214, 222, 1)',
           borderColor         : 'rgba(210, 214, 222, 1)',
           pointRadius         : false,
@@ -79,7 +166,7 @@
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
+          data                : data["{{ date('Y',strtotime('-1 year')) }}"]['revenue']
         },
       ]
     }
@@ -104,41 +191,50 @@
       }
     }
 
-  var barrChartData = {
-      // make this year to date dynamic
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    // This will get the first returned node in the jQuery collection.
+    new Chart(areaChartCanvas, {
+      type: 'line',
+      data: areaChartData,
+      options: areaChartOptions
+    })
+
+
+    //-------------
+    //- LINE CHART -
+    //--------------
+
+    
+// Paid Total-------------------------------------------
+
+var lineChartData = {
+  labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December'],
       datasets: [
         {
-          label               : '2022',
-          backgroundColor     : 'rgba(34,68,237,0.9)',
-          // backgroundColor     : 'rgba(197,15,109,0.9)',
-          borderColor         : 'rgba(34,68,237,0.8)',
-          // borderColor         : 'rgba(197,15,109,0.8)',
+          label               : "{{ date('Y') }}",
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
           pointRadius          : false,
           pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(34,68,237,1)',
-          // pointStrokeColor    : 'rgba(197,15,109,1)',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(34,68,237,1)',
-          // pointHighlightStroke: 'rgba(197,15,109,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : data["{{ date('Y') }}"]['payout']
         },
         {
-          label               : '2021',
-          backgroundColor     : 'rgba(49, 73, 176, 0.6)',
-          borderColor         : 'rgba(49, 73, 176, 1)',
+          label               : "{{ date('Y',strtotime('-1 year')) }}",
+          backgroundColor     : 'rgba(210, 214, 222, 1)',
+          borderColor         : 'rgba(210, 214, 222, 1)',
           pointRadius         : false,
-          pointColor          : 'rgba(49, 73, 176, 1)',
+          pointColor          : 'rgba(210, 214, 222, 1)',
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          // make this year to date dynamic
-          data                : [65, 59, 80, 81, 56, 55, 40]
+          data                : data["{{ date('Y',strtotime('-1 year')) }}"]['payout']
         },
       ]
     }
 
-    var barrChartOptions = {
+    var lineChartOptions = {
       maintainAspectRatio : false,
       responsive : true,
       legend: {
@@ -158,22 +254,9 @@
       }
     }
 
-
-
-
-    // This will get the first returned node in the jQuery collection.
-    new Chart(areaChartCanvas, {
-      type: 'line',
-      data: areaChartData,
-      options: areaChartOptions
-    })
-
-    //-------------
-    //- LINE CHART -
-    //--------------
     var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
-    var lineChartOptions = $.extend(true, {}, areaChartOptions)
-    var lineChartData = $.extend(true, {}, areaChartData)
+    var lineChartOptions = $.extend(true, {}, lineChartOptions)
+    var lineChartData = $.extend(true, {}, lineChartData)
     lineChartData.datasets[0].fill = false;
     lineChartData.datasets[1].fill = false;
     lineChartOptions.datasetFill = false
@@ -183,34 +266,9 @@
       data: lineChartData,
       options: lineChartOptions
     })
-
    
-
-    
-
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = $.extend(true, {}, barrChartData)
-    var temp0 = barrChartData.datasets[0]
-    var temp1 = barrChartData.datasets[1]
-    barrChartData.datasets[0] = temp1
-    barrChartData.datasets[1] = temp0
-
-    var barrChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false
     }
 
-    new Chart(barChartCanvas, {
-      type: 'bar',
-      data: barrChartData,
-      options: barrChartOptions
-    })
-
-    
   });
 </script>
 @endsection

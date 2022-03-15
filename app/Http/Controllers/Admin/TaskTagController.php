@@ -8,7 +8,6 @@ use App\Http\Requests\StoreTaskTagRequest;
 use App\Http\Requests\UpdateTaskTagRequest;
 use App\Models\TaskTag;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskTagController extends Controller
