@@ -320,7 +320,7 @@ class HomeController extends Controller
                 ->get();
         }
 
-        if (!array_key_exists('fields', $settings9)) {
+        if (! array_key_exists('fields', $settings9)) {
             $settings9['fields'] = [];
         }
 
