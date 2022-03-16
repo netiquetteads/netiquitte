@@ -26,4 +26,6 @@ storage/migrations.code-workspace
 old.dev.netiquetteads.com.zip
 dev.netiquetteads.com.zip
 database/seeders-3-15.rar
+*.rar
+*.zip
 
