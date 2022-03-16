@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateTeamRequest;
 use App\Http\Resources\Admin\TeamResource;
 use App\Models\Team;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TeamApiController extends Controller
