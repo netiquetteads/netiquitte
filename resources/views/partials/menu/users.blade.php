@@ -1,9 +1,7 @@
                 @can('user_management_access')
                     <li class="nav-item has-treeview {{ request()->is("admin/users*") ? "menu-open" : "" }} {{ request()->is("admin/permissions*") ? "menu-open" : "" }} {{ request()->is("admin/roles*") ? "menu-open" : "" }} {{ request()->is("admin/teams*") ? "menu-open" : "" }} {{ request()->is("admin/audit-logs*") ? "menu-open" : "" }} {{ request()->is("admin/user-alerts*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="fa-fw nav-icon fas fa-users">
-
-                            </i>
+                            <i class="fa-fw nav-icon fas fa-users"></i>
                             <p>
                               User {{ trans('cruds.userManagement.title') }}
                                 <i class="right fa fa-fw fa-angle-left nav-icon"></i>
