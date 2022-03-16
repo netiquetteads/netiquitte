@@ -9,6 +9,34 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.tasks.store") }}" enctype="multipart/form-data">
             @csrf
+            <div class="form-row">
+            <div class="form-group col">
+                <label>{{ trans('cruds.task.fields.priority') }}</label>
+                <select class="form-control {{ $errors->has('priority') ? 'is-invalid' : '' }}" name="priority" id="priority">
+                    <option value disabled {{ old('priority', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\Task::PRIORITY_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('priority', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('priority'))
+                    <span class="text-danger">{{ $errors->first('priority') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.task.fields.priority_helper') }}</span>
+            </div>
+            <div class="form-group col">
+                <label class="required" for="status_id">{{ trans('cruds.task.fields.status') }}</label>
+                <select class="form-control select2 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status_id" id="status_id" required>
+                    @foreach($statuses as $id => $entry)
+                        <option value="{{ $id }}" {{ old('status_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('status'))
+                    <span class="text-danger">{{ $errors->first('status') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.task.fields.status_helper') }}</span>
+            </div>
+</div>
+
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.task.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
@@ -25,19 +53,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.task.fields.description_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="status_id">{{ trans('cruds.task.fields.status') }}</label>
-                <select class="form-control select2 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status_id" id="status_id" required>
-                    @foreach($statuses as $id => $entry)
-                        <option value="{{ $id }}" {{ old('status_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('status'))
-                    <span class="text-danger">{{ $errors->first('status') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.task.fields.status_helper') }}</span>
-            </div>
-            <div class="form-group">
+
+            {{-- <div class="form-group">
                 <label for="tags">{{ trans('cruds.task.fields.tag') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -52,7 +69,8 @@
                     <span class="text-danger">{{ $errors->first('tags') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.task.fields.tag_helper') }}</span>
-            </div>
+            </div> --}}
+
             <div class="form-group">
                 <label for="attachment">{{ trans('cruds.task.fields.attachment') }}</label>
                 <div class="needsclick dropzone {{ $errors->has('attachment') ? 'is-invalid' : '' }}" id="attachment-dropzone">
@@ -94,6 +112,7 @@
 
 
 @endsection
+
 
 @section('scripts')
 <script>

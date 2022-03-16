@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use \DateTimeInterface;
+use App\Traits\Auditable;
+use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,8 +16,16 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Task extends Model implements HasMedia
 {
     use SoftDeletes;
+    use MultiTenantModelTrait;
     use InteractsWithMedia;
+    use Auditable;
     use HasFactory;
+
+    public const PRIORITY_SELECT = [
+        'alert-yellow'  => 'Low',
+        'alert-warning' => 'Medium',
+        'alert-danger'  => 'High',
+    ];
 
     public $table = 'tasks';
 
@@ -37,8 +47,11 @@ class Task extends Model implements HasMedia
         'due_date',
         'assigned_to_id',
         'created_at',
+        'author_id',
+        'priority',
         'updated_at',
         'deleted_at',
+        'team_id',
     ];
 
     public function registerMediaConversions(Media $media = null): void
@@ -75,6 +88,16 @@ class Task extends Model implements HasMedia
     public function assigned_to()
     {
         return $this->belongsTo(User::class, 'assigned_to_id');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

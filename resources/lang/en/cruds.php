@@ -760,7 +760,7 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'task' => [
+  'task' => [
         'title'          => 'Tasks',
         'title_singular' => 'Task',
         'fields'         => [
@@ -786,6 +786,12 @@ return [
             'updated_at_helper'  => ' ',
             'deleted_at'         => 'Deleted At',
             'deleted_at_helper'  => ' ',
+            'team'               => 'Team',
+            'team_helper'        => ' ',
+            'author'             => 'Author',
+            'author_helper'      => ' ',
+            'priority'           => 'Priority',
+            'priority_helper'    => ' ',
         ],
     ],
     'tasksCalendar' => [
