@@ -760,7 +760,7 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-  'task' => [
+    'task' => [
         'title'          => 'Tasks',
         'title_singular' => 'Task',
         'fields'         => [
