@@ -9,8 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "barryvdh/laravel-debugbar": "^3.6",
         "bugsnag/bugsnag-laravel": "^2.21",
-        "doctrine/dbal": "^3.0",
+        "doctrine/dbal": "^3.1.4",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.3",
@@ -27,10 +28,10 @@
         "php-flasher/flasher-sweet-alert-laravel": "^0.9.6",
         "php-flasher/flasher-toastr-laravel": "^0.9.6",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
+        "sendgrid/sendgrid": "~7",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-medialibrary": "^8.7",
-        "yajra/laravel-datatables-oracle": "^9.11",
-        "sendgrid/sendgrid": "~7"
+        "yajra/laravel-datatables-oracle": "^9.11"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
