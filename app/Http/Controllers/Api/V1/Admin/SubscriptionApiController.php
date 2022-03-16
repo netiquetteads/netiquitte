@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateSubscriptionRequest;
 use App\Http\Resources\Admin\SubscriptionResource;
 use App\Models\Subscription;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SubscriptionApiController extends Controller

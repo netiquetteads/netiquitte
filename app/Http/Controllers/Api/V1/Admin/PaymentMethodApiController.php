@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePaymentMethodRequest;
 use App\Http\Requests\UpdatePaymentMethodRequest;
 use App\Http\Resources\Admin\PaymentMethodResource;
+use App\Models\Affiliate;
 use App\Models\PaymentMethod;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentMethodApiController extends Controller
@@ -23,6 +23,11 @@ class PaymentMethodApiController extends Controller
     public function store(StorePaymentMethodRequest $request)
     {
         $paymentMethod = PaymentMethod::create($request->all());
+
+        $affiliate = Affiliate::where('id', $request->affiliate_id)->first();
+        $affiliate->w8 = $request->w8;
+        $affiliate->w9 = $request->w9;
+        $affiliate->save();
 
         return (new PaymentMethodResource($paymentMethod))
             ->response()
@@ -39,6 +44,11 @@ class PaymentMethodApiController extends Controller
     public function update(UpdatePaymentMethodRequest $request, PaymentMethod $paymentMethod)
     {
         $paymentMethod->update($request->all());
+
+        $affiliate = Affiliate::where('id', $request->affiliate_id)->first();
+        $affiliate->w8 = $request->w8;
+        $affiliate->w9 = $request->w9;
+        $affiliate->save();
 
         return (new PaymentMethodResource($paymentMethod))
             ->response()

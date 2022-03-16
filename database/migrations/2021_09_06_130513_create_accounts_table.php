@@ -32,7 +32,7 @@ class CreateAccountsTable extends Migration
             $table->string('UnsubscribeDate')->nullable();
             $table->string('UnsubscribeTime')->nullable();
             $table->timestamps();
-        }); 
+        });
     }
 
     /**

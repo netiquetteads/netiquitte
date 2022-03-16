@@ -11,9 +11,11 @@ Route::get('/home', function () {
 
 Auth::routes();
 
-
 Route::get('/unsubscribe', 'UnsubscribeController@index')->name('unsubscribe');
 Route::get('/success', 'UnsubscribeController@success')->name('success');
+Route::get('openEmail', 'UnsubscribeController@openEmail')->name('openEmail');
+Route::get('paymentOpenEmail', 'UnsubscribeController@paymentOpenEmail')->name('paymentOpenEmail');
+Route::get('userApproval/{id?}', 'UnsubscribeController@userApproval')->name('userApproval');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -60,7 +62,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
     Route::get('user-alerts/read', 'UserAlertsController@read');
     Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
- 
+
     // Label
     Route::delete('labels/destroy', 'LabelController@massDestroy')->name('labels.massDestroy');
     Route::resource('labels', 'LabelController');
@@ -97,7 +99,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Payment Method
     Route::delete('payment-methods/destroy', 'PaymentMethodController@massDestroy')->name('payment-methods.massDestroy');
+    Route::post('getPaymentType', 'PaymentMethodController@getPaymentType')->name('payment-methods.getPaymentType');
     Route::resource('payment-methods', 'PaymentMethodController');
+
+    // Payment Method Type
+    Route::delete('payment-method-type/destroy', 'PaymentMethodTypeController@massDestroy')->name('payment-method-type.massDestroy');
+    Route::post('createNewMethod', 'PaymentMethodTypeController@createNewMethod')->name('payment-method-type.createNewMethod');
+    Route::post('getPaymentFields', 'PaymentMethodTypeController@getPaymentFields')->name('payment-method-type.getPaymentFields');
+    Route::resource('payment-method-type', 'PaymentMethodTypeController');
 
     // Template
     Route::delete('templates/destroy', 'TemplateController@massDestroy')->name('templates.massDestroy');
@@ -105,7 +114,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('templates/ckmedia', 'TemplateController@storeCKEditorImages')->name('templates.storeCKEditorImages');
     Route::resource('templates', 'TemplateController');
     Route::post('deleteSelectedTemplate', 'TemplateController@deleteSelectedTemplate')->name('templates.deleteSelectedTemplate');
-    
+
     // Campaign Results
     Route::delete('campaign-results/destroy', 'CampaignResultsController@massDestroy')->name('campaign-results.massDestroy');
     Route::resource('campaign-results', 'CampaignResultsController');
@@ -134,7 +143,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('subscriptions/destroy', 'SubscriptionController@massDestroy')->name('subscriptions.massDestroy');
     Route::resource('subscriptions', 'SubscriptionController');
 
+    // Task Status
+    Route::delete('task-statuses/destroy', 'TaskStatusController@massDestroy')->name('task-statuses.massDestroy');
+    Route::resource('task-statuses', 'TaskStatusController');
+
+    // Task Tag
+    Route::delete('task-tags/destroy', 'TaskTagController@massDestroy')->name('task-tags.massDestroy');
+    Route::resource('task-tags', 'TaskTagController');
+
+    // Task
+    Route::delete('tasks/destroy', 'TaskController@massDestroy')->name('tasks.massDestroy');
+    Route::post('tasks/media', 'TaskController@storeMedia')->name('tasks.storeMedia');
+    Route::post('tasks/ckmedia', 'TaskController@storeCKEditorImages')->name('tasks.storeCKEditorImages');
+    Route::resource('tasks', 'TaskController');
+
+    // Tasks Calendar
+    Route::resource('tasks-calendars', 'TasksCalendarController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
+    Route::get('calendar', 'SystemCalendarController@calendar')->name('calendar');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');
     Route::post('messenger', 'MessengerController@storeTopic')->name('messenger.storeTopic');
@@ -157,15 +184,13 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
     }
 });
 
-
-Route::get('/r', function ()
-{
+Route::get('/r', function () {
     function philsroutes()
     {
         $routeCollection = Route::getRoutes();
 
         echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">';
-        echo "<div class='container'><div class='col-md-12'><a target='_blank' href='". url('/') ."' type='button' class='btn btn-primary' style='position: fixed;top:5rem;right:3em;'>Live Site</a><table class='table table-striped' style='width:100%'>";
+        echo "<div class='container'><div class='col-md-12'><a target='_blank' href='".url('/')."' type='button' class='btn btn-primary' style='position: fixed;top:5rem;right:3em;'>Live Site</a><table class='table table-striped' style='width:100%'>";
         echo '<tr>';
         //  echo '<td><h4>Domain</h4></td>';
         echo "<td width='10%'><h4>HTTP Method</h4></td>";
@@ -189,5 +214,4 @@ Route::get('/r', function ()
     }
 
     return philsroutes();
-
 })->name('assigned-routes');

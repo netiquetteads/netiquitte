@@ -6,17 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBalanceRequest;
 use App\Http\Requests\StoreBalanceRequest;
 use App\Http\Requests\UpdateBalanceRequest;
-use App\Models\Balance;
-use App\Models\PaymentMethod;
-use App\Models\PaymentStatus;
-use App\Models\BalanceContainer;
+use App\Mail\SendInvoiceMail;
 use App\Models\Affiliate;
-use DateTime;
+use App\Models\Balance;
+use App\Models\PaymentMailLogs;
+use App\Models\PaymentMethod;
+use App\Models\PaymentMethodType;
+use App\Models\PaymentStatus;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use App\Mail\SendInvoiceMail;
 
 class BalancesController extends Controller
 {
@@ -71,193 +71,128 @@ class BalancesController extends Controller
         //     return $table->make(true);
         // }
 
-        $accountingYears=Balance::groupBy('accounting_year')->pluck('accounting_year');
+        $accountingYears = Balance::groupBy('accounting_year')->pluck('accounting_year');
 
-        return view('admin.balances.index',compact('accountingYears'));
+        return view('admin.balances.index', compact('accountingYears'));
     }
 
     public function getTabledata(Request $request)
     {
+        // $Year=$request->Year;
+        $startDate = $request->start;
+        $endDate = $request->end;
 
-        $Year=$request->Year;
-        $start=$request->start;
-        $end=$request->end;
+        $start = strtotime($request->start);
+        $end = strtotime($request->end);
 
-        $startMonth=date('F',strtotime($start));
-        $startYear=date('Y',strtotime($start));
-        $endMonth=date('F',strtotime($end));
-        $endYear=date('Y',strtotime($end));
-
-        $table='<thead>
+        $table = '<thead>
         <tr>
-          <th>Company Name</th>
-          <th>January<br>'.$this->calculateNetworkMonthlyBalance("January",$Year).'</th>
-          <th>February<br>'.$this->calculateNetworkMonthlyBalance("February",$Year).'</th>
-          <th>March<br>'.$this->calculateNetworkMonthlyBalance("March",$Year).'</th>
-          <th>April<br>'.$this->calculateNetworkMonthlyBalance("April",$Year).'</th>
-          <th>May<br>'.$this->calculateNetworkMonthlyBalance("May",$Year).'</th>
-          <th>June<br>'.$this->calculateNetworkMonthlyBalance("June",$Year).'</th>
-          <th>July<br>'.$this->calculateNetworkMonthlyBalance("July",$Year).'</th>
-          <th>August<br>'.$this->calculateNetworkMonthlyBalance("August",$Year).'</th>
-          <th>September<br>'.$this->calculateNetworkMonthlyBalance("September",$Year).'</th>
-          <th>October<br>'.$this->calculateNetworkMonthlyBalance("October",$Year).'</th>
-          <th>November<br>'.$this->calculateNetworkMonthlyBalance("November",$Year).'</th>
-          <th>December<br>'.$this->calculateNetworkMonthlyBalance("December",$Year).'</th>
-          <th>Balance<br>'.$this->calculateNetworkYTDBalance($Year).'</th>
-        </tr>
+        <th>Company Name</th>';
+
+        while ($start < $end) {
+            $table .= '<th>'.date('M Y', $start).'</th>';
+
+            $start = strtotime('+1 month', $start);
+        }
+
+        $table .= '<th>Total</th>
+          </tr>
       </thead>';
 
-      if($start && $end){
-
-        $balances = Balance::where('accounting_year','>=',$startYear)->where('accounting_year','<=',$endYear)->groupBy('affiliate_id')->get();
-
-        // $balances = Balance::where('accounting_year','>=',$startYear)->where('accounting_month','>=',$startMonth)->where('accounting_year','<=',$endYear)->where('accounting_month','<=',$endMonth)->groupBy('affiliate_id')->get();
-
-      }else{
-        $balances = Balance::groupBy('affiliate_id')->get();
-      }
-    
-
-     foreach ($balances as $key => $balance) {
-    
-     $AffiliateID = null;
-     $AffiliateID = $balance->affiliate_id;
-     $Affiliate = $balance->affiliate;
-                        
-     // Calculate Monthly Start
-     $monthArr = array(
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-    );
-    
-    $month = null;
-    $monthColor = null;
-    
-    $monthVar = 0;
-
-    foreach($monthArr as $k => $v)
-						{
-        list($status, $month[$monthVar]) = $this->grabMonthlyPayout($AffiliateID, $Year, $v);
-
-        if($status == 'PAID')
-        {
-            $monthColor[$monthVar] = '#3cb371;font-weight: bold;';
-        }
-        if($status == 'PENDING')
-        {
-            $monthColor[$monthVar] = 'orange;font-weight: bold;';
-        }
-        if($status == 'ISSUE')
-        {
-            $monthColor[$monthVar] = 'red;font-weight: bold;';
+        if ($startDate && $endDate) {
+            $balances = Balance::where('accounting_year', '>=', date('Y', strtotime($startDate)))->where('accounting_year', '<=', date('Y', strtotime($endDate)))->groupBy('affiliate_id')->get();
+        } else {
+            $balances = Balance::groupBy('affiliate_id')->where('accounting_year', date('Y', $startDate))->get();
         }
 
-        if($status == '')
-        {
-            $monthColor[$monthVar] = 'black;font-weight: normal;';
+        $grandTotal = 0;
+        $grandMonthlyTotal = [];
+
+        foreach ($balances as $key => $balance) {
+            $AffiliateID = null;
+            $AffiliateID = $balance->affiliate_id;
+            $Affiliate = $balance->affiliate;
+
+            $payout = null;
+            $monthColor = null;
+
+            $totalPayout = 0;
+
+            $start = $request->start;
+            $end = $request->end;
+
+            $start = strtotime($start);
+            $end = strtotime($end);
+
+            $table .= '<tr>';
+            $table .= "
+                <td data-order='".$Affiliate."'>$Affiliate</td>";
+
+            while ($start < $end) {
+                $cYear = date('Y', $start);
+                $cMonth = date('F', $start);
+
+                [$status, $payout] = $this->grabMonthlyPayout($AffiliateID, $cYear, $cMonth);
+
+                if ($payout == '' || $payout == '0') {
+                    $payout = '$0.00';
+                    $tpay = 0.00;
+                } else {
+                    $tpay = round($payout, 2);
+                    $payout = '$'.round($payout, 2);
+                }
+
+                if ($status == 'UNPAID') {
+                    $monthColor = 'black;font-weight: bold;';
+                    $bgColor = '#EC7063;';
+                }
+                if ($status == 'PENDING' || $status == '') {
+                    $monthColor = 'black;font-weight: bold;';
+                    $bgColor = '#FCE7D2;';
+                }
+
+                // if($status == '')
+                // {
+                //     $monthColor = 'black;font-weight: bold;';
+                //     $bgColor = '#FCE7D2;';
+                // }
+
+                if ($status == 'PAID') {
+                    $monthColor = 'black;font-weight: bold;';
+                    $bgColor = '#ADF5B0;';
+                } else {
+                    $totalPayout = $totalPayout + $tpay;
+
+                    if (@$grandMonthlyTotal[$cYear.$cMonth]) {
+                        $grandMonthlyTotal[$cYear.$cMonth] = $tpay + $grandMonthlyTotal[$cYear.$cMonth];
+                    } else {
+                        $grandMonthlyTotal[$cYear.$cMonth] = $tpay;
+                    }
+                }
+
+                $table .= "<td data-order='".$payout."' style='background: ".$bgColor."'>
+                      <font style='color:".$monthColor."'>".$payout."</font>&nbsp;
+
+                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$cYear','".$cMonth."');\"></i>
+                  </td>";
+
+                $start = strtotime('+1 month', $start);
+            }
+
+            $grandTotal = $grandTotal + $totalPayout;
+
+            $table .= "<td id='totalAmount".$AffiliateID."' data-order='$".$totalPayout."'>$".$totalPayout.'</td>';
+            $table .= '</tr>';
         }
 
-        if($month[$monthVar] == '' || $month[$monthVar] == '0')
-        {
-            $month[$monthVar] = '$0.00';
-        }else{
-            $month[$monthVar] = "$".round($month[$monthVar],2);
+        // dump($grandMonthlyTotal);
+        $table .= '<tr><th>Total</th>';
+        foreach ($grandMonthlyTotal as $key => $value) {
+            $table .= '<th>$'.$value.'</th>';
         }
-        
-        $monthVar++;
-    }
+        $table .= '<th>$'.$grandTotal.'</th></tr>';
 
-      $table .= "<tr>";
-      $table .= "
-                <td data-order='".$Affiliate."'>$Affiliate</td>
-                  <td data-order='".$month[0]."'>
-                      <font style='color:".$monthColor[0]."'>".$month[0]."</font>&nbsp;
-
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[0]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[1]."'>
-                      <font style='color:".$monthColor[1]."'>".$month[1]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[1]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[2]."'>
-                      <font style='color:".$monthColor[2]."'>".$month[2]."</font>&nbsp; 
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[2]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[3]."'>
-                      <font style='color:".$monthColor[3]."'>".$month[3]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[3]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[4]."'>
-                      <font style='color:".$monthColor[4]."'>".$month[4]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[4]."');\"></i>
-                      
-                  </td>
-                  
-                  <td data-order='".$month[5]."'>
-                      <font style='color:".$monthColor[5]."'>".$month[5]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[5]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[6]."'>
-                      <font style='color:".$monthColor[6]."'>".$month[6]."</font>&nbsp;
-
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[6]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[7]."'>
-                      <font style='style='color:".$monthColor[7]."'>".$month[7]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[7]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[8]."'>
-                      <font style='color:".$monthColor[8]."'>".$month[8]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[8]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[9]."'>
-                      <font style='color:".$monthColor[9]."'>".$month[9]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[9]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[10]."'>
-                      <font style='color:".$monthColor[10]."'>".$month[10]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[10]."');\"></i>
-                  </td>
-                  
-                  <td data-order='".$month[11]."'>
-                      <font style='color:".$monthColor[11]."'>".$month[11]."</font>&nbsp;
-                      
-                      <i style='float:right' class=\"fa fa-edit\" aria-hidden=\"true\" onclick=\"OpenModal('$AffiliateID','$Year','".$monthArr[11]."');\"></i>
-                  </td>
-                  <td data-order='".$this->calculateAffiliateYTDBalance($AffiliateID,$Year)."'>".$this->calculateAffiliateYTDBalance($AffiliateID,$Year)."</td>";
-        $table .= "</tr>";
-
-    }
-
-      echo $table;
+        echo $table;
     }
 
     public function getModeldata(Request $request)
@@ -265,56 +200,60 @@ class BalancesController extends Controller
         $AffiliateID = $request->AffiliateID;
         $Year = $request->Year;
         $Month = $request->Month;
+        $total = $request->total;
 
-        $balance=Balance::where('affiliate_id',$AffiliateID)->first();
+        $paymentMethod = PaymentMethod::where('affiliate_id', $AffiliateID)->first();
 
-        $revenue=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('revenue');
-        $payout=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('payout');
-        $profit=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->where('accounting_month',$Month)->sum('profit');
+        $paymentMethodTypes = PaymentMethodType::get();
 
-        $html= view('admin.balances.partials.balance-model', compact('AffiliateID','Year','Month','balance','revenue','payout','profit'))->render();
+        $affiliate = Affiliate::where('id', $AffiliateID)->first();
+
+        $paymentMailLogs = PaymentMailLogs::where('affiliate_id', $AffiliateID)->orderBy('id', 'DESC')->get();
+
+        $balance = Balance::where('affiliate_id', $AffiliateID)->where('accounting_year', $Year)->where('accounting_month', $Month)->first();
+
+        $revenue = Balance::where('affiliate_id', $AffiliateID)->where('accounting_year', $Year)->where('accounting_month', $Month)->sum('revenue');
+        $payout = Balance::where('affiliate_id', $AffiliateID)->where('accounting_year', $Year)->where('accounting_month', $Month)->sum('payout');
+        $profit = Balance::where('affiliate_id', $AffiliateID)->where('accounting_year', $Year)->where('accounting_month', $Month)->sum('profit');
+
+        $html = view('admin.balances.partials.balance-model', compact('AffiliateID', 'Year', 'Month', 'balance', 'revenue', 'payout', 'profit', 'total', 'paymentMethod', 'affiliate', 'paymentMailLogs', 'paymentMethodTypes'))->render();
 
         echo $html;
-        
     }
 
     public function SaveAccounting(Request $request)
     {
-        
         $AffiliateID = $request->account;
         $Type = $request->type;
         $Amount = $request->amount;
         $Month = $request->month;
         $Year = $request->year;
 
-        $checkBalance=Balance::where('accounting_year',$Year)->where('accounting_month',$Month)->where('affiliate_id',$AffiliateID)->first();
+        $checkBalance = Balance::where('accounting_year', $Year)->where('accounting_month', $Month)->where('affiliate_id', $AffiliateID)->first();
 
-        if(!$checkBalance){
+        if (! $checkBalance) {
+            $balance = Balance::where('affiliate_id', $AffiliateID)->first();
 
-            $balance=Balance::where('affiliate_id',$AffiliateID)->first();
-
-            $balanceInsert=new Balance;
-            $balanceInsert->affiliate=$balance->affiliate;
-            $balanceInsert->affiliate_id=$AffiliateID;
-            $balanceInsert->accounting_year=$Year;
-            $balanceInsert->accounting_month=$Month;
+            $balanceInsert = new Balance;
+            $balanceInsert->affiliate = $balance->affiliate;
+            $balanceInsert->affiliate_id = $AffiliateID;
+            $balanceInsert->accounting_year = $Year;
+            $balanceInsert->accounting_month = $Month;
             $balanceInsert->save();
         }
 
-        $updateBalance=Balance::where('accounting_year',$Year)->where('accounting_month',$Month)->where('affiliate_id',$AffiliateID)->first();
+        $updateBalance = Balance::where('accounting_year', $Year)->where('accounting_month', $Month)->where('affiliate_id', $AffiliateID)->first();
 
-        if($Type == "Revenue"){
-            $updateBalance->revenue=$Amount;
+        if ($Type == 'Revenue') {
+            $updateBalance->revenue = $Amount;
         }
-        if($Type == "Payout"){
-            $updateBalance->payout=$Amount;
+        if ($Type == 'Payout') {
+            $updateBalance->payout = $Amount;
         }
-        if($Type == "Profit"){
-            $updateBalance->profit=$Amount;
+        if ($Type == 'Profit') {
+            $updateBalance->profit = $Amount;
         }
         $updateBalance->save();
-        
-
     }
 
     public function SavePaymentStatus(Request $request)
@@ -324,10 +263,9 @@ class BalancesController extends Controller
         $AffiliateID = $request->account;
         $Status = $request->status;
 
-        $balance=Balance::where('accounting_year',$Year)->where('accounting_month',$Month)->where('affiliate_id',$AffiliateID)->first();
-        $balance->monthly_status=$Status;
+        $balance = Balance::where('accounting_year', $Year)->where('accounting_month', $Month)->where('affiliate_id', $AffiliateID)->first();
+        $balance->monthly_status = $Status;
         $balance->save();
-
     }
 
     public function SavePaymentInfo(Request $request)
@@ -343,16 +281,16 @@ class BalancesController extends Controller
         $Paypal = $request->Paypal;
         $PaymentType = $request->PaymentType;
 
-        $balance=Balance::where('affiliate_id',$AffID)->first();
-        $balance->ach_name=$ACHName;
-        $balance->ach_account=$ACHAccount;
-        $balance->ach_routing=$ACHRouting;
-        $balance->wire_name=$WireName;
-        $balance->wire_account=$WireAccount;
-        $balance->wire_routing=$WireRouting;
-        $balance->wire_swift=$WireSWIFT;
-        $balance->paypal=$Paypal;
-        $balance->payment_type=$PaymentType;
+        $balance = Balance::where('affiliate_id', $AffID)->first();
+        $balance->ach_name = $ACHName;
+        $balance->ach_account = $ACHAccount;
+        $balance->ach_routing = $ACHRouting;
+        $balance->wire_name = $WireName;
+        $balance->wire_account = $WireAccount;
+        $balance->wire_routing = $WireRouting;
+        $balance->wire_swift = $WireSWIFT;
+        $balance->paypal = $Paypal;
+        $balance->payment_type = $PaymentType;
         $balance->save();
     }
 
@@ -362,35 +300,39 @@ class BalancesController extends Controller
         $AccountID = $request->AccountID;
         $Note = addslashes($Note);
 
-        $balance=Balance::where('affiliate_id',$AccountID)->first();
-        $balance->publisher_notes=$Note;
+        $balance = Balance::where('affiliate_id', $AccountID)->first();
+        $balance->publisher_notes = $Note;
         $balance->save();
     }
 
     public function grabMonthlyPayout($AffiliateID, $Year, $Month)
     {
-        $balance=Balance::select(\DB::raw('SUM(payout) AS payout'),'monthly_status AS status')->where('accounting_year',$Year)->where('accounting_month',$Month)->where('affiliate_id',$AffiliateID)->first();        
-        return array($balance->status, $balance->payout);
+        $balance = Balance::select(\DB::raw('SUM(payout) AS payout'), 'monthly_status AS status')->where('accounting_year', $Year)->where('accounting_month', $Month)->where('affiliate_id', $AffiliateID)->first();
+
+        return [$balance->status, $balance->payout];
     }
 
     public function calculateNetworkMonthlyBalance($Month, $Year)
     {
-        $payout=Balance::where('accounting_year',$Year)->where('accounting_month',$Month)->sum('payout');
-        $Balance = "$".number_format($payout);
+        $payout = Balance::where('accounting_year', $Year)->where('accounting_month', $Month)->sum('payout');
+        $Balance = '$'.number_format($payout);
+
         return $Balance;
     }
 
     public function calculateNetworkYTDBalance($Year)
     {
-        $payout=Balance::where('accounting_year',$Year)->whereNull('monthly_status')->sum('payout');
-        $Balance = "$".number_format($payout);
+        $payout = Balance::where('accounting_year', $Year)->whereNull('monthly_status')->sum('payout');
+        $Balance = '$'.number_format($payout);
+
         return $Balance;
     }
 
     public function calculateAffiliateYTDBalance($AffiliateID, $Year)
     {
-        $payout=Balance::where('affiliate_id',$AffiliateID)->where('accounting_year',$Year)->whereNull('monthly_status')->sum('payout');
-        $Balance = "$".number_format($payout);
+        $payout = Balance::where('affiliate_id', $AffiliateID)->where('accounting_year', $Year)->whereNull('monthly_status')->sum('payout');
+        $Balance = '$'.number_format($payout);
+
         return $Balance;
     }
 
@@ -459,16 +401,28 @@ class BalancesController extends Controller
 
     public function sendInvoiceMail(Request $request)
     {
-        $account=Affiliate::with(["Accounts" => function($q){
+        $account = Affiliate::with(['Accounts' => function ($q) {
             $q->where('AccountType', 1);
         }])->where('id', $request->aid)->first();
 
+        $content = str_replace('{FirstName}', $account->Accounts->FirstName, $request->invoiceData);
+
         $input = [
-            'message' => $request->invoiceData,
-            'subject' => 'Invoice for your account from Netiquette Ads',
+            'email_subject' => $account->Accounts->FirstName.', You have Been Paid',
+            'email_body' => $content,
+            'from_name' => $account->Accounts->FirstName,
+            'email' => $account->Accounts->EmailAddress,
+            'email_opened' => 0,
+            'email_open_date' => '',
+            'email_open_time' => '',
+            'affiliate_id' => $request->aid,
         ];
 
-        $send=\Mail::to($account->Accounts->EmailAddress)->send(new SendInvoiceMail($input));
+        $PaymentMailLogs = PaymentMailLogs::create($input);
+
+        $url = url('').'/paymentOpenEmail?id='.$PaymentMailLogs->id.'&aid='.$input['affiliate_id'];
+        $input['email_body'] = $input['email_body']."<img src='".$url."' width='1' height='1' />";
+
+        $send = \Mail::to($account->Accounts->EmailAddress)->send(new SendInvoiceMail($input));
     }
-    
 }

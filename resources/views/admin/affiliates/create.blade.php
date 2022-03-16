@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
+<div class="card col-md-8">
     <div class="card-header">
         {{ trans('global.create') }} {{ trans('cruds.affiliate.title_singular') }}
     </div>
@@ -9,27 +9,33 @@
     <div class="card-body">
         <form method="POST" action="{{ route("admin.affiliates.store") }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <label for="account_status_id">{{ trans('cruds.affiliate.fields.account_status') }}</label>
-                <select class="form-control select2 {{ $errors->has('account_status') ? 'is-invalid' : '' }}" name="account_status" id="account_status">
-                        <option value="active" {{ old('account_status') == "active" ? 'selected' : '' }}>Active</option>
-                        <option value="inactive" {{ old('account_status') == "inactive" ? 'selected' : '' }}>Inactive</option>
-                        <option value="suspended" {{ old('account_status') == "suspended" ? 'selected' : '' }}>Suspended</option>
-                </select>
-                @if($errors->has('account_status'))
-                    <span class="text-danger">{{ $errors->first('account_status') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.affiliate.fields.account_status_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="logo">{{ trans('cruds.affiliate.fields.logo') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('logo') ? 'is-invalid' : '' }}" id="logo-dropzone">
+
+                <div class="form-group">
+                    <div class="form-check {{ $errors->has('published') ? 'is-invalid' : '' }}">
+                        <input type="hidden" name="published" value="0">
+                        <input class="form-check-input" type="checkbox" name="published" id="published" value="1" {{ old('published', 0) == 1 || old('published') === null ? 'checked' : '' }}>
+                        <label class="form-check-label" for="published">{{ trans('cruds.affiliate.fields.published') }}</label>
+                    </div>
+                    @if($errors->has('published'))
+                        <span class="text-danger">{{ $errors->first('published') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.affiliate.fields.published_helper') }}</span>
                 </div>
-                @if($errors->has('logo'))
-                    <span class="text-danger">{{ $errors->first('logo') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.affiliate.fields.logo_helper') }}</span>
-            </div>
+
+                <div class="form-group">
+                    <label for="account_status_id">{{ trans('cruds.affiliate.fields.account_status') }}</label>
+                    <select class="form-control select2 {{ $errors->has('account_status') ? 'is-invalid' : '' }}" name="account_status" id="account_status">
+                            <option value="active" {{ old('account_status') == "active" ? 'selected' : '' }}>Active</option>
+                            <option value="inactive" {{ old('account_status') == "inactive" ? 'selected' : '' }}>Inactive</option>
+                            <option value="suspended" {{ old('account_status') == "suspended" ? 'selected' : '' }}>Suspended</option>
+                    </select>
+                    @if($errors->has('account_status'))
+                        <span class="text-danger">{{ $errors->first('account_status') }}</span>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.affiliate.fields.account_status_helper') }}</span>
+                </div>
+
+
             <div class="form-group">
                 <label for="name">{{ trans('cruds.affiliate.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}">
@@ -38,6 +44,31 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.affiliate.fields.name_helper') }}</span>
             </div>
+
+            <div class="form-group">
+                <label for="account_executive_name">{{ trans('cruds.affiliate.fields.account_executive_name') }}</label>
+                <input class="form-control {{ $errors->has('account_executive_name') ? 'is-invalid' : '' }}" type="text" name="account_executive_name" id="account_executive_name" value="{{ old('account_executive_name', '') }}">
+                @if($errors->has('account_executive_name'))
+                    <span class="text-danger">{{ $errors->first('account_executive_name') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.affiliate.fields.account_executive_name_helper') }}</span>
+            </div>
+
+
+
+
+
+
+            {{-- <div class="form-group">
+                <label for="logo">{{ trans('cruds.affiliate.fields.logo') }}</label>
+                <div class="needsclick dropzone {{ $errors->has('logo') ? 'is-invalid' : '' }}" id="logo-dropzone">
+                </div>
+                @if($errors->has('logo'))
+                    <span class="text-danger">{{ $errors->first('logo') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.affiliate.fields.logo_helper') }}</span>
+            </div>
+
             <div class="form-group">
                 <label for="everflow_account">{{ trans('cruds.affiliate.fields.everflow_account') }}</label>
                 <input class="form-control {{ $errors->has('everflow_account') ? 'is-invalid' : '' }}" type="text" name="everflow_account" id="everflow_account" value="{{ old('everflow_account', '') }}">
@@ -63,14 +94,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.affiliate.fields.account_manager_name_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="account_executive_name">{{ trans('cruds.affiliate.fields.account_executive_name') }}</label>
-                <input class="form-control {{ $errors->has('account_executive_name') ? 'is-invalid' : '' }}" type="text" name="account_executive_name" id="account_executive_name" value="{{ old('account_executive_name', '') }}">
-                @if($errors->has('account_executive_name'))
-                    <span class="text-danger">{{ $errors->first('account_executive_name') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.affiliate.fields.account_executive_name_helper') }}</span>
-            </div>
+
             <div class="form-group">
                 <label for="balance">{{ trans('cruds.affiliate.fields.balance') }}</label>
                 <input class="form-control {{ $errors->has('balance') ? 'is-invalid' : '' }}" type="number" name="balance" id="balance" value="{{ old('balance', '') }}" step="0.01">
@@ -103,17 +127,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.affiliate.fields.global_tracking_domain_url_helper') }}</span>
             </div>
-            <div class="form-group">
-                <div class="form-check {{ $errors->has('published') ? 'is-invalid' : '' }}">
-                    <input type="hidden" name="published" value="0">
-                    <input class="form-check-input" type="checkbox" name="published" id="published" value="1" {{ old('published', 0) == 1 || old('published') === null ? 'checked' : '' }}>
-                    <label class="form-check-label" for="published">{{ trans('cruds.affiliate.fields.published') }}</label>
-                </div>
-                @if($errors->has('published'))
-                    <span class="text-danger">{{ $errors->first('published') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.affiliate.fields.published_helper') }}</span>
-            </div>
+
             <div class="form-group">
                 <label for="today_revenue">{{ trans('cruds.affiliate.fields.today_revenue') }}</label>
                 <input class="form-control {{ $errors->has('today_revenue') ? 'is-invalid' : '' }}" type="number" name="today_revenue" id="today_revenue" value="{{ old('today_revenue', '0.00') }}" step="0.01">
@@ -153,7 +167,7 @@
                     <span class="text-danger">{{ $errors->first('networkid') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.affiliate.fields.networkid_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

@@ -21,15 +21,21 @@
         "laravel/ui": "^3.3",
         "laraveldaily/laravel-charts": "^0.1.24",
         "nwidart/laravel-modules": "^8.2",
+        "orangehill/iseed": "^3.0",
+        "php-flasher/flasher-laravel": "^0.9.6",
+        "php-flasher/flasher-notyf-laravel": "^0.9.6",
+        "php-flasher/flasher-sweet-alert-laravel": "^0.9.6",
+        "php-flasher/flasher-toastr-laravel": "^0.9.6",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "spatie/laravel-backup": "^6.16",
         "spatie/laravel-medialibrary": "^8.7",
-        "yajra/laravel-datatables-oracle": "^9.11"
+        "yajra/laravel-datatables-oracle": "^9.11",
+        "sendgrid/sendgrid": "~7"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.12",
+        "laravel/sail": "^1.13",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3"
@@ -41,7 +47,7 @@
         "platform": {
             "ext-pcntl": "7.3",
             "ext-posix": "7.3",
-            "php":  "7.4"
+            "php": "7.4"
         }
     },
     "extra": {
@@ -65,14 +71,8 @@
     "prefer-stable": true,
     "scripts": {
         "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"
+
         ]
     }
 }

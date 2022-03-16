@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserApprovedMail;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,7 +43,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        if (request()->has('signature') && !request()->hasValidSignature()) {
+        if (request()->has('signature') && ! request()->hasValidSignature()) {
             return redirect()->route('register');
         }
 
@@ -56,7 +58,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => ['required', 'string', 'max:255'],
+            'first_name'     => ['required', 'string', 'max:255'],
+            'last_name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -70,13 +73,14 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => Hash::make($data['password']),
-            'team_id'  => request()->input('team', null),
+            'first_name'     => $data['first_name'],
+            'last_name'     => $data['last_name'],
+            'email'         => $data['email'],
+            'password'      => Hash::make($data['password']),
+            'team_id'       => request()->input('team', null),
         ]);
 
-        if (!request()->has('team')) {
+        if (! request()->has('team')) {
             $team = \App\Models\Team::create([
                 'owner_id' => $user->id,
                 'name'     => $data['email'],
@@ -86,5 +90,35 @@ class RegisterController extends Controller
         }
 
         return $user;
+    }
+
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $user = $this->create($request->all());
+
+        $data = [
+            'email_subject'=>'Pending user waiting for approval!',
+            'email_body'=>'<p><strong>Hello Admin</strong></p> <p>There is a pending user waiting for approval! <a href="'.route('userApproval', $user->id).'">Click Here</a></p>',
+        ];
+
+        $admins = User::get();
+
+        foreach ($admins as $key => $admin) {
+            $role = implode('', $admin->roles->pluck('id')->toArray());
+
+            if ($role == 1) {
+                \Mail::to($admin->email)->send(new UserApprovedMail($data));
+            }
+        }
+
+        return redirect()->route('login')->with('message', trans('global.yourAccountNeedsAdminApproval'));
     }
 }

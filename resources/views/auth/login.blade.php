@@ -3,8 +3,8 @@
 <div class="login-box">
     <div class="login-logo">
         <div class="login-logo">
-            <a href="{{ route('admin.home') }}">
-                {{ trans('panel.site_title') }}
+            <a href="javascript:void(0);">
+                <img src="{{ url('images/cpa_marketing_netiquette_logo.png') }}" alt="NetiquetteAds Logo">
             </a>
         </div>
     </div>

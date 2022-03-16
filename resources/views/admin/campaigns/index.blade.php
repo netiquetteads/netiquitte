@@ -12,7 +12,7 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.campaigns.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.campaign.title_singular') }}
+                Send {{ trans('cruds.campaign.title_singular') }}
             </a>
             <button class="btn btn-danger" id="deleteAll" disabled>Delete</button>
         </div>
@@ -31,32 +31,32 @@
                   <th width="10">
                     <input type="checkbox" name="selectall" id="selectall">
                 </th>
-                <th width="10">
+                {{-- <th width="10">
                      
-                </th>
+                </th> --}}
                     <th>
                         {{ trans('cruds.campaign.fields.id') }}
                     </th>
-                    {{-- <th>
-                        {{ trans('cruds.campaign.fields.name') }}
-                    </th> --}}
                     <th>
-                        {{ trans('cruds.campaign.fields.email_subject') }}
+                        {{ trans('cruds.campaign.fields.name') }}
                     </th>
+                    {{-- <th>
+                        {{ trans('cruds.campaign.fields.email_subject') }}
+                    </th> --}}
                     {{-- <th>
                         {{ trans('cruds.campaign.fields.campaign_offer') }}
                     </th> --}}
                     <th>
-                        {{ trans('cruds.campaign.fields.sentDateTime') }}
-                    </th>
-                    {{-- <th>
-                        {{ trans('cruds.campaign.fields.sentTo') }}
-                    </th> --}}
-                    {{-- <th>
-                        {{ trans('cruds.campaign.fields.subs') }}
+                        {{ trans('cruds.campaign.fields.sent_date') }}
                     </th>
                     <th>
-                        {{ trans('cruds.campaign.fields.opens') }}
+                        {{ trans('cruds.campaign.fields.sentTo') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.campaign.fields.stats') }}
+                    </th>
+                    {{-- <th>
+                        {{ trans('cruds.campaign.fields.unopened') }}
                     </th> --}}
                     <th class="text-center">
                       {{ trans('global.actions') }}
@@ -195,18 +195,34 @@ $.fn.dataTable.Api.register( 'clearPipeline()', function () {
 function format ( d ) {
     console.log('tabeldata',d);
     // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px; min-width:600px;" >'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.name') }}:</td>'+
-            '<td>'+d.name+'</td>'+
+            '<th>{{ trans('cruds.campaign.fields.email_subject') }}:</th>'+
+            '<td>'+d.email_subject+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.sentTo') }}:</td>'+
+            '<th>{{ trans('cruds.campaign.fields.list') }}:</th>'+
             '<td>'+d.send_to+'</td>'+
         '</tr>'+
         '<tr>'+
-            '<td>{{ trans('cruds.campaign.fields.sentDateTime') }}:</td>'+
-            '<td>'+d.sentDateTime+'</td>'+
+            '<th>{{ trans('cruds.campaign.fields.email_sent') }}:</th>'+
+            '<td>'+d.temp_emails.length+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<th>{{ trans('cruds.campaign.fields.opens') }}:</th>'+
+            '<td>'+d.opens+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<th>{{ trans('cruds.campaign.fields.unopened') }}:</th>'+
+            '<td>'+d.unopened+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<th>{{ trans('cruds.campaign.fields.sent_date') }}:</th>'+
+            '<td>'+d.sent_date+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<th>{{ trans('cruds.campaign.fields.sent_time') }}:</th>'+
+            '<td>'+d.sent_time+'</td>'+
         '</tr>'+
     '</table>';
 }
@@ -250,10 +266,12 @@ $(document).ready(function() {
             },
             { "data": "placeholder","orderable":      false  },
             { "data": "id" },
-            // { "data": "name" },
-            { "data": "email_subject" },
+            { "data": "name" },
+            // { "data": "email_subject" },
             { "data": "sentDateTime" },
-            // { "data": "send_to" },
+            { "data": "send_to" },
+            { "data": "stats" },
+            // { "data": "unopened" },
             { "data": "actions" }
         ],
         "order": [[1, 'asc']]

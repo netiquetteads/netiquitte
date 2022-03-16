@@ -138,6 +138,25 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/bugsnag/bugsnag-laravel" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dragonmantank/cron-expression" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nwidart/laravel-modules" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/schema" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/config" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/db-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/laravel-backup" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/dflydev/dot-access-data" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php81" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orangehill/iseed" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-flasher/flasher-sweet-alert-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-flasher/flasher-notyf-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-flasher/flasher-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-flasher/flasher-toastr-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-flasher/flasher-toastr" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-flasher/flasher" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-flasher/flasher-sweet-alert" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/php-flasher/flasher-notyf" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

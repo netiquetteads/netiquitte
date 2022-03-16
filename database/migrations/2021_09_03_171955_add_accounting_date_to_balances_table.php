@@ -17,6 +17,4 @@ class AddAccountingDateToBalancesTable extends Migration
             $table->date('accounting_date')->nullable();
         });
     }
-
-    
 }

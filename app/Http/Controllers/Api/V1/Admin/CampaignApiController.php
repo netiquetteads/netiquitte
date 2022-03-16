@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateCampaignRequest;
 use App\Http\Resources\Admin\CampaignResource;
 use App\Models\Campaign;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CampaignApiController extends Controller
@@ -28,7 +27,7 @@ class CampaignApiController extends Controller
         $campaign = Campaign::create($request->all());
 
         if ($request->input('offer_image', false)) {
-            $campaign->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
+            $campaign->addMedia(storage_path('tmp/uploads/'.basename($request->input('offer_image'))))->toMediaCollection('offer_image');
         }
 
         return (new CampaignResource($campaign))
@@ -48,11 +47,11 @@ class CampaignApiController extends Controller
         $campaign->update($request->all());
 
         if ($request->input('offer_image', false)) {
-            if (!$campaign->offer_image || $request->input('offer_image') !== $campaign->offer_image->file_name) {
+            if (! $campaign->offer_image || $request->input('offer_image') !== $campaign->offer_image->file_name) {
                 if ($campaign->offer_image) {
                     $campaign->offer_image->delete();
                 }
-                $campaign->addMedia(storage_path('tmp/uploads/' . basename($request->input('offer_image'))))->toMediaCollection('offer_image');
+                $campaign->addMedia(storage_path('tmp/uploads/'.basename($request->input('offer_image'))))->toMediaCollection('offer_image');
             }
         } elseif ($campaign->offer_image) {
             $campaign->offer_image->delete();

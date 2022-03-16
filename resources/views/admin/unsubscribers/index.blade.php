@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('content')
-
+<div style="margin-bottom: 10px;" class="row">
+  <div class="col-lg-12">
+      <a class="btn btn-success" href="{{ route('admin.unsubscribers.create') }}">
+          {{ trans('global.add') }} {{ trans('cruds.unsubscribers.title_singular') }}
+      </a>
+  </div>
+</div>
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.unsubscribers.title_singular') }} {{ trans('global.list') }}
@@ -19,9 +25,9 @@
                     <th>
                         {{ trans('cruds.unsubscribers.fields.email') }}
                     </th>
-                    {{-- <th>
-                        &nbsp;
-                    </th> --}}
+                    <th class="text-center">
+                      {{ trans('global.actions') }}
+                  </th>
                 </tr>
             </thead>
         </table>
@@ -77,7 +83,7 @@
       { data: 'placeholder', name: 'placeholder', orderable:false},
 { data: 'id', name: 'id' },
 { data: 'email', name: 'email' },
-// { data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

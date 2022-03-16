@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyUserAlertRequest;
 use App\Http\Requests\StoreUserAlertRequest;
+use App\Models\Role;
+use App\Models\Team;
 use App\Models\User;
 use App\Models\UserAlert;
 use Gate;
@@ -19,7 +21,7 @@ class UserAlertsController extends Controller
         abort_if(Gate::denies('user_alert_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = UserAlert::with(['users'])->select(sprintf('%s.*', (new UserAlert())->table));
+            $query = UserAlert::with(['users', 'roles', 'teams'])->select(sprintf('%s.*', (new UserAlert())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -52,13 +54,29 @@ class UserAlertsController extends Controller
             $table->editColumn('user', function ($row) {
                 $labels = [];
                 foreach ($row->users as $user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $user->name);
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $user->first_name);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->editColumn('team', function ($row) {
+                $labels = [];
+                foreach ($row->teams as $team) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $team->name);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->editColumn('role', function ($row) {
+                $labels = [];
+                foreach ($row->roles as $role) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $role->title);
                 }
 
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'team', 'role']);
 
             return $table->make(true);
         }
@@ -70,15 +88,19 @@ class UserAlertsController extends Controller
     {
         abort_if(Gate::denies('user_alert_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::all()->pluck('name', 'id');
+        $users = User::get();
+        $teams = Team::all()->pluck('name', 'id');
+        $roles = Role::all()->pluck('title', 'id');
 
-        return view('admin.userAlerts.create', compact('users'));
+        return view('admin.userAlerts.create', compact('users', 'teams', 'roles'));
     }
 
     public function store(StoreUserAlertRequest $request)
     {
         $userAlert = UserAlert::create($request->all());
         $userAlert->users()->sync($request->input('users', []));
+        $userAlert->roles()->sync($request->input('roles', []));
+        $userAlert->teams()->sync($request->input('teams', []));
 
         return redirect()->route('admin.user-alerts.index');
     }
@@ -87,7 +109,7 @@ class UserAlertsController extends Controller
     {
         abort_if(Gate::denies('user_alert_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $userAlert->load('users');
+        $userAlert->load('users', 'roles', 'teams');
 
         return view('admin.userAlerts.show', compact('userAlert'));
     }
@@ -112,7 +134,7 @@ class UserAlertsController extends Controller
     {
         $alerts = \Auth::user()->userUserAlerts()->where('read', false)->get();
         foreach ($alerts as $alert) {
-            $pivot       = $alert->pivot;
+            $pivot = $alert->pivot;
             $pivot->read = true;
             $pivot->save();
         }

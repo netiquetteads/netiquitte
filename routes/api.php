@@ -41,6 +41,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     Route::apiResource('offers', 'OfferApiController');
 
     // Balances
+    Route::get('getChartData', 'BalancesApiController@getChartData')->name('balances.getChartData');
     Route::apiResource('balances', 'BalancesApiController');
 
     // Payment Status
@@ -48,6 +49,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
 
     // Payment Method
     Route::apiResource('payment-methods', 'PaymentMethodApiController');
+
+    // Payment Method Type
+    Route::apiResource('payment-method-type', 'PaymentMethodTypeApiController');
 
     // Template
     Route::post('templates/media', 'TemplateApiController@storeMedia')->name('templates.storeMedia');
@@ -65,8 +69,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
 
     // Subscriber
     Route::apiResource('subscribers', 'SubscriberApiController');
+    Route::post('subscribers/GetUnsubscribes', 'SubscriberApiController@GetUnsubscribes')->name('subscribers.GetUnsubscribes');
 
     // Subscription
     Route::apiResource('subscriptions', 'SubscriptionApiController');
-
 });

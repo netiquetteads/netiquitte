@@ -10,16 +10,49 @@ use App\Models\PaymentStatus;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentStatusController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('payment_status_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $paymentStatuses = PaymentStatus::all();
+        if ($request->ajax()) {
+            $query = PaymentStatus::select(sprintf('%s.*', (new PaymentStatus())->table));
+            $table = Datatables::of($query);
 
-        return view('admin.paymentStatuses.index', compact('paymentStatuses'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate = 'payment_status_show';
+                $editGate = 'payment_status_edit';
+                $deleteGate = 'payment_status_delete';
+                $crudRoutePart = 'payment-statuses';
+
+                return view('partials.datatablesActions', compact(
+                'viewGate',
+                'editGate',
+                'deleteGate',
+                'crudRoutePart',
+                'row'
+            ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'id', 'name']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.paymentStatuses.index');
     }
 
     public function create()

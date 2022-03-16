@@ -2,17 +2,15 @@
 
 namespace App\Http\Requests;
 
-use App\Models\UserAlert;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreUserAlertRequest extends FormRequest
 {
     public function authorize()
     {
         return true;
-            //Gate::allows('user_alert_create');
+        //Gate::allows('user_alert_create');
     }
 
     public function rules()

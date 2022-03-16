@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateOfferRequest;
 use App\Http\Resources\Admin\OfferResource;
 use App\Models\Offer;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class OfferApiController extends Controller

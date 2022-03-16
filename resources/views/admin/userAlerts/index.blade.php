@@ -31,7 +31,13 @@
                         {{ trans('cruds.userAlert.fields.alert_link') }}
                     </th>
                     <th>
+                        {{ trans('cruds.userAlert.fields.role') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.userAlert.fields.user') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.userAlert.fields.team') }}
                     </th>
                     <th>
                         {{ trans('cruds.userAlert.fields.created_at') }}
@@ -95,7 +101,9 @@
 { data: 'id', name: 'id' },
 { data: 'alert_text', name: 'alert_text' },
 { data: 'alert_link', name: 'alert_link' },
-{ data: 'user', name: 'users.name' },
+{ data: 'role', name: 'roles.title' },
+{ data: 'user', name: 'users.first_name' },
+{ data: 'team', name: 'team.name' },
 { data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

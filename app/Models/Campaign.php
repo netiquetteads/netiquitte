@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use \DateTimeInterface;
 use App\Traits\Auditable;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,6 +22,8 @@ class Campaign extends Model implements HasMedia
 
     protected $appends = [
         'offer_image',
+        'sent_date',
+        'sent_time',
     ];
 
     protected $dates = [
@@ -41,6 +43,8 @@ class Campaign extends Model implements HasMedia
         'unsubs',
         'opens',
         'send_to',
+        'unopened',
+        'total_emails_sent',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -56,12 +60,26 @@ class Campaign extends Model implements HasMedia
     {
         $file = $this->getMedia('offer_image')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;
+    }
+
+    public function getSentDateAttribute()
+    {
+        $date = date('d-m-Y', strtotime($this->created_at));
+
+        return $date;
+    }
+
+    public function getSentTimeAttribute()
+    {
+        $date = date('h:i:s a', strtotime($this->created_at));
+
+        return $date;
     }
 
     public function campaign_offer()
@@ -71,12 +89,17 @@ class Campaign extends Model implements HasMedia
 
     public function campaignOffers()
     {
-        return $this->belongsToMany(Offer::class,'campaign_offers');
+        return $this->belongsToMany(Offer::class, 'campaign_offers');
     }
 
     public function selected_template()
     {
         return $this->belongsTo(Template::class, 'selected_template_id');
+    }
+
+    public function tempEmails()
+    {
+        return $this->hasMany(TempEmail::class);
     }
 
     protected function serializeDate(DateTimeInterface $date)

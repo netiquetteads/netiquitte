@@ -25,6 +25,9 @@
                         {{ trans('cruds.paymentMethod.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.paymentMethod.fields.affiliate') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.paymentMethod.fields.name') }}
                     </th>
                     <th>
@@ -84,6 +87,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'affiliate', name: 'affiliate' },
 { data: 'name', name: 'name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

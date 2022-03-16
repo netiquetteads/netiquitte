@@ -34,7 +34,7 @@ class QaTopic extends Model
 
     public static function unreadCount()
     {
-        $topics = QaTopic::where(function ($query) {
+        $topics = self::where(function ($query) {
             $query
                 ->where('creator_id', Auth::user()->id)
                 ->orWhere('receiver_id', Auth::user()->id);
@@ -48,7 +48,7 @@ class QaTopic extends Model
         foreach ($topics as $topic) {
             foreach ($topic->messages as $message) {
                 if ($message->sender_id !== Auth::user()->id && $message->read_at === null) {
-                    ++$unreadCount;
+                    $unreadCount++;
                 }
             }
         }

@@ -12,7 +12,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <link href="{{ asset('css/adminltev3.css') }}" rel="stylesheet" />
-    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{-- <link href="https://use..com/releases/v5.6.3/css/all.css" rel="stylesheet" /> --}}
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
     {{-- <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" /> --}}
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -24,10 +25,11 @@
     <link href="{{ asset('datepicker/css/datepicker.css') }}" rel="stylesheet" />
     {{--  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  --}}
     {{--  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">  --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     @yield('styles')
-</head>
 
-<style>
+    <style>
         body.sidebar-open > .nav-sidebar .nav-item.menu-open {background-color: #212529!important; }
         li.menu-open>ul>li {margin-left: 20px!important }
         body.sidebar-open > li[class*="nav-item.has-treeview.menu-open"]>ul>li  { margin-left: 20px!important }
@@ -57,6 +59,7 @@
         .hidden {display:none; }
      </style>
 
+</head>
 
 <body class="sidebar-mini layout-fixed" style="height: auto;">
     <div class="wrapper">
@@ -68,15 +71,15 @@
                 </li>
                                 <li class="adminbuttonbar">
                     <div class="btn-group">
-                        
+
                         @if(Auth::user()->isAdmin())
-                         <a type="button"  target="_blank" href="{{ url('r') }}" class="btn btn-outline-success" title="Route Endpoints">Routes</a>
-                         <a type="button" target="_blank" href="{{ url('/telescope') }}" class="btn btn-outline-success" title="Requests & Responses">Telescope</a>
-                         <a type="button"  target="_blank" href="{{ url('/logs') }}" class="btn btn-outline-success" title="Application Logs">Logs</a>
-                          @endif
+                            <a type="button"  target="_blank" href="{{ url('r') }}" class="btn btn-outline-success" title="Route Endpoints">Routes</a>
+                            <a type="button" target="_blank" href="{{ url('/telescope') }}" class="btn btn-outline-success" title="Requests & Responses">Telescope</a>
+                            <a type="button"  target="_blank" href="{{ url('/logs') }}" class="btn btn-outline-success" title="Application Logs">Logs</a>
+                        @endif
 
                         {{--  <a type="button" class="btn btn-outline-success" title="User Account Profile Area">Account Profile</a>--}}
-            
+
                         <a target="_blank" href="{{ url('/') }}" type="button" class="btn btn-info" title="View The Live Site">Live Site</a>
                 </div>
                 </li>
@@ -150,6 +153,11 @@
                         </ul>
                     </div>
                 @endif
+
+
+                @flasher_render
+
+
                 @yield('content')
             </section>
             <!-- /.content -->
@@ -157,7 +165,7 @@
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
-                <strong> &copy;</strong> {{ trans('global.allRightsReserved') }} <b>Version</b> 3.0.0-alpha HIPPY
+                <strong> &copy;</strong> {{ trans('global.allRightsReserved') }} <b>Version</b> 1.0
             </div>
                 {{-- <button type="button" class="btn btn-outline-primary">Primary</button>
                 <button type="button" class="btn btn-outline-secondary">Secondary</button>
@@ -193,15 +201,46 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('datepicker/js/bootstrap-datepicker.js') }}"></script>
     {{--  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  --}}
     {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>  --}}
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script>
+
+const notyf = new Notyf({
+    position: {
+                x: 'right',
+                y: 'top',
+            },
+  types: [
+    {
+      type: 'info',
+      background: 'blue',
+      icon: {
+        className: 'material-icons',
+        tagName: 'i',
+        text: 'warning'
+      },
+      dismissible: true
+    }
+  ]
+});
+
+
         $("#syncAdvertisers").click(function(e){
             e.preventDefault();
+
+            notyf.open({
+                type: 'info',
+                message: 'The advertisers update has been triggered!',
+                duration: 9000,
+            });
 
             $this=$(this);
 $loader='<div class="spinner-border text-dark" role="status">'+
@@ -209,19 +248,30 @@ $loader='<div class="spinner-border text-dark" role="status">'+
             '</div>';
     $this.html($loader);
 
+
             $.ajax({
                 type: "POST",
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: '{{ route('api.advertiser.getAllAdvertiser') }}',
                 success: function() {
                     console.log("SYNC Advertisers Successful!");
-                    alert("SYNC Advertisers Successful!");
+                    // alert("SYNC Advertisers Successful!");
+                    notyf.success({
+                        message: 'SYNC Advertisers Successful!',
+                        duration: 9000,
+                    });
                     $this.html('SYNC Advertisers');
                 }
             })
         });
         $("#syncAffiliates").click(function(e){
             e.preventDefault();
+
+            notyf.open({
+                type: 'info',
+                message: 'The affiliates update has been triggered!',
+                duration: 9000,
+            });
 
             $this=$(this);
 $loader='<div class="spinner-border text-dark" role="status">'+
@@ -235,13 +285,23 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                 url: '{{ route('api.advertiser.getAllAffiliates') }}',
                 success: function() {
                     console.log("SYNC Affiliates Successful!");
-                    alert("SYNC Affiliates Successful!");
+                    // alert("SYNC Affiliates Successful!");
+                    notyf.success({
+                        message: 'SYNC Affiliates Successful!',
+                        duration: 9000,
+                    });
                     $this.html('SYNC Affiliates');
                 }
             })
         });
         $("#syncOffers").click(function(e){
             e.preventDefault();
+
+            notyf.open({
+                type: 'info',
+                message: 'The offers update has been triggered!',
+                duration: 9000,
+            });
 
             $this=$(this);
 $loader='<div class="spinner-border text-dark" role="status">'+
@@ -255,11 +315,15 @@ $loader='<div class="spinner-border text-dark" role="status">'+
                 url: '{{ route('api.advertiser.getAllOffers') }}',
                 success: function() {
                     console.log("SYNC Offers Successful!");
-                    alert("SYNC Offers Successful!");
+                    // alert("SYNC Offers Successful!");
+                    notyf.success({
+                        message: 'SYNC Offers Successful!',
+                        duration: 9000,
+                    });
                     $this.html('SYNC Offers');
                 }
             })
-        }); 
+        });
     </script>
 
 
@@ -390,6 +454,7 @@ $loader='<div class="spinner-border text-dark" role="status">'+
 });
 
     </script>
+
     <script>
         /*!
      * AdminLTE v3.0.0-alpha.2 (https://adminlte.io)

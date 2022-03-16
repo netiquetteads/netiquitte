@@ -52,6 +52,15 @@ class PermissionsController extends Controller
             return $table->make(true);
         }
 
+        //$pout = [];
+        //$perm = Permission::all();
+        //foreach($perm as $p) {
+        //if(substr($p->title, -6) != 'delete'){
+        // $pout[] = $p->title;
+        //};
+        //}
+        //dd($pout);
+
         return view('admin.permissions.index');
     }
 

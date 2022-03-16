@@ -98,7 +98,7 @@
 { data: 'name', name: 'name' },
 // { data: 'everflow_account', name: 'everflow_account' },
 // { data: 'published', name: 'published' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: 'actions' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

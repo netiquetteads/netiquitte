@@ -38,7 +38,7 @@ class AdvertiserController extends Controller
         $advertiser = Advertiser::create($request->all());
 
         if ($request->input('featured_image', false)) {
-            $advertiser->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+            $advertiser->addMedia(storage_path('tmp/uploads/'.basename($request->input('featured_image'))))->toMediaCollection('featured_image');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -60,11 +60,11 @@ class AdvertiserController extends Controller
         $advertiser->update($request->all());
 
         if ($request->input('featured_image', false)) {
-            if (!$advertiser->featured_image || $request->input('featured_image') !== $advertiser->featured_image->file_name) {
+            if (! $advertiser->featured_image || $request->input('featured_image') !== $advertiser->featured_image->file_name) {
                 if ($advertiser->featured_image) {
                     $advertiser->featured_image->delete();
                 }
-                $advertiser->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+                $advertiser->addMedia(storage_path('tmp/uploads/'.basename($request->input('featured_image'))))->toMediaCollection('featured_image');
             }
         } elseif ($advertiser->featured_image) {
             $advertiser->featured_image->delete();
@@ -100,10 +100,10 @@ class AdvertiserController extends Controller
     {
         abort_if(Gate::denies('advertiser_create') && Gate::denies('advertiser_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new Advertiser();
-        $model->id     = $request->input('crud_id', 0);
+        $model = new Advertiser();
+        $model->id = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+        $media = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }

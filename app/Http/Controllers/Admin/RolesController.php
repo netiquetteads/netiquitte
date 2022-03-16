@@ -27,9 +27,9 @@ class RolesController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'role_show';
-                $editGate      = 'role_edit';
-                $deleteGate    = 'role_delete';
+                $viewGate = 'role_show';
+                $editGate = 'role_edit';
+                $deleteGate = 'role_delete';
                 $crudRoutePart = 'roles';
 
                 return view('partials.datatablesActions', compact(
@@ -42,10 +42,10 @@ class RolesController extends Controller
             });
 
             $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
+                return $row->id ? $row->id : '';
             });
             $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : "";
+                return $row->title ? $row->title : '';
             });
             $table->editColumn('permissions', function ($row) {
                 $labels = [];

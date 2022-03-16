@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
-use \DateTimeInterface;
-use App\Notifications\VerifyUserNotification;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -66,9 +63,9 @@ class User extends Authenticatable implements HasMedia
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        self::created(function (User $user) {
+        self::created(function (self $user) {
             $registrationRole = config('panel.registration_default_role');
-            if (!$user->roles()->get()->contains($registrationRole)) {
+            if (! $user->roles()->get()->contains($registrationRole)) {
                 $user->roles()->attach($registrationRole);
             }
         });
@@ -85,9 +82,9 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function isAdmin() 
+    public function isAdmin()
     {
-       return $this->roles()->where('title', 'Admin')->exists();
+        return $this->roles()->where('title', 'Admin')->exists();
     }
 
     public function userUserAlerts()
@@ -97,12 +94,12 @@ class User extends Authenticatable implements HasMedia
 
     public function getEmailVerifiedAtAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
     }
 
     public function setEmailVerifiedAtAttribute($value)
     {
-        $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['email_verified_at'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     public function setPasswordAttribute($input)
@@ -126,9 +123,9 @@ class User extends Authenticatable implements HasMedia
     {
         $file = $this->getMedia('photo')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;

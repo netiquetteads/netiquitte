@@ -8,7 +8,6 @@ use App\Http\Requests\StoreAccountStatusRequest;
 use App\Http\Requests\UpdateAccountStatusRequest;
 use App\Models\AccountStatus;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AccountStatusController extends Controller

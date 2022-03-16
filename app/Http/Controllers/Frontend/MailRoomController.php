@@ -8,7 +8,6 @@ use App\Http\Requests\StoreMailRoomRequest;
 use App\Http\Requests\UpdateMailRoomRequest;
 use App\Models\MailRoom;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class MailRoomController extends Controller

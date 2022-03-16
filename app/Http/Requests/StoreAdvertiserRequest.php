@@ -5,13 +5,12 @@ namespace App\Http\Requests;
 use App\Models\Advertiser;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response;
 
 class StoreAdvertiserRequest extends FormRequest
 {
     public function authorize()
     {
-         return true;
+        return true;
         //return Gate::allows('advertiser_create');
     }
 
@@ -38,7 +37,7 @@ class StoreAdvertiserRequest extends FormRequest
                 'numeric',
             ],
             'last_login' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'date_format:'.config('panel.date_format').' '.config('panel.time_format'),
                 'nullable',
             ],
             'network_country_code' => [

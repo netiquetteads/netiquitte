@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use \DateTimeInterface;
 use App\Traits\Auditable;
 use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,6 +22,8 @@ class Affiliate extends Model implements HasMedia
     use HasFactory;
 
     public $table = 'affiliates';
+
+    protected $with = ['accounts', 'media'];
 
     protected $appends = [
         'logo',
@@ -60,7 +62,24 @@ class Affiliate extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'w8',
+        'w9',
     ];
+
+    public function scopePublished($query)
+    {
+        // $affiliates = Affiliate::published()->get();
+        // $affiliates = Affiliate::published()->count();
+        return $query->where('published', 1);
+    }
+
+    public function scopeIsActive($query)
+    {
+        //$affiliates = Affiliate::isActive()->count();
+        //$affiliates = Affiliate::isActive()->get();
+        // $affiliates = Affiliate::isActive()->find('3');
+        return $query->where('account_status', 'active');
+    }
 
     public function registerMediaConversions(Media $media = null): void
     {
@@ -77,9 +96,9 @@ class Affiliate extends Model implements HasMedia
     {
         $file = $this->getMedia('logo')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;
@@ -89,9 +108,9 @@ class Affiliate extends Model implements HasMedia
     {
         $file = $this->getMedia('featured_image')->last();
         if ($file) {
-            $file->url       = $file->getUrl();
+            $file->url = $file->getUrl();
             $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
+            $file->preview = $file->getUrl('preview');
         }
 
         return $file;
@@ -99,12 +118,12 @@ class Affiliate extends Model implements HasMedia
 
     public function getLastLoginAttribute($value)
     {
-        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format').' '.config('panel.time_format')) : null;
     }
 
     public function setLastLoginAttribute($value)
     {
-        $this->attributes['last_login'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+        $this->attributes['last_login'] = $value ? Carbon::createFromFormat(config('panel.date_format').' '.config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
     public function team()
@@ -119,6 +138,6 @@ class Affiliate extends Model implements HasMedia
 
     public function Accounts()
     {
-        return $this->belongsTo(Account::class,'id','PlatformUserID');
+        return $this->belongsTo(Account::class, 'id', 'PlatformUserID');
     }
 }

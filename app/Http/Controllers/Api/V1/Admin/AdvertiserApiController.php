@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateAdvertiserRequest;
 use App\Http\Resources\Admin\AdvertiserResource;
 use App\Models\Advertiser;
 use Gate;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdvertiserApiController extends Controller
@@ -28,7 +27,7 @@ class AdvertiserApiController extends Controller
         $advertiser = Advertiser::create($request->all());
 
         if ($request->input('featured_image', false)) {
-            $advertiser->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+            $advertiser->addMedia(storage_path('tmp/uploads/'.basename($request->input('featured_image'))))->toMediaCollection('featured_image');
         }
 
         return (new AdvertiserResource($advertiser))
@@ -48,11 +47,11 @@ class AdvertiserApiController extends Controller
         $advertiser->update($request->all());
 
         if ($request->input('featured_image', false)) {
-            if (!$advertiser->featured_image || $request->input('featured_image') !== $advertiser->featured_image->file_name) {
+            if (! $advertiser->featured_image || $request->input('featured_image') !== $advertiser->featured_image->file_name) {
                 if ($advertiser->featured_image) {
                     $advertiser->featured_image->delete();
                 }
-                $advertiser->addMedia(storage_path('tmp/uploads/' . basename($request->input('featured_image'))))->toMediaCollection('featured_image');
+                $advertiser->addMedia(storage_path('tmp/uploads/'.basename($request->input('featured_image'))))->toMediaCollection('featured_image');
             }
         } elseif ($advertiser->featured_image) {
             $advertiser->featured_image->delete();

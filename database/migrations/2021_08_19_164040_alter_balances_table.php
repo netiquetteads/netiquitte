@@ -31,6 +31,4 @@ class AlterBalancesTable extends Migration
             $table->string('payment_type')->nullable();
         });
     }
- 
-    
 }

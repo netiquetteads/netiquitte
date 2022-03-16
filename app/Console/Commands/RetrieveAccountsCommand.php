@@ -3,10 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class RetrieveAccountsCommand extends Command
 {
@@ -43,12 +39,11 @@ class RetrieveAccountsCommand extends Command
     {
         $this->comment('=====================================');
         $this->comment('');
-        $this->info("Updating the Dev channels started@:". Carbon::now()->diffForHumans());
+        $this->info('Updating the Dev channels started@:'.Carbon::now()->diffForHumans());
         $this->comment('');
         $this->comment('=====================================');
         $this->comment('');
 
-        
         return 0;
     }
 }

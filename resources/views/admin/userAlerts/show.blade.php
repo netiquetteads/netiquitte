@@ -41,11 +41,31 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.userAlert.fields.role') }}
+                        </th>
+                        <td>
+                            @foreach($userAlert->roles as $key => $role)
+                                <span class="label label-info">{{ $role->title }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.userAlert.fields.user') }}
                         </th>
                         <td>
                             @foreach($userAlert->users as $key => $user)
-                                <span class="label label-info">{{ $user->name }}</span>
+                                <span class="label label-info">{{ $user->first_name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.userAlert.fields.team') }}
+                        </th>
+                        <td>
+                            @foreach($userAlert->teams as $key => $team)
+                                <span class="label label-info">{{ $team->name }}</span>
                             @endforeach
                         </td>
                     </tr>
