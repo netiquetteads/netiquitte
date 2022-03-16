@@ -109,3 +109,5 @@ div.dt-button-collection {
     background-color: rgba(255,255,255,.9);
     color: #343a40;
 }
+
+.alert-yellow {  color: yellow !important;}

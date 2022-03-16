@@ -28,17 +28,15 @@
                         <th>
                             {{ trans('cruds.task.fields.name') }}
                         </th>
-                        <th>
+                       {{--  <th>
                             {{ trans('cruds.task.fields.description') }}
-                        </th>
+                        </th> --}}
                         <th>
                             {{ trans('cruds.task.fields.status') }}
                         </th>
+
                         <th>
-                            {{ trans('cruds.task.fields.tag') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.task.fields.attachment') }}
+                            Author
                         </th>
                         <th>
                             {{ trans('cruds.task.fields.due_date') }}
@@ -63,23 +61,13 @@
                             <td>
                                 {{ $task->name ?? '' }}
                             </td>
-                            <td>
-                                {{ $task->description ?? '' }}
-                            </td>
+
                             <td>
                                 {{ $task->status->name ?? '' }}
                             </td>
+
                             <td>
-                                @foreach($task->tags as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
-                                @endforeach
-                            </td>
-                            <td>
-                                @if($task->attachment)
-                                    <a href="{{ $task->attachment->getUrl() }}" target="_blank">
-                                        {{ trans('global.view_file') }}
-                                    </a>
-                                @endif
+                  add author code here
                             </td>
                             <td>
                                 {{ $task->due_date ?? '' }}
