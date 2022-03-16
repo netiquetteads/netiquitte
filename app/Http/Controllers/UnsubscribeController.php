@@ -53,13 +53,14 @@ class UnsubscribeController extends Controller
         }
     }
 
-    public function userApproval($id=0)
+    public function userApproval($id = 0)
     {
-        if ($id!=0) {
-            $user=User::where('id',$id)->first();
-            $user->approved=1;
+        if ($id != 0) {
+            $user = User::where('id', $id)->first();
+            $user->approved = 1;
             $user->save();
         }
-        return redirect()->route('admin.home')->with('success','User successfully approved!');
+
+        return redirect()->route('admin.home')->with('success', 'User successfully approved!');
     }
 }

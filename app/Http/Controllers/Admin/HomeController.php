@@ -382,10 +382,10 @@ class HomeController extends Controller
             $settings10['fields'] = [];
         }
 
-        $users=User::where('approved',0)->get();
+        $users = User::where('approved', 0)->get();
 
         return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4',
-            'events', 'settings_sent_emails', 'settings9','settings10','users'));
+            'events', 'settings_sent_emails', 'settings9', 'settings10', 'users'));
 
         // ->with('year',json_encode($year,JSON_NUMERIC_CHECK))
             // ->with('user',json_encode($user,JSON_NUMERIC_CHECK));

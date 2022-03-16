@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserApprovedMail;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Mail\UserApprovedMail;
 
 class RegisterController extends Controller
 {
@@ -102,19 +102,19 @@ class RegisterController extends Controller
             );
         }
 
-        $user=$this->create($request->all());
+        $user = $this->create($request->all());
 
-        $data=[
+        $data = [
             'email_subject'=>'Pending user waiting for approval!',
-            'email_body'=>'<p><strong>Hello Admin</strong></p> <p>There is a pending user waiting for approval! <a href="'.route("userApproval",$user->id).'">Click Here</a></p>'
+            'email_body'=>'<p><strong>Hello Admin</strong></p> <p>There is a pending user waiting for approval! <a href="'.route('userApproval', $user->id).'">Click Here</a></p>',
         ];
 
-        $admins=User::get();
+        $admins = User::get();
 
         foreach ($admins as $key => $admin) {
-            $role=implode('',$admin->roles->pluck('id')->toArray());
+            $role = implode('', $admin->roles->pluck('id')->toArray());
 
-            if ($role==1) {
+            if ($role == 1) {
                 \Mail::to($admin->email)->send(new UserApprovedMail($data));
             }
         }
