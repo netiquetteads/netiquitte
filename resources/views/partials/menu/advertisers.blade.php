@@ -1,3 +1,4 @@
+
                 @can('advertiser_access')
                     <li class="nav-item has-treeview {{ request()->is("admin/advertiser*") ? "menu-open" : "" }}">
                         <a href="{{ route("admin.advertisers.index") }}" class="nav-link nav-dropdown-toggle {{ request()->is("admin/advertisers") || request()->is("admin/advertisers/*") ? "active" : "" }}">
@@ -45,3 +46,4 @@
                         </ul>
                     </li>
                 @endcan
+

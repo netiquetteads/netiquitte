@@ -58,6 +58,7 @@
         .br-red {background: #dc3545 !important; }
         .hidden {display:none; }
      </style>
+
 </head>
 
 <body class="sidebar-mini layout-fixed" style="height: auto;">
@@ -154,7 +155,9 @@
                 @endif
 
 
-                    @flasher_render
+                @flasher_render
+
+
                 @yield('content')
             </section>
             <!-- /.content -->
