@@ -551,6 +551,8 @@ return [
     'mailRoom' => [
         'title'          => 'Mail Room',
         'title_singular' => 'Mail Room',
+        'name'          => 'Name',
+
     ],
     'tool' => [
         'title'          => 'Tools',

@@ -5,7 +5,7 @@
 
                             </i>
                             <p>
-                                {{ trans('cruds.userManagement.title') }}
+                              User {{ trans('cruds.userManagement.title') }}
                                 <i class="right fa fa-fw fa-angle-left nav-icon"></i>
                             </p>
                         </a>

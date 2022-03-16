@@ -12,7 +12,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route("admin.home") }}">
+                    <a class="nav-link {{ request()->is("admin")  ? "active" : "" }}" href="{{ route("admin.home") }}">
                         <i class="fas fa-fw fa-tachometer-alt nav-icon">
                         </i>
                         <p>
@@ -39,12 +39,12 @@
                     </li>
                 @endcan --}}
 @include('partials.menu.mail-room')
-@include('partials.menu.tasks')
-@include('partials.menu.system-calendar')
+
+
 @include('partials.menu.users')
 @include('partials.menu.tools')
 @include('partials.menu.settings')
-
+@include('partials.menu.system-calendar')
                     @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
                         @can('profile_password_edit')
                             <li class="nav-item">

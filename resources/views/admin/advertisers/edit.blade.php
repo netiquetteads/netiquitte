@@ -11,6 +11,18 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('published') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="published" value="0">
+                    <input class="form-check-input" type="checkbox" name="published" id="published" value="1" {{ $advertiser->published || old('published', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="published">{{ trans('cruds.advertiser.fields.published') }}</label>
+                </div>
+                @if($errors->has('published'))
+                    <span class="text-danger">{{ $errors->first('published') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.advertiser.fields.published_helper') }}</span>
+            </div>
+
+            <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.advertiser.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $advertiser->name) }}" required>
                 @if($errors->has('name'))
@@ -31,7 +43,19 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.advertiser.fields.account_status_helper') }}</span>
             </div>
-            <div class="form-group">
+           <div class="form-group">
+                <label for="internal_notes">{{ trans('cruds.advertiser.fields.internal_notes') }}</label>
+                <textarea class="form-control {{ $errors->has('internal_notes') ? 'is-invalid' : '' }}" name="internal_notes" id="internal_notes">{{ old('internal_notes', $advertiser->internal_notes) }}</textarea>
+                @if($errors->has('internal_notes'))
+                    <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.advertiser.fields.internal_notes_helper') }}</span>
+            </div>
+
+
+
+
+            {{-- <div class="form-group">
                 <label for="everflow_account">{{ trans('cruds.advertiser.fields.everflow_account') }}</label>
                 <input class="form-control {{ $errors->has('everflow_account') ? 'is-invalid' : '' }}" type="text" name="everflow_account" id="everflow_account" value="{{ old('everflow_account', $advertiser->everflow_account) }}">
                 @if($errors->has('everflow_account'))
@@ -96,17 +120,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.advertiser.fields.global_tracking_domain_url_helper') }}</span>
             </div>
-            <div class="form-group">
-                <div class="form-check {{ $errors->has('published') ? 'is-invalid' : '' }}">
-                    <input type="hidden" name="published" value="0">
-                    <input class="form-check-input" type="checkbox" name="published" id="published" value="1" {{ $advertiser->published || old('published', 0) === 1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="published">{{ trans('cruds.advertiser.fields.published') }}</label>
-                </div>
-                @if($errors->has('published'))
-                    <span class="text-danger">{{ $errors->first('published') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.advertiser.fields.published_helper') }}</span>
-            </div>
+
             <div class="form-group">
                 <label for="today_revenue">{{ trans('cruds.advertiser.fields.today_revenue') }}</label>
                 <input class="form-control {{ $errors->has('today_revenue') ? 'is-invalid' : '' }}" type="number" name="today_revenue" id="today_revenue" value="{{ old('today_revenue', $advertiser->today_revenue) }}" step="0.01">
@@ -155,14 +169,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.advertiser.fields.network_employeeid_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="internal_notes">{{ trans('cruds.advertiser.fields.internal_notes') }}</label>
-                <textarea class="form-control {{ $errors->has('internal_notes') ? 'is-invalid' : '' }}" name="internal_notes" id="internal_notes">{{ old('internal_notes', $advertiser->internal_notes) }}</textarea>
-                @if($errors->has('internal_notes'))
-                    <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.advertiser.fields.internal_notes_helper') }}</span>
-            </div>
+
             <div class="form-group">
                 <div class="form-check {{ $errors->has('is_contact_address_enabled') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="is_contact_address_enabled" value="0">
@@ -264,7 +271,7 @@
                     <span class="text-danger">{{ $errors->first('network_advertiserid') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.advertiser.fields.network_advertiserid_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

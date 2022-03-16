@@ -1,5 +1,5 @@
                 @can('setting_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/account-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/labels*") ? "menu-open" : "" }} {{ request()->is("admin/payment-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/payment-methods*") ? "menu-open" : "" }} {{ request()->is("admin/payment-method-type*") ? "menu-open" : "" }}">
+                    <li class="nav-item has-treeview {{ request()->is("admin/account-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/labels*") ? "menu-open" : "" }} {{ request()->is("admin/payment-statuses*") ? "menu-open" : "" }} {{ request()->is("admin/payment-methods*") ? "menu-open" : "" }} {{ request()->is("admin/payment-method-type*") ? "menu-open" : "" }} {{ request()->is("admin/task-statuses*") ? "menu-open" : "" }} ">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="fa-fw nav-icon fas fa-cogs">
 
@@ -10,6 +10,18 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                              @can('task_status_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.task-statuses.index") }}" class="nav-link {{ request()->is("admin/task-statuses") || request()->is("admin/task-statuses/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-server">
+
+                                        </i>
+                                        <p>
+                                           Task {{ trans('cruds.taskStatus.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
                             @can('account_status_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.account-statuses.index") }}" class="nav-link {{ request()->is("admin/account-statuses") || request()->is("admin/account-statuses/*") ? "active" : "" }}">

@@ -4,7 +4,7 @@
 
                         </i>
                         <p>
-                            {{ trans('global.systemCalendar') }}
+                          System {{ trans('global.systemCalendar') }}
                         </p>
                     </a>
                 </li>
