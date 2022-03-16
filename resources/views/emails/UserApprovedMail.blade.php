@@ -1,0 +1,1 @@
+{!! $input['email_body'] !!}

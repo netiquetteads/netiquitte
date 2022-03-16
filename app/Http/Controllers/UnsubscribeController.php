@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use App\Models\PaymentMailLogs;
 use App\Models\TempEmail;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UnsubscribeController extends Controller
@@ -50,5 +51,15 @@ class UnsubscribeController extends Controller
                 $tempEmail->save();
             }
         }
+    }
+
+    public function userApproval($id=0)
+    {
+        if ($id!=0) {
+            $user=User::where('id',$id)->first();
+            $user->approved=1;
+            $user->save();
+        }
+        return redirect()->route('admin.home')->with('success','User successfully approved!');
     }
 }

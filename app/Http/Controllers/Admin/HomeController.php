@@ -15,7 +15,18 @@ class HomeController extends Controller
             'field'      => 'name',
             'prefix'     => '',
             'suffix'     => '',
-            'route'      => 'admin.campaigns.edit',
+            'route'      => 'admin.campaigns.show',
+        ],
+    ];
+
+    public $sources2 = [
+        [
+            'model'      => '\App\Models\Task',
+            'date_field' => 'created_at',
+            'field'      => 'name',
+            'prefix'     => '',
+            'suffix'     => '',
+            'route'      => 'admin.tasks.show',
         ],
     ];
 
@@ -294,11 +305,27 @@ class HomeController extends Controller
             }
         }
 
+        foreach ($this->sources2 as $source2) {
+            foreach ($source2['model']::all() as $model) {
+                $crudFieldValue = $model->getAttributes()[$source2['date_field']];
+
+                if (! $crudFieldValue) {
+                    continue;
+                }
+
+                $events[] = [
+                    'title' => trim($source2['prefix'].' '.$model->{$source2['field']}.' '.$source2['suffix']),
+                    'start' => $crudFieldValue,
+                    'url'   => route($source2['route'], $model->id),
+                ];
+            }
+        }
+
         $settings9 = [
-            'chart_title'           => 'Sent Emails',
+            'chart_title'           => 'Sent Offers',
             'chart_type'            => 'latest_entries',
             'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\MailRoom',
+            'model'                 => 'App\Models\Campaign',
             'group_by_field'        => 'created_at',
             'group_by_period'       => 'day',
             'aggregate_function'    => 'count',
@@ -310,7 +337,7 @@ class HomeController extends Controller
                 'name'       => '',
                 'created_at' => '',
             ],
-            'translation_key' => 'mailRoom',
+            'translation_key' => 'campaign',
         ];
 
         $settings9['data'] = [];
@@ -324,8 +351,41 @@ class HomeController extends Controller
             $settings9['fields'] = [];
         }
 
+        $settings10 = [
+            'chart_title'           => 'Sent Payments',
+            'chart_type'            => 'latest_entries',
+            'report_type'           => 'group_by_affiliate_id',
+            'model'                 => 'App\Models\PaymentMailLogs',
+            'group_by_field'        => 'created_at',
+            'group_by_period'       => 'day',
+            'aggregate_function'    => 'count',
+            'filter_field'          => 'created_at',
+            'group_by_field_format' => 'm/d/Y H:i:s',
+            'column_class'          => 'col-md-12',
+            'entries_number'        => '10',
+            'fields'                => [
+                'email_subject'       => '',
+                'created_at' => '',
+            ],
+            'translation_key' => 'campaign',
+        ];
+
+        $settings10['data'] = [];
+        if (class_exists($settings10['model'])) {
+            $settings10['data'] = $settings10['model']::latest()
+                ->groupBy('affiliate_id')
+                ->take($settings10['entries_number'])
+                ->get();
+        }
+
+        if (! array_key_exists('fields', $settings10)) {
+            $settings10['fields'] = [];
+        }
+
+        $users=User::where('approved',0)->get();
+
         return view('home', compact('chart5', 'chart6', 'chart7', 'settings1', 'settings2', 'settings3', 'settings4',
-            'events', 'settings_sent_emails', 'settings9'));
+            'events', 'settings_sent_emails', 'settings9','settings10','users'));
 
         // ->with('year',json_encode($year,JSON_NUMERIC_CHECK))
             // ->with('user',json_encode($user,JSON_NUMERIC_CHECK));

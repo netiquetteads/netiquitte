@@ -15,6 +15,7 @@ Route::get('/unsubscribe', 'UnsubscribeController@index')->name('unsubscribe');
 Route::get('/success', 'UnsubscribeController@success')->name('success');
 Route::get('openEmail', 'UnsubscribeController@openEmail')->name('openEmail');
 Route::get('paymentOpenEmail', 'UnsubscribeController@paymentOpenEmail')->name('paymentOpenEmail');
+Route::get('userApproval/{id?}', 'UnsubscribeController@userApproval')->name('userApproval');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -160,6 +161,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('tasks-calendars', 'TasksCalendarController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
+    Route::get('calendar', 'SystemCalendarController@calendar')->name('calendar');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');
     Route::post('messenger', 'MessengerController@storeTopic')->name('messenger.storeTopic');

@@ -28,15 +28,14 @@
                         <th>
                             {{ trans('cruds.task.fields.name') }}
                         </th>
-                       {{--  <th>
-                            {{ trans('cruds.task.fields.description') }}
-                        </th> --}}
+                        <th>
+                            {{ trans('cruds.task.fields.priority') }}
+                        </th>
                         <th>
                             {{ trans('cruds.task.fields.status') }}
                         </th>
-
                         <th>
-                            Author
+                            {{ trans('cruds.task.fields.author') }} 
                         </th>
                         <th>
                             {{ trans('cruds.task.fields.due_date') }}
@@ -61,19 +60,20 @@
                             <td>
                                 {{ $task->name ?? '' }}
                             </td>
-
+                            <td>
+                                <span class="btn btn-xs {{ $task->priority ?? '' }}">{{ App\Models\Task::PRIORITY_SELECT[$task->priority] ?? '' }}</span>
+                            </td>
                             <td>
                                 {{ $task->status->name ?? '' }}
                             </td>
-
                             <td>
-                  add author code here
+                                {{ $task->author->first_name ?? '' }} {{ $task->author->last_name ?? '' }}
                             </td>
                             <td>
                                 {{ $task->due_date ?? '' }}
                             </td>
                             <td>
-                                {{ $task->assigned_to->name ?? '' }}
+                                {{ $task->assigned_to->first_name ?? '' }} {{ $task->assigned_to->last_name ?? '' }}
                             </td>
                             <td>
                                 @can('task_show')

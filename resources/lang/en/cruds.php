@@ -554,6 +554,18 @@ return [
         'name'          => 'Name',
 
     ],
+    'paymentMailLog' => [
+        'title'          => 'Payment Sent Logs',
+        'title_singular' => 'Payment Sent Logs',
+        'name'          => 'Name',
+        'created_at'             => 'Created at',
+        'created_at_helper'      => ' ',
+        'updated_at'             => 'Updated at',
+        'updated_at_helper'      => ' ',
+        'deleted_at'             => 'Deleted at',
+        'deleted_at_helper'      => ' ',
+
+    ],
     'tool' => [
         'title'          => 'Tools',
         'title_singular' => 'Tools',

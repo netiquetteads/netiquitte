@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
 
             0 => [
                 'id' => 1,
-                'name' => '',
+                'name' => 'Phillip Madsen',
                 'email' => 'wecodelaravel@gmail.com',
                 'email_verified_at' => null,
                 'password' => '$2y$10$zAbxGjONkQalLfEcm7dsFe5OxmSsFA4OGc3o0LszO8EvYLorlWZVO',
@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder
             ],
             1 => [
                 'id' => 2,
-                'name' => '',
+                'name' => 'Owen Rupchand',
                 'email' => 'owenrupchand@gmail.com',
                 'email_verified_at' => null,
                 'password' => '$2y$10$oHWWbRtPyDMQh9bvJ.fQ3et0P0VZWelI9vPGVbpw1NvVgfq8G.wpG',
@@ -61,7 +61,7 @@ class UsersTableSeeder extends Seeder
             ],
             2 => [
                 'id' => 3,
-                'name' => '',
+                'name' => 'Tapas Vishwas',
                 'email' => 'tpsvishwas786@gmail.com',
                 'email_verified_at' => null,
                 'password' => '$2y$10$ebEV.6ABCYkuc6fMccFfROGRmpYjRTPCIRed1IMKEQ6FE4SjYKhJW',
@@ -82,7 +82,7 @@ class UsersTableSeeder extends Seeder
             ],
             3 => [
                 'id' => 4,
-                'name' => '',
+                'name' => 'Test',
                 'email' => 'owen@prosprio.com',
                 'email_verified_at' => null,
                 'password' => '$2y$10$hynBmpdrd1V/4T7/Qpe97.g3HvlSntbNSQxPu1kN27EX255SpoKpO',

@@ -5,7 +5,29 @@
 
 @section('content')
 
+  @if(Session::has('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ Session::get('success') }}
+      @php
+          Session::forget('success');
+      @endphp
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" class="fa fa-times"></span>
+      </button>
+  </div>
+  @endif
 
+  @if ($users->count()>0)
+    @foreach ($users as $user)
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      Hello Admin, {{ $user->first_name }} {{ $user->last_name }} waiting for approval! <a href="{{ route("userApproval",$user->id) }}">Click Here</a>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" class="fa fa-times"></span>
+      </button>
+  </div>
+    @endforeach
+  @endif
+        
 
 <div class="content">
     <div class="row">

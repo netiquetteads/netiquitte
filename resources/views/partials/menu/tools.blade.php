@@ -1,5 +1,5 @@
                 {{-- @can('tool_access') --}}
-                <li class="nav-item has-treeview {{ request()->is("admin/tools*") ? "menu-open" : "" }} {{ request()->is("admin/system-calendar") ? "menu-open" : "" }} {{ request()->is("admin/messenger") ? "menu-open" : "" }}   {{ request()->is("admin/tasks*") ? "menu-open" : "" }} {{ request()->is("admin/tasks-calendars*") ? "menu-open" : "" }}">
+                <li class="nav-item has-treeview {{ request()->is("admin/tools*") ? "menu-open" : "" }} {{ request()->is("admin/calendar") ? "menu-open" : "" }} {{ request()->is("admin/messenger") ? "menu-open" : "" }}   {{ request()->is("admin/tasks*") ? "menu-open" : "" }} {{ request()->is("admin/tasks-calendars*") ? "menu-open" : "" }}">
 
                     <a class="nav-link nav-dropdown-toggle" href="#">
                         <i class="fa-fw nav-icon fas fa-cogs">
@@ -14,10 +14,10 @@
                         @include('partials.menu.tasks')
 
                         <li class="nav-item">
-                            <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is("admin/system-calendar") || request()->is("admin/system-calendar/*") ? "active" : "" }}">
+                            <a href="{{ route("admin.calendar") }}" class="nav-link {{ request()->is("admin/calendar") || request()->is("admin/calendar/*") ? "active" : "" }}">
                                 <i class="fas fa-fw fa-calendar nav-icon"> </i>
                                 <p>
-                                    {{ trans('global.systemCalendar') }}
+                                    {{ trans('global.calendar') }}
                                 </p>
                             </a>
                         </li>

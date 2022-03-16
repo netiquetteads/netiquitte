@@ -37,14 +37,15 @@ class TaskController extends Controller
 
         $tags = TaskTag::pluck('name', 'id');
 
-        $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $assigned_tos = User::pluck('first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.tasks.create', compact('assigned_tos', 'statuses', 'tags'));
     }
 
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::create($request->all());
+        $task = Task::create(array_merge($request->all(), ['author_id' => auth()->user()->id]));
+
         $task->tags()->sync($request->input('tags', []));
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/'.basename($request->input('attachment'))))->toMediaCollection('attachment');
@@ -65,7 +66,7 @@ class TaskController extends Controller
 
         $tags = TaskTag::pluck('name', 'id');
 
-        $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $assigned_tos = User::pluck('first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $task->load('status', 'tags', 'assigned_to');
 
@@ -74,7 +75,7 @@ class TaskController extends Controller
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $task->update($request->all());
+        $task->update(array_merge($request->all(), ['author_id' => auth()->user()->id]));
         $task->tags()->sync($request->input('tags', []));
         if ($request->input('attachment', false)) {
             if (! $task->attachment || $request->input('attachment') !== $task->attachment->file_name) {
